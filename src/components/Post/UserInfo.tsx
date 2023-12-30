@@ -34,7 +34,10 @@ export default function UserInfo() {
 		<StyledLink>
 			<Container>
 				<ImageBox>
-					<ProfileImage src="" alt="profile image" />
+					<ProfileImage
+						src="https://wafflestudio.com/static/images/DefaultProfileImage.svg"
+						alt="profile image"
+					/>
 				</ImageBox>
 				<NameBox>
 					<span>
