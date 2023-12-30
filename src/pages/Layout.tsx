@@ -99,6 +99,13 @@ const Menu = styled.div`
 	}
 `
 
+const StyledLink = styled(NavLink)`
+	text-decoration: none;
+	&.active {
+		font-weight: bold;
+	}
+`
+
 export default function Layout() {
 	return (
 		<Div>
@@ -123,7 +130,7 @@ export default function Layout() {
 						</div>
 					</NavLink>
 				</Logo>
-				<NavLink to="/" end>
+				<StyledLink to="/" end>
 					<Menu>
 						<svg
 							aria-label="홈"
@@ -138,7 +145,7 @@ export default function Layout() {
 							<span>홈</span>
 						</div>
 					</Menu>
-				</NavLink>
+				</StyledLink>
 			</SideBar>
 			<Outlet />
 		</Div>
