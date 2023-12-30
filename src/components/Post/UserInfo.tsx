@@ -16,6 +16,7 @@ const ImageBox = styled.div`
 	border-radius: 70%;
 	overflow: hidden;
 	display: inline;
+	border: 1px solid rgb(214, 214, 214);
 `
 
 const ProfileImage = styled.img`
