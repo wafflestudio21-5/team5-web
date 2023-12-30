@@ -3,10 +3,10 @@ import styled from 'styled-components'
 const Container = styled.div`
 	position: relative;
 	width: 100%;
-	height: fit-content;
 	top: 0;
 	left: 0;
 	box-sizing: border-box;
+	display: flex;
 `
 
 const Image = styled.img`
