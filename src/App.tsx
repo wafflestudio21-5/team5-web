@@ -4,9 +4,18 @@ import Home from './pages/Home.tsx'
 import Profile from './pages/Profile.tsx'
 import Reels from './pages/Reels.tsx'
 import Login from './pages/Login/Login.tsx'
-import PasswordRecovery from './pages/Login/PasswordRecovery.tsx'
-import SignIn from './pages/Login/SignIn.tsx'
-import { UserProvider } from './contexts/UserContext.tsx'
+import PasswordRecovery from './pages/Login/passwordRecovery/PasswordRecovery.tsx'
+import SignIn from './pages/Login/signIn/SignIn.tsx'
+import { useUserContext } from './contexts/UserContext.tsx'
+import Certification from './pages/Login/passwordRecovery/Certification.tsx'
+import NewPassword from './pages/Login/passwordRecovery/NewPassword.tsx'
+import MakePassword from './pages/Login/signIn/MakePassword.tsx'
+import AskToSave from './pages/Login/signIn/AskToSave.tsx'
+import AskBirthday from './pages/Login/signIn/AskBirthday.tsx'
+import AskUsername from './pages/Login/signIn/AskUsername.tsx'
+import AskEmail from './pages/Login/signIn/AskEmail.tsx'
+import CertificationSignIn from './pages/Login/signIn/CertificationSignIn.tsx'
+import Agree from './pages/Login/signIn/Agree.tsx'
 
 const router = createBrowserRouter([
   {
@@ -31,22 +40,54 @@ const router = createBrowserRouter([
   }
 ])
 
-const LoginRouter = createBrowserRouter([
+const loginRouter = createBrowserRouter([
   {
     path: '',
     element: <Login />
   },
   {
     path: 'passwordRecovery/',
-    element: <PasswordRecovery />
+    element: <PasswordRecovery />,
   },
   {
-    path: 'facebookLogin/',
-    element: <Reels />
+    path: 'passwordRecovery/certification/',
+    element: <Certification />
+  },
+  {
+    path: 'passwordRecovery/newPassword/',
+    element: <NewPassword />
   },
   {
     path: 'signIn/',
     element: <SignIn />
+  },
+  {
+    path: 'signIn/password/',
+    element: <MakePassword />
+  },
+  {
+    path: 'signIn/askToSave/',
+    element: <AskToSave />
+  },
+  {
+    path: 'signIn/askBirthday/',
+    element: <AskBirthday />
+  },
+  {
+    path: 'signIn/askUsername/',
+    element: <AskUsername />
+  },
+  {
+    path: 'signIn/askEmail/',
+    element: <AskEmail />
+  },
+  {
+    path: 'signIn/certification/',
+    element: <CertificationSignIn />
+  },
+  {
+    path: 'signIn/agreeToTerm/',
+    element: <Agree />
   },
   {
     path: '*',
@@ -55,13 +96,8 @@ const LoginRouter = createBrowserRouter([
 ])
 
 function App() {
-  return (
-    <>
-      <UserProvider>
-        <RouterProvider router={LoginRouter} />
-      </UserProvider>
-    </>
-  )
+  const { isLoggedin } = useUserContext()
+  return <RouterProvider router={ isLoggedin ? router : loginRouter } />
 }
 
 export default App

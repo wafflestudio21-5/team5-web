@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useUserContext } from '../../contexts/UserContext'
+import { useEffect, useState } from 'react'
 
 const Img = styled.img`
 	&.instagram {
 		display: block;
 		margin: 80px auto 20px;
-		width: 40%;
+		width: 60%;
 		
 	}
 	&.facebook {
@@ -18,8 +19,8 @@ const Img = styled.img`
 const Input = styled.input`
 	display: block;
 	margin: 0 auto 10px;
-	width: 60%;
-	height: 30px;
+	width: 90%;
+	height: 2.5rem;
 	font-size: 12px;
 	padding-left: 7px;
 	border-radius: 5px;
@@ -32,7 +33,7 @@ const Input = styled.input`
 const Div = styled.div`
 	&.passwordRecovery {
 		display: block;
-		width: 60%;
+		width: 90%;
 		margin: 15px auto;
 		text-align: right;
 		font-size: x-small;
@@ -41,10 +42,10 @@ const Div = styled.div`
 	&.facebookBox {
 		display: block;
 		width: 190px;
-		margin: 50px auto 0px;
+		margin: 3rem auto 5rem;
 	}
 	&.line {
-		width: 60%;
+		width: 90%;
 		text-align: center;
 		border-bottom: 1px solid #aaa;
 		line-height: 0.1em;
@@ -53,6 +54,7 @@ const Div = styled.div`
 	&.footer {
 		position: fixed;
 		border: 1px solid gainsboro;
+		background-color: white;
 		color: gainsboro;
 		font-size: small;
 		bottom: 0px;
@@ -66,12 +68,13 @@ const Div = styled.div`
 const Button = styled.button`
 	display: block;
 	margin: 10px auto;
-	width: 60%;
-	height: 35px;
-	border-radius: 5px;
+	width: 90%;
+	height: 2.5rem;
+	border-radius: 1.2rem;
 	border: none;
-	background-color: skyblue;
+	background-color: blue;
 	color: white;
+	$
 `
 const Span = styled.span`
 	background: #fff;
@@ -85,8 +88,14 @@ const StyledLink = styled(Link)`
 `
 
 export default function Login() {
-	const {username, setUsername, password, setPassword } = useUserContext()
-
+	const {username, setUsername, password, setPassword, setIsLoggedin } = useUserContext()
+	const [ buttonActive, setButtonActive ] = useState(false)
+	useEffect(() => {
+		if (username.length > 0 && password.length > 0) setButtonActive(true)
+		else setButtonActive(false)
+		console.log(username)
+		console.log(password)	
+	}, [username, password])
 	return (
 		<div>
 			<Img
@@ -97,12 +106,14 @@ export default function Login() {
 			<br />
 			<Input
 				type="text"
+				name="username"
 				value={username}
 				placeholder="사용자 이름, 이메일 주소 또는 휴대폰 번호"
 				onChange={(e) => setUsername(e.target.value)}
 			/>
 			<Input
 				type="password"
+				name="password"
 				value={password}
 				placeholder="비밀번호"
 				onChange={(e) => setPassword(e.target.value)}
@@ -110,7 +121,7 @@ export default function Login() {
 			<StyledLink to="passwordRecovery/">
 				<Div className="passwordRecovery">비밀번호를 잊으셨나요?</Div>
 			</StyledLink>
-			<Button>로그인</Button>
+			<Button disabled={!buttonActive} onClick={() => setIsLoggedin(true)}>로그인</Button>
 			<Div className="line">
 				<Span> 또는 </Span>
 			</Div>
