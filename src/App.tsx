@@ -6,6 +6,7 @@ import Reels from './pages/Reels.tsx'
 import Login from './pages/Login/Login.tsx'
 import PasswordRecovery from './pages/Login/PasswordRecovery.tsx'
 import SignIn from './pages/Login/SignIn.tsx'
+import { UserProvider } from './contexts/UserContext.tsx'
 
 const router = createBrowserRouter([
   {
@@ -56,7 +57,9 @@ const LoginRouter = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={LoginRouter} />
+      <UserProvider>
+        <RouterProvider router={LoginRouter} />
+      </UserProvider>
     </>
   )
 }

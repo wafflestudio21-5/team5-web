@@ -1,12 +1,13 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useUserContext } from '../../contexts/UserContext'
 
 const Img = styled.img`
 	&.instagram {
 		display: block;
 		margin: 80px auto 20px;
-		width: 200px;
+		width: 40%;
+		
 	}
 	&.facebook {
 		float: left;
@@ -17,7 +18,7 @@ const Img = styled.img`
 const Input = styled.input`
 	display: block;
 	margin: 0 auto 10px;
-	width: 300px;
+	width: 60%;
 	height: 30px;
 	font-size: 12px;
 	padding-left: 7px;
@@ -31,7 +32,7 @@ const Input = styled.input`
 const Div = styled.div`
 	&.passwordRecovery {
 		display: block;
-		width: 300px;
+		width: 60%;
 		margin: 15px auto;
 		text-align: right;
 		font-size: x-small;
@@ -43,7 +44,7 @@ const Div = styled.div`
 		margin: 50px auto 0px;
 	}
 	&.line {
-		width: 300px;
+		width: 60%;
 		text-align: center;
 		border-bottom: 1px solid #aaa;
 		line-height: 0.1em;
@@ -65,7 +66,7 @@ const Div = styled.div`
 const Button = styled.button`
 	display: block;
 	margin: 10px auto;
-	width: 310px;
+	width: 60%;
 	height: 35px;
 	border-radius: 5px;
 	border: none;
@@ -84,8 +85,7 @@ const StyledLink = styled(Link)`
 `
 
 export default function Login() {
-	const [username, setUsername] = useState('')
-	const [password, setPassword] = useState('')
+	const {username, setUsername, password, setPassword } = useUserContext()
 
 	return (
 		<div>

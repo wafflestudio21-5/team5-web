@@ -13,7 +13,7 @@ const StyledLink = styled(Link)`
 const Input = styled.input`
 	display: block;
 	margin: 0 auto 10px;
-	width: 300px;
+	width: 60%;
 	height: 30px;
 	font-size: 12px;
 	padding-left: 7px;
@@ -27,7 +27,7 @@ const Input = styled.input`
 const Div = styled.div`
 	&.menu {
 		display: grid;
-		width: 300px;
+		width: 60%;
 		margin: 10px auto 30px auto;
 		grid-template-columns: repeat(2, 1fr);
 	}
@@ -42,7 +42,7 @@ const Div = styled.div`
 		font-size: small;
 		display: block;
 		margin: 10px auto;
-		width: 300px;
+		width: 60%;
 		text-align: center;
 	}
 	&.footer {
@@ -61,7 +61,7 @@ const Div = styled.div`
 const Button = styled.button`
 	display: block;
 	margin: 10px auto;
-	width: 310px;
+	width: 62%;
 	height: 35px;
 	border-radius: 5px;
 	border: none;

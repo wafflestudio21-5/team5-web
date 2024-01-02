@@ -5,19 +5,19 @@ import { Link } from 'react-router-dom'
 const Img = styled.img`
 	&.image {
 		display: block;
-		margin: 80px auto 40px;
-		width: 90px;
+		margin: 10% auto 7%;
+		width: 15%;
 	}
 	&.facebook {
 		float: left;
-		width: 25px;
-		margin-right: 10px;
+		width: 12%;
+		margin-right: 3%;
 	}
 `
 const Input = styled.input`
 	display: block;
 	margin: 0 auto 10px;
-	width: 300px;
+	width: 60%;
 	height: 30px;
 	font-size: 12px;
 	padding-left: 7px;
@@ -30,28 +30,28 @@ const Input = styled.input`
 `
 const H4 = styled.h4`
 	display: block;
-	width: 300px;
+	width: 60%;
 	margin: 10px auto 20px;
 	text-align: center;
 `
 const Div = styled.div`
 	&.toServiceCenter {
 		display: block;
-		width: 300px;
+		width: 60%;
 		margin: 20px auto;
 		text-align: center;
 		font-size: small;
 	}
 	&.text {
 		display: block;
-		width: 300px;
+		width: 60%;
 		margin: 10px auto;
 		text-align: center;
 		font-size: small;
 	}
 	&.menu {
 		display: grid;
-		width: 300px;
+		width: 60%;
 		margin: 10px auto 20px auto;
 		grid-template-columns: repeat(2, 1fr);
 	}
@@ -67,7 +67,7 @@ const Div = styled.div`
 		margin: 50px auto 0px;
 	}
 	&.line {
-		width: 300px;
+		width: 60%;
 		text-align: center;
 		border-bottom: 1px solid #aaa;
 		line-height: 0.1em;
@@ -89,7 +89,7 @@ const Div = styled.div`
 const Button = styled.button`
 	display: block;
 	margin: 10px auto;
-	width: 310px;
+	width: 62%;
 	height: 35px;
 	border-radius: 5px;
 	border: none;
