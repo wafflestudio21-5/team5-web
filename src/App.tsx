@@ -12,92 +12,97 @@ import NewPassword from './pages/Login/passwordRecovery/NewPassword.tsx'
 import MakePassword from './pages/Login/signIn/MakePassword.tsx'
 import AskToSave from './pages/Login/signIn/AskToSave.tsx'
 import AskBirthday from './pages/Login/signIn/AskBirthday.tsx'
-import AskUsername from './pages/Login/signIn/AskUsername.tsx'
+import MakeUsername from './pages/Login/signIn/MakeUsername.tsx'
 import AskEmail from './pages/Login/signIn/AskEmail.tsx'
 import CertificationSignIn from './pages/Login/signIn/CertificationSignIn.tsx'
 import Agree from './pages/Login/signIn/Agree.tsx'
+import AddPhoto from './pages/Login/signIn/AddPhoto.tsx'
 
 const router = createBrowserRouter([
-  {
-    path: '',
-    element: <Home />
-  },
-  {
-    path: 'explore/',
-    element: <Explore />
-  },
-  {
-    path: 'reels/',
-    element: <Reels />
-  },
-  {
-    path: ':id/',
-    element: <Profile />
-  },
-  {
-    path: '*',
-    element: <Navigate to="/" />
-  }
+	{
+		path: '',
+		element: <Home />,
+	},
+	{
+		path: 'explore/',
+		element: <Explore />,
+	},
+	{
+		path: 'reels/',
+		element: <Reels />,
+	},
+	{
+		path: ':id/',
+		element: <Profile />,
+	},
+	{
+		path: '*',
+		element: <Navigate to="/" />,
+	},
 ])
 
 const loginRouter = createBrowserRouter([
-  {
-    path: '',
-    element: <Login />
-  },
-  {
-    path: 'passwordRecovery/',
-    element: <PasswordRecovery />,
-  },
-  {
-    path: 'passwordRecovery/certification/',
-    element: <Certification />
-  },
-  {
-    path: 'passwordRecovery/newPassword/',
-    element: <NewPassword />
-  },
-  {
-    path: 'signIn/',
-    element: <SignIn />
-  },
-  {
-    path: 'signIn/password/',
-    element: <MakePassword />
-  },
-  {
-    path: 'signIn/askToSave/',
-    element: <AskToSave />
-  },
-  {
-    path: 'signIn/askBirthday/',
-    element: <AskBirthday />
-  },
-  {
-    path: 'signIn/askUsername/',
-    element: <AskUsername />
-  },
-  {
-    path: 'signIn/askEmail/',
-    element: <AskEmail />
-  },
-  {
-    path: 'signIn/certification/',
-    element: <CertificationSignIn />
-  },
-  {
-    path: 'signIn/agreeToTerm/',
-    element: <Agree />
-  },
-  {
-    path: '*',
-    element: <Navigate to="/" />
-  }
+	{
+		path: '',
+		element: <Login />,
+	},
+	{
+		path: 'passwordRecovery/',
+		element: <PasswordRecovery />,
+	},
+	{
+		path: 'passwordRecovery/certification/',
+		element: <Certification />,
+	},
+	{
+		path: 'passwordRecovery/newPassword/',
+		element: <NewPassword />,
+	},
+	{
+		path: 'signIn/',
+		element: <SignIn />,
+	},
+	{
+		path: 'signIn/password/',
+		element: <MakePassword />,
+	},
+	{
+		path: 'signIn/save/',
+		element: <AskToSave />,
+	},
+	{
+		path: 'signIn/birthday/',
+		element: <AskBirthday />,
+	},
+	{
+		path: 'signIn/username/',
+		element: <MakeUsername />,
+	},
+	{
+		path: 'signIn/email/',
+		element: <AskEmail />,
+	},
+	{
+		path: 'signIn/certification/',
+		element: <CertificationSignIn />,
+	},
+	{
+		path: 'signIn/agreeToTerm/',
+		element: <Agree />,
+	},
+	{
+		path: 'signIn/photo/',
+		element: <AddPhoto />,
+	},
+	{
+		path: '*',
+		element: <Navigate to="/" />,
+	},
 ])
 
 function App() {
-  const { isLoggedin } = useUserContext()
-  return <RouterProvider router={ isLoggedin ? router : loginRouter } />
+	const { isLoggedin } = useUserContext()
+	return <RouterProvider router={isLoggedin ? router : loginRouter} />
 }
 
 export default App

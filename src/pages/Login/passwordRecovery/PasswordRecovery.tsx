@@ -53,20 +53,29 @@ export default function Login() {
 	}
 	return (
 		<>
-			<Link to='/'><Img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsl8RBI7W6MLf98a-xSu5HLLUasmcPAkIU1A&usqp=CAU" alt="뒤로가기" /></Link>
+			<Link to="/">
+				<Img
+					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsl8RBI7W6MLf98a-xSu5HLLUasmcPAkIU1A&usqp=CAU"
+					alt="뒤로가기"
+				/>
+			</Link>
 			<H2>내 계정 찾기</H2>
 			<Div className="text">사용자 이름 또는 이메일 주소를 입력하세요.</Div>
-			<Div className='text'>비밀번호를 재설정할 수 없나요?</Div>
+			<Div className="text">비밀번호를 재설정할 수 없나요?</Div>
 			<Input
 				type="text"
 				value={username}
 				placeholder="사용자 이름 또는 이메일 주소"
 				onChange={(e) => setUsername(e.target.value)}
 			/>
-			<Div className='text'>보안 및 로그인 목적으로 Facebook이 보내는 WhatsApp 및 SMS 알림을 수신할 수 있습니다.</Div>
+			<Div className="text">
+				보안 및 로그인 목적으로 Facebook이 보내는 WhatsApp 및 SMS 알림을 수신할
+				수 있습니다.
+			</Div>
 			<Button onClick={onClick}>계정 찾기</Button>
-			<Div className="text" id="link">이메일 주소로 검색</Div>
+			<Div className="text" id="link">
+				이메일 주소로 검색
+			</Div>
 		</>
 	)
-	
 }

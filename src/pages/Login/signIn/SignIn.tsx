@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
+import { useUserContext } from '../../../contexts/UserContext'
 
 const Img = styled.img`
 	width: 2rem;
@@ -25,10 +26,10 @@ const Input = styled.input`
 	}
 `
 const Div = styled.div`
-    &.notice {
-        width: 94%;
-        margin-left: 1.5rem;
-    }
+	&.notice {
+		width: 94%;
+		margin-left: 1.5rem;
+	}
 	&.text {
 		width: 90%;
 		margin: 0 1.5rem;
@@ -47,21 +48,32 @@ const Button = styled.button`
 `
 
 export default function SignIn() {
-	const [username, setUsername] = useState('')
-	const navigate = useNavigate();
+	const { name, setName } = useUserContext()
+	const navigate = useNavigate()
+	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+		setName(e.target.value)
+		console.log(name)
+	}
 	return (
 		<>
-			<Link to='/'><Img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsl8RBI7W6MLf98a-xSu5HLLUasmcPAkIU1A&usqp=CAU" alt="뒤로가기" /></Link>
+			<Link to="/">
+				<Img
+					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsl8RBI7W6MLf98a-xSu5HLLUasmcPAkIU1A&usqp=CAU"
+					alt="뒤로가기"
+				/>
+			</Link>
 			<H2>이름 입력</H2>
-			<Div className="text">친구들이 회원님을 찾을 수 있도록 이름을 추가하세요.</Div>
+			<Div className="text">
+				친구들이 회원님을 찾을 수 있도록 이름을 추가하세요.
+			</Div>
 			<Input
 				type="text"
-                className="code"
-				value={username}
+				name="name"
+				value={name}
 				placeholder="성명"
-				onChange={(e) => setUsername(e.target.value)}
+				onChange={handleChange}
 			/>
-			<Button onClick={()=>navigate('password/')}>다음</Button>
+			<Button onClick={() => navigate('password/')}>다음</Button>
 		</>
 	)
 }

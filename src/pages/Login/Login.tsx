@@ -8,7 +8,6 @@ const Img = styled.img`
 		display: block;
 		margin: 80px auto 20px;
 		width: 60%;
-		
 	}
 	&.facebook {
 		float: left;
@@ -88,13 +87,14 @@ const StyledLink = styled(Link)`
 `
 
 export default function Login() {
-	const {username, setUsername, password, setPassword, setIsLoggedin } = useUserContext()
-	const [ buttonActive, setButtonActive ] = useState(false)
+	const { username, setUsername, password, setPassword, setIsLoggedin } =
+		useUserContext()
+	const [buttonActive, setButtonActive] = useState(false)
 	useEffect(() => {
 		if (username.length > 0 && password.length > 0) setButtonActive(true)
 		else setButtonActive(false)
 		console.log(username)
-		console.log(password)	
+		console.log(password)
 	}, [username, password])
 	return (
 		<div>
@@ -121,7 +121,9 @@ export default function Login() {
 			<StyledLink to="passwordRecovery/">
 				<Div className="passwordRecovery">비밀번호를 잊으셨나요?</Div>
 			</StyledLink>
-			<Button disabled={!buttonActive} onClick={() => setIsLoggedin(true)}>로그인</Button>
+			<Button disabled={!buttonActive} onClick={() => setIsLoggedin(true)}>
+				로그인
+			</Button>
 			<Div className="line">
 				<Span> 또는 </Span>
 			</Div>
