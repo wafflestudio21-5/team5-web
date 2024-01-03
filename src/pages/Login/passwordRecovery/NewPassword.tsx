@@ -1,6 +1,15 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useUserContext } from '../../../contexts/UserContext'
+
+interface InputProps {
+	isvalid: boolean
+	type: string
+	value: string
+	placeholder: string
+	onChange: React.ChangeEventHandler<HTMLInputElement>
+}
 
 const Img = styled.img`
 	width: 2rem;
@@ -12,17 +21,24 @@ const H2 = styled.h2`
 	margin-left: 1.5rem;
 `
 const Div = styled.div`
-	&.notice {
+	&.logout {
 		width: 94%;
 		margin-left: 1.5rem;
+		font-size: 0.9rem;
 	}
 	&.text {
 		width: 90%;
 		margin: 0 1.5rem;
 		font-size: 0.9rem;
 	}
+	&.notice {
+		width: 90%;
+		color: red;
+		font-size: 0.7rem;
+		margin: -0.5rem 0 0 1.5rem;
+	}
 `
-const Input = styled.input`
+const Input = styled.input<InputProps>`
 	&.code {
 		display: block;
 		width: 90%;
@@ -30,15 +46,17 @@ const Input = styled.input`
 		margin: 1rem auto;
 		padding-left: 0.5rem;
 		border-radius: 1rem;
-		border: 1px solid gainsboro;
+		border: 1px solid ${({ isvalid }) => (isvalid ? 'gainsboro' : 'red')};
 		background-color: whitesmoke;
-	}
-	&.checkbox {
-		display: inline;
-		float: left;
 	}
 	&:focus {
 		outline: none;
+	}
+`
+const Checkbox = styled.input`
+	&.checkbox {
+		display: inline;
+		float: left;
 	}
 `
 const Button = styled.button`
@@ -53,8 +71,17 @@ const Button = styled.button`
 `
 
 export default function NewPassword() {
-	const [username, setUsername] = useState('')
+	const { password, setPassword, setIsLoggedin } = useUserContext()
+	const [isValid, setIsValid] = useState(true)
 	const navigate = useNavigate()
+	const handleClick = () => {
+		if (password.length < 6) setIsValid(false)
+		else {
+			setIsValid(true)
+			setIsLoggedin(true)
+			navigate('/')
+		}
+	}
 	return (
 		<>
 			<Link to="/passwordRecovery/certification">
@@ -69,16 +96,23 @@ export default function NewPassword() {
 				비밀번호가 필요합니다.
 			</Div>
 			<Input
+				isvalid={isValid}
 				type="password"
 				className="code"
-				value={username}
+				value={password}
 				placeholder="새 비밀번호"
-				onChange={(e) => setUsername(e.target.value)}
+				onChange={(e) => setPassword(e.target.value)}
 			/>
-			<Button onClick={() => navigate('certification/')}>계속</Button>
-			<Div className="notice">
-				<Input type="checkbox" className="checkbox" />
+			{!isValid && (
 				<Div className="notice">
+					비밀번호가 너무 짧습니다. 6자 이상의 문자 또는 숫자로 비밀번호를
+					만드세요.
+				</Div>
+			)}
+			<Button onClick={handleClick}>계속</Button>
+			<Div className="logout">
+				<Checkbox type="checkbox" className="checkbox" />
+				<Div className="logout">
 					다른 기기에서 로그아웃합니다. 다른 사람이 회원님의 계정을 사용한 경우
 					선택하세요.
 				</Div>

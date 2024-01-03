@@ -5,7 +5,7 @@ import { useUserContext } from '../../../contexts/UserContext'
 
 interface InputProps {
 	issixormore: boolean
-	type: string // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
+	type: string
 	value: string
 	placeholder: string
 	onChange: React.ChangeEventHandler<HTMLInputElement>
@@ -64,7 +64,6 @@ export default function MakePassword() {
 	const [isSixOrMore, setIsSixOrMore] = useState(true)
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		setPassword(e.target.value)
-		console.log(password)
 	}
 	const handleClick = () => {
 		if (password.length < 6) setIsSixOrMore(false)

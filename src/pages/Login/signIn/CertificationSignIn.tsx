@@ -5,7 +5,7 @@ import { useUserContext } from '../../../contexts/UserContext'
 
 interface InputProps {
 	isvalid: boolean
-	type: string // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
+	type: string
 	value: string
 	placeholder: string
 	onChange: React.ChangeEventHandler<HTMLInputElement>
@@ -84,7 +84,7 @@ export default function CertificationSignIn() {
 	const [code, setCode] = useState('')
 	const [isValid, setIsValid] = useState(true)
 	const [isModalOpen, setIsModalOpen] = useState(false)
-	const handleChange = () => {
+	const handleClick = () => {
 		if (code.length === 6) {
 			setIsValid(true)
 			navigate('/signIn/agreeToTerm')
@@ -115,7 +115,7 @@ export default function CertificationSignIn() {
 					정확한 코드를 입력했는지 확인하고 다시 시도하세요.
 				</Div>
 			)}
-			<Button className="next" onClick={handleChange}>
+			<Button className="next" onClick={handleClick}>
 				다음
 			</Button>
 			<Button className="option" onClick={() => setIsModalOpen(true)}>
