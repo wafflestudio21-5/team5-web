@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import PostList from '../components/Post/PostList'
+import Header from '../components/Header'
 
 const HomeLayout = styled.main`
 	width: 100%;
@@ -16,10 +17,13 @@ const HomeLayout = styled.main`
 
 export default function Home() {
 	return (
-		<HomeLayout>
-			<div className="story-post">
-				<PostList />
-			</div>
-		</HomeLayout>
+		<>
+			<Header />
+			<HomeLayout>
+				<div className="story-post">
+					<PostList />
+				</div>
+			</HomeLayout>
+		</>
 	)
 }
