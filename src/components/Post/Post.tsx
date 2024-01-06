@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import UserInfo from './UserInfo'
 import PostImage from './PostImage'
 import ReactSection from './ReactSection'
+import PostHeader from './PostHeader'
 
 const Container = styled.article`
 	display: flex;
@@ -14,38 +14,10 @@ const Container = styled.article`
 	box-sizing: border-box;
 `
 
-const UserInfoContainer = styled.div`
-	display: flex;
-	width: 100%;
-	flex-direction: row;
-	justify-content: space-between;
-	padding-bottom: 0.75rem;
-	padding-left: 0.25rem;
-	box-sizing: border-box;
-`
-
-const ExtraButton = styled.button`
-	background-color: transparent;
-	border: none;
-	box-sizing: border-box;
-	padding: 0;
-	display: flex;
-	align-items: center;
-	& img {
-		width: 2em;
-		height: 1.5em;
-	}
-`
-
 export default function Post({ postId }: { postId: number }) {
 	return (
 		<Container>
-			<UserInfoContainer>
-				<UserInfo />
-				<ExtraButton>
-					<img src="/ellipsis.svg" alt="ellipsis" />
-				</ExtraButton>
-			</UserInfoContainer>
+			<PostHeader />
 			<PostImage />
 			<ReactSection postId={postId} />
 		</Container>
