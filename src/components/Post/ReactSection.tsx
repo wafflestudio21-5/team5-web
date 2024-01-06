@@ -21,6 +21,9 @@ const IconBar = styled.div`
 	& .icon-box {
 		padding: 0.5rem;
 	}
+	& .icon-box:first-child {
+		margin-left: -0.5rem;
+	}
 	& svg {
 		height: 1.5rem;
 		width: 1.5rem;
