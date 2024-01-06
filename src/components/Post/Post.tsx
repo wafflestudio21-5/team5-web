@@ -14,12 +14,17 @@ const Container = styled.article`
 	box-sizing: border-box;
 `
 
-export default function Post({ postId }: { postId: number }) {
+type Props = {
+	postId: number | null
+	openPostModal: (postId: number) => void
+}
+
+export default function Post({ postId, openPostModal }: Props) {
 	return (
 		<Container>
 			<PostHeader />
 			<PostImage />
-			<ReactSection postId={postId} />
+			<ReactSection postId={postId} openPostModal={openPostModal} />
 		</Container>
 	)
 }
