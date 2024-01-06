@@ -20,6 +20,10 @@ const IconBar = styled.div`
 	}
 	& .icon-box {
 		padding: 0.5rem;
+		cursor: pointer;
+	}
+	& .icon-box:hover {
+		color: gray;
 	}
 	& .icon-box:first-child {
 		margin-left: -0.5rem;
@@ -43,11 +47,19 @@ const TextBox = styled.div`
 	&.secondary-text {
 		color: rgb(125, 125, 125);
 	}
+	&.more-comment {
+		cursor: pointer;
+	}
 	& .like-num {
 		font-weight: 600;
+		cursor: pointer;
 	}
 	& .username {
 		font-weight: 700;
+		cursor: pointer;
+	}
+	& .username:hover {
+		color: gray;
 	}
 `
 
@@ -160,7 +172,7 @@ export default function ReactSection({ postId, openPostModal }: Props) {
 					<span className="username">sangchu</span> 가나다라마바사
 				</TextBox>
 				<TextBox
-					className="margin secondary-text"
+					className="margin secondary-text more-comment"
 					onClick={() => {
 						if (openPostModal !== undefined) {
 							openPostModal(postId)
