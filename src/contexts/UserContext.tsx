@@ -1,4 +1,10 @@
+import axios from 'axios'
 import { createContext, ReactNode, useContext, useState } from 'react'
+
+type trySignUpProps = {
+	navigate: (to: string) => void,
+	addr: string
+}
 
 export type UserContextData = {
 	name: string
@@ -15,6 +21,7 @@ export type UserContextData = {
 	setIsSaved: (b: boolean) => void
 	isLoggedin: boolean
 	setIsLoggedin: (b: boolean) => void
+	trySignUp: (props: trySignUpProps) => void
 }
 
 export const UserContext = createContext<UserContextData | null>(null)
@@ -30,6 +37,24 @@ export function UserProvider({ children }: ProviderProps) {
 	const [birthday, setBirthday] = useState(new Date())
 	const [isSaved, setIsSaved] = useState(false)
 	const [isLoggedin, setIsLoggedin] = useState(false)
+	const trySignUp = async ({navigate, addr}: trySignUpProps) => {
+		try {
+			const response = await axios.post(
+				'/api/v1/auth/signup',
+				{
+					username: username,
+					name: name,
+					password: password,
+					contact: email,
+					contact_type: email
+				}
+			)
+			console.log(response)
+			navigate(addr)
+		} catch (error) {
+			alert('회원가입 실패')
+		}
+	}
 	return (
 		<UserContext.Provider
 			value={{
@@ -47,6 +72,7 @@ export function UserProvider({ children }: ProviderProps) {
 				setIsSaved,
 				isLoggedin,
 				setIsLoggedin,
+				trySignUp,
 			}}
 		>
 			{children}

@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useUserContext } from '../../contexts/UserContext'
 import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const Img = styled.img`
 	&.instagram {
@@ -89,13 +90,39 @@ const StyledLink = styled(Link)`
 export default function Login() {
 	const { username, setUsername, password, setPassword, setIsLoggedin } =
 		useUserContext()
-	const [buttonActive, setButtonActive] = useState(false)
+	const [isActive, setIsActive] = useState(false)
 	useEffect(() => {
-		if (username.length > 0 && password.length > 0) setButtonActive(true)
-		else setButtonActive(false)
-		console.log(username)
-		console.log(password)
+		if (username.length > 0 && password.length > 0) setIsActive(true)
+		else setIsActive(false)
 	}, [username, password])
+	const handleClick = () => {
+		const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+		const numberRegex = /^010[0-9]{8}$/
+		function checkType() {
+			if (emailRegex.test(username)) return "email"
+			else if (numberRegex.test(username)) return "phone" 
+			else return "username"	
+		}
+		const data = {
+			id: username,
+			password: password,
+			type: checkType()
+		}
+		const tryLogin = async () => {
+			try {
+				const response = await axios.post(
+					'/api/v1/auth/login',
+					data
+				)
+				console.log(response)
+			} catch {
+				alert("아이디나 비밀번호가 다릅니다.")
+			}
+		}
+		tryLogin()
+		setIsLoggedin(true)
+	}
+
 	return (
 		<div>
 			<Img
@@ -121,7 +148,7 @@ export default function Login() {
 			<StyledLink to="passwordRecovery/">
 				<Div className="passwordRecovery">비밀번호를 잊으셨나요?</Div>
 			</StyledLink>
-			<Button disabled={!buttonActive} onClick={() => setIsLoggedin(true)}>
+			<Button disabled={!isActive} onClick={handleClick}>
 				로그인
 			</Button>
 			<Div className="line">
@@ -139,7 +166,7 @@ export default function Login() {
 			</Div>
 			<Div className="footer">
 				계정이 없으신가요?
-				<StyledLink to="signIn">
+				<StyledLink to="signUp/">
 					<Span>가입하기</Span>
 				</StyledLink>
 			</Div>
