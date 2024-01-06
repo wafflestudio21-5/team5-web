@@ -48,12 +48,19 @@ const TextBox = styled.div`
 	}
 `
 
-export default function ReactSection() {
+export default function ReactSection({ postId }: { postId: number }) {
 	return (
 		<Container>
 			<IconBar>
 				<div className="like-comment-share">
-					<div className="icon-box">
+					<div
+						className="icon-box"
+						onClick={() => {
+							fetch(`/api/v1/posts/${postId}/likes`, {
+								method: 'POST',
+							})
+						}}
+					>
 						<svg
 							aria-label="좋아요"
 							fill="currentColor"

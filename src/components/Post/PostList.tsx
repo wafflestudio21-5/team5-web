@@ -12,16 +12,10 @@ const Container = styled.div`
 export default function PostList() {
 	return (
 		<Container>
-			<Post />
-			<Post />
-			<Post />
-			<Post />
-			<Post />
-			<Post />
-			<Post />
-			<Post />
-			<Post />
-			<Post />
+			<Post postId={1} />
+			<Post postId={1} />
+			<Post postId={1} />
+			<Post postId={1} />
 		</Container>
 	)
 }

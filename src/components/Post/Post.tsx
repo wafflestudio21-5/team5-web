@@ -37,7 +37,7 @@ const ExtraButton = styled.button`
 	}
 `
 
-export default function Post() {
+export default function Post({ postId }: { postId: number }) {
 	return (
 		<Container>
 			<UserInfoContainer>
@@ -47,7 +47,7 @@ export default function Post() {
 				</ExtraButton>
 			</UserInfoContainer>
 			<PostImage />
-			<ReactSection />
+			<ReactSection postId={postId} />
 		</Container>
 	)
 }
