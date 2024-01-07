@@ -73,7 +73,7 @@ const EditProfileContainer = styled.div`
 
 	& label {
 		font-size: 1rem;
-		color: ${(props) => props.theme.colors.grey};
+		color: ${getColor('grey')};
 		margin-bottom: 0.4rem;
 	}
 

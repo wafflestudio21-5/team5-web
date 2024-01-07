@@ -23,6 +23,7 @@ import Follow from './pages/Profile/Follow.tsx'
 import GlobalStyles from './styles/GlobalStyles.tsx'
 import { ThemeProvider } from 'styled-components'
 import Theme from './styles/Theme.tsx'
+import Layout from './components/NavBar/Layout.tsx'
 
 const router = createBrowserRouter([
 	{
@@ -117,11 +118,13 @@ const loginRouter = createBrowserRouter([
 function App() {
 	return (
 		<ThemeProvider theme={Theme}>
-			<GlobalStyles />
-			<RouterProvider router={router} />
-			{/* 개발할 때 login 화면으로 안가려고 주석처리 해놨습니다. */}
-			{/*const { isLoggedin } = useUserContext()*/}
-			{/*<RouterProvider router={isLoggedin ? router : loginRouter} />*/}
+			<Layout>
+				<GlobalStyles />
+				<RouterProvider router={router} />
+				{/* 개발할 때 login 화면으로 안가려고 주석처리 해놨습니다. */}
+				{/*const { isLoggedin } = useUserContext()*/}
+				{/*<RouterProvider router={isLoggedin ? router : loginRouter} />*/}
+			</Layout>
 		</ThemeProvider>
 	)
 }

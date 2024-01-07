@@ -31,7 +31,7 @@ const HeaderContainer = styled.div`
 	& img {
 		height: 1.7rem;
 		width: 1.7rem;
-		margin: 0 0.5rem;
+		margin-right: 1rem;
 
 		&:hover {
 			cursor: pointer;
