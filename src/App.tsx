@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import Explore from './pages/Explore.tsx'
 import Home from './pages/Home.tsx'
-import Profile from './pages/Profile.tsx'
+import Profile from './pages/Profile/Profile.tsx'
 import Reels from './pages/Reels.tsx'
 import Login from './pages/Login/Login.tsx'
 import PasswordRecovery from './pages/Login/passwordRecovery/PasswordRecovery.tsx'
@@ -17,6 +17,12 @@ import AskEmail from './pages/Login/signIn/AskEmail.tsx'
 import CertificationSignIn from './pages/Login/signIn/CertificationSignIn.tsx'
 import Agree from './pages/Login/signIn/Agree.tsx'
 import AddPhoto from './pages/Login/signIn/AddPhoto.tsx'
+import EditProfile from './pages/Profile/EditProfile.tsx'
+import * as path from 'path'
+import Follow from './pages/Profile/Follow.tsx'
+import GlobalStyles from './styles/GlobalStyles.tsx'
+import { ThemeProvider } from 'styled-components'
+import Theme from './styles/Theme.tsx'
 
 const router = createBrowserRouter([
 	{
@@ -34,6 +40,14 @@ const router = createBrowserRouter([
 	{
 		path: ':id/',
 		element: <Profile />,
+	},
+	{
+		path: 'accounts/edit/',
+		element: <EditProfile />,
+	},
+	{
+		path: 'if/follow/',
+		element: <Follow />,
 	},
 	{
 		path: '*',
@@ -101,8 +115,14 @@ const loginRouter = createBrowserRouter([
 ])
 
 function App() {
-	const { isLoggedin } = useUserContext()
-	return <RouterProvider router={isLoggedin ? router : loginRouter} />
+	// const { isLoggedin } = useUserContext()
+	// return <RouterProvider router={isLoggedin ? router : loginRouter} />
+	return (
+		<ThemeProvider theme={Theme}>
+			<GlobalStyles />
+			<RouterProvider router={router} />
+		</ThemeProvider>
+	)
 }
 
 export default App
