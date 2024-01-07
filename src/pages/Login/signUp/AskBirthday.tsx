@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { Link, useNavigate } from 'react-router-dom'
 import { useUserContext } from '../../../contexts/UserContext'
 
 interface InputProps {
 	isvalid: boolean
-	type: string
+	type: string // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
 	value: string
 	placeholder: string
 	onChange: React.ChangeEventHandler<HTMLInputElement>
@@ -25,8 +25,9 @@ const Input = styled.input<InputProps>`
 	width: 90%;
 	height: 3rem;
 	margin: 1rem auto;
-	padding-left: 1rem;
 	border-radius: 1rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
 	border: 1px solid ${({ isvalid }) => (isvalid ? 'gainsboro' : 'red')};
 	background-color: whitesmoke;
 	&:focus {
@@ -41,9 +42,10 @@ const Div = styled.div`
 	}
 	&.notice {
 		width: 90%;
-		margin: -0.5rem 0 0 1.5rem;
-		color: red;
+		margin-top: -0.5rem;
+		margin-left: 1.5rem;
 		font-size: 0.7rem;
+		color: red;
 	}
 `
 const Button = styled.button`
@@ -57,16 +59,6 @@ const Button = styled.button`
 		background-color: blue;
 		color: white;
 	}
-	&.option {
-		display: block;
-		margin: 1rem auto;
-		width: 93%;
-		height: 2.5rem;
-		border-radius: 1.2rem;
-		border: 1px solid gainsboro;
-		background-color: white;
-		color: black;
-	}
 	&.already {
 		display: block;
 		width: 90%;
@@ -78,48 +70,44 @@ const Button = styled.button`
 	}
 `
 
-export default function CertificationSignIn() {
-	const navigate = useNavigate()
-	const { email } = useUserContext()
-	const [code, setCode] = useState('')
+export default function AskBirthday() {
+	const { birthday, setBirthday } = useUserContext()
 	const [isValid, setIsValid] = useState(true)
-	const [isModalOpen, setIsModalOpen] = useState(false)
+	const navigate = useNavigate()
 	const handleClick = () => {
-		if (code.length === 6) {
+		if (birthday.getFullYear() < 2022) {
+			navigate('/signUp/username')
 			setIsValid(true)
-			navigate('/signIn/agreeToTerm')
-			setIsValid(false)
 		} else setIsValid(false)
 	}
 	return (
 		<>
-			<Link to="/signIn/email">
+			<Link to="/signUp/save">
 				<Img
 					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsl8RBI7W6MLf98a-xSu5HLLUasmcPAkIU1A&usqp=CAU"
 					alt="뒤로가기"
 				/>
 			</Link>
-			<H2>인증 코드 입력</H2>
+			<H2>생년월일 입력</H2>
 			<Div className="text">
-				계정을 확인하려면 {email} 주소로 전송된 6자리 코드를 입력하세요.
+				비즈니스, 반려동물 또는 기타 목적으로 이 계정을 만드는 경우에도 회원님의
+				실제 생년월일을 사용하세요. 이 생년월일 정보는 회원님이 공유하지 않는 한
+				다른 사람에게 공개되지 않습니다.
 			</Div>
 			<Input
 				isvalid={isValid}
-				type="number"
-				value={code}
-				placeholder="인증 코드"
-				onChange={(e) => setCode(e.target.value)}
+				type="date"
+				value={birthday.toISOString().split('T')[0]}
+				placeholder="생년월일"
+				onChange={(e) => setBirthday(new Date(e.target.value))}
 			/>
 			{!isValid && (
 				<Div className="notice">
-					정확한 코드를 입력했는지 확인하고 다시 시도하세요.
+					잘못된 정보를 입력한 것 같습니다. 실제 생일을 입력해주세요.
 				</Div>
 			)}
 			<Button className="next" onClick={handleClick}>
 				다음
-			</Button>
-			<Button className="option" onClick={() => setIsModalOpen(true)}>
-				코드를 받지 못했습니다.
 			</Button>
 			<Button className="already" onClick={() => navigate('/')}>
 				이미 계정이 있으신가요?

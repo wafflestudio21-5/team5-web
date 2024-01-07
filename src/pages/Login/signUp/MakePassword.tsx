@@ -69,12 +69,12 @@ export default function MakePassword() {
 		if (password.length < 6) setIsSixOrMore(false)
 		else {
 			setIsSixOrMore(true)
-			navigate('/signIn/save')
+			navigate('/signUp/save')
 		}
 	}
 	return (
 		<>
-			<Link to="/signIn">
+			<Link to="/signUp">
 				<Img
 					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsl8RBI7W6MLf98a-xSu5HLLUasmcPAkIU1A&usqp=CAU"
 					alt="뒤로가기"

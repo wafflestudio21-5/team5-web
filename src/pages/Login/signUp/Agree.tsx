@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { useUserContext } from '../../../contexts/UserContext'
 
 const Img = styled.img`
 	width: 2rem;
@@ -88,10 +89,15 @@ const Input = styled.input`
 `
 
 export default function Agree() {
+	const { trySignUp } = useUserContext()
 	const navigate = useNavigate()
+	const addr = '/signUp/photo'
+	const handleClick = () => {
+		trySignUp({navigate, addr})
+	}
 	return (
 		<>
-			<Link to="/signIn/certification">
+			<Link to="/signUp/certification">
 				<Img
 					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsl8RBI7W6MLf98a-xSu5HLLUasmcPAkIU1A&usqp=CAU"
 					alt="뒤로가기"
@@ -105,7 +111,7 @@ export default function Agree() {
 			<BoxElement content="개인정보처리방침(필수)" id="second" />
 			<Div className="line"></Div>
 			<BoxElement content="위치 기반 기능(필수)" id="third" />
-			<Button className="next" onClick={() => navigate('/signIn/photo')}>
+			<Button className="next" onClick={handleClick}>
 				동의
 			</Button>
 			<Button className="already" onClick={() => navigate('/')}>
