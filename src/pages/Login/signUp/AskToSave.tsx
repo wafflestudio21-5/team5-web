@@ -59,12 +59,12 @@ export default function AskToSave() {
 	const { setIsSaved } = useUserContext()
 	const navigate = useNavigate()
 	const handleClick = (b: boolean) => {
-		navigate('/signIn/birthday')
+		navigate('/signUp/birthday')
 		setIsSaved(b)
 	}
 	return (
 		<>
-			<Link to="/signIn/password">
+			<Link to="/signUp/password">
 				<Img
 					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsl8RBI7W6MLf98a-xSu5HLLUasmcPAkIU1A&usqp=CAU"
 					alt="뒤로가기"

@@ -47,7 +47,7 @@ const Button = styled.button`
 	color: white;
 `
 
-export default function SignIn() {
+export default function SignUp() {
 	const { name, setName } = useUserContext()
 	const navigate = useNavigate()
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {

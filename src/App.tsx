@@ -5,18 +5,18 @@ import Profile from './pages/Profile.tsx'
 import Reels from './pages/Reels.tsx'
 import Login from './pages/Login/Login.tsx'
 import PasswordRecovery from './pages/Login/passwordRecovery/PasswordRecovery.tsx'
-import SignIn from './pages/Login/signIn/SignIn.tsx'
+import SignUp from './pages/Login/signUp/SignUp.tsx'
 import { useUserContext } from './contexts/UserContext.tsx'
 import Certification from './pages/Login/passwordRecovery/Certification.tsx'
 import NewPassword from './pages/Login/passwordRecovery/NewPassword.tsx'
-import MakePassword from './pages/Login/signIn/MakePassword.tsx'
-import AskToSave from './pages/Login/signIn/AskToSave.tsx'
-import AskBirthday from './pages/Login/signIn/AskBirthday.tsx'
-import MakeUsername from './pages/Login/signIn/MakeUsername.tsx'
-import AskEmail from './pages/Login/signIn/AskEmail.tsx'
-import CertificationSignIn from './pages/Login/signIn/CertificationSignIn.tsx'
-import Agree from './pages/Login/signIn/Agree.tsx'
-import AddPhoto from './pages/Login/signIn/AddPhoto.tsx'
+import MakePassword from './pages/Login/signUp/MakePassword.tsx'
+import AskToSave from './pages/Login/signUp/AskToSave.tsx'
+import AskBirthday from './pages/Login/signUp/AskBirthday.tsx'
+import MakeUsername from './pages/Login/signUp/MakeUsername.tsx'
+import AskEmail from './pages/Login/signUp/AskEmail.tsx'
+import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx'
+import Agree from './pages/Login/signUp/Agree.tsx'
+import AddPhoto from './pages/Login/signUp/AddPhoto.tsx'
 
 const router = createBrowserRouter([
 	{
@@ -59,39 +59,39 @@ const loginRouter = createBrowserRouter([
 		element: <NewPassword />,
 	},
 	{
-		path: 'signIn/',
-		element: <SignIn />,
+		path: 'signUp/',
+		element: <SignUp />,
 	},
 	{
-		path: 'signIn/password/',
+		path: 'signUp/password/',
 		element: <MakePassword />,
 	},
 	{
-		path: 'signIn/save/',
+		path: 'signUp/save/',
 		element: <AskToSave />,
 	},
 	{
-		path: 'signIn/birthday/',
+		path: 'signUp/birthday/',
 		element: <AskBirthday />,
 	},
 	{
-		path: 'signIn/username/',
+		path: 'signUp/username/',
 		element: <MakeUsername />,
 	},
 	{
-		path: 'signIn/email/',
+		path: 'signUp/email/',
 		element: <AskEmail />,
 	},
 	{
-		path: 'signIn/certification/',
-		element: <CertificationSignIn />,
+		path: 'signUp/certification/',
+		element: <CertificationSignUp />,
 	},
 	{
-		path: 'signIn/agreeToTerm/',
+		path: 'signUp/agreeToTerm/',
 		element: <Agree />,
 	},
 	{
-		path: 'signIn/photo/',
+		path: 'signUp/photo/',
 		element: <AddPhoto />,
 	},
 	{
