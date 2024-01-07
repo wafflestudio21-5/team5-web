@@ -4,9 +4,16 @@ const Theme: DefaultTheme = {
 	colors: {
 		black: '#000000',
 		white: '#FFFFFF',
+		darkGrey: '#262626',
 		grey: '#8E8E8E',
-		blue: '#0094FF',
+		lightGrey: '#FAFAFA',
+		blue: '#0095f6',
 	},
 }
+
+export const getColor =
+	(colorKey: keyof DefaultTheme['colors']) =>
+	({ theme }: { theme: DefaultTheme }) =>
+		theme.colors[colorKey]
 
 export default Theme

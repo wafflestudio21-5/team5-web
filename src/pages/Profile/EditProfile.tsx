@@ -3,7 +3,7 @@ import defaultProfile from '../../assets/Images/Profile/default-profile.svg'
 import editCancel from '../../assets/Images/Profile/EditProfile/edit-cancel.png'
 import editSave from '../../assets/Images/Profile/EditProfile/edit-save.png'
 import { useNavigate } from 'react-router-dom'
-// import { getColor } from '../../styles/Theme.tsx'
+import { getColor } from '../../styles/Theme.tsx'
 
 const ProfileLayout = styled.main`
 	width: 100%;
@@ -55,7 +55,7 @@ const ProfileImageContainer = styled.div`
 
 	& p.profile-image-edit {
 		font-size: 1.2rem;
-		color: #0095f6;
+		color: ${getColor('blue')}};
 		margin: 1.5rem 0;
 
 		&:hover {
