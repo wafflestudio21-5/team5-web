@@ -4,9 +4,9 @@ const Theme: DefaultTheme = {
 	colors: {
 		black: '#000000',
 		white: '#FFFFFF',
-		darkGrey: '#262626',
+		darkGrey: '#616161',
 		grey: '#8E8E8E',
-		lightGrey: '#FAFAFA',
+		lightGrey: '#c7c7c7',
 		blue: '#0095f6',
 	},
 }

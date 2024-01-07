@@ -19,7 +19,7 @@ const HeaderContainer = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	margin: 0.5rem 0 2.5rem 0;
+	margin-bottom: 2.5rem;
 
 	& img {
 		width: 1.7rem;
