@@ -24,35 +24,41 @@ import GlobalStyles from './styles/GlobalStyles.tsx'
 import { ThemeProvider } from 'styled-components'
 import Theme from './styles/Theme.tsx'
 import Layout from './components/NavBar/Layout.tsx'
-
+import NavBar from './components/NavBar.tsx'
 const router = createBrowserRouter([
 	{
-		path: '',
-		element: <Home />,
-	},
-	{
-		path: 'explore/',
-		element: <Explore />,
-	},
-	{
-		path: 'reels/',
-		element: <Reels />,
-	},
-	{
-		path: ':id/',
-		element: <Profile />,
-	},
-	{
-		path: 'accounts/edit/',
-		element: <EditProfile />,
-	},
-	{
-		path: 'if/follow/',
-		element: <Follow />,
-	},
-	{
-		path: '*',
-		element: <Navigate to="/" />,
+		path: '/',
+		element: <NavBar />,
+		children: [
+			{
+				path: '',
+				element: <Home />,
+			},
+			{
+				path: 'explore/',
+				element: <Explore />,
+			},
+			{
+				path: 'reels/',
+				element: <Reels />,
+			},
+			{
+				path: ':id/',
+				element: <Profile />,
+			},
+			{
+				path: 'accounts/edit/',
+				element: <EditProfile />,
+			},
+			{
+				path: 'id/follow/',
+				element: <Follow />,
+			},
+			{
+				path: '*',
+				element: <Navigate to="/" />,
+			},
+		],
 	},
 ])
 
@@ -118,13 +124,12 @@ const loginRouter = createBrowserRouter([
 function App() {
 	return (
 		<ThemeProvider theme={Theme}>
-			<Layout>
-				<GlobalStyles />
-				<RouterProvider router={router} />
+			<GlobalStyles />
+			<RouterProvider router={router}>
 				{/* 개발할 때 login 화면으로 안가려고 주석처리 해놨습니다. */}
 				{/*const { isLoggedin } = useUserContext()*/}
 				{/*<RouterProvider router={isLoggedin ? router : loginRouter} />*/}
-			</Layout>
+			</RouterProvider>
 		</ThemeProvider>
 	)
 }

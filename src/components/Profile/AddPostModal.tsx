@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components'
-import reels from '../../assets/Images/Profile/AddPost/reels.png'
+import reels from '../../assets/Images/NavBar/reels.png'
 import post from '../../assets/Images/Profile/AddPost/post.png'
 import story from '../../assets/Images/Profile/AddPost/story.png'
 
