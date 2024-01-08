@@ -23,7 +23,6 @@ import Follow from './pages/Profile/Follow.tsx'
 import GlobalStyles from './styles/GlobalStyles.tsx'
 import { ThemeProvider } from 'styled-components'
 import Theme from './styles/Theme.tsx'
-import Layout from './components/NavBar/Layout.tsx'
 import NavBar from './components/NavBar.tsx'
 const router = createBrowserRouter([
 	{
@@ -47,7 +46,7 @@ const router = createBrowserRouter([
 				element: <Profile />,
 			},
 			{
-				path: 'accounts/edit/',
+				path: 'id/edit/',
 				element: <EditProfile />,
 			},
 			{
@@ -56,7 +55,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '*',
-				element: <Navigate to="/" />,
+				element: <Navigate to="" />, // 이상한 url이 home이 아닌 profile로 가는 원인 모를 현상이 있음. useparams 도입 후 고칠 것
 			},
 		],
 	},
