@@ -31,7 +31,7 @@ const HeaderContainer = styled.div`
 	& img {
 		height: 1.7rem;
 		width: 1.7rem;
-		margin: 0 0.5rem;
+		margin-right: 1rem;
 
 		&:hover {
 			cursor: pointer;
@@ -91,7 +91,6 @@ const UserProfileContainer = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;
-
 	margin-bottom: 1rem;
 
 	& h3 {
@@ -154,10 +153,6 @@ export default function Profile() {
 	// 페이지 이동
 	const navigate = useNavigate()
 
-	const onClickEditProfile = () => {
-		navigate('/accounts/edit')
-	}
-
 	return (
 		<ProfileLayout>
 			<HeaderContainer>
@@ -202,7 +197,7 @@ export default function Profile() {
 			</UserProfileContainer>
 
 			<ProfileEditContainer>
-				<button onClick={onClickEditProfile}>프로필 편집</button>
+				<button onClick={() => navigate('edit')}>프로필 편집</button>
 				<button>프로필 공유</button>
 			</ProfileEditContainer>
 

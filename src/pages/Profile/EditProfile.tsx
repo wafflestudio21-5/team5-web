@@ -5,7 +5,7 @@ import editSave from '../../assets/Images/Profile/EditProfile/edit-save.png'
 import { useNavigate } from 'react-router-dom'
 import { getColor } from '../../styles/Theme.tsx'
 
-const ProfileLayout = styled.main`
+const EditProfileLayout = styled.main`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -46,14 +46,14 @@ const ProfileImageContainer = styled.div`
 		width: 6rem;
 		height: 6rem;
 		border-radius: 50%;
-		border: 1px solid #8e8e8e;
+		border: 1px solid ${getColor('darkGrey')};
 
 		&:hover {
 			cursor: pointer;
 		}
 	}
 
-	& p.profile-image-edit {
+	& p {
 		font-size: 1.2rem;
 		color: ${getColor('blue')}};
 		margin: 1.5rem 0;
@@ -72,19 +72,18 @@ const EditProfileContainer = styled.div`
 	align-items: flex-start;
 
 	& label {
-		font-size: 1rem;
-		color: ${(props) => props.theme.colors.grey};
+		color: ${getColor('grey')};
 		margin-bottom: 0.4rem;
 	}
 
 	& input {
-		width: 100%;
 		font-size: 1.2rem;
+		width: 100%;
 		margin-bottom: 1rem;
 		padding: 0.5rem 0;
 
 		border: none;
-		border-bottom: 1px solid #8e8e8e;
+		border-bottom: 1px solid ${getColor('lightGrey')};
 
 		&:focus {
 			outline: none;
@@ -100,7 +99,7 @@ export default function Profile() {
 	}
 
 	return (
-		<ProfileLayout>
+		<EditProfileLayout>
 			<HeaderContainer>
 				<img
 					src={editCancel}
@@ -123,6 +122,6 @@ export default function Profile() {
 				<label htmlFor="introduction">소개</label>
 				<input type="text" id="introduction" />
 			</EditProfileContainer>
-		</ProfileLayout>
+		</EditProfileLayout>
 	)
 }
