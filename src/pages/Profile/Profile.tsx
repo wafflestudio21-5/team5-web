@@ -91,7 +91,6 @@ const UserProfileContainer = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;
-
 	margin-bottom: 1rem;
 
 	& h3 {

@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import Modal from './Modal'
-import PostImage from '../Post/PostImage'
-import PostHeader from '../Post/PostHeader'
-import ReactSection from '../Post/ReactSection'
+import Modal from './Modal.tsx'
+import PostImage from '../../components/Post/PostImage.tsx'
+import PostHeader from '../../components/Post/PostHeader.tsx'
+import ReactSection from '../../components/Post/ReactSection.tsx'
 
 type Props = {
 	close: () => void
