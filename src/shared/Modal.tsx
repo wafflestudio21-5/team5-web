@@ -2,22 +2,24 @@ import { ReactNode } from 'react'
 import styled from 'styled-components'
 
 const ModalContainer = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	position: fixed;
+
 	left: 0;
 	right: 0;
 	top: 0;
 	bottom: 0;
-	align-items: center;
-	justify-content: center;
-	display: flex;
-	z-index: 2;
+	z-index: 100;
+
 	& h1 {
 		margin: 0;
 	}
 	& p {
 		margin: 0;
 	}
-	& > :not(.modal--backgroud) {
+	& > :not(.modal--background) {
 		animation: modal-content 0.5s;
 	}
 	&.closing :not(.modal--background) {
@@ -39,6 +41,7 @@ const ModalContainer = styled.div`
 		animation: modal-bg-closing 0.5s;
 		opacity: 0;
 	}
+
 	@keyframes modal-content {
 		from {
 			transform: translateY(-5rem);

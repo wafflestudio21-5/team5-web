@@ -1,3 +1,6 @@
+import styled from 'styled-components'
+import Modal from '../../shared/Modal.tsx'
+
 export default function MenuModal({
 	onCloseMenuModal,
 }: {
@@ -5,7 +8,7 @@ export default function MenuModal({
 }) {
 	return (
 		<>
-			<div></div>
+			<Modal></Modal>
 		</>
 	)
 }
