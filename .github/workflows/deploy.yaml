@@ -3,43 +3,42 @@ name: Build and Deploy to AWS S3
 on:
   push:
     branches:
-      - feat/CICD  # This will trigger the workflow on pushes to the main branch
+      - feat/CICD  # Trigger on pushes to the specified branch
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest  # Specifies the runner
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2  # Checks out your repository under $GITHUB_WORKSPACE
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      # Step to setup Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '21.5.0'  # Specify your Node.js version here
+          node-version: '21.5.0'
 
-      # Step to install dependencies and build your project
       - name: Install and Build
         run: |
           npm install
-          npm run build  # Assumes you have a script in your package.json for building the project
+          npm run build
 
-      # Configure AWS credentials from the GitHub secrets
-      - name: Configure AWS credentials
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-southeast-2
 
-      # Deploy to S3
       - name: Upload to S3
         env:
           BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
         run: |
-          aws s3 sync \
-            ./dist s3://$BUCKET_NAME
+          aws s3 sync ./dist s3://$BUCKET_NAME
 
-      # Invalidate Cloudfront Cache
       - name: Invalidate Cloudfront Cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set region ap-southeast-2
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
