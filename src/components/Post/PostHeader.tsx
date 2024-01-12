@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import UserInfo from './UserInfo'
+import Icon from '../../shared/Icon'
+import ellipsis from '../../assets/Images/Post/ellipsis.svg'
 
 const Wrapper = styled.div`
 	display: flex;
@@ -29,7 +31,7 @@ export default function PostHeader() {
 		<Wrapper>
 			<UserInfo />
 			<ExtraButton>
-				<img src="/ellipsis.svg" alt="ellipsis" />
+				<Icon src={ellipsis} alt="ellipsis" />
 			</ExtraButton>
 		</Wrapper>
 	)
