@@ -12,7 +12,7 @@ const HomeLayout = styled.main`
 	justify-content: center;
 	padding: 0;
 	& .story-post {
-		width: 30rem;
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 	}
