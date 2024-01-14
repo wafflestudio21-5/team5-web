@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import Post from './Post'
+import Post from './Post/Post.tsx'
 import { useState } from 'react'
-import PostMenuModal from './PostMenuModal.tsx'
+import PostMenuModal from './Post/PostMenuModal.tsx'
 
 const Container = styled.div`
 	background-color: white;

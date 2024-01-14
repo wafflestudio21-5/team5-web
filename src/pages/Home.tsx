@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import PostList from '../components/Post/PostList'
+import PostList from '../components/Feed'
 import Header from '../components/Header'
 import StoryBar from '../components/Story/StoryBar'
 
