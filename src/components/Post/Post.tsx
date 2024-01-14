@@ -7,7 +7,7 @@ const Container = styled.article`
 	display: flex;
 	flex-direction: column;
 	height: fit-content;
-	width: 30rem;
+	width: 100%;
 	border-bottom: 1px solid gray;
 	margin-bottom: 1rem;
 	padding-bottom: 1rem;
@@ -16,15 +16,19 @@ const Container = styled.article`
 
 type Props = {
 	postId: number | null
-	openPostModal: (postId: number) => void
+	openMenuModal: (postId: number) => void
 }
 
-export default function Post({ postId, openPostModal }: Props) {
+export default function Post({ postId, openMenuModal }: Props) {
 	return (
 		<Container>
-			<PostHeader />
-			<PostImage />
-			<ReactSection postId={postId} openPostModal={openPostModal} />
+			<PostHeader
+				showMenu={() => {
+					if (postId) openMenuModal(postId)
+				}}
+			/>
+			<PostImage imageUrl="https://dimg.donga.com/wps/NEWS/IMAGE/2023/07/05/120093215.1.edit.jpg" />
+			<ReactSection postId={postId} />
 		</Container>
 	)
 }

@@ -68,10 +68,9 @@ const TextBox = styled.div`
 
 type Props = {
 	postId: number | null
-	openPostModal?: (postId: number) => void
 }
 
-export default function ReactSection({ postId, openPostModal }: Props) {
+export default function ReactSection({ postId }: Props) {
 	const [liked, setLiked] = useState(false)
 
 	return (
@@ -100,14 +99,7 @@ export default function ReactSection({ postId, openPostModal }: Props) {
 								<Icon src={likeIcon} alt="좋아요" />
 							)}
 						</div>
-						<div
-							className="icon-box"
-							onClick={() => {
-								if (openPostModal !== undefined) {
-									openPostModal(postId)
-								}
-							}}
-						>
+						<div className="icon-box">
 							<Icon src={commentIcon} />
 						</div>
 						<div className="icon-box">
@@ -126,14 +118,7 @@ export default function ReactSection({ postId, openPostModal }: Props) {
 				<TextBox className="margin">
 					<span className="username">sangchu</span> 가나다라마바사
 				</TextBox>
-				<TextBox
-					className="margin secondary-text more-comment"
-					onClick={() => {
-						if (openPostModal !== undefined) {
-							openPostModal(postId)
-						}
-					}}
-				>
+				<TextBox className="margin secondary-text more-comment">
 					댓글 3개 모두 보기
 				</TextBox>
 				<TextBox className="margin secondary-text">댓글 달기...</TextBox>

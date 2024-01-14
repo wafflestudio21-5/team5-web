@@ -26,11 +26,11 @@ const ExtraButton = styled.button`
 	}
 `
 
-export default function PostHeader() {
+export default function PostHeader({ showMenu }: { showMenu: () => void }) {
 	return (
 		<Wrapper>
 			<UserInfo />
-			<ExtraButton>
+			<ExtraButton onClick={showMenu}>
 				<Icon src={ellipsis} alt="ellipsis" />
 			</ExtraButton>
 		</Wrapper>

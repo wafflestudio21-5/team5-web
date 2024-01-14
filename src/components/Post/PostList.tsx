@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Post from './Post'
 import { useState } from 'react'
-import PostModal from './PostModal.tsx'
+import PostMenuModal from './PostMenuModal.tsx'
 
 const Container = styled.div`
 	background-color: white;
@@ -11,38 +11,37 @@ const Container = styled.div`
 	justify-content: center;
 `
 
-type PostModalState =
-	| { state: 'open' | 'closing'; postId: number | null }
-	| { state: 'closed' }
+type ModalState = 'open' | 'closed' | 'closing'
 
 export default function PostList() {
-	const [postModal, setPostModal] = useState<PostModalState>({
-		state: 'closed',
-	})
+	const [menuModal, setMenuModal] = useState<ModalState>('closed')
 
-	const openPostModal = (postId: number) => {
-		setPostModal({
-			state: 'open',
-			postId: postId,
-		})
+	const [menuPostId, setMenuPostId] = useState<number | null>(null)
+
+	const openMenuModal = (postId: number) => {
+		setMenuPostId(postId)
+		setMenuModal('open')
 	}
 
 	return (
 		<>
 			<Container>
-				<Post postId={1} openPostModal={openPostModal} />
-				<Post postId={1} openPostModal={openPostModal} />
-				<Post postId={1} openPostModal={openPostModal} />
-				<Post postId={1} openPostModal={openPostModal} />
+				<Post postId={1} openMenuModal={openMenuModal} />
+				<Post postId={1} openMenuModal={openMenuModal} />
+				<Post postId={1} openMenuModal={openMenuModal} />
+				<Post postId={1} openMenuModal={openMenuModal} />
 			</Container>
-			{postModal.state !== 'closed' && (
-				<PostModal
-					isClosing={postModal.state === 'closing'}
+			{menuModal !== 'closed' && (
+				<PostMenuModal
 					close={() => {
-						setPostModal({ state: 'closing', postId: postModal.postId })
-						setTimeout(() => setPostModal({ state: 'closed' }), 500)
+						setMenuModal('closing')
+						setTimeout(() => {
+							setMenuModal('closed')
+							setMenuPostId(null)
+						}, 500)
 					}}
-					postId={postModal.postId}
+					isClosing={menuModal === 'closing'}
+					postId={menuPostId}
 				/>
 			)}
 		</>
