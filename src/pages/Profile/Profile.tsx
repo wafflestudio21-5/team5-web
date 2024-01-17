@@ -198,7 +198,7 @@ export default function Profile() {
 
 			<ProfileEditContainer>
 				<button onClick={() => navigate('edit')}>프로필 편집</button>
-				<button>프로필 공유</button>
+				<button>프로필 공유123</button>
 			</ProfileEditContainer>
 
 			<PostContainer>{/* <PostList /> */}</PostContainer>
