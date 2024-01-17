@@ -4,6 +4,7 @@ import editCancel from '../../assets/Images/Profile/EditProfile/edit-cancel.png'
 import editSave from '../../assets/Images/Profile/EditProfile/edit-save.png'
 import { useNavigate } from 'react-router-dom'
 import { getColor } from '../../styles/Theme.tsx'
+import Icon from '../../shared/Icon.tsx'
 
 const EditProfileLayout = styled.main`
 	width: 100%;
@@ -20,15 +21,6 @@ const HeaderContainer = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 2.5rem;
-
-	& img {
-		width: 1.7rem;
-		height: 1.7rem;
-
-		&:hover {
-			cursor: pointer;
-		}
-	}
 
 	& h2 {
 		margin: 0 auto 0 2rem;
@@ -101,13 +93,9 @@ export default function Profile() {
 	return (
 		<EditProfileLayout>
 			<HeaderContainer>
-				<img
-					src={editCancel}
-					alt="프로필 편집 취소"
-					onClick={onClickEditCancel}
-				/>
+				<Icon src={editCancel} alt="취소" onClick={onClickEditCancel} />
 				<h2>프로필 편집</h2>
-				<img src={editSave} alt="프로필 편집 저장" />
+				<Icon src={editSave} alt="저장" />
 			</HeaderContainer>
 			<ProfileImageContainer>
 				<img src={defaultProfile} alt="프로필 사진" />

@@ -1,4 +1,4 @@
-export default function Follow() {
+export default function Follower() {
 	return (
 		<>
 			<div></div>

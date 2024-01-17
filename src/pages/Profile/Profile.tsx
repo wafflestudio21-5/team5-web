@@ -5,6 +5,7 @@ import defaultProfile from '../../assets/Images/Profile/default-profile.svg'
 import AddPostModal from '../../components/Profile/AddPostModal.tsx'
 import MenuModal from '../../components/Profile/MenuModal.tsx'
 import ProfileImageModal from '../../components/Profile/ProfileImageModal.tsx'
+import Icon from '../../shared/Icon.tsx'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -47,6 +48,7 @@ const UserInfoContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 
+	// 프로필 사진
 	& img {
 		height: 6rem;
 		width: 6rem;
@@ -158,19 +160,18 @@ export default function Profile() {
 			<HeaderContainer>
 				<h2>dndw0</h2>
 				<div>
-					<img
+					<Icon
 						src={addPost}
 						alt="게시글 추가"
 						onClick={() => setIsAddPostModalOpen(true)}
 					/>
-					<img
+					<Icon
 						src={menu}
-						alt="메뉴 열기"
+						alt="메뉴 추가"
 						onClick={() => setIsMenuModalOpen(true)}
 					/>
 				</div>
 			</HeaderContainer>
-
 			<UserInfoContainer>
 				<img
 					src={defaultProfile}
@@ -190,14 +191,12 @@ export default function Profile() {
 					<p>팔로우</p>
 				</div>
 			</UserInfoContainer>
-
 			<UserProfileContainer>
 				<h3>최재웅</h3>
 				<p>자기소개</p>
 			</UserProfileContainer>
-
 			<ProfileEditContainer>
-				<button onClick={() => navigate('edit')}>프로필 편집</button>
+				<button onClick={() => navigate('/id/edit')}>프로필 편집</button>
 				<button>프로필 공유</button>
 			</ProfileEditContainer>
 

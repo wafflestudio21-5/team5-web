@@ -31,9 +31,10 @@ const ProfileImageModalContainer = styled.div`
 	& p {
 		display: flex;
 		align-items: center;
+		box-sizing: border-box;
 
 		font-size: 1.2rem;
-		width: calc(100% - 1rem); // 1rem은 padding-left
+		width: 100%;
 		height: 50%;
 
 		margin: 0;

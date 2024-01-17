@@ -2,6 +2,7 @@ import styled, { keyframes } from 'styled-components'
 import reels from '../../assets/Images/NavBar/reels.png'
 import post from '../../assets/Images/Profile/AddPost/post.png'
 import story from '../../assets/Images/Profile/AddPost/story.png'
+import Icon from '../../shared/Icon.tsx'
 
 // 모달 fade in and out
 const fadeInUp = keyframes`
@@ -123,15 +124,15 @@ export default function AddPostModal({
 				<hr />
 				<CellContainer>
 					<Cell>
-						<img src={reels} alt="릴스" />
+						<Icon src={reels} alt="릴스" />
 						<p>릴스</p>
 					</Cell>
 					<Cell>
-						<img src={post} alt="게시물" />
+						<Icon src={post} alt="게시물" />
 						<p>게시물</p>
 					</Cell>
 					<Cell>
-						<img src={story} alt="스토리" />
+						<Icon src={story} alt="스토리" />
 						<p>스토리</p>
 					</Cell>
 				</CellContainer>
