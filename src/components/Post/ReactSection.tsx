@@ -66,17 +66,6 @@ const TextBox = styled.div`
 	}
 `
 
-const CommentInput = styled.textarea`
-	width: 100%;
-	margin-top: 0.5rem;
-	resize: none;
-	border: none;
-	outline: none;
-	padding: 0;
-	line-height: 18px;
-	font-size: 14px;
-`
-
 type Props = {
 	postId: number | null
 }
@@ -132,14 +121,6 @@ export default function ReactSection({ postId }: Props) {
 				<TextBox className="margin secondary-text more-comment">
 					댓글 3개 모두 보기
 				</TextBox>
-				<CommentInput
-					placeholder="댓글 달기..."
-					rows={1}
-					onChange={(e) => {
-						e.currentTarget.style.height = 'auto'
-						e.currentTarget.style.height = e.currentTarget.scrollHeight + 'px'
-					}}
-				></CommentInput>
 			</Container>
 		)
 	)
