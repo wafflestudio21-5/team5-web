@@ -1,78 +1,21 @@
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import reels from '../../assets/Images/NavBar/reels.png'
 import post from '../../assets/Images/Profile/AddPost/post.png'
 import story from '../../assets/Images/Profile/AddPost/story.png'
 import Icon from '../../shared/Icon.tsx'
-
-// 모달 fade in and out
-const fadeInUp = keyframes`
-  from {
-    transform: translateY(20rem);
-  }
-  to {
-    transform: translateY(0);
-  }
-`
-
-const fadeOutDown = keyframes`
-	from {
-		transform: translateY(0);
-	}
-	to {
-		transform: translateY(20rem);
-	}
-`
-
-// 모달 배경 fade in and out
-const fadeInBackground = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`
-
-const fadeOutBackground = keyframes`
-	from {
-		opacity: 1;
-	}
-	to {
-		opacity: 0;
-	}
-`
-
-const AddPostModalBackground = styled.div`
-	//	화면 아래에 모달 위치시키기
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: end;
-	align-items: center;
-
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 999;
-
-	animation: ${fadeInBackground} 0.5s ease forwards;
-`
+import Modal from '../../shared/Modal.tsx'
 
 const AddPostModalContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 
-	width: 430px;
+	width: 100%;
 	height: 40%;
 
 	background-color: white;
 	border-top-left-radius: 1rem;
 	border-top-right-radius: 1rem;
-
-	animation: ${fadeInUp} 0.5s ease forwards;
 
 	& h2 {
 	}
@@ -112,14 +55,15 @@ const Cell = styled.div`
 	}
 `
 
-export default function AddPostModal({
-	onCloseModal,
-}: {
-	onCloseModal: () => void
-}) {
+type Props = {
+	close: () => void
+	isClosing: boolean
+}
+
+export default function AddPostModal({ close, isClosing }: Props) {
 	return (
-		<AddPostModalBackground onClick={onCloseModal}>
-			<AddPostModalContainer onClick={(e) => e.stopPropagation()}>
+		<Modal onBackgroundClick={close} isClosing={isClosing}>
+			<AddPostModalContainer>
 				<h2>만들기</h2>
 				<hr />
 				<CellContainer>
@@ -137,6 +81,6 @@ export default function AddPostModal({
 					</Cell>
 				</CellContainer>
 			</AddPostModalContainer>
-		</AddPostModalBackground>
+		</Modal>
 	)
 }

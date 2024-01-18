@@ -137,20 +137,15 @@ const PostContainer = styled.div`
 	align-items: center;
 `
 
+// 모달 상태 관리
+type AddPostModalState = 'open' | 'closed' | 'closing'
+type MenuModalState = 'open' | 'closed' | 'closing'
+
 export default function Profile() {
 	// 모달 관련
-	const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false)
-	const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
-	const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false)
-	const closeAddPostModal = () => {
-		setIsAddPostModalOpen(false)
-	}
-	const closeMenuModal = () => {
-		setIsMenuModalOpen(false)
-	}
-	const closeProfileImageModal = () => {
-		setIsProfileImageModalOpen(false)
-	}
+	const [addPostModal, setAddPostModal] = useState<AddPostModalState>('closed')
+	const [menuModal, setMenuModal] = useState<MenuModalState>('closed')
+	const [profileImageModal, setProfileImageModal] = useState(false)
 
 	// 페이지 이동
 	const navigate = useNavigate()
@@ -163,20 +158,16 @@ export default function Profile() {
 					<Icon
 						src={addPost}
 						alt="게시글 추가"
-						onClick={() => setIsAddPostModalOpen(true)}
+						onClick={() => setAddPostModal(true)}
 					/>
-					<Icon
-						src={menu}
-						alt="메뉴 추가"
-						onClick={() => setIsMenuModalOpen(true)}
-					/>
+					<Icon src={menu} alt="메뉴 추가" onClick={() => setMenuModal(true)} />
 				</div>
 			</HeaderContainer>
 			<UserInfoContainer>
 				<img
 					src={defaultProfile}
 					alt="프로필 사진"
-					onClick={() => setIsProfileImageModalOpen(true)}
+					onClick={() => setProfileImageModal(true)}
 				/>
 				<div>
 					<h2>0</h2>
@@ -203,15 +194,23 @@ export default function Profile() {
 			<PostContainer>{/* <PostList /> */}</PostContainer>
 
 			{/*	Modals */}
-			{isAddPostModalOpen && (
+			{addPostModal !== 'closed' && (
 				<AddPostModal
-					onCloseModal={closeAddPostModal}
-					isOpenModal={isAddPostModalOpen}
+					close={() => {
+						setAddPostModal('closing')
+						setTimeout(() => setAddPostModal('closed'), 500)
+					}}
+					isClosing={addPostModal === 'closing'}
 				/>
 			)}
-			{isMenuModalOpen && <MenuModal onCloseMenuModalOpen={closeMenuModal} />}
-			{isProfileImageModalOpen && (
-				<ProfileImageModal onCloseProfileImageModal={closeProfileImageModal} />
+			{menuModal !== 'closed' && (
+				<MenuModal
+					close={() => {
+						setMenuModal('closing')
+						setTimeout(() => setMenuModal('closed'), 500)
+					}}
+					isClosing={menuModal === 'closing'}
+				/>
 			)}
 		</ProfileLayout>
 	)

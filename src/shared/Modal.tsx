@@ -21,11 +21,17 @@ const ModalContainer = styled.div`
 	}
 	& > :not(.modal--background) {
 		animation: modal-content 0.5s;
+		max-width: 430px;
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
 	}
 	&.closing :not(.modal--background) {
 		animation: modal-content-closing 0.5s;
 		opacity: 0;
-		transform: translateY(-5rem);
+		transform: translateY(30rem);
 	}
 	& .modal--background {
 		position: absolute;
@@ -44,8 +50,7 @@ const ModalContainer = styled.div`
 
 	@keyframes modal-content {
 		from {
-			transform: translateY(-5rem);
-			opacity: 0;
+			transform: translateY(30rem);
 		}
 		to {
 		}
