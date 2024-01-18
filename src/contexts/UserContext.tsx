@@ -7,6 +7,12 @@ type trySignUpProps = {
 }
 
 export type UserContextData = {
+	accessToken: string
+	setAccessToken: (s: string) => void
+	refreshToken: string
+	setRefreshToken: (s: string) => void
+	path: string
+	setPath: (s: string) => void
 	name: string
 	setName: (s: string) => void
 	username: string
@@ -30,6 +36,9 @@ type ProviderProps = {
 	children: ReactNode
 }
 export function UserProvider({ children }: ProviderProps) {
+	const [accessToken, setAccessToken] = useState('')
+	const [refreshToken, setRefreshToken] = useState('')
+	const [path, setPath] = useState('')
 	const [name, setName] = useState('')
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
@@ -58,6 +67,12 @@ export function UserProvider({ children }: ProviderProps) {
 	return (
 		<UserContext.Provider
 			value={{
+				accessToken,
+				setAccessToken,
+				refreshToken,
+				setRefreshToken,
+				path,
+				setPath,
 				name,
 				setName,
 				username,

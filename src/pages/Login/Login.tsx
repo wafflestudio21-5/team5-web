@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useUserContext } from '../../contexts/UserContext'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 const Img = styled.img`
 	&.instagram {
@@ -88,7 +89,7 @@ const StyledLink = styled(Link)`
 `
 
 export default function Login() {
-	const { username, setUsername, password, setPassword, setIsLoggedin } =
+	const { setAccessToken, setRefreshToken, setPath, username, setUsername, password, setPassword, setIsLoggedin } =
 		useUserContext()
 	const [isActive, setIsActive] = useState(false)
 	useEffect(() => {
@@ -119,8 +120,11 @@ export default function Login() {
 						}
 					}
 				)
-				console.log(response)
-				console.log
+				setAccessToken(response.data.access_token)
+				const tempRefreshToken = Cookies.get('refresh_token')
+				const tempPath = Cookies.get('Path')
+				if (tempRefreshToken) setRefreshToken(tempRefreshToken)
+				if (tempPath) setPath(tempPath)
 			} catch {
 				alert("아이디나 비밀번호가 다릅니다.")
 			}
