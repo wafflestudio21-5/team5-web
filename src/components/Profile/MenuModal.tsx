@@ -4,6 +4,7 @@ import post from '../../assets/Images/Profile/AddPost/post.png'
 import story from '../../assets/Images/Profile/AddPost/story.png'
 import Icon from '../../shared/Icon.tsx'
 import Modal from '../../shared/Modal.tsx'
+import { getColor } from '../../styles/Theme.tsx'
 
 const MenuModalContainer = styled.div`
 	height: 30%;
@@ -28,6 +29,11 @@ const Cell = styled.div`
 	&:hover {
 		cursor: pointer;
 	}
+
+	& p.logout {
+		font-weight: 600;
+		color: ${getColor('red')};
+	}
 `
 
 type Props = {
@@ -41,16 +47,20 @@ export default function MenuModal({ close, isClosing }: Props) {
 			<MenuModalContainer>
 				<CellContainer>
 					<Cell>
-						<Icon src={reels} alt="설정 및 개인정보" />
-						<p>설정 및 개인정보</p>
-					</Cell>
-					<Cell>
 						<Icon src={post} alt="내 활동" />
 						<p>내 활동</p>
 					</Cell>
 					<Cell>
 						<Icon src={story} alt="저장됨" />
 						<p>저장됨</p>
+					</Cell>
+					<Cell>
+						<Icon src={story} alt="비밀번호 변경" />
+						<p>비밀번호 변경</p>
+					</Cell>
+					<Cell>
+						<Icon src={story} alt="로그아웃" />
+						<p className="logout">로그아웃</p>
 					</Cell>
 				</CellContainer>
 			</MenuModalContainer>

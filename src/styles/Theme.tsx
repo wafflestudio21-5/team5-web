@@ -9,6 +9,7 @@ const Theme: DefaultTheme = {
 		lightGrey: '#c7c7c7',
 		extraLightGrey: '#f0f1f0',
 		blue: '#0095f6',
+		red: '#ED4956',
 	},
 }
 
