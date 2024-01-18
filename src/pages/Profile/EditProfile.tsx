@@ -47,7 +47,7 @@ const ProfileImageContainer = styled.div`
 
 	& p {
 		font-size: 1.2rem;
-		color: ${getColor('blue')}};
+		color: ${getColor('blue')};
 		margin: 1.5rem 0;
 
 		&:hover {
@@ -99,7 +99,7 @@ export default function Profile() {
 			</HeaderContainer>
 			<ProfileImageContainer>
 				<img src={defaultProfile} alt="프로필 사진" />
-				<p className="profile-image-edit">프로필 사진 변경</p>
+				<p>프로필 사진 변경</p>
 			</ProfileImageContainer>
 			<EditProfileContainer>
 				<label htmlFor="name">이름</label>

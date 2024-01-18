@@ -6,7 +6,7 @@ import Icon from '../../shared/Icon.tsx'
 import Modal from '../../shared/Modal.tsx'
 
 const MenuModalContainer = styled.div`
-	height: 40%;
+	height: 30%;
 `
 
 const CellContainer = styled.div`
@@ -47,10 +47,6 @@ export default function MenuModal({ close, isClosing }: Props) {
 					<Cell>
 						<Icon src={post} alt="내 활동" />
 						<p>내 활동</p>
-					</Cell>
-					<Cell>
-						<Icon src={story} alt="QR 코드" />
-						<p>QR 코드</p>
 					</Cell>
 					<Cell>
 						<Icon src={story} alt="저장됨" />

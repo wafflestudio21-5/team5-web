@@ -19,7 +19,7 @@ import NewPassword from './pages/Login/passwordRecovery/NewPassword.tsx'
 // import AddPhoto from './pages/Login/signIn/AddPhoto.tsx'
 import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx'
 import EditProfile from './pages/Profile/EditProfile.tsx'
-import Follower from './pages/Profile/Follower.tsx'
+import Follow from './pages/Profile/Follow.tsx'
 import GlobalStyles from './styles/GlobalStyles.tsx'
 import { ThemeProvider } from 'styled-components'
 import Theme from './styles/Theme.tsx'
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'id/follow/',
-				element: <Follower />,
+				element: <Follow />,
 			},
 			{
 				path: '*',
