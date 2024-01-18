@@ -40,7 +40,7 @@ export function UserProvider({ children }: ProviderProps) {
 	const trySignUp = async ({navigate, addr}: trySignUpProps) => {
 		try {
 			const response = await axios.post(
-				'/api/v1/auth/signup',
+				'https://waffle5gram.shop/api/v1/auth/signup',
 				{
 					username: username,
 					name: name,

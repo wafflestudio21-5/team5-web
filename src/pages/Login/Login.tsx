@@ -96,25 +96,32 @@ export default function Login() {
 		else setIsActive(false)
 	}, [username, password])
 	const handleClick = () => {
-		const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+		/* const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
 		const numberRegex = /^010[0-9]{8}$/
 		function checkType() {
 			if (emailRegex.test(username)) return "email"
 			else if (numberRegex.test(username)) return "phone" 
 			else return "username"	
-		}
+		} */
 		const data = {
-			id: username,
+			username: username,
 			password: password,
-			type: checkType()
+			/* type: checkType() */
 		}
 		const tryLogin = async () => {
 			try {
 				const response = await axios.post(
-					'/api/v1/auth/login',
-					data
+					'https://waffle5gram.shop/api/v1/auth/login',
+					data,
+					{
+						headers: {
+							'Content-Type' : 'application/json',
+							'Access-Control-Allow-Origin': '*'
+						}
+					}
 				)
 				console.log(response)
+				console.log
 			} catch {
 				alert("아이디나 비밀번호가 다릅니다.")
 			}

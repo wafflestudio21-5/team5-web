@@ -75,6 +75,7 @@ const Button = styled.button`
 		bottom: 1rem;
 		border: none;
 		background-color: white;
+		color: blue;
 	}
 `
 
@@ -85,6 +86,7 @@ export default function CertificationSignUp() {
 	const [isValid, setIsValid] = useState(true)
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const handleClick = () => {
+		if(isModalOpen) setIsModalOpen(isModalOpen)
 		if (code.length === 6) {
 			setIsValid(true)
 			navigate('/signUp/agreeToTerm')

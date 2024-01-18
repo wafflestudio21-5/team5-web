@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
 import { useUserContext } from '../../../contexts/UserContext'
+import  { convert } from 'hangul-romanization'
 
 interface InputProps {
 	isvalid: boolean
@@ -65,19 +66,24 @@ const Button = styled.button`
 		bottom: 1rem;
 		border: none;
 		background-color: white;
+		color: blue;
+
 	}
 `
 
 export default function MakeUsername() {
-	const { username, setUsername } = useUserContext()
+	const { name, username, setUsername } = useUserContext()
 	const navigate = useNavigate()
 	const [isValid, setIsValid] = useState(false)
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+		console.log(e.target.value)
 		setUsername(e.target.value)
 	}
 	useEffect(() => {
-		if (username.length === 0) setIsValid(false)
-		else setIsValid(true)
+		if (username === '') setUsername(convert(name) + Math.floor(Math.random()*1000 + 1))
+	}, [])
+	useEffect(() => {
+		setIsValid(username.length > 0)
 	}, [username])
 	return (
 		<>

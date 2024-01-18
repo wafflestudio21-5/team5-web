@@ -29,17 +29,16 @@ const Img = styled.img`
 const Div = styled.div`
     &.headerBox {
         position: relative;
-        width: 30rem;
+        width: 100%;
         height: 4rem; 
         margin: 0 auto;
         background-color: white;  
     }
     &.modalBox {
         position: absolute;
-        z-index: 1;
-        left: 50%;
+        z-index: 100;
+        left: 5%;
         top : 5rem;
-        transform: translateX(-14rem);
         width: 9rem;
         box-shadow: 0 0 3rem gainsboro;
         border-radius: 1rem;
