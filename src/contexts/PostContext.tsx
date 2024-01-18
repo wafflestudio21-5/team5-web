@@ -1,4 +1,4 @@
-export type Post = {
+export type PostDataType = {
 	postId: number
 	userId: number
 	username: string
@@ -9,8 +9,8 @@ export type Post = {
 	commentsCount: number
 }
 
-export type Feed = {
-	posts: Post[]
+export type FeedDataType = {
+	posts: PostDataType[]
 	page: number
 	total: number
 }
