@@ -89,7 +89,7 @@ const StyledLink = styled(Link)`
 `
 
 export default function Login() {
-	const { setAccessToken, setRefreshToken, setPath, username, setUsername, password, setPassword, setIsLoggedin } =
+	const { accessToken, setAccessToken, refreshToken, setRefreshToken, setPath, username, setUsername, password, setPassword, setIsLoggedin } =
 		useUserContext()
 	const [isActive, setIsActive] = useState(false)
 	useEffect(() => {
@@ -125,6 +125,8 @@ export default function Login() {
 				const tempPath = Cookies.get('Path')
 				if (tempRefreshToken) setRefreshToken(tempRefreshToken)
 				if (tempPath) setPath(tempPath)
+				console.log(accessToken)
+				console.log(refreshToken)
 			} catch {
 				alert("아이디나 비밀번호가 다릅니다.")
 			}

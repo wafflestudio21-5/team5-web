@@ -17,9 +17,7 @@ const Div = styled.div`
 		font-size: 0.9rem;
 	}
 	&.buttonPos {
-		position: absolute;
-		bottom: 1rem;
-		width: 93%;
+		width: 100%;
 	}
 	&.imageBox {
 		overflow: hidden;
@@ -33,7 +31,7 @@ const Div = styled.div`
 const Button = styled.button`
 	display: block;
 	margin: 1rem auto;
-	width: 93%;
+	width: 90%;
 	height: 2.5rem;
 	border-radius: 1.2rem;
 	border: none;
