@@ -30,7 +30,7 @@ export default function Post({ postData, openMenuModal }: Props) {
 					}}
 				/>
 				<PostImage imageUrl={postData.imageUrl} />
-				<ReactSection postId={postData.postId} />
+				<ReactSection postData={postData} />
 			</Container>
 		)
 	)

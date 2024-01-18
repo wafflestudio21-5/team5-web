@@ -6,6 +6,7 @@ import likeIcon from '../../assets/Images/Post/like.svg'
 import commentIcon from '../../assets/Images/Post/comment.svg'
 import shareIcon from '../../assets/Images/Post/share.svg'
 import saveIcon from '../../assets/Images/Post/save.svg'
+import { PostDataType } from '../../contexts/PostContext'
 
 const Container = styled.div`
 	display: flex;
@@ -67,14 +68,14 @@ const TextBox = styled.div`
 `
 
 type Props = {
-	postId: number | null
+	postData: PostDataType | null
 }
 
-export default function ReactSection({ postId }: Props) {
+export default function ReactSection({ postData }: Props) {
 	const [liked, setLiked] = useState(false)
 
 	return (
-		postId && (
+		postData && (
 			<Container>
 				<IconBar>
 					<div className="like-comment-share">
@@ -82,11 +83,11 @@ export default function ReactSection({ postId }: Props) {
 							className="icon-box"
 							onClick={() => {
 								if (liked) {
-									fetch(`/api/v1/posts/${postId}/likes`, {
+									fetch(`/api/v1/posts/${postData.postId}/likes`, {
 										method: 'POST',
 									})
 								} else {
-									fetch(`/api/v1/posts/${postId}/likes`, {
+									fetch(`/api/v1/posts/${postData.postId}/likes`, {
 										method: 'DELETE',
 									})
 								}
@@ -113,13 +114,14 @@ export default function ReactSection({ postId }: Props) {
 					</div>
 				</IconBar>
 				<TextBox>
-					<span className="like-num">좋아요 527개</span>
+					<span className="like-num">좋아요 {postData.likesCount}개</span>
 				</TextBox>
 				<TextBox className="margin">
-					<span className="username">sangchu</span> 가나다라마바사
+					<span className="username">{postData.username}</span>{' '}
+					{postData.content}
 				</TextBox>
 				<TextBox className="margin secondary-text more-comment">
-					댓글 3개 모두 보기
+					댓글 {postData.commentsCount}개 모두 보기
 				</TextBox>
 			</Container>
 		)
