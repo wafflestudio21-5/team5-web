@@ -198,7 +198,7 @@ export default function Profile() {
 				<AddPostModal
 					close={() => {
 						setAddPostModal('closing')
-						setTimeout(() => setAddPostModal('closed'), 500)
+						setTimeout(() => setAddPostModal('closed'), 300)
 					}}
 					isClosing={addPostModal === 'closing'}
 				/>
@@ -207,7 +207,7 @@ export default function Profile() {
 				<MenuModal
 					close={() => {
 						setMenuModal('closing')
-						setTimeout(() => setMenuModal('closed'), 500)
+						setTimeout(() => setMenuModal('closed'), 300)
 					}}
 					isClosing={menuModal === 'closing'}
 				/>

@@ -6,28 +6,12 @@ import Icon from '../../shared/Icon.tsx'
 import Modal from '../../shared/Modal.tsx'
 
 const AddPostModalContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-
-	width: 100%;
 	height: 40%;
 
-	background-color: white;
-	border-top-left-radius: 1rem;
-	border-top-right-radius: 1rem;
-
 	& h2 {
-	}
-
-	& hr {
-		width: 100%;
-	}
-
-	& img {
-		height: 1.7rem;
-		width: 1.7rem;
-		margin: 1rem;
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin: 1rem 0;
 	}
 `
 
@@ -37,10 +21,6 @@ const CellContainer = styled.div`
 	align-items: flex-start;
 
 	width: 100%;
-
-	& hr {
-		width: 70%;
-	}
 `
 
 const Cell = styled.div`
@@ -71,14 +51,17 @@ export default function AddPostModal({ close, isClosing }: Props) {
 						<Icon src={reels} alt="릴스" />
 						<p>릴스</p>
 					</Cell>
+					<hr className="content" />
 					<Cell>
 						<Icon src={post} alt="게시물" />
 						<p>게시물</p>
 					</Cell>
+					<hr className="content" />
 					<Cell>
 						<Icon src={story} alt="스토리" />
 						<p>스토리</p>
 					</Cell>
+					<hr className="content" />
 				</CellContainer>
 			</AddPostModalContainer>
 		</Modal>
