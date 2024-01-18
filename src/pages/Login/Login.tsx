@@ -116,7 +116,6 @@ export default function Login() {
 					{
 						headers: {
 							'Content-Type' : 'application/json',
-							'Access-Control-Allow-Origin': '*'
 						}
 					}
 				)
