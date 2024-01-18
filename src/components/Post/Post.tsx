@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import PostImage from './PostImage'
 import ReactSection from './ReactSection'
 import PostHeader from './PostHeader'
+import { PostDataType } from '../../contexts/PostContext'
 
 const Container = styled.article`
 	display: flex;
@@ -15,20 +16,22 @@ const Container = styled.article`
 `
 
 type Props = {
-	postId: number | null
+	postData: PostDataType | null
 	openMenuModal: (postId: number) => void
 }
 
-export default function Post({ postId, openMenuModal }: Props) {
+export default function Post({ postData, openMenuModal }: Props) {
 	return (
-		<Container>
-			<PostHeader
-				showMenu={() => {
-					if (postId) openMenuModal(postId)
-				}}
-			/>
-			<PostImage imageUrl="https://dimg.donga.com/wps/NEWS/IMAGE/2023/07/05/120093215.1.edit.jpg" />
-			<ReactSection postId={postId} />
-		</Container>
+		postData && (
+			<Container>
+				<PostHeader
+					showMenu={() => {
+						openMenuModal(postData.postId)
+					}}
+				/>
+				<PostImage imageUrl={postData.imageUrl} />
+				<ReactSection postId={postData.postId} />
+			</Container>
+		)
 	)
 }
