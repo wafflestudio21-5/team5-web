@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
-import { useUserContext } from './contexts/UserContext.tsx'
+// import { useUserContext } from './contexts/UserContext.tsx'
 import Explore from './pages/Explore.tsx'
-import Home from './pages/Home.tsx'
+// import Home from './pages/Home.tsx'
 import Profile from './pages/Profile/Profile.tsx'
 import Reels from './pages/Reels.tsx'
 import Login from './pages/Login/Login.tsx'
@@ -23,6 +23,7 @@ import GlobalStyles from './styles/GlobalStyles.tsx'
 import { ThemeProvider } from 'styled-components'
 import Theme from './styles/Theme.tsx'
 import NavBar from './components/NavBar.tsx'
+import Home from './pages/Home.tsx'
 const router = createBrowserRouter([
 	{
 		path: '/',

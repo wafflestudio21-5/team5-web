@@ -84,7 +84,7 @@ export default function CertificationSignUp() {
 	const { email } = useUserContext()
 	const [code, setCode] = useState('')
 	const [isValid, setIsValid] = useState(true)
-	const [isModalOpen, setIsModalOpen] = useState(false)
+	// const [isModalOpen, setIsModalOpen] = useState(false)
 	const handleClick = () => {
 		if(isModalOpen) setIsModalOpen(isModalOpen)
 		if (code.length === 6) {
@@ -120,9 +120,9 @@ export default function CertificationSignUp() {
 			<Button className="next" onClick={handleClick}>
 				다음
 			</Button>
-			<Button className="option" onClick={() => setIsModalOpen(true)}>
-				코드를 받지 못했습니다.
-			</Button>
+			{/*<Button className="option" onClick={() => setIsModalOpen(true)}>*/}
+			{/*	코드를 받지 못했습니다.*/}
+			{/*</Button>*/}
 			<Button className="already" onClick={() => navigate('/')}>
 				이미 계정이 있으신가요?
 			</Button>
