@@ -86,14 +86,14 @@ const EditProfileContainer = styled.div`
 export default function Profile() {
 	const navigate = useNavigate()
 
-	const onClickEditCancel = () => {
+	const navigateBack = () => {
 		navigate('/id')
 	}
 
 	return (
 		<EditProfileLayout>
 			<HeaderContainer>
-				<Icon src={editCancel} alt="취소" onClick={onClickEditCancel} />
+				<Icon src={editCancel} alt="취소" onClick={navigateBack} />
 				<h2>프로필 편집</h2>
 				<Icon src={editSave} alt="저장" />
 			</HeaderContainer>

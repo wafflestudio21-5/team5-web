@@ -150,6 +150,10 @@ export default function Profile() {
 	// 페이지 이동
 	const navigate = useNavigate()
 
+	const navigateToFollow = () => {
+		navigate('/id/follow')
+	}
+
 	return (
 		<ProfileLayout>
 			<HeaderContainer>
@@ -173,11 +177,11 @@ export default function Profile() {
 					<h2>0</h2>
 					<p>게시물</p>
 				</div>
-				<div>
+				<div onClick={navigateToFollow}>
 					<h2>0</h2>
 					<p>팔로워</p>
 				</div>
-				<div>
+				<div onClick={navigateToFollow}>
 					<h2>0</h2>
 					<p>팔로우</p>
 				</div>
