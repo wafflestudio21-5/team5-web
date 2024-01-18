@@ -84,9 +84,8 @@ export default function CertificationSignUp() {
 	const { email } = useUserContext()
 	const [code, setCode] = useState('')
 	const [isValid, setIsValid] = useState(true)
-	const [isModalOpen, setIsModalOpen] = useState(false)
+	const setIsModalOpen = useState(false)[1]
 	const handleClick = () => {
-		if(isModalOpen) setIsModalOpen(isModalOpen)
 		if (code.length === 6) {
 			setIsValid(true)
 			navigate('/signUp/agreeToTerm')
