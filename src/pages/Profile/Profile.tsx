@@ -2,10 +2,10 @@ import styled from 'styled-components'
 import addPost from '../../assets/Images/Profile/add-post.png'
 import menu from '../../assets/Images/Profile/menu.png'
 import defaultProfile from '../../assets/Images/Profile/default-profile.svg'
-import AddPostModal from '../../components/Profile/AddPostModal.tsx'
-import MenuModal from '../../components/Profile/MenuModal.tsx'
-import ProfileImageModal from '../../components/Profile/ProfileImageModal.tsx'
-import { useState } from 'react'
+// import AddPostModal from '../../components/Profile/AddPostModal.tsx'
+// import MenuModal from '../../components/Profile/MenuModal.tsx'
+// import ProfileImageModal from '../../components/Profile/ProfileImageModal.tsx'
+// import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const ProfileLayout = styled.main`
@@ -137,18 +137,18 @@ const PostContainer = styled.div`
 
 export default function Profile() {
 	// 모달 관련
-	const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false)
-	const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
-	const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false)
-	const closeAddPostModal = () => {
-		setIsAddPostModalOpen(false)
-	}
-	const closeMenuModal = () => {
-		setIsMenuModalOpen(false)
-	}
-	const closeProfileImageModal = () => {
-		setIsProfileImageModalOpen(false)
-	}
+	// const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false)
+	// const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
+	// const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false)
+	// const closeAddPostModal = () => {
+	// 	setIsAddPostModalOpen(false)
+	// }
+	// const closeMenuModal = () => {
+	// 	setIsMenuModalOpen(false)
+	// }
+	// const closeProfileImageModal = () => {
+	// 	setIsProfileImageModalOpen(false)
+	// }
 
 	// 페이지 이동
 	const navigate = useNavigate()
@@ -161,12 +161,12 @@ export default function Profile() {
 					<img
 						src={addPost}
 						alt="게시글 추가"
-						onClick={() => setIsAddPostModalOpen(true)}
+						// onClick={() => setIsAddPostModalOpen(true)}
 					/>
 					<img
 						src={menu}
 						alt="메뉴 열기"
-						onClick={() => setIsMenuModalOpen(true)}
+						// onClick={() => setIsMenuModalOpen(true)}
 					/>
 				</div>
 			</HeaderContainer>
@@ -175,7 +175,7 @@ export default function Profile() {
 				<img
 					src={defaultProfile}
 					alt="프로필 사진"
-					onClick={() => setIsProfileImageModalOpen(true)}
+					// onClick={() => setIsProfileImageModalOpen(true)}
 				/>
 				<div>
 					<h2>0</h2>
@@ -204,16 +204,16 @@ export default function Profile() {
 			<PostContainer>{/* <PostList /> */}</PostContainer>
 
 			{/*	Modals */}
-			{isAddPostModalOpen && (
-				<AddPostModal
-					onCloseModal={closeAddPostModal}
-					isOpenModal={isAddPostModalOpen}
-				/>
-			)}
-			{isMenuModalOpen && <MenuModal onCloseMenuModalOpen={closeMenuModal} />}
-			{isProfileImageModalOpen && (
-				<ProfileImageModal onCloseProfileImageModal={closeProfileImageModal} />
-			)}
+			{/*{isAddPostModalOpen && (*/}
+			{/*	<AddPostModal*/}
+			{/*		onCloseModal={closeAddPostModal}*/}
+			{/*		isOpenModal={isAddPostModalOpen}*/}
+			{/*	/>*/}
+			{/*)}*/}
+			{/*{isMenuModalOpen && <MenuModal onCloseMenuModalOpen={closeMenuModal} />}*/}
+			{/*{isProfileImageModalOpen && (*/}
+			{/*	<ProfileImageModal onCloseProfileImageModal={closeProfileImageModal} />*/}
+			{/*)}*/}
 		</ProfileLayout>
 	)
 }
