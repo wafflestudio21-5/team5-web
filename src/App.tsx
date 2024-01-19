@@ -25,6 +25,7 @@ import { ThemeProvider } from 'styled-components'
 import Theme from './styles/Theme.tsx'
 import NavBar from './components/NavBar.tsx'
 import Home from './pages/Home.tsx'
+
 const router = createBrowserRouter([
 	{
 		path: '/',
