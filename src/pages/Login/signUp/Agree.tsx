@@ -1,19 +1,19 @@
-import { Link, useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
-import { useUserContext } from '../../../contexts/UserContext'
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { useUserContext } from '../../../contexts/UserContext';
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const H4 = styled.h4`
 	margin-left: 1.5rem;
-`
+`;
 const Div = styled.div`
 	&.text {
 		width: 90%;
@@ -47,7 +47,7 @@ const Div = styled.div`
 	&#third {
 		border-radius: 0 0 1rem 1rem;
 	}
-`
+`;
 const Button = styled.button`
 	&.next {
 		display: block;
@@ -79,22 +79,22 @@ const Button = styled.button`
 		border: none;
 		background-color: white;
 	}
-`
+`;
 const Input = styled.input`
 	display: inline;
 	position: absolute;
 	right: 1.2rem;
 	bottom: 1.2rem;
 	transform: scale(2);
-`
+`;
 
 export default function Agree() {
-	const { trySignUp } = useUserContext()
-	const navigate = useNavigate()
-	const addr = '/signUp/photo'
+	const { trySignUp } = useUserContext();
+	const navigate = useNavigate();
+	const addr = '/signUp/photo';
 	const handleClick = () => {
-		trySignUp({navigate, addr})
-	}
+		trySignUp({ navigate, addr });
+	};
 	return (
 		<>
 			<Link to="/signUp/certification">
@@ -118,11 +118,11 @@ export default function Agree() {
 				이미 계정이 있으신가요?
 			</Button>
 		</>
-	)
+	);
 }
 
 function BoxElement(props: { content: string; id: string }) {
-	const { content, id } = props
+	const { content, id } = props;
 	return (
 		<Div className="box" id={id}>
 			{content}
@@ -130,5 +130,5 @@ function BoxElement(props: { content: string; id: string }) {
 			<a href="https://help.instagram.com/">더 알아보기</a>
 			<Input type="checkbox" />
 		</Div>
-	)
+	);
 }

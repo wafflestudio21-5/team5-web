@@ -1,17 +1,17 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
-import { useUserContext } from '../../../contexts/UserContext'
+import { useState } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUserContext } from '../../../contexts/UserContext';
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const Div = styled.div`
 	&.notice {
 		width: 94%;
@@ -22,7 +22,7 @@ const Div = styled.div`
 		margin: 0 1.5rem;
 		font-size: 0.9rem;
 	}
-`
+`;
 const Button = styled.button`
 	&.save {
 		display: block;
@@ -53,15 +53,15 @@ const Button = styled.button`
 		border: none;
 		background-color: white;
 	}
-`
+`;
 
 export default function AskToSave() {
-	const { setIsSaved } = useUserContext()
-	const navigate = useNavigate()
+	const { setIsSaved } = useUserContext();
+	const navigate = useNavigate();
 	const handleClick = (b: boolean) => {
-		navigate('/signUp/birthday')
-		setIsSaved(b)
-	}
+		navigate('/signUp/birthday');
+		setIsSaved(b);
+	};
 	return (
 		<>
 			<Link to="/signUp/password">
@@ -85,5 +85,5 @@ export default function AskToSave() {
 				이미 계정이 있으신가요?
 			</Button>
 		</>
-	)
+	);
 }

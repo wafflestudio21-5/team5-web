@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import UserInfo from './UserInfo'
+import styled from 'styled-components';
+import UserInfo from './UserInfo';
 
 const Wrapper = styled.div`
 	display: flex;
@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 	padding-bottom: 0.75rem;
 	padding-left: 0.25rem;
 	box-sizing: border-box;
-`
+`;
 
 const ExtraButton = styled.button`
 	background-color: transparent;
@@ -22,7 +22,7 @@ const ExtraButton = styled.button`
 		width: 2em;
 		height: 1.5em;
 	}
-`
+`;
 
 export default function PostHeader() {
 	return (
@@ -32,5 +32,5 @@ export default function PostHeader() {
 				<img src="/ellipsis.svg" alt="ellipsis" />
 			</ExtraButton>
 		</Wrapper>
-	)
+	);
 }

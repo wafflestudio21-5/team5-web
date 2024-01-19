@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import { getColor } from '../styles/Theme.tsx'
-import Search from '../assets/Images/Search.png'
+import styled from 'styled-components';
+import { getColor } from '../styles/Theme.tsx';
+import Search from '../assets/Images/Search.png';
 
 const SearchBarLayout = styled.div`
 	display: flex;
@@ -8,7 +8,7 @@ const SearchBarLayout = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 90%;
-`
+`;
 
 const SearchBarContainer = styled.div`
 	display: flex;
@@ -38,7 +38,7 @@ const SearchBarContainer = styled.div`
 			outline: none;
 		}
 	}
-`
+`;
 
 export default function SearchBar() {
 	return (
@@ -50,5 +50,5 @@ export default function SearchBar() {
 				<input type="text" id="search" placeholder="검색" />
 			</SearchBarContainer>
 		</SearchBarLayout>
-	)
+	);
 }

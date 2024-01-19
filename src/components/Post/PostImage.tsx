@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Container = styled.div`
 	position: relative;
@@ -7,12 +7,12 @@ const Container = styled.div`
 	left: 0;
 	box-sizing: border-box;
 	display: flex;
-`
+`;
 
 const Image = styled.img`
 	width: 100%;
 	position: relative;
-`
+`;
 
 const MoveButton = styled.button`
 	position: absolute;
@@ -30,7 +30,7 @@ const MoveButton = styled.button`
 	&.right {
 		right: 1rem;
 	}
-`
+`;
 
 const IndexBar = styled.div`
 	position: absolute;
@@ -53,7 +53,7 @@ const IndexBar = styled.div`
 		background-color: rgb(255, 255, 255);
 		margin-right: 0;
 	}
-`
+`;
 
 export default function PostImage() {
 	return (
@@ -70,5 +70,5 @@ export default function PostImage() {
 				<div className="dot select"></div>
 			</IndexBar>
 		</Container>
-	)
+	);
 }

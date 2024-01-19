@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Container = styled.div`
 	display: flex;
@@ -12,7 +12,7 @@ const Container = styled.div`
 		margin-top: 0.25rem;
 		margin-bottom: 0;
 	}
-`
+`;
 
 const ProfileImage = styled.div`
 	width: 3rem;
@@ -24,7 +24,7 @@ const ProfileImage = styled.div`
 		width: 100%;
 		height: 100%;
 	}
-`
+`;
 
 export default function StoryProfile() {
 	return (
@@ -34,5 +34,5 @@ export default function StoryProfile() {
 			</ProfileImage>
 			<p>SangChu</p>
 		</Container>
-	)
+	);
 }

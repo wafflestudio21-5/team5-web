@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react'
-import styled from 'styled-components'
+import { useRef, useState } from 'react';
+import styled from 'styled-components';
 
 const Img = styled.img`
 	&.logo {
@@ -25,7 +25,7 @@ const Img = styled.img`
 		width: 1.3rem;
 		bottom: 0.6rem;
 	}
-`
+`;
 const Div = styled.div`
     &.headerBox {
         position: relative;
@@ -60,7 +60,7 @@ const Div = styled.div`
         z-index: 2;
 
     }
-`
+`;
 const Button = styled.button`
 	border: none;
 	height: 4rem;
@@ -99,10 +99,10 @@ const Button = styled.button`
 	&#third {
 		border-radius: 0 0 1rem 1rem;
 	}
-`
+`;
 
 export default function Header() {
-	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	return (
 		<>
 			<Div className="headerBox">
@@ -139,15 +139,15 @@ export default function Header() {
 				<Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 			)}
 		</>
-	)
+	);
 }
 
 function Modal(props: {
-	isModalOpen: boolean
-	setIsModalOpen: (b: boolean) => void
+	isModalOpen: boolean;
+	setIsModalOpen: (b: boolean) => void;
 }) {
-	const { isModalOpen, setIsModalOpen } = props
-	const modalBackground = useRef<HTMLDivElement>(null)
+	const { isModalOpen, setIsModalOpen } = props;
+	const modalBackground = useRef<HTMLDivElement>(null);
 
 	return (
 		<>
@@ -157,7 +157,7 @@ function Modal(props: {
 					ref={modalBackground}
 					onClick={(e) => {
 						if (e.target === modalBackground.current) {
-							setIsModalOpen(false)
+							setIsModalOpen(false);
 						}
 					}}
 				>
@@ -183,5 +183,5 @@ function Modal(props: {
 				</Div>
 			)}
 		</>
-	)
+	);
 }

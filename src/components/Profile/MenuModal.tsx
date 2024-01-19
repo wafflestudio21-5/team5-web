@@ -1,13 +1,13 @@
-import styled from 'styled-components'
-import post from '../../assets/Images/Profile/AddPost/post.png'
-import story from '../../assets/Images/Profile/AddPost/story.png'
-import Icon from '../../shared/Icon.tsx'
-import Modal from '../../shared/Modal.tsx'
-import { getColor } from '../../styles/Theme.tsx'
+import styled from 'styled-components';
+import post from '../../assets/Images/Profile/AddPost/post.png';
+import story from '../../assets/Images/Profile/AddPost/story.png';
+import Icon from '../../shared/Icon.tsx';
+import Modal from '../../shared/Modal.tsx';
+import { getColor } from '../../styles/Theme.tsx';
 
 const MenuModalContainer = styled.div`
 	height: 30%;
-`
+`;
 
 const CellContainer = styled.div`
 	display: flex;
@@ -16,7 +16,7 @@ const CellContainer = styled.div`
 
 	width: 100%;
 	margin-top: 1rem;
-`
+`;
 
 const Cell = styled.div`
 	display: flex;
@@ -33,12 +33,12 @@ const Cell = styled.div`
 		font-weight: 600;
 		color: ${getColor('red')};
 	}
-`
+`;
 
 type Props = {
-	close: () => void
-	isClosing: boolean
-}
+	close: () => void;
+	isClosing: boolean;
+};
 
 export default function MenuModal({ close, isClosing }: Props) {
 	return (
@@ -64,5 +64,5 @@ export default function MenuModal({ close, isClosing }: Props) {
 				</CellContainer>
 			</MenuModalContainer>
 		</Modal>
-	)
+	);
 }

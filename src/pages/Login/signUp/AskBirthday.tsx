@@ -1,25 +1,25 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
-import { useUserContext } from '../../../contexts/UserContext'
+import { useState } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUserContext } from '../../../contexts/UserContext';
 
 interface InputProps {
-	isvalid: boolean
-	type: string // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
-	value: string
-	placeholder: string
-	onChange: React.ChangeEventHandler<HTMLInputElement>
+	isvalid: boolean;
+	type: string; // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
+	value: string;
+	placeholder: string;
+	onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const Input = styled.input<InputProps>`
 	display: block;
 	width: 90%;
@@ -33,7 +33,7 @@ const Input = styled.input<InputProps>`
 	&:focus {
 		outline: none;
 	}
-`
+`;
 const Div = styled.div`
 	&.text {
 		width: 90%;
@@ -47,7 +47,7 @@ const Div = styled.div`
 		font-size: 0.7rem;
 		color: red;
 	}
-`
+`;
 const Button = styled.button`
 	&.next {
 		display: block;
@@ -68,18 +68,18 @@ const Button = styled.button`
 		border: none;
 		background-color: white;
 	}
-`
+`;
 
 export default function AskBirthday() {
-	const { birthday, setBirthday } = useUserContext()
-	const [isValid, setIsValid] = useState(true)
-	const navigate = useNavigate()
+	const { birthday, setBirthday } = useUserContext();
+	const [isValid, setIsValid] = useState(true);
+	const navigate = useNavigate();
 	const handleClick = () => {
 		if (birthday.getFullYear() < 2022) {
-			navigate('/signUp/username')
-			setIsValid(true)
-		} else setIsValid(false)
-	}
+			navigate('/signUp/username');
+			setIsValid(true);
+		} else setIsValid(false);
+	};
 	return (
 		<>
 			<Link to="/signUp/save">
@@ -113,5 +113,5 @@ export default function AskBirthday() {
 				이미 계정이 있으신가요?
 			</Button>
 		</>
-	)
+	);
 }

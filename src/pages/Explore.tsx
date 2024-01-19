@@ -3,5 +3,5 @@ export default function Explore() {
 		<>
 			<div>탐색탭</div>
 		</>
-	)
+	);
 }

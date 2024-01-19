@@ -1,9 +1,9 @@
-import styled from 'styled-components'
-import reels from '../../assets/Images/NavBar/reels.png'
-import post from '../../assets/Images/Profile/AddPost/post.png'
-import story from '../../assets/Images/Profile/AddPost/story.png'
-import Icon from '../../shared/Icon.tsx'
-import Modal from '../../shared/Modal.tsx'
+import styled from 'styled-components';
+import reels from '../../assets/Images/NavBar/reels.png';
+import post from '../../assets/Images/Profile/AddPost/post.png';
+import story from '../../assets/Images/Profile/AddPost/story.png';
+import Icon from '../../shared/Icon.tsx';
+import Modal from '../../shared/Modal.tsx';
 
 const AddPostModalContainer = styled.div`
 	height: 40%;
@@ -13,7 +13,7 @@ const AddPostModalContainer = styled.div`
 		font-weight: 500;
 		margin: 1rem 0;
 	}
-`
+`;
 
 const CellContainer = styled.div`
 	display: flex;
@@ -21,7 +21,7 @@ const CellContainer = styled.div`
 	align-items: flex-start;
 
 	width: 100%;
-`
+`;
 
 const Cell = styled.div`
 	display: flex;
@@ -33,12 +33,12 @@ const Cell = styled.div`
 	&:hover {
 		cursor: pointer;
 	}
-`
+`;
 
 type Props = {
-	close: () => void
-	isClosing: boolean
-}
+	close: () => void;
+	isClosing: boolean;
+};
 
 export default function AddPostModal({ close, isClosing }: Props) {
 	return (
@@ -65,5 +65,5 @@ export default function AddPostModal({ close, isClosing }: Props) {
 				</CellContainer>
 			</AddPostModalContainer>
 		</Modal>
-	)
+	);
 }

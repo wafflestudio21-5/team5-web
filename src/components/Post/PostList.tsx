@@ -1,7 +1,8 @@
-import styled from 'styled-components'
-import Post from './Post'
-import { useState } from 'react'
-import PostModal from './PostModal.tsx'
+import { useState } from 'react';
+import styled from 'styled-components';
+
+import Post from './Post';
+import PostModal from './PostModal.tsx';
 
 const Container = styled.div`
 	background-color: white;
@@ -9,23 +10,23 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-`
+`;
 
 type PostModalState =
 	| { state: 'open' | 'closing'; postId: number | null }
-	| { state: 'closed' }
+	| { state: 'closed' };
 
 export default function PostList() {
 	const [postModal, setPostModal] = useState<PostModalState>({
 		state: 'closed',
-	})
+	});
 
 	const openPostModal = (postId: number) => {
 		setPostModal({
 			state: 'open',
 			postId: postId,
-		})
-	}
+		});
+	};
 
 	return (
 		<>
@@ -39,12 +40,12 @@ export default function PostList() {
 				<PostModal
 					isClosing={postModal.state === 'closing'}
 					close={() => {
-						setPostModal({ state: 'closing', postId: postModal.postId })
-						setTimeout(() => setPostModal({ state: 'closed' }), 500)
+						setPostModal({ state: 'closing', postId: postModal.postId });
+						setTimeout(() => setPostModal({ state: 'closed' }), 500);
 					}}
 					postId={postModal.postId}
 				/>
 			)}
 		</>
-	)
+	);
 }

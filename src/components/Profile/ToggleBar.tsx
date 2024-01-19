@@ -1,8 +1,8 @@
-import { ReactNode } from 'react'
-import styled from 'styled-components'
-import { useState } from 'react'
-import Icon from '../../shared/Icon.tsx'
-import { getColor } from '../../styles/Theme.tsx'
+import { ReactNode } from 'react';
+import styled from 'styled-components';
+import { useState } from 'react';
+import Icon from '../../shared/Icon.tsx';
+import { getColor } from '../../styles/Theme.tsx';
 
 const ToggleBarLayout = styled.div`
 	display: flex;
@@ -10,7 +10,7 @@ const ToggleBarLayout = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-`
+`;
 
 const ToggleBarContainer = styled.div`
 	display: flex;
@@ -20,7 +20,7 @@ const ToggleBarContainer = styled.div`
 	height: 100%;
 
 	border-bottom: 1px solid ${getColor('lightGrey')};
-`
+`;
 
 const ToggleButtonContainer = styled.div`
 	display: flex;
@@ -41,7 +41,7 @@ const ToggleButtonContainer = styled.div`
 	&:hover {
 		cursor: pointer;
 	}
-`
+`;
 
 const ContentContainer = styled.div`
 	display: flex;
@@ -50,15 +50,15 @@ const ContentContainer = styled.div`
 	align-items: center;
 	width: 100%;
 	height: 100%;
-`
+`;
 
 type props = {
-	children: ReactNode[]
-	leftTab: string | ReactNode
-	rightTab: string | ReactNode
-	activeTab: 'left' | 'right'
-	setActiveTab: (tab: 'left' | 'right') => void
-}
+	children: ReactNode[];
+	leftTab: string | ReactNode;
+	rightTab: string | ReactNode;
+	activeTab: 'left' | 'right';
+	setActiveTab: (tab: 'left' | 'right') => void;
+};
 
 export default function ToggleBar({
 	children,
@@ -87,5 +87,5 @@ export default function ToggleBar({
 				{activeTab === 'left' ? children[0] : children[1]}
 			</ContentContainer>
 		</ToggleBarLayout>
-	)
+	);
 }

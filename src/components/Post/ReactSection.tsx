@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import styled from 'styled-components'
+import { useState } from 'react';
+import styled from 'styled-components';
 
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 	height: fit-content;
-`
+`;
 
 const IconBar = styled.div`
 	display: grid;
@@ -37,7 +37,7 @@ const IconBar = styled.div`
 		margin-left: auto;
 		margin-right: 0;
 	}
-`
+`;
 
 const TextBox = styled.div`
 	line-height: 18px;
@@ -62,15 +62,15 @@ const TextBox = styled.div`
 	& .username:hover {
 		color: gray;
 	}
-`
+`;
 
 type Props = {
-	postId: number | null
-	openPostModal?: (postId: number) => void
-}
+	postId: number | null;
+	openPostModal?: (postId: number) => void;
+};
 
 export default function ReactSection({ postId, openPostModal }: Props) {
-	const [liked, setLiked] = useState(false)
+	const [liked, setLiked] = useState(false);
 
 	return (
 		postId && (
@@ -83,13 +83,13 @@ export default function ReactSection({ postId, openPostModal }: Props) {
 								if (liked) {
 									fetch(`/api/v1/posts/${postId}/likes`, {
 										method: 'POST',
-									})
+									});
 								} else {
 									fetch(`/api/v1/posts/${postId}/likes`, {
 										method: 'DELETE',
-									})
+									});
 								}
-								setLiked(!liked)
+								setLiked(!liked);
 							}}
 						>
 							{liked ? (
@@ -118,7 +118,7 @@ export default function ReactSection({ postId, openPostModal }: Props) {
 							className="icon-box"
 							onClick={() => {
 								if (openPostModal !== undefined) {
-									openPostModal(postId)
+									openPostModal(postId);
 								}
 							}}
 						>
@@ -197,7 +197,7 @@ export default function ReactSection({ postId, openPostModal }: Props) {
 					className="margin secondary-text more-comment"
 					onClick={() => {
 						if (openPostModal !== undefined) {
-							openPostModal(postId)
+							openPostModal(postId);
 						}
 					}}
 				>
@@ -206,5 +206,5 @@ export default function ReactSection({ postId, openPostModal }: Props) {
 				<TextBox className="margin secondary-text">댓글 달기...</TextBox>
 			</Container>
 		)
-	)
+	);
 }

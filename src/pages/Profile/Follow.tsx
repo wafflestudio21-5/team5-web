@@ -1,11 +1,11 @@
-import styled from 'styled-components'
-import { getColor } from '../../styles/Theme.tsx'
-import Icon from '../../shared/Icon.tsx'
-import { useLocation, useNavigate } from 'react-router-dom'
-import back from '../../assets/Images/Profile/back.png'
-import SearchBar from '../../shared/SearchBar.tsx'
-import ToggleBar from '../../components/Profile/ToggleBar.tsx'
-import { useEffect, useState } from 'react'
+import styled from 'styled-components';
+import { getColor } from '../../styles/Theme.tsx';
+import Icon from '../../shared/Icon.tsx';
+import { useLocation, useNavigate } from 'react-router-dom';
+import back from '../../assets/Images/Profile/back.png';
+import SearchBar from '../../shared/SearchBar.tsx';
+import ToggleBar from '../../components/Profile/ToggleBar.tsx';
+import { useEffect, useState } from 'react';
 
 const FollowLayout = styled.main`
 	width: 100%;
@@ -13,7 +13,7 @@ const FollowLayout = styled.main`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-`
+`;
 
 const HeaderContainer = styled.div`
 	width: 95%;
@@ -26,7 +26,7 @@ const HeaderContainer = styled.div`
 	& h2 {
 		margin: 0 auto 0 2rem;
 	}
-`
+`;
 
 const FollowContainer = styled.div`
 	width: 100%;
@@ -34,7 +34,7 @@ const FollowContainer = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-`
+`;
 
 const FollowList = styled.div`
 	width: 100%;
@@ -43,27 +43,27 @@ const FollowList = styled.div`
 	justify-content: center;
 	align-items: center;
 	padding-top: 1rem;
-`
+`;
 
 export default function Follow() {
-	const navigate = useNavigate()
-	const location = useLocation()
-	const [activeTab, setActiveTab] = useState<'left' | 'right'>('left')
+	const navigate = useNavigate();
+	const location = useLocation();
+	const [activeTab, setActiveTab] = useState<'left' | 'right'>('left');
 
 	useEffect(() => {
-		const active = location.pathname.includes('/followers') ? 'left' : 'right'
-		setActiveTab(active)
-	}, [location])
+		const active = location.pathname.includes('/followers') ? 'left' : 'right';
+		setActiveTab(active);
+	}, [location]);
 
 	const handleTabChange = (tab: 'left' | 'right') => {
-		setActiveTab(tab)
-		const newPath = tab === 'left' ? '/id/followers' : '/id/following'
-		navigate(newPath)
-	}
+		setActiveTab(tab);
+		const newPath = tab === 'left' ? '/id/followers' : '/id/following';
+		navigate(newPath);
+	};
 
 	const navigateBack = () => {
-		navigate('/id')
-	}
+		navigate('/id');
+	};
 
 	return (
 		<FollowLayout>
@@ -89,5 +89,5 @@ export default function Follow() {
 				</ToggleBar>
 			</FollowContainer>
 		</FollowLayout>
-	)
+	);
 }

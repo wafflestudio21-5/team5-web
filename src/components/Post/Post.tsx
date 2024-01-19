@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import PostImage from './PostImage'
-import ReactSection from './ReactSection'
-import PostHeader from './PostHeader'
+import styled from 'styled-components';
+import PostImage from './PostImage';
+import ReactSection from './ReactSection';
+import PostHeader from './PostHeader';
 
 const Container = styled.article`
 	display: flex;
@@ -12,12 +12,12 @@ const Container = styled.article`
 	margin-bottom: 1rem;
 	padding-bottom: 1rem;
 	box-sizing: border-box;
-`
+`;
 
 type Props = {
-	postId: number | null
-	openPostModal: (postId: number) => void
-}
+	postId: number | null;
+	openPostModal: (postId: number) => void;
+};
 
 export default function Post({ postId, openPostModal }: Props) {
 	return (
@@ -26,5 +26,5 @@ export default function Post({ postId, openPostModal }: Props) {
 			<PostImage />
 			<ReactSection postId={postId} openPostModal={openPostModal} />
 		</Container>
-	)
+	);
 }

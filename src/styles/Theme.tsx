@@ -1,4 +1,4 @@
-import { DefaultTheme } from 'styled-components'
+import { DefaultTheme } from 'styled-components';
 
 const Theme: DefaultTheme = {
 	colors: {
@@ -11,11 +11,11 @@ const Theme: DefaultTheme = {
 		blue: '#0095f6',
 		red: '#ED4956',
 	},
-}
+};
 
 export const getColor =
 	(colorKey: keyof DefaultTheme['colors']) =>
 	({ theme }: { theme: DefaultTheme }) =>
-		theme.colors[colorKey]
+		theme.colors[colorKey];
 
-export default Theme
+export default Theme;

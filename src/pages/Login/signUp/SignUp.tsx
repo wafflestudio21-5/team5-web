@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
-import { useUserContext } from '../../../contexts/UserContext'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUserContext } from '../../../contexts/UserContext';
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const Input = styled.input`
 	display: block;
 	width: 90%;
@@ -24,7 +24,7 @@ const Input = styled.input`
 	&:focus {
 		outline: none;
 	}
-`
+`;
 const Div = styled.div`
 	&.notice {
 		width: 94%;
@@ -35,7 +35,7 @@ const Div = styled.div`
 		margin: 0 1.5rem;
 		font-size: 0.9rem;
 	}
-`
+`;
 const Button = styled.button`
 	display: block;
 	margin: 1rem auto;
@@ -45,15 +45,15 @@ const Button = styled.button`
 	border: none;
 	background-color: blue;
 	color: white;
-`
+`;
 
 export default function SignUp() {
-	const { name, setName } = useUserContext()
-	const navigate = useNavigate()
+	const { name, setName } = useUserContext();
+	const navigate = useNavigate();
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-		setName(e.target.value)
-		console.log(name)
-	}
+		setName(e.target.value);
+		console.log(name);
+	};
 	return (
 		<>
 			<Link to="/">
@@ -75,5 +75,5 @@ export default function SignUp() {
 			/>
 			<Button onClick={() => navigate('password/')}>다음</Button>
 		</>
-	)
+	);
 }

@@ -1,25 +1,25 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
-import { useUserContext } from '../../../contexts/UserContext'
+import { useState } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUserContext } from '../../../contexts/UserContext';
 
 interface InputProps {
-	issixormore: boolean
-	type: string
-	value: string
-	placeholder: string
-	onChange: React.ChangeEventHandler<HTMLInputElement>
+	issixormore: boolean;
+	type: string;
+	value: string;
+	placeholder: string;
+	onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const Input = styled.input<InputProps>`
 	display: block;
 	width: 90%;
@@ -32,7 +32,7 @@ const Input = styled.input<InputProps>`
 	&:focus {
 		outline: none;
 	}
-`
+`;
 const Div = styled.div`
 	&.notice {
 		width: 90%;
@@ -46,7 +46,7 @@ const Div = styled.div`
 		margin: 0 1.5rem;
 		font-size: 0.9rem;
 	}
-`
+`;
 const Button = styled.button`
 	display: block;
 	margin: 1rem auto;
@@ -56,22 +56,22 @@ const Button = styled.button`
 	border: none;
 	background-color: blue;
 	color: white;
-`
+`;
 
 export default function MakePassword() {
-	const { password, setPassword } = useUserContext()
-	const navigate = useNavigate()
-	const [isSixOrMore, setIsSixOrMore] = useState(true)
+	const { password, setPassword } = useUserContext();
+	const navigate = useNavigate();
+	const [isSixOrMore, setIsSixOrMore] = useState(true);
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-		setPassword(e.target.value)
-	}
+		setPassword(e.target.value);
+	};
 	const handleClick = () => {
-		if (password.length < 6) setIsSixOrMore(false)
+		if (password.length < 6) setIsSixOrMore(false);
 		else {
-			setIsSixOrMore(true)
-			navigate('/signUp/save')
+			setIsSixOrMore(true);
+			navigate('/signUp/save');
 		}
-	}
+	};
 	return (
 		<>
 			<Link to="/signUp">
@@ -100,5 +100,5 @@ export default function MakePassword() {
 			)}
 			<Button onClick={handleClick}>다음</Button>
 		</>
-	)
+	);
 }

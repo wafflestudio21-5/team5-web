@@ -1,10 +1,10 @@
-import styled from 'styled-components'
-import defaultProfile from '../../assets/Images/Profile/default-profile.svg'
-import editCancel from '../../assets/Images/Profile/EditProfile/edit-cancel.png'
-import editSave from '../../assets/Images/Profile/EditProfile/edit-save.png'
-import { useNavigate } from 'react-router-dom'
-import { getColor } from '../../styles/Theme.tsx'
-import Icon from '../../shared/Icon.tsx'
+import styled from 'styled-components';
+import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
+import editCancel from '../../assets/Images/Profile/EditProfile/edit-cancel.png';
+import editSave from '../../assets/Images/Profile/EditProfile/edit-save.png';
+import { useNavigate } from 'react-router-dom';
+import { getColor } from '../../styles/Theme.tsx';
+import Icon from '../../shared/Icon.tsx';
 
 const EditProfileLayout = styled.main`
 	width: 100%;
@@ -12,7 +12,7 @@ const EditProfileLayout = styled.main`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-`
+`;
 
 const HeaderContainer = styled.div`
 	width: 95%;
@@ -25,7 +25,7 @@ const HeaderContainer = styled.div`
 	& h2 {
 		margin: 0 auto 0 2rem;
 	}
-`
+`;
 
 const ProfileImageContainer = styled.div`
 	width: 100%;
@@ -54,7 +54,7 @@ const ProfileImageContainer = styled.div`
 			cursor: pointer;
 		}
 	}
-`
+`;
 
 const EditProfileContainer = styled.div`
 	width: 95%;
@@ -81,14 +81,14 @@ const EditProfileContainer = styled.div`
 			outline: none;
 		}
 	}
-`
+`;
 
 export default function Profile() {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	const navigateBack = () => {
-		navigate('/id')
-	}
+		navigate('/id');
+	};
 
 	return (
 		<EditProfileLayout>
@@ -111,5 +111,5 @@ export default function Profile() {
 				<input type="text" id="introduction" />
 			</EditProfileContainer>
 		</EditProfileLayout>
-	)
+	);
 }

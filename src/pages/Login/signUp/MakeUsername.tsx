@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
-import { useUserContext } from '../../../contexts/UserContext'
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUserContext } from '../../../contexts/UserContext';
 
 interface InputProps {
-	isvalid: boolean
-	type: string // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
-	value: string
-	placeholder: string
-	onChange: React.ChangeEventHandler<HTMLInputElement>
+	isvalid: boolean;
+	type: string; // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
+	value: string;
+	placeholder: string;
+	onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const Input = styled.input<InputProps>`
 	display: block;
 	width: 90%;
@@ -32,7 +32,7 @@ const Input = styled.input<InputProps>`
 	&:focus {
 		outline: none;
 	}
-`
+`;
 const Div = styled.div`
 	&.notice {
 		color: red;
@@ -45,7 +45,7 @@ const Div = styled.div`
 		margin: 0 1.5rem;
 		font-size: 0.9rem;
 	}
-`
+`;
 const Button = styled.button`
 	&.next {
 		display: block;
@@ -66,19 +66,19 @@ const Button = styled.button`
 		border: none;
 		background-color: white;
 	}
-`
+`;
 
 export default function MakeUsername() {
-	const { username, setUsername } = useUserContext()
-	const navigate = useNavigate()
-	const [isValid, setIsValid] = useState(false)
+	const { username, setUsername } = useUserContext();
+	const navigate = useNavigate();
+	const [isValid, setIsValid] = useState(false);
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-		setUsername(e.target.value)
-	}
+		setUsername(e.target.value);
+	};
 	useEffect(() => {
-		if (username.length === 0) setIsValid(false)
-		else setIsValid(true)
-	}, [username])
+		if (username.length === 0) setIsValid(false);
+		else setIsValid(true);
+	}, [username]);
 	return (
 		<>
 			<Link to="/signUp/birthday">
@@ -109,5 +109,5 @@ export default function MakeUsername() {
 				이미 계정이 있으신가요?
 			</Button>
 		</>
-	)
+	);
 }
