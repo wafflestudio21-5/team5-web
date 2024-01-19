@@ -50,7 +50,11 @@ const router = createBrowserRouter([
 				element: <EditProfile />,
 			},
 			{
-				path: 'id/follow/',
+				path: 'id/followers/',
+				element: <Follow />,
+			},
+			{
+				path: 'id/following/',
 				element: <Follow />,
 			},
 			{

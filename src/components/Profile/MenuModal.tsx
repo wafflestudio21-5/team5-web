@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import reels from '../../assets/Images/NavBar/reels.png'
 import post from '../../assets/Images/Profile/AddPost/post.png'
 import story from '../../assets/Images/Profile/AddPost/story.png'
 import Icon from '../../shared/Icon.tsx'

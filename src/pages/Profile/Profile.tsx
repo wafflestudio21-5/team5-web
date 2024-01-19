@@ -7,6 +7,7 @@ import MenuModal from '../../components/Profile/MenuModal.tsx'
 import Icon from '../../shared/Icon.tsx'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ToggleBar from '../../components/Profile/ToggleBar.tsx'
 
 const ProfileLayout = styled.main`
 	width: 100%;
@@ -110,6 +111,7 @@ const ProfileEditContainer = styled.div`
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 2rem;
 
 	& button {
 		width: 45%;
@@ -149,9 +151,8 @@ export default function Profile() {
 	// 페이지 이동
 	const navigate = useNavigate()
 
-	const navigateToFollow = () => {
-		navigate('/id/follow')
-	}
+	// ToggleBar 탭 상태 관리
+	const [activeTab, setActiveTab] = useState<'left' | 'right'>('left')
 
 	return (
 		<ProfileLayout>
@@ -176,13 +177,13 @@ export default function Profile() {
 					<h2>0</h2>
 					<p>게시물</p>
 				</div>
-				<div onClick={navigateToFollow}>
+				<div onClick={() => navigate('/id/followers')}>
 					<h2>0</h2>
 					<p>팔로워</p>
 				</div>
-				<div onClick={navigateToFollow}>
+				<div onClick={() => navigate('/id/following')}>
 					<h2>0</h2>
-					<p>팔로우</p>
+					<p>팔로잉</p>
 				</div>
 			</UserInfoContainer>
 			<UserProfileContainer>
@@ -193,8 +194,17 @@ export default function Profile() {
 				<button onClick={() => navigate('/id/edit')}>프로필 편집</button>
 				<button>프로필 공유</button>
 			</ProfileEditContainer>
-
-			<PostContainer>{/* <PostList /> */}</PostContainer>
+			<PostContainer>
+				<ToggleBar
+					leftTab={<Icon src={menu} />}
+					rightTab={<Icon src={addPost} />}
+					activeTab={activeTab}
+					setActiveTab={setActiveTab}
+				>
+					<div>포스트</div>
+					<div>태그됨</div>
+				</ToggleBar>
+			</PostContainer>
 
 			{/*	Modals */}
 			{addPostModal !== 'closed' && (
