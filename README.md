@@ -19,8 +19,8 @@
 ## 배포 
 - 배포 URL : www.waffle5gram.com
 - 배포 방식 : aws s3, cloudfront, route53 이용. Github actions 이용해서 main에 merge 시 빌드 + 배포
-- Test ID : -
-- Test PW : -
+- Test ID : user-n (n = 0, 1, 2)
+- Test PW : password-n (n = 0, 1, 2)
 ## 팀원 구성
 <table>
     <tr>
