@@ -2,6 +2,7 @@ import styled from "styled-components";
 import addPost from "../../assets/Images/Profile/add-post.png";
 import menu from "../../assets/Images/Profile/menu.png";
 import defaultProfile from "../../assets/Images/Profile/default-profile.svg";
+
 // import AddPostModal from '../../components/Profile/AddPostModal.tsx'
 // import MenuModal from '../../components/Profile/MenuModal.tsx'
 // import ProfileImageModal from '../../components/Profile/ProfileImageModal.tsx'
@@ -136,84 +137,84 @@ const PostContainer = styled.div`
 `;
 
 export default function Profile() {
-  // 모달 관련
-  // const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false)
-  // const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
-  // const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false)
-  // const closeAddPostModal = () => {
-  // 	setIsAddPostModalOpen(false)
-  // }
-  // const closeMenuModal = () => {
-  // 	setIsMenuModalOpen(false)
-  // }
-  // const closeProfileImageModal = () => {
-  // 	setIsProfileImageModalOpen(false)
-  // }
+	// 모달 관련
+	// const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false)
+	// const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
+	// const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false)
+	// const closeAddPostModal = () => {
+	// 	setIsAddPostModalOpen(false)
+	// }
+	// const closeMenuModal = () => {
+	// 	setIsMenuModalOpen(false)
+	// }
+	// const closeProfileImageModal = () => {
+	// 	setIsProfileImageModalOpen(false)
+	// }
 
-  // 페이지 이동
-  const navigate = useNavigate();
+	// 페이지 이동
+	const navigate = useNavigate()
 
-  return (
-    <ProfileLayout>
-      <HeaderContainer>
-        <h2>dndw0</h2>
-        <div>
-          <img
-            src={addPost}
-            alt="게시글 추가"
-            // onClick={() => setIsAddPostModalOpen(true)}
-          />
-          <img
-            src={menu}
-            alt="메뉴 열기"
-            // onClick={() => setIsMenuModalOpen(true)}
-          />
-        </div>
-      </HeaderContainer>
+	return (
+		<ProfileLayout>
+			<HeaderContainer>
+				<h2>dndw0</h2>
+				<div>
+					<img
+						src={addPost}
+						alt="게시글 추가"
+						// onClick={() => setIsAddPostModalOpen(true)}
+					/>
+					<img
+						src={menu}
+						alt="메뉴 열기"
+						// onClick={() => setIsMenuModalOpen(true)}
+					/>
+				</div>
+			</HeaderContainer>
 
-      <UserInfoContainer>
-        <img
-          src={defaultProfile}
-          alt="프로필 사진"
-          // onClick={() => setIsProfileImageModalOpen(true)}
-        />
-        <div>
-          <h2>0</h2>
-          <p>게시물</p>
-        </div>
-        <div>
-          <h2>0</h2>
-          <p>팔로워</p>
-        </div>
-        <div>
-          <h2>0</h2>
-          <p>팔로우</p>
-        </div>
-      </UserInfoContainer>
+			<UserInfoContainer>
+				<img
+					src={defaultProfile}
+					alt="프로필 사진"
+					// onClick={() => setIsProfileImageModalOpen(true)}
+				/>
+				<div>
+					<h2>0</h2>
+					<p>게시물</p>
+				</div>
+				<div>
+					<h2>0</h2>
+					<p>팔로워</p>
+				</div>
+				<div>
+					<h2>0</h2>
+					<p>팔로우</p>
+				</div>
+			</UserInfoContainer>
 
-      <UserProfileContainer>
-        <h3>최재웅</h3>
-        <p>자기소개</p>
-      </UserProfileContainer>
+			<UserProfileContainer>
+				<h3>최재웅</h3>
+				<p>자기소개</p>
+			</UserProfileContainer>
 
-      <ProfileEditContainer>
-        <button onClick={() => navigate("edit")}>프로필 편집</button>
-        <button>프로필 공유</button>
-      </ProfileEditContainer>
+			<ProfileEditContainer>
+				<button onClick={() => navigate('edit')}>프로필 편집</button>
+				<button>프로필 공유</button>
+			</ProfileEditContainer>
 
-      <PostContainer>{/* <PostList /> */}</PostContainer>
+			<PostContainer>{/* <PostList /> */}</PostContainer>
 
-      {/*	Modals */}
-      {/*{isAddPostModalOpen && (*/}
-      {/*	<AddPostModal*/}
-      {/*		onCloseModal={closeAddPostModal}*/}
-      {/*		isOpenModal={isAddPostModalOpen}*/}
-      {/*	/>*/}
-      {/*)}*/}
-      {/*{isMenuModalOpen && <MenuModal onCloseMenuModalOpen={closeMenuModal} />}*/}
-      {/*{isProfileImageModalOpen && (*/}
-      {/*	<ProfileImageModal onCloseProfileImageModal={closeProfileImageModal} />*/}
-      {/*)}*/}
-    </ProfileLayout>
-  );
+			{/*	Modals */}
+			{/*{isAddPostModalOpen && (*/}
+			{/*	<AddPostModal*/}
+			{/*		onCloseModal={closeAddPostModal}*/}
+			{/*		isOpenModal={isAddPostModalOpen}*/}
+			{/*	/>*/}
+			{/*)}*/}
+			{/*{isMenuModalOpen && <MenuModal onCloseMenuModalOpen={closeMenuModal} />}*/}
+			{/*{isProfileImageModalOpen && (*/}
+			{/*	<ProfileImageModal onCloseProfileImageModal={closeProfileImageModal} />*/}
+			{/*)}*/}
+		</ProfileLayout>
+	)
 }
