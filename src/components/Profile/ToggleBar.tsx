@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import styled from 'styled-components';
-import { useState } from 'react';
+
 import Icon from '../../shared/Icon.tsx';
 import { getColor } from '../../styles/Theme.tsx';
 
@@ -10,6 +10,7 @@ const ToggleBarLayout = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 100%;
+	height: fit-content;
 `;
 
 const ToggleBarContainer = styled.div`
