@@ -13,14 +13,14 @@ const fadeInUp = keyframes`
   }
 `
 
-const fadeOutDown = keyframes`
-	from {
-		transform: translateY(0);
-	}
-	to {
-		transform: translateY(20rem);
-	}
-`
+// const fadeOutDown = keyframes`
+// 	from {
+// 		transform: translateY(0);
+// 	}
+// 	to {
+// 		transform: translateY(20rem);
+// 	}
+// `
 
 // 모달 배경 fade in and out
 const fadeInBackground = keyframes`
@@ -32,14 +32,14 @@ const fadeInBackground = keyframes`
   }
 `
 
-const fadeOutBackground = keyframes`
-	from {
-		opacity: 1;
-	}
-	to {
-		opacity: 0;
-	}
-`
+// const fadeOutBackground = keyframes`
+// 	from {
+// 		opacity: 1;
+// 	}
+// 	to {
+// 		opacity: 0;
+// 	}
+// `
 
 const AddPostModalBackground = styled.div`
 	//	화면 아래에 모달 위치시키기
