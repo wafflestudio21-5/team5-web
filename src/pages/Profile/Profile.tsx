@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+// import AddPostModal from '../../components/Profile/AddPostModal.tsx'
 import addPost from '../../assets/Images/Profile/add-post.png';
+// import MenuModal from '../../components/Profile/MenuModal.tsx'
 import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
 import menu from '../../assets/Images/Profile/menu.png';
-// import AddPostModal from '../../components/Profile/AddPostModal.tsx'
-// import MenuModal from '../../components/Profile/MenuModal.tsx'
 // import ProfileImageModal from '../../components/Profile/ProfileImageModal.tsx'
 // import { useState } from 'react'
 
