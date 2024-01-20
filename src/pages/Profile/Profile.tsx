@@ -9,38 +9,6 @@ import menu from '../../assets/Images/Profile/menu.png';
 // import ProfileImageModal from '../../components/Profile/ProfileImageModal.tsx'
 // import { useState } from 'react'
 
-import { useNavigate } from "react-router-dom";
-
-const ProfileLayout = styled.main`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const HeaderContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-
-  & h2 {
-    margin: 0 1rem;
-  }
-
-  & img {
-    height: 1.7rem;
-    width: 1.7rem;
-    margin-right: 1rem;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-=======
 
 const ProfileLayout = styled.main`
 	width: 100%;
