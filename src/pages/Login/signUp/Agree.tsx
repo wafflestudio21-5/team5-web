@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { useUserContext } from "../../../contexts/UserContext";
 
 const Img = styled.img`
   width: 2rem;
@@ -110,7 +111,7 @@ const A = styled.a`
 `;
 
 export default function Agree() {
-  /* const { trySignUp } = useUserContext() */
+  const { trySignUp } = useUserContext()
   const navigate = useNavigate();
   const addr = "/signUp/photo";
   const [selectAll, setSelectAll] = useState(false);
@@ -120,8 +121,7 @@ export default function Agree() {
     checkbox3: false,
   });
   const handleClick = () => {
-    /* trySignUp({navigate, addr}) */
-    navigate(addr);
+    trySignUp({navigate, addr})
   };
   const setCheckbox = (num: number) => {
     const boxNumber = "checkbox" + num;

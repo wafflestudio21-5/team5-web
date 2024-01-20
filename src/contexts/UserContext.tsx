@@ -48,6 +48,10 @@ export function UserProvider({ children }: ProviderProps) {
   const [isLoggedin, setIsLoggedin] = useState(false);
   const trySignUp = async ({ navigate, addr }: trySignUpProps) => {
     try {
+      const year = birthday.getFullYear();
+      const month = String(birthday.getMonth() + 1).padStart(2, '0');
+      const day = String(birthday.getDate()).padStart(2, '0');
+      const formatted = `${year}-${month}-${day}`
       const response = await axios.post(
         "https://waffle5gram.shop/api/v1/auth/signup",
         {
@@ -55,7 +59,8 @@ export function UserProvider({ children }: ProviderProps) {
           name: name,
           password: password,
           contact: email,
-          contact_type: email,
+          contactType: "email",
+          birthday: formatted
         },
       );
       console.log(response);
