@@ -47,7 +47,7 @@ export default function NavBar() {
 					alt="Explore"
 					onClick={() => navigate('/explore')}
 				></Icon>
-				<Icon src={addPost} alt="AddPost"></Icon>
+				<Icon src={addPost} alt="AddPost" onClick={()=>navigate('/addPost')}></Icon>
 				<Icon src={reels} alt="Reels" onClick={() => navigate('/reels')}></Icon>
 				<Icon
 					src={defaultProfile}

@@ -29,6 +29,8 @@ import { ThemeProvider } from 'styled-components';
 import Theme from './styles/Theme.tsx';
 import NavBar from './components/NavBar.tsx';
 import Home from './pages/Home.tsx';
+import AddPhoto from './pages/addPost/AddPhoto.tsx';
+import AddText from './pages/addPost/AddText.tsx';
 
 const router = createBrowserRouter([
 	{
@@ -46,6 +48,14 @@ const router = createBrowserRouter([
 			{
 				path: 'reels/',
 				element: <Reels />,
+			},
+			{
+				path: 'addPost/',
+				element: <AddPhoto />
+			},
+			{
+				path: 'addText/',
+				element: <AddText />
 			},
 			{
 				path: ':id/',
