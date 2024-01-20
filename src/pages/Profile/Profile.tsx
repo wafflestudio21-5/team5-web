@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { getUserInformation } from '../../apis/user.ts';
 import addPost from '../../assets/Images/Profile/add-post.png';
 import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
 import menu from '../../assets/Images/Profile/menu.png';
@@ -10,6 +11,7 @@ import MenuModal from '../../components/Profile/MenuModal.tsx';
 import ToggleBar from '../../components/Profile/ToggleBar.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
+import { UserType } from '../../types.ts';
 
 const ProfileLayout = styled.main`
 	width: 100%;
@@ -155,7 +157,37 @@ export default function Profile() {
 	// ToggleBar 탭 상태 관리
 	const [activeTab, setActiveTab] = useState<'left' | 'right'>('left');
 
+	// id로 유저 정보 가져오기
 	const { id } = useParams();
+	const { username } = useUserContext();
+	const [user, setUser] = useState<UserType | undefined>();
+	const [isMyAccount, setIsMyAccount] = useState(false);
+	const [isPrivate, setIsPrivate] = useState(false);
+	const [isFollowing, setIsFollowing] = useState(false);
+	useEffect(() => {
+		if (id) {
+			getUserInformation(id)
+				.then(setUser)
+				.then(() => {
+					if (!user) return;
+					if (user.username === username) {
+						setIsMyAccount(true);
+					} else {
+						if (user.isPrivate) {
+							setIsPrivate(true);
+						} else {
+							//
+						}
+					}
+				})
+				.catch((error) => {
+					console.error('Failed to fetch user information:', error);
+					navigate('/'); // 이상한 URL 오면 홈으로 이동
+				});
+		} else {
+			navigate('/'); // 이상한 URL 오면 홈으로 이동
+		}
+	}, [id, navigate]);
 
 	return (
 		<ProfileLayout>
