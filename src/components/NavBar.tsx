@@ -44,12 +44,16 @@ export default function NavBar() {
 					onClick={() => navigate('/')}
 				></Icon>
 				<Icon
-					src={currentURL === '/explore' ? searchBold : search}
-					alt="Explore"
-					onClick={() => navigate('/explore')}
+					src={currentURL === '/search' ? searchBold : search}
+					alt="Search"
+					onClick={() => navigate('/search')}
 				></Icon>
 				<Icon src={addPost} alt="AddPost"></Icon>
-				<Icon src={reels} alt="Reels" onClick={() => navigate('/reels')}></Icon>
+				<Icon
+					src={reels}
+					alt="Reels"
+					onClick={() => navigate('/explore')}
+				></Icon>
 				<Icon
 					src={defaultProfile}
 					alt="Profile"
