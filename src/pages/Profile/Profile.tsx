@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import addPost from '../../assets/Images/Profile/add-post.png';
@@ -8,6 +8,7 @@ import menu from '../../assets/Images/Profile/menu.png';
 import AddPostModal from '../../components/Profile/AddPostModal.tsx';
 import MenuModal from '../../components/Profile/MenuModal.tsx';
 import ToggleBar from '../../components/Profile/ToggleBar.tsx';
+import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 
 const ProfileLayout = styled.main`
@@ -154,10 +155,12 @@ export default function Profile() {
 	// ToggleBar 탭 상태 관리
 	const [activeTab, setActiveTab] = useState<'left' | 'right'>('left');
 
+	const { id } = useParams();
+
 	return (
 		<ProfileLayout>
 			<HeaderContainer>
-				<h2>dndw0</h2>
+				<h2>{id}</h2>
 				<div>
 					<Icon
 						src={addPost}
