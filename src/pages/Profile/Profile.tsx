@@ -1,12 +1,14 @@
-import styled from "styled-components";
-import addPost from "../../assets/Images/Profile/add-post.png";
-import menu from "../../assets/Images/Profile/menu.png";
-import defaultProfile from "../../assets/Images/Profile/default-profile.svg";
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 // import AddPostModal from '../../components/Profile/AddPostModal.tsx'
+import addPost from '../../assets/Images/Profile/add-post.png';
 // import MenuModal from '../../components/Profile/MenuModal.tsx'
+import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
+import menu from '../../assets/Images/Profile/menu.png';
 // import ProfileImageModal from '../../components/Profile/ProfileImageModal.tsx'
 // import { useState } from 'react'
+
 import { useNavigate } from "react-router-dom";
 
 const ProfileLayout = styled.main`
@@ -38,70 +40,101 @@ const HeaderContainer = styled.div`
       cursor: pointer;
     }
   }
+=======
+
+const ProfileLayout = styled.main`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+`;
+
+const HeaderContainer = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1.5rem;
+
+	& h2 {
+		margin: 0 1rem;
+	}
+
+	& img {
+		height: 1.7rem;
+		width: 1.7rem;
+		margin-right: 1rem;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
 `;
 
 // 사진, 게시물, 팔로워, 팔로잉
 const UserInfoContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 
-  & img {
-    height: 6rem;
-    width: 6rem;
-    border-radius: 50%;
-    margin: 0 1rem;
+	& img {
+		height: 6rem;
+		width: 6rem;
+		border-radius: 50%;
+		margin: 0 1rem;
 
-    &:hover {
-      cursor: pointer;
-    }
-  }
+		&:hover {
+			cursor: pointer;
+		}
+	}
 
-  // 게시물, 팔로워, 팔로잉과 숫자 담는 div
-  & div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 1.5rem;
+	// 게시물, 팔로워, 팔로잉과 숫자 담는 div
+	& div {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin: 0 1.5rem;
 
-    &:hover {
-      cursor: pointer;
-    }
+		&:hover {
+			cursor: pointer;
+		}
 
-    // 숫자
-    & h2 {
-      font-size: 1.5rem;
-      margin: 0;
-    }
+		// 숫자
+		& h2 {
+			font-size: 1.5rem;
+			margin: 0;
+		}
 
-    // 게시물, 팔로워, 팔로잉
-    & p {
-      font-size: 1rem;
-      margin: 0;
-    }
-  }
+		// 게시물, 팔로워, 팔로잉
+		& p {
+			font-size: 1rem;
+			margin: 0;
+		}
+	}
 `;
 
 // 이름, 소개
 const UserProfileContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  margin-bottom: 1rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	margin-bottom: 1rem;
 
-  & h3 {
-    margin: 0.5rem 1rem 0 1rem;
-    font-weight: 500;
-  }
+	& h3 {
+		margin: 0.5rem 1rem 0 1rem;
+		font-weight: 500;
+	}
 
-  & p {
-    margin: 0.5rem 1rem 0 1rem;
-  }
+	& p {
+		margin: 0.5rem 1rem 0 1rem;
+	}
 `;
 
 const ProfileEditContainer = styled.div`
@@ -122,18 +155,18 @@ const ProfileEditContainer = styled.div`
     border: none;
     border-radius: 0.5rem;
 
-    &:hover {
-      cursor: pointer;
-    }
-  }
+		&:hover {
+			cursor: pointer;
+		}
+	}
 `;
 
 const PostContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 `;
 
 export default function Profile() {
@@ -152,7 +185,7 @@ export default function Profile() {
 	// }
 
 	// 페이지 이동
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	return (
 		<ProfileLayout>
@@ -216,5 +249,5 @@ export default function Profile() {
 			{/*	<ProfileImageModal onCloseProfileImageModal={closeProfileImageModal} />*/}
 			{/*)}*/}
 		</ProfileLayout>
-	)
+	);
 }
