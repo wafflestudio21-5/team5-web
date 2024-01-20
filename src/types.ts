@@ -1,9 +1,9 @@
 // 모든 변수는 CamelCase로 작성한다.
-// 모든 타입은 뒤에 Type을 붙여준다.
+// 모든 타입 이름은 끝에 Type을 붙여준다.
 
 type UserLink = {
 	linkId: number;
-	links: string; // Assuming 'links' is a URL string
+	links: string;
 };
 
 type UserContact = {
@@ -16,7 +16,7 @@ export type UserType = {
 	userId: number;
 	username: string;
 	name: string;
-	password: string; // Note: Storing passwords like this is generally unsafe
+	password: string;
 	birthday: string; // or Date if you're going to convert it
 	isPrivate: number; // 0 or 1, assuming this is a boolean-like field
 	pronoun: string;
