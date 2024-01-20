@@ -1,8 +1,9 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { useUserContext } from '../../contexts/UserContext';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { useUserContext } from '../../contexts/UserContext';
 
 const Img = styled.img`
 	&.instagram {

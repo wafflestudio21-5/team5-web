@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import post from '../../assets/Images/Profile/AddPost/post.png';
 import story from '../../assets/Images/Profile/AddPost/story.png';
 import Icon from '../../shared/Icon.tsx';

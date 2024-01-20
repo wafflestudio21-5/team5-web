@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+
+import PostHeader from './PostHeader';
 import PostImage from './PostImage';
 import ReactSection from './ReactSection';
-import PostHeader from './PostHeader';
 
 const Container = styled.article`
 	display: flex;

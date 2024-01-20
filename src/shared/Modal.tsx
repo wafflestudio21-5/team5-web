@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
+
 import { getColor } from '../styles/Theme.tsx';
 
 const ModalContainer = styled.div`

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import PostList from '../components/Post/PostList';
+
 import Header from '../components/Header';
+import PostList from '../components/Post/PostList';
 import StoryBar from '../components/Story/StoryBar';
 
 const HomeLayout = styled.main`

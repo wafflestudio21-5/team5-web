@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import StoryProfile from './StoryProfile';
 
 const Container = styled.div`

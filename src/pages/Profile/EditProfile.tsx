@@ -1,10 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
 import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
 import editCancel from '../../assets/Images/Profile/EditProfile/edit-cancel.png';
 import editSave from '../../assets/Images/Profile/EditProfile/edit-save.png';
-import { useNavigate } from 'react-router-dom';
-import { getColor } from '../../styles/Theme.tsx';
 import Icon from '../../shared/Icon.tsx';
+import { getColor } from '../../styles/Theme.tsx';
 
 const EditProfileLayout = styled.main`
 	width: 100%;

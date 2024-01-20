@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { useUserContext } from '../../../contexts/UserContext';
 
 interface InputProps {
