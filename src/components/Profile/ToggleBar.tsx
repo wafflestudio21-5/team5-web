@@ -1,7 +1,6 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 
-import Icon from '../../shared/Icon.tsx';
 import { getColor } from '../../styles/Theme.tsx';
 
 const ToggleBarLayout = styled.div`

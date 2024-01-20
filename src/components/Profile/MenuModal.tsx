@@ -30,7 +30,7 @@ const Cell = styled.div`
 		cursor: pointer;
 	}
 
-	& p.logout {
+	& .logout {
 		font-weight: 600;
 		color: ${getColor('red')};
 	}
