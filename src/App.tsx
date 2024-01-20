@@ -13,14 +13,14 @@ import Login from './pages/Login/Login.tsx';
 import Certification from './pages/Login/passwordRecovery/Certification.tsx';
 import NewPassword from './pages/Login/passwordRecovery/NewPassword.tsx';
 import PasswordRecovery from './pages/Login/passwordRecovery/PasswordRecovery.tsx';
+import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
 import Agree from './pages/Login/signUp/Agree.tsx';
 import AskBirthday from './pages/Login/signUp/AskBirthday.tsx';
+import AskEmail from './pages/Login/signUp/AskEmail.tsx';
+import AskToSave from './pages/Login/signUp/AskToSave.tsx';
+import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx';
 import MakePassword from './pages/Login/signUp/MakePassword.tsx';
 import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
-import AskEmail from './pages/Login/signUp/AskEmail.tsx';
-import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx';
-import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
-import AskToSave from './pages/Login/signUp/AskToSave.tsx';
 import SignUp from './pages/Login/signUp/SignUp.tsx';
 import EditProfile from './pages/Profile/EditProfile.tsx';
 import Follow from './pages/Profile/Follow.tsx';
@@ -55,7 +55,11 @@ const router = createBrowserRouter([
 				element: <EditProfile />,
 			},
 			{
-				path: 'id/follow/',
+				path: 'id/followers/',
+				element: <Follow />,
+			},
+			{
+				path: 'id/following/',
 				element: <Follow />,
 			},
 			{
