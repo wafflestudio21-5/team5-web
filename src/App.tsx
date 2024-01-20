@@ -134,10 +134,10 @@ function App() {
 	return (
 		<ThemeProvider theme={Theme}>
 			<GlobalStyles />
-			<RouterProvider router={router}>
-				{/* const { isLoggedin } = useUserContext() */}
-				{/*<RouterProvider router={isLoggedin ? router : loginRouter} />*/}
-			</RouterProvider>
+			{/*<RouterProvider router={router}>*/}
+			{/* const { isLoggedin } = useUserContext() */}
+			<RouterProvider router={isLoggedin ? router : loginRouter} />
+			{/*</RouterProvider>*/}
 		</ThemeProvider>
 	);
 }
