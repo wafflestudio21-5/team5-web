@@ -1,7 +1,7 @@
 export default function Follow() {
-	return (
-		<>
-			<div></div>
-		</>
-	)
+  return (
+    <>
+      <div></div>
+    </>
+  );
 }
