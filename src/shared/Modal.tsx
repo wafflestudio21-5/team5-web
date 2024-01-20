@@ -1,5 +1,5 @@
-import { ReactNode } from 'react'
-import styled from 'styled-components'
+import { ReactNode } from 'react';
+import styled from 'styled-components';
 
 const ModalContainer = styled.div`
 	display: flex;
@@ -75,13 +75,13 @@ const ModalContainer = styled.div`
 		to {
 		}
 	}
-`
+`;
 
 type Props = {
-	children: ReactNode
-	onBackgroundClick: () => void
-	isClosing: boolean
-}
+	children: ReactNode;
+	onBackgroundClick: () => void;
+	isClosing: boolean;
+};
 
 export default function Modal({
 	children,
@@ -93,5 +93,5 @@ export default function Modal({
 			<div className="modal--background" onClick={() => onBackgroundClick()} />
 			{children}
 		</ModalContainer>
-	)
+	);
 }
