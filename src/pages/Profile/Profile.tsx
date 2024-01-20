@@ -163,9 +163,13 @@ export default function Profile() {
 					<Icon
 						src={addPost}
 						alt="게시글 추가"
-						onClick={() => setAddPostModal(true)}
+						onClick={() => setAddPostModal('open')}
 					/>
-					<Icon src={menu} alt="메뉴 추가" onClick={() => setMenuModal(true)} />
+					<Icon
+						src={menu}
+						alt="메뉴 추가"
+						onClick={() => setMenuModal('open')}
+					/>
 				</div>
 			</HeaderContainer>
 			<UserInfoContainer>

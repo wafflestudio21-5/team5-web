@@ -21,7 +21,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'semi': ['error', 'always'],
-    'prettier/prettier': ['error'],
     // Add specific import rules
     'import/order': ['error', {
       'groups': ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
@@ -29,5 +28,6 @@ module.exports = {
       'alphabetize': { 'order': 'asc', 'caseInsensitive': true }
     }],
     'import/no-duplicates': 'error',
+    "import/no-named-as-default": "off" // styled import에 대한 오류 방지
   },
 }

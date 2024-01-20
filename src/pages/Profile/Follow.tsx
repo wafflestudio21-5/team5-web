@@ -6,7 +6,6 @@ import back from '../../assets/Images/Profile/back.png';
 import ToggleBar from '../../components/Profile/ToggleBar.tsx';
 import Icon from '../../shared/Icon.tsx';
 import SearchBar from '../../shared/SearchBar.tsx';
-import { getColor } from '../../styles/Theme.tsx';
 
 const FollowLayout = styled.main`
 	width: 100%;
