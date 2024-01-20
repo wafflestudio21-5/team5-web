@@ -76,7 +76,6 @@ const Button = styled.button`
 	border: none;
 	background-color: blue;
 	color: white;
-	$
 `;
 const Span = styled.span`
 	background: #fff;
