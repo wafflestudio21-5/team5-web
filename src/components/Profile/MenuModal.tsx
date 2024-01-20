@@ -6,9 +6,7 @@
 // }: {
 // 	onCloseMenuModal: () => void
 // }) {
-// 	return (
-// 		<>
-// 			<Modal></Modal>
+// 	return (>
 // 		</>
 // 	)
 // }
