@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: '21.5.0'
 
+      - name: Bypass Husky
+        run: echo "HUSKY_SKIP_HOOKS=1" >> $GITHUB_ENV
+
       - name: Install and Build
         run: |
           npm install
