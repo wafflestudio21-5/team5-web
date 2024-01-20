@@ -1,19 +1,19 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import Icon from '../../shared/Icon'
-import likedIcon from '../../assets/Images/Post/liked.svg'
-import likeIcon from '../../assets/Images/Post/like.svg'
-import commentIcon from '../../assets/Images/Post/comment.svg'
-import shareIcon from '../../assets/Images/Post/share.svg'
-import saveIcon from '../../assets/Images/Post/save.svg'
-import { PostDataType } from '../../contexts/PostContext'
+import { useState } from 'react';
+import styled from 'styled-components';
+import Icon from '../../shared/Icon';
+import likedIcon from '../../assets/Images/Post/liked.svg';
+import likeIcon from '../../assets/Images/Post/like.svg';
+import commentIcon from '../../assets/Images/Post/comment.svg';
+import shareIcon from '../../assets/Images/Post/share.svg';
+import saveIcon from '../../assets/Images/Post/save.svg';
+import { PostDataType } from '../../contexts/PostContext';
 
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 	height: fit-content;
-`
+`;
 
 const IconBar = styled.div`
 	display: grid;
@@ -40,7 +40,7 @@ const IconBar = styled.div`
 		margin-left: auto;
 		margin-right: 0;
 	}
-`
+`;
 
 const TextBox = styled.div`
 	line-height: 18px;
@@ -65,14 +65,15 @@ const TextBox = styled.div`
 	& .username:hover {
 		color: gray;
 	}
-`
+`;
 
 type Props = {
-	postData: PostDataType | null
-}
+	postId: number | null;
+	openPostModal?: (postId: number) => void;
+};
 
-export default function ReactSection({ postData }: Props) {
-	const [liked, setLiked] = useState(false)
+export default function ReactSection({ postId, openPostModal }: Props) {
+	const [liked, setLiked] = useState(false);
 
 	return (
 		postData && (
@@ -85,13 +86,13 @@ export default function ReactSection({ postData }: Props) {
 								if (liked) {
 									fetch(`/api/v1/posts/${postData.postId}/likes`, {
 										method: 'POST',
-									})
+									});
 								} else {
 									fetch(`/api/v1/posts/${postData.postId}/likes`, {
 										method: 'DELETE',
-									})
+									});
 								}
-								setLiked(!liked)
+								setLiked(!liked);
 							}}
 						>
 							{liked ? (
@@ -125,5 +126,5 @@ export default function ReactSection({ postData }: Props) {
 				</TextBox>
 			</Container>
 		)
-	)
+	);
 }

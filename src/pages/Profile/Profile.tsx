@@ -1,12 +1,15 @@
-import styled from 'styled-components'
-import addPost from '../../assets/Images/Profile/add-post.png'
-import menu from '../../assets/Images/Profile/menu.png'
-import defaultProfile from '../../assets/Images/Profile/default-profile.svg'
-import AddPostModal from '../../components/Profile/AddPostModal.tsx'
-import MenuModal from '../../components/Profile/MenuModal.tsx'
-import ProfileImageModal from '../../components/Profile/ProfileImageModal.tsx'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+
+import addPost from '../../assets/Images/Profile/add-post.png';
+import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
+import menu from '../../assets/Images/Profile/menu.png';
+import AddPostModal from '../../components/Profile/AddPostModal.tsx';
+import MenuModal from '../../components/Profile/MenuModal.tsx';
+import ToggleBar from '../../components/Profile/ToggleBar.tsx';
+import { useUserContext } from '../../contexts/UserContext.tsx';
+import Icon from '../../shared/Icon.tsx';
 
 const ProfileLayout = styled.main`
 	width: 100%;
@@ -14,7 +17,7 @@ const ProfileLayout = styled.main`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-`
+`;
 
 const HeaderContainer = styled.div`
 	width: 100%;
@@ -37,7 +40,7 @@ const HeaderContainer = styled.div`
 			cursor: pointer;
 		}
 	}
-`
+`;
 
 // 사진, 게시물, 팔로워, 팔로잉
 const UserInfoContainer = styled.div`
@@ -47,6 +50,7 @@ const UserInfoContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 
+	// 프로필 사진
 	& img {
 		height: 6rem;
 		width: 6rem;
@@ -82,7 +86,7 @@ const UserInfoContainer = styled.div`
 			margin: 0;
 		}
 	}
-`
+`;
 
 // 이름, 소개
 const UserProfileContainer = styled.div`
@@ -101,7 +105,7 @@ const UserProfileContainer = styled.div`
 	& p {
 		margin: 0.5rem 1rem 0 1rem;
 	}
-`
+`;
 
 const ProfileEditContainer = styled.div`
 	width: 100%;
@@ -109,6 +113,7 @@ const ProfileEditContainer = styled.div`
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 2rem;
 
 	& button {
 		width: 45%;
@@ -125,7 +130,7 @@ const ProfileEditContainer = styled.div`
 			cursor: pointer;
 		}
 	}
-`
+`;
 
 const PostContainer = styled.div`
 	width: 100%;
@@ -133,87 +138,96 @@ const PostContainer = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-`
+`;
+
+// 모달 상태 관리
+type AddPostModalState = 'open' | 'closed' | 'closing';
+type MenuModalState = 'open' | 'closed' | 'closing';
 
 export default function Profile() {
 	// 모달 관련
-	const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false)
-	const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
-	const [isProfileImageModalOpen, setIsProfileImageModalOpen] = useState(false)
-	const closeAddPostModal = () => {
-		setIsAddPostModalOpen(false)
-	}
-	const closeMenuModal = () => {
-		setIsMenuModalOpen(false)
-	}
-	const closeProfileImageModal = () => {
-		setIsProfileImageModalOpen(false)
-	}
+	const [addPostModal, setAddPostModal] = useState<AddPostModalState>('closed');
+	const [menuModal, setMenuModal] = useState<MenuModalState>('closed');
 
 	// 페이지 이동
-	const navigate = useNavigate()
+	const navigate = useNavigate();
+
+	// ToggleBar 탭 상태 관리
+	const [activeTab, setActiveTab] = useState<'left' | 'right'>('left');
+
+	const { id } = useParams();
 
 	return (
 		<ProfileLayout>
 			<HeaderContainer>
-				<h2>dndw0</h2>
+				<h2>{id}</h2>
 				<div>
-					<img
+					<Icon
 						src={addPost}
 						alt="게시글 추가"
-						onClick={() => setIsAddPostModalOpen(true)}
+						onClick={() => setAddPostModal('open')}
 					/>
-					<img
+					<Icon
 						src={menu}
-						alt="메뉴 열기"
-						onClick={() => setIsMenuModalOpen(true)}
+						alt="메뉴 추가"
+						onClick={() => setMenuModal('open')}
 					/>
 				</div>
 			</HeaderContainer>
-
 			<UserInfoContainer>
-				<img
-					src={defaultProfile}
-					alt="프로필 사진"
-					onClick={() => setIsProfileImageModalOpen(true)}
-				/>
+				<img src={defaultProfile} alt="프로필 사진" />
 				<div>
 					<h2>0</h2>
 					<p>게시물</p>
 				</div>
-				<div>
+				<div onClick={() => navigate('/id/followers')}>
 					<h2>0</h2>
 					<p>팔로워</p>
 				</div>
-				<div>
+				<div onClick={() => navigate('/id/following')}>
 					<h2>0</h2>
-					<p>팔로우</p>
+					<p>팔로잉</p>
 				</div>
 			</UserInfoContainer>
-
 			<UserProfileContainer>
 				<h3>최재웅</h3>
 				<p>자기소개</p>
 			</UserProfileContainer>
-
 			<ProfileEditContainer>
-				<button onClick={() => navigate('edit')}>프로필 편집</button>
+				<button onClick={() => navigate('/id/edit')}>프로필 편집</button>
 				<button>프로필 공유</button>
 			</ProfileEditContainer>
-
-			<PostContainer>{/* <PostList /> */}</PostContainer>
+			<PostContainer>
+				<ToggleBar
+					leftTab={<Icon src={menu} />}
+					rightTab={<Icon src={addPost} />}
+					activeTab={activeTab}
+					setActiveTab={setActiveTab}
+				>
+					<div>포스트</div>
+					<div>태그됨</div>
+				</ToggleBar>
+			</PostContainer>
 
 			{/*	Modals */}
-			{isAddPostModalOpen && (
+			{addPostModal !== 'closed' && (
 				<AddPostModal
-					onCloseModal={closeAddPostModal}
-					isOpenModal={isAddPostModalOpen}
+					close={() => {
+						setAddPostModal('closing');
+						setTimeout(() => setAddPostModal('closed'), 300);
+					}}
+					isClosing={addPostModal === 'closing'}
 				/>
 			)}
-			{isMenuModalOpen && <MenuModal onCloseMenuModalOpen={closeMenuModal} />}
-			{isProfileImageModalOpen && (
-				<ProfileImageModal onCloseProfileImageModal={closeProfileImageModal} />
+			{menuModal !== 'closed' && (
+				<MenuModal
+					close={() => {
+						setMenuModal('closing');
+						setTimeout(() => setMenuModal('closed'), 300);
+					}}
+					isClosing={menuModal === 'closing'}
+				/>
 			)}
 		</ProfileLayout>
-	)
+	);
 }

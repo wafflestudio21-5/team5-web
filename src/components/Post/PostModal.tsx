@@ -1,14 +1,16 @@
-import styled from 'styled-components'
-import Modal from '../../shared/Modal/Modal.tsx'
-import PostImage from './PostImage.tsx'
-import PostHeader from './PostHeader.tsx'
-import ReactSection from './ReactSection.tsx'
+import styled from 'styled-components';
+
+import Modal from '../../shared/Modal/Modal.tsx';
+
+import PostHeader from './PostHeader.tsx';
+import PostImage from './PostImage.tsx';
+import ReactSection from './ReactSection.tsx';
 
 type Props = {
-	close: () => void
-	isClosing: boolean
-	postId: number | null
-}
+	close: () => void;
+	isClosing: boolean;
+	postId: number | null;
+};
 
 const ModalWrapper = styled.div`
 	display: flex;
@@ -16,7 +18,7 @@ const ModalWrapper = styled.div`
 	width: 75%;
 	height: 90%;
 	background-color: white;
-`
+`;
 
 const SideBar = styled.div`
 	border-left: 1px solid gray;
@@ -27,7 +29,7 @@ const SideBar = styled.div`
 	}
 	width: 30rem;
 	padding: 1rem;
-`
+`;
 
 export default function PostModal({ close, isClosing, postId }: Props) {
 	return (
@@ -42,5 +44,5 @@ export default function PostModal({ close, isClosing, postId }: Props) {
 				</ModalWrapper>
 			</Modal>
 		)
-	)
+	);
 }

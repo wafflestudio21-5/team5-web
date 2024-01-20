@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import type { Post } from '../../contexts/PostContext'
+import styled from 'styled-components';
+import type { Post } from '../../contexts/PostContext';
 
 const Container = styled.div`
 	position: relative;
@@ -8,12 +8,12 @@ const Container = styled.div`
 	left: 0;
 	box-sizing: border-box;
 	display: flex;
-`
+`;
 
 const Image = styled.img`
 	width: 100%;
 	position: relative;
-`
+`;
 
 // 이미지가 여러 개 있을 때 보이는 좌우 이동 버튼과 인덱스 표시 수평점
 // 여러 이미지를 받을 지 결정이 안되어서 주석처리 함.
@@ -62,7 +62,7 @@ const Image = styled.img`
 export default function PostImage({
 	imageUrl,
 }: {
-	imageUrl: Post['imageUrl']
+	imageUrl: Post['imageUrl'];
 }) {
 	return (
 		<Container>
@@ -75,5 +75,5 @@ export default function PostImage({
 				<div className="dot select"></div>
 			</IndexBar> */}
 		</Container>
-	)
+	);
 }

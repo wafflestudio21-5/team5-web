@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import styled from 'styled-components'
 import PostImage from './PostImage'
 import ReactSection from './ReactSection'
 import PostHeader from './PostHeader'
 import { PostDataType } from '../../contexts/PostContext'
+=======
+import styled from 'styled-components';
+
+import PostHeader from './PostHeader';
+import PostImage from './PostImage';
+import ReactSection from './ReactSection';
+>>>>>>> origin/develope
 
 const Container = styled.article`
 	display: flex;
@@ -13,7 +21,7 @@ const Container = styled.article`
 	margin-bottom: 1rem;
 	padding-bottom: 1rem;
 	box-sizing: border-box;
-`
+`;
 
 type Props = {
 	postData: PostDataType | null

@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import PostList from '../components/Feed'
-import Header from '../components/Header'
-import StoryBar from '../components/Story/StoryBar'
+import styled from 'styled-components';
+import PostList from '../components/Feed';
+import Header from '../components/Header';
+import StoryBar from '../components/Story/StoryBar';
 
 const HomeLayout = styled.main`
 	width: 100%;
@@ -16,7 +16,7 @@ const HomeLayout = styled.main`
 		display: flex;
 		flex-direction: column;
 	}
-`
+`;
 
 export default function Home() {
 	return (
@@ -29,5 +29,5 @@ export default function Home() {
 				</div>
 			</HomeLayout>
 		</>
-	)
+	);
 }

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Icon = styled.img`
 	width: 1.7rem;
@@ -7,6 +7,6 @@ const Icon = styled.img`
 	&:hover {
 		cursor: pointer;
 	}
-`
+`;
 
-export default Icon
+export default Icon;

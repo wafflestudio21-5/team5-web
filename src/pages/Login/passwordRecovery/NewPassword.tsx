@@ -1,25 +1,26 @@
-import styled from 'styled-components'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useUserContext } from '../../../contexts/UserContext'
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { useUserContext } from '../../../contexts/UserContext';
 
 interface InputProps {
-	isvalid: boolean
-	type: string
-	value: string
-	placeholder: string
-	onChange: React.ChangeEventHandler<HTMLInputElement>
+	isvalid: boolean;
+	type: string;
+	value: string;
+	placeholder: string;
+	onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const Div = styled.div`
 	&.logout {
 		width: 94%;
@@ -37,7 +38,7 @@ const Div = styled.div`
 		font-size: 0.7rem;
 		margin: -0.5rem 0 0 1.5rem;
 	}
-`
+`;
 const Input = styled.input<InputProps>`
 	&.code {
 		display: block;
@@ -52,13 +53,13 @@ const Input = styled.input<InputProps>`
 	&:focus {
 		outline: none;
 	}
-`
+`;
 const Checkbox = styled.input`
 	&.checkbox {
 		display: inline;
 		float: left;
 	}
-`
+`;
 const Button = styled.button`
 	display: block;
 	margin: 1rem auto;
@@ -68,20 +69,20 @@ const Button = styled.button`
 	border: none;
 	background-color: blue;
 	color: white;
-`
+`;
 
 export default function NewPassword() {
-	const { password, setPassword, setIsLoggedin } = useUserContext()
-	const [isValid, setIsValid] = useState(true)
-	const navigate = useNavigate()
+	const { password, setPassword, setIsLoggedin } = useUserContext();
+	const [isValid, setIsValid] = useState(true);
+	const navigate = useNavigate();
 	const handleClick = () => {
-		if (password.length < 6) setIsValid(false)
+		if (password.length < 6) setIsValid(false);
 		else {
-			setIsValid(true)
-			setIsLoggedin(true)
-			navigate('/')
+			setIsValid(true);
+			setIsLoggedin(true);
+			navigate('/');
 		}
-	}
+	};
 	return (
 		<>
 			<Link to="/passwordRecovery/certification">
@@ -118,5 +119,5 @@ export default function NewPassword() {
 				</Div>
 			</Div>
 		</>
-	)
+	);
 }

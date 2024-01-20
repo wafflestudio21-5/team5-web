@@ -1,24 +1,24 @@
-import styled from 'styled-components'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 interface InputProps {
-	isvalid: boolean
-	type: string
-	value: string
-	placeholder: string
-	onChange: React.ChangeEventHandler<HTMLInputElement>
+	isvalid: boolean;
+	type: string;
+	value: string;
+	placeholder: string;
+	onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const Div = styled.div`
 	&.text {
 		width: 90%;
@@ -35,7 +35,7 @@ const Div = styled.div`
 		margin: 0 auto;
 		text-align: center;
 	}
-`
+`;
 const Input = styled.input<InputProps>`
 	display: block;
 	width: 90%;
@@ -48,7 +48,7 @@ const Input = styled.input<InputProps>`
 	&:focus {
 		outline: none;
 	}
-`
+`;
 const Button = styled.button`
 	display: block;
 	margin: 1rem auto;
@@ -58,19 +58,19 @@ const Button = styled.button`
 	border: none;
 	background-color: blue;
 	color: white;
-`
+`;
 
 export default function Certification() {
-	const [code, setCode] = useState('')
-	const [isValid, setIsValid] = useState(true)
-	const navigate = useNavigate()
+	const [code, setCode] = useState('');
+	const [isValid, setIsValid] = useState(true);
+	const navigate = useNavigate();
 	const handleClick = () => {
 		if (code.length === 6) {
-			setIsValid(true)
-			navigate('/passwordRecovery/newPassword')
-			setIsValid(false)
-		} else setIsValid(false)
-	}
+			setIsValid(true);
+			navigate('/passwordRecovery/newPassword');
+			setIsValid(false);
+		} else setIsValid(false);
+	};
 	return (
 		<>
 			<Link to="/passwordRecovery">
@@ -101,5 +101,5 @@ export default function Certification() {
 				코드 다시 받기
 			</Div>
 		</>
-	)
+	);
 }

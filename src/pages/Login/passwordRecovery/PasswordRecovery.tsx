@@ -1,17 +1,17 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
-import { useUserContext } from '../../../contexts/UserContext'
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { useUserContext } from '../../../contexts/UserContext';
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const Div = styled.div`
 	&.text {
 		width: 90%;
@@ -21,7 +21,7 @@ const Div = styled.div`
 	&#link {
 		text-align: center;
 	}
-`
+`;
 const Input = styled.input`
 	display: block;
 	width: 90%;
@@ -34,7 +34,7 @@ const Input = styled.input`
 	&:focus {
 		outline: none;
 	}
-`
+`;
 const Button = styled.button`
 	display: block;
 	margin: 1rem auto;
@@ -44,14 +44,14 @@ const Button = styled.button`
 	border: none;
 	background-color: blue;
 	color: white;
-`
+`;
 
 export default function Login() {
-	const { username, setUsername } = useUserContext()
-	const navigate = useNavigate()
+	const { username, setUsername } = useUserContext();
+	const navigate = useNavigate();
 	const onClick = () => {
-		if (username !== '') navigate('certification/')
-	}
+		if (username !== '') navigate('certification/');
+	};
 	return (
 		<>
 			<Link to="/">
@@ -78,5 +78,5 @@ export default function Login() {
 				이메일 주소로 검색
 			</Div>
 		</>
-	)
+	);
 }

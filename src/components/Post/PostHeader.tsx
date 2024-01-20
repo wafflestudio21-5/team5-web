@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import UserInfo from './UserInfo'
-import Icon from '../../shared/Icon'
-import ellipsis from '../../assets/Images/Post/ellipsis.svg'
+import styled from 'styled-components';
+import UserInfo from './UserInfo';
+import Icon from '../../shared/Icon';
+import ellipsis from '../../assets/Images/Post/ellipsis.svg';
 
 const Wrapper = styled.div`
 	display: flex;
@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 	padding-bottom: 0.75rem;
 	padding-left: 0.25rem;
 	box-sizing: border-box;
-`
+`;
 
 const ExtraButton = styled.button`
 	background-color: transparent;
@@ -24,7 +24,7 @@ const ExtraButton = styled.button`
 		width: 2em;
 		height: 1.5em;
 	}
-`
+`;
 
 export default function PostHeader({ showMenu }: { showMenu: () => void }) {
 	return (
@@ -34,5 +34,5 @@ export default function PostHeader({ showMenu }: { showMenu: () => void }) {
 				<Icon src={ellipsis} alt="ellipsis" />
 			</ExtraButton>
 		</Wrapper>
-	)
+	);
 }
