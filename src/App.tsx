@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components';
 
 import NavBar from './components/NavBar.tsx';
 import { useUserContext } from './contexts/UserContext.tsx';
-import Explore from './pages/Explore.tsx';
+import Explore from './pages/Explore/Explore.tsx';
 import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
 import Certification from './pages/Login/passwordRecovery/Certification.tsx';
@@ -25,7 +25,7 @@ import SignUp from './pages/Login/signUp/SignUp.tsx';
 import EditProfile from './pages/Profile/EditProfile.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
-import Reels from './pages/Reels.tsx';
+import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
 
@@ -39,12 +39,12 @@ const router = createBrowserRouter([
 				element: <Home />,
 			},
 			{
-				path: 'explore/',
-				element: <Explore />,
+				path: 'search/',
+				element: <Search />,
 			},
 			{
-				path: 'reels/',
-				element: <Reels />,
+				path: 'explore/',
+				element: <Explore />,
 			},
 			{
 				path: ':id/',
