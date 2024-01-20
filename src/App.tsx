@@ -51,20 +51,20 @@ const router = createBrowserRouter([
 				element: <Profile />,
 			},
 			{
-				path: 'id/edit/',
+				path: ':id/edit/',
 				element: <EditProfile />,
 			},
 			{
-				path: 'id/followers/',
+				path: ':id/followers/',
 				element: <Follow />,
 			},
 			{
-				path: 'id/following/',
+				path: ':id/following/',
 				element: <Follow />,
 			},
 			{
 				path: '*',
-				element: <Navigate to="" />, // 이상한 url이 home이 아닌 profile로 가는 원인 모를 현상이 있음. useparams 도입 후 고칠 것
+				element: <Navigate to="" />,
 			},
 		],
 	},
@@ -134,10 +134,10 @@ function App() {
 	return (
 		<ThemeProvider theme={Theme}>
 			<GlobalStyles />
-			{/*<RouterProvider router={router}>*/}
-			{/* const { isLoggedin } = useUserContext() */}
-			<RouterProvider router={isLoggedin ? router : loginRouter} />
-			{/* </RouterProvider> */}
+			<RouterProvider router={router}>
+				{/* const { isLoggedin } = useUserContext() */}
+				{/*<RouterProvider router={isLoggedin ? router : loginRouter} />*/}
+			</RouterProvider>
 		</ThemeProvider>
 	);
 }
