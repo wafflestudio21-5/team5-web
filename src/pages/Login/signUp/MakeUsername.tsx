@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
-import { useUserContext } from '../../../contexts/UserContext'
+import { useUserContext } from '../../../contexts/AuthContext'
 
 interface InputProps {
 	isvalid: boolean

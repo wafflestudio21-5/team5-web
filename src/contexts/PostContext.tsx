@@ -8,7 +8,8 @@ type tryPostProps = {
 
 export type PostContextData = {
 	content: string,
-    setContent: string,
+    setContent: (s:string)=>void,
+	tryPost: (props: tryPostProps) => void
 }
 
 export const PostContext = createContext<PostContextData | null>(null)
@@ -23,46 +24,30 @@ export function PostProvider({ children }: ProviderProps) {
 			const response = await axios.post(
 				'/api/v1/post',
 				{
-					username: username,
-					name: name,
-					password: password,
-					contact: email,
-					contact_type: email
+					
 				}
 			)
 			console.log(response)
 			navigate(addr)
 		} catch (error) {
-			alert('회원가입 실패')
+			alert('포스트 생성 실패')
 		}
 	}
 	return (
-		<UserContext.Provider
+		<PostContext.Provider
 			value={{
-				name,
-				setName,
-				username,
-				setUsername,
-				password,
-				setPassword,
-				email,
-				setEmail,
-				birthday,
-				setBirthday,
-				isSaved,
-				setIsSaved,
-				isLoggedin,
-				setIsLoggedin,
-				trySignUp,
+				content, 
+				setContent,
+				tryPost
 			}}
 		>
 			{children}
-		</UserContext.Provider>
+		</PostContext.Provider>
 	)
 }
 
 export function useUserContext() {
-	const context = useContext(UserContext)
+	const context = useContext(PostContext)
 	if (!context) {
 		throw new Error('useUserContext must be used within a UserProvider')
 	}
