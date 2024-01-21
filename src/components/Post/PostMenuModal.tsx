@@ -11,7 +11,6 @@ const ModalContent = styled.div`
 	gap: 0.5rem;
 	width: 430px;
 	padding: 1rem;
-	box-sizing: border-box;
 	background-color: grey;
 	border-radius: 1rem 1rem 0 0;
 `;

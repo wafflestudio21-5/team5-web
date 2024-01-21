@@ -14,7 +14,6 @@ const Container = styled.article`
 	border-bottom: 1px solid gray;
 	margin-bottom: 1rem;
 	padding-bottom: 1rem;
-	box-sizing: border-box;
 `;
 
 type Props = {

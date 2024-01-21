@@ -12,13 +12,11 @@ const Wrapper = styled.div`
 	justify-content: space-between;
 	padding-bottom: 0.75rem;
 	padding-left: 0.25rem;
-	box-sizing: border-box;
 `;
 
 const ExtraButton = styled.button`
 	background-color: transparent;
 	border: none;
-	box-sizing: border-box;
 	padding: 0;
 	display: flex;
 	align-items: center;

@@ -7,7 +7,6 @@ const Container = styled.div`
 	width: 100%;
 	top: 0;
 	left: 0;
-	box-sizing: border-box;
 	display: flex;
 `;
 
