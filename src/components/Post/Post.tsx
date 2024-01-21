@@ -26,6 +26,7 @@ export default function Post({ postData, openMenuModal }: Props) {
 		postData && (
 			<Container>
 				<PostHeader
+					username={postData.username}
 					showMenu={() => {
 						openMenuModal(postData.postId);
 					}}

@@ -26,10 +26,20 @@ const ExtraButton = styled.button`
 	}
 `;
 
-export default function PostHeader({ showMenu }: { showMenu: () => void }) {
+type PostHeaderType = {
+	username: string;
+	userImage?: string;
+	showMenu: () => void;
+};
+
+export default function PostHeader({
+	username,
+	userImage,
+	showMenu,
+}: PostHeaderType) {
 	return (
 		<Wrapper>
-			<UserInfo />
+			<UserInfo username={username} userImage={userImage} />
 			<ExtraButton onClick={showMenu}>
 				<Icon src={ellipsis} alt="ellipsis" />
 			</ExtraButton>
