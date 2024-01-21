@@ -13,7 +13,7 @@ const ModalContent = styled.div`
 	width: 430px;
 	padding: 1rem;
 	background-color: ${getColor('grey')};
-	border-radius: 1rem 1rem 0 0;
+	border-radius: 0.5rem 0.5rem 0 0;
 `;
 
 const SaveQRContainer = styled.div`
@@ -29,7 +29,7 @@ const ButtonGroup = styled.div`
 	display: flex;
 	flex-direction: column;
 	border: 1px solid grey;
-	border-radius: 1rem;
+	border-radius: 0.5rem;
 	overflow: hidden;
 	justify-content: center;
 	gap: 0;
