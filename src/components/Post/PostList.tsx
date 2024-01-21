@@ -81,7 +81,7 @@ export default function PostList() {
 						setTimeout(() => {
 							setMenuModal('closed');
 							setMenuPostId(null);
-						}, 500);
+						}, 300);
 					}}
 					isClosing={menuModal === 'closing'}
 					postId={menuPostId}
