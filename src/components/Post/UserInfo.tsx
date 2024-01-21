@@ -30,19 +30,27 @@ const NameBox = styled.div`
 	align-items: center;
 `;
 
-export default function UserInfo() {
+type UserInfoProps = {
+	username: string;
+	userImage?: string;
+};
+
+export default function UserInfo({ username, userImage }: UserInfoProps) {
 	return (
 		<StyledLink>
 			<Container>
 				<ImageBox>
 					<ProfileImage
-						src="https://wafflestudio.com/static/images/DefaultProfileImage.svg"
+						src={
+							userImage ??
+							'https://wafflestudio.com/static/images/DefaultProfileImage.svg'
+						}
 						alt="profile image"
 					/>
 				</ImageBox>
 				<NameBox>
 					<span>
-						<b>sangchu</b>
+						<b>{username}</b>
 					</span>
 				</NameBox>
 			</Container>
