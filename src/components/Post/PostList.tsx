@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import { getColor } from '../../styles/Theme';
 import { FeedType } from '../../types';
 
 import Post from './Post';
 import PostMenuModal from './PostMenuModal';
 
 const Container = styled.div`
-	background-color: white;
+	background-color: ${getColor('white')};
 	width: 100%;
 	display: flex;
 	flex-direction: column;

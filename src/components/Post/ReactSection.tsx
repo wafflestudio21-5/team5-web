@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -7,8 +8,8 @@ import likedIcon from '../../assets/Images/Post/liked.svg';
 import saveIcon from '../../assets/Images/Post/save.svg';
 import shareIcon from '../../assets/Images/Post/share.svg';
 import Icon from '../../shared/Icon';
+import { getColor } from '../../styles/Theme';
 import { PostType } from '../../types';
-import axios from 'axios';
 
 const Container = styled.div`
 	display: flex;
@@ -51,7 +52,7 @@ const TextBox = styled.div`
 		margin-top: 0.5rem;
 	}
 	&.secondary-text {
-		color: rgb(125, 125, 125);
+		color: ${getColor('grey')};
 	}
 	&.more-comment {
 		cursor: pointer;
@@ -65,7 +66,7 @@ const TextBox = styled.div`
 		cursor: pointer;
 	}
 	& .username:hover {
-		color: gray;
+		color: ${getColor('grey')};
 	}
 `;
 

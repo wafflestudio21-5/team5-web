@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import saveIcon from '../../assets/Images/Post/save.svg';
 import Icon from '../../shared/Icon';
 import Modal from '../../shared/Modal/Modal';
+import { getColor } from '../../styles/Theme';
 
 const ModalContent = styled.div`
 	display: flex;
@@ -11,7 +12,7 @@ const ModalContent = styled.div`
 	gap: 0.5rem;
 	width: 430px;
 	padding: 1rem;
-	background-color: grey;
+	background-color: ${getColor('grey')};
 	border-radius: 1rem 1rem 0 0;
 `;
 
@@ -34,7 +35,7 @@ const ButtonGroup = styled.div`
 	gap: 0;
 	font-size: 0;
 	& button {
-		background-color: darkGrey;
+		background-color: ${getColor('darkGrey')};
 		min-height: 2rem;
 		font-size: 0.7rem;
 	}
