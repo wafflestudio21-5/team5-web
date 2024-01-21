@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-/* import { useUserContext } from '../../contexts/UserContext'
-import React, { useEffect, useState } from 'react'
-import axios from 'axios' */
+
 
 const Div = styled.div`
     &.header {
