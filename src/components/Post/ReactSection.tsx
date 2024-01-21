@@ -76,6 +76,7 @@ type Props = {
 
 export default function ReactSection({ postData }: Props) {
 	const [liked, setLiked] = useState(false);
+	const [saved, setSaved] = useState(false);
 
 	return (
 		postData && (
@@ -106,7 +107,17 @@ export default function ReactSection({ postData }: Props) {
 							<Icon src={shareIcon} />
 						</div>
 					</div>
-					<div className="save">
+					<div
+						className="save"
+						onClick={() => {
+							if (saved) {
+								axios.post(`/api/v1/posts/${postData.postId}/save`);
+							} else {
+								axios.delete(`/api/v1/posts/${postData.postId}/save`);
+							}
+							setSaved(!saved);
+						}}
+					>
 						<div className="icon-box">
 							<Icon src={saveIcon} />
 						</div>
