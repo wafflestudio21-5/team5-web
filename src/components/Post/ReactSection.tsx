@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import Icon from '../../shared/Icon';
-import likedIcon from '../../assets/Images/Post/liked.svg';
-import likeIcon from '../../assets/Images/Post/like.svg';
+
 import commentIcon from '../../assets/Images/Post/comment.svg';
-import shareIcon from '../../assets/Images/Post/share.svg';
+import likeIcon from '../../assets/Images/Post/like.svg';
+import likedIcon from '../../assets/Images/Post/liked.svg';
 import saveIcon from '../../assets/Images/Post/save.svg';
-import { PostDataType } from '../../contexts/PostContext';
+import shareIcon from '../../assets/Images/Post/share.svg';
+import Icon from '../../shared/Icon';
+import { PostType } from '../../types';
 
 const Container = styled.div`
 	display: flex;
@@ -68,11 +69,10 @@ const TextBox = styled.div`
 `;
 
 type Props = {
-	postId: number | null;
-	openPostModal?: (postId: number) => void;
+	postData: PostType | null;
 };
 
-export default function ReactSection({ postId, openPostModal }: Props) {
+export default function ReactSection({ postData }: Props) {
 	const [liked, setLiked] = useState(false);
 
 	return (

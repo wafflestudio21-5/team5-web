@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import type { Post } from '../../contexts/PostContext';
+
+import { PostType } from '../../types';
 
 const Container = styled.div`
 	position: relative;
@@ -62,7 +63,7 @@ const Image = styled.img`
 export default function PostImage({
 	imageUrl,
 }: {
-	imageUrl: Post['imageUrl'];
+	imageUrl: PostType['imageUrl'];
 }) {
 	return (
 		<Container>

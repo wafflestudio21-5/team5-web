@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import UserInfo from './UserInfo';
-import Icon from '../../shared/Icon';
+
 import ellipsis from '../../assets/Images/Post/ellipsis.svg';
+import Icon from '../../shared/Icon';
+
+import UserInfo from './UserInfo';
 
 const Wrapper = styled.div`
 	display: flex;

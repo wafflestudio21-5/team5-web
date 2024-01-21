@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import PostList from '../components/Feed';
-import Header from '../components/Header';
+
+import Header from '../components/Post/Header';
+import PostList from '../components/Post/PostList';
 import StoryBar from '../components/Story/StoryBar';
+import React from 'react';
 
 const HomeLayout = styled.main`
 	width: 100%;

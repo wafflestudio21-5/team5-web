@@ -1,8 +1,9 @@
-import styled from 'styled-components'
-import Post from './Post/Post.tsx'
-import { useState } from 'react'
-import PostMenuModal from './Post/PostMenuModal.tsx'
-import { FeedDataType } from '../contexts/PostContext.tsx'
+import styled from 'styled-components';
+import Post from './Post/Post.tsx';
+import { useState } from 'react';
+import PostMenuModal from './Post/PostMenuModal.tsx';
+import { FeedDataType } from '../contexts/PostContext.tsx';
+import React from 'react';
 
 const Container = styled.div`
 	background-color: white;
@@ -10,9 +11,9 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-`
+`;
 
-type ModalState = 'open' | 'closed' | 'closing'
+type ModalState = 'open' | 'closed' | 'closing';
 
 const feed: FeedDataType = {
 	posts: [
@@ -52,17 +53,17 @@ const feed: FeedDataType = {
 	],
 	page: 1,
 	total: 12,
-}
+};
 
 export default function PostList() {
-	const [menuModal, setMenuModal] = useState<ModalState>('closed')
+	const [menuModal, setMenuModal] = useState<ModalState>('closed');
 
-	const [menuPostId, setMenuPostId] = useState<number | null>(null)
+	const [menuPostId, setMenuPostId] = useState<number | null>(null);
 
 	const openMenuModal = (postId: number) => {
-		setMenuPostId(postId)
-		setMenuModal('open')
-	}
+		setMenuPostId(postId);
+		setMenuModal('open');
+	};
 
 	return (
 		<>
@@ -74,16 +75,16 @@ export default function PostList() {
 			{menuModal !== 'closed' && (
 				<PostMenuModal
 					close={() => {
-						setMenuModal('closing')
+						setMenuModal('closing');
 						setTimeout(() => {
-							setMenuModal('closed')
-							setMenuPostId(null)
-						}, 500)
+							setMenuModal('closed');
+							setMenuPostId(null);
+						}, 500);
 					}}
 					isClosing={menuModal === 'closing'}
 					postId={menuPostId}
 				/>
 			)}
 		</>
-	)
+	);
 }

@@ -1,16 +1,10 @@
-<<<<<<< HEAD
-import styled from 'styled-components'
-import PostImage from './PostImage'
-import ReactSection from './ReactSection'
-import PostHeader from './PostHeader'
-import { PostDataType } from '../../contexts/PostContext'
-=======
 import styled from 'styled-components';
+
+import { PostType } from '../../types';
 
 import PostHeader from './PostHeader';
 import PostImage from './PostImage';
 import ReactSection from './ReactSection';
->>>>>>> origin/develope
 
 const Container = styled.article`
 	display: flex;
@@ -24,9 +18,9 @@ const Container = styled.article`
 `;
 
 type Props = {
-	postData: PostDataType | null
-	openMenuModal: (postId: number) => void
-}
+	postData: PostType | null;
+	openMenuModal: (postId: number) => void;
+};
 
 export default function Post({ postData, openMenuModal }: Props) {
 	return (
@@ -34,12 +28,12 @@ export default function Post({ postData, openMenuModal }: Props) {
 			<Container>
 				<PostHeader
 					showMenu={() => {
-						openMenuModal(postData.postId)
+						openMenuModal(postData.postId);
 					}}
 				/>
 				<PostImage imageUrl={postData.imageUrl} />
 				<ReactSection postData={postData} />
 			</Container>
 		)
-	)
+	);
 }

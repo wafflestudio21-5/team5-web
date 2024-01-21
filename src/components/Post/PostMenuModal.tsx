@@ -1,7 +1,9 @@
-import styled from 'styled-components'
-import Modal from '../../shared/Modal/Modal'
-import saveIcon from '../../assets/Images/Post/save.svg'
-import Icon from '../../shared/Icon'
+import axios from 'axios';
+import styled from 'styled-components';
+
+import saveIcon from '../../assets/Images/Post/save.svg';
+import Icon from '../../shared/Icon';
+import Modal from '../../shared/Modal/Modal';
 
 const ModalContent = styled.div`
 	display: flex;
@@ -12,7 +14,7 @@ const ModalContent = styled.div`
 	box-sizing: border-box;
 	background-color: grey;
 	border-radius: 1rem 1rem 0 0;
-`
+`;
 
 const SaveQRContainer = styled.div`
 	display: flex;
@@ -20,7 +22,7 @@ const SaveQRContainer = styled.div`
 	gap: 1px;
 	width: 100%;
 	flex-grow: 1;
-`
+`;
 
 const ButtonGroup = styled.div`
 	width: 100%;
@@ -37,23 +39,27 @@ const ButtonGroup = styled.div`
 		min-height: 2rem;
 		font-size: 0.7rem;
 	}
-`
+`;
 
 export default function PostMenuModal({
 	postId,
 	close,
 	isClosing,
 }: {
-	postId: number | null
-	close: () => void
-	isClosing: boolean
+	postId: number | null;
+	close: () => void;
+	isClosing: boolean;
 }) {
 	return (
 		<Modal onBackgroundClick={close} isClosing={isClosing}>
 			<ModalContent>
 				<SaveQRContainer>
 					<ButtonGroup>
-						<button>
+						<button
+							onClick={async () => {
+								await axios.post(`/api/v1/posts/${postId}/save`);
+							}}
+						>
 							<div>
 								<Icon src={saveIcon} />
 							</div>
@@ -81,5 +87,5 @@ export default function PostMenuModal({
 				</ButtonGroup>
 			</ModalContent>
 		</Modal>
-	)
+	);
 }
