@@ -27,6 +27,7 @@ import { ThemeProvider } from "styled-components";
 import Theme from "./styles/Theme.tsx";
 import NavBar from "./components/NavBar.tsx";
 import Home from "./pages/Home.tsx";
+import AskPhone from "./pages/Login/signUp/AskPhone.tsx";
 
 const router = createBrowserRouter([
   {
@@ -105,6 +106,10 @@ const loginRouter = createBrowserRouter([
   {
     path: "signUp/email/",
     element: <AskEmail />,
+  },
+  {
+    path: "signUp/phone/",
+    element: <AskPhone />,
   },
   {
     path: "signUp/certification/",
