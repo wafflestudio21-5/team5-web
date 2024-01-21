@@ -8,6 +8,7 @@ import saveIcon from '../../assets/Images/Post/save.svg';
 import shareIcon from '../../assets/Images/Post/share.svg';
 import Icon from '../../shared/Icon';
 import { PostType } from '../../types';
+import axios from 'axios';
 
 const Container = styled.div`
 	display: flex;
@@ -84,13 +85,9 @@ export default function ReactSection({ postData }: Props) {
 							className="icon-box"
 							onClick={() => {
 								if (liked) {
-									fetch(`/api/v1/posts/${postData.postId}/likes`, {
-										method: 'POST',
-									});
+									axios.post(`/api/v1/posts/${postData.postId}/likes`);
 								} else {
-									fetch(`/api/v1/posts/${postData.postId}/likes`, {
-										method: 'DELETE',
-									});
+									axios.delete(`/api/v1/posts/${postData.postId}/likes`);
 								}
 								setLiked(!liked);
 							}}
