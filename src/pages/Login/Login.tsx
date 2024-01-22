@@ -139,6 +139,7 @@ export default function Login() {
 				console.log(response.data.access_token);
 				console.log(accessToken);
 				console.log(refreshToken);
+				console.log(document.cookie);
 			} catch {
 				alert('아이디나 비밀번호가 다릅니다.');
 			}
