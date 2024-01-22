@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { getColor } from '../../styles/Theme';
+
 const Container = styled.div`
 	display: flex;
 	gap: 1rem;
@@ -7,7 +9,7 @@ const Container = styled.div`
 
 const StyledLink = styled.a`
 	text-decoration: none;
-	color: black;
+	color: ${getColor('black')};
 `;
 
 const ImageBox = styled.div`
@@ -30,19 +32,27 @@ const NameBox = styled.div`
 	align-items: center;
 `;
 
-export default function UserInfo() {
+type UserInfoProps = {
+	username: string;
+	userImage?: string;
+};
+
+export default function UserInfo({ username, userImage }: UserInfoProps) {
 	return (
 		<StyledLink>
 			<Container>
 				<ImageBox>
 					<ProfileImage
-						src="https://wafflestudio.com/static/images/DefaultProfileImage.svg"
+						src={
+							userImage ??
+							'https://wafflestudio.com/static/images/DefaultProfileImage.svg'
+						}
 						alt="profile image"
 					/>
 				</ImageBox>
 				<NameBox>
 					<span>
-						<b>sangchu</b>
+						<b>{username}</b>
 					</span>
 				</NameBox>
 			</Container>

@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+import ellipsis from '../../assets/Images/Post/ellipsis.svg';
+import Icon from '../../shared/Icon';
+
 import UserInfo from './UserInfo';
 
 const Wrapper = styled.div`
@@ -9,13 +12,11 @@ const Wrapper = styled.div`
 	justify-content: space-between;
 	padding-bottom: 0.75rem;
 	padding-left: 0.25rem;
-	box-sizing: border-box;
 `;
 
 const ExtraButton = styled.button`
 	background-color: transparent;
 	border: none;
-	box-sizing: border-box;
 	padding: 0;
 	display: flex;
 	align-items: center;
@@ -25,12 +26,22 @@ const ExtraButton = styled.button`
 	}
 `;
 
-export default function PostHeader() {
+type PostHeaderType = {
+	username: string;
+	userImage?: string;
+	showMenu: () => void;
+};
+
+export default function PostHeader({
+	username,
+	userImage,
+	showMenu,
+}: PostHeaderType) {
 	return (
 		<Wrapper>
-			<UserInfo />
-			<ExtraButton>
-				<img src="/ellipsis.svg" alt="ellipsis" />
+			<UserInfo username={username} userImage={userImage} />
+			<ExtraButton onClick={showMenu}>
+				<Icon src={ellipsis} alt="ellipsis" />
 			</ExtraButton>
 		</Wrapper>
 	);
