@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { getColor } from '../../styles/Theme';
+
 const Container = styled.div`
 	display: flex;
 	gap: 1rem;
@@ -7,7 +9,7 @@ const Container = styled.div`
 
 const StyledLink = styled.a`
 	text-decoration: none;
-	color: black;
+	color: ${getColor('black')};
 `;
 
 const ImageBox = styled.div`
