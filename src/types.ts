@@ -24,6 +24,7 @@ export type UserType = {
 	bio: string;
 	userLinks: UserLink[];
 	contacts: UserContact[];
+	postNumber: number;
 	followingNumber: number;
 	followerNumber: number;
 };

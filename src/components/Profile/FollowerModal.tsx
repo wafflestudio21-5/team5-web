@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { deleteFollower } from '../../apis/user.ts';
 import Modal from '../../shared/Modal/Modal.tsx';
 
 const FollowerModalContainer = styled.div`
@@ -42,7 +43,7 @@ export default function FollowerModal({ close, isClosing }: Props) {
 		<Modal onBackgroundClick={close} isClosing={isClosing}>
 			<FollowerModalContainer>
 				<CellContainer>
-					<Cell>
+					<Cell onClick={() => deleteFollower}>
 						<p>팔로워 삭제</p>
 					</Cell>
 				</CellContainer>

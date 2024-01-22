@@ -6,6 +6,12 @@ import {
 	getUserInformation,
 	getUserFollowStatus,
 	getUserFollowMeStatus,
+	getFollowRequestStatus,
+	getFollowRequestToMeStatus,
+	requestFollowToPrivateUser,
+	// cancelRequestFollowToPrivateUser,
+	followPublicUser,
+	unfollowUser,
 } from '../../apis/user.ts';
 import addPost from '../../assets/Images/Profile/add-post.png';
 import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
@@ -57,6 +63,38 @@ const IconContainer = styled.div<{
 }>`
 	display: ${(props) =>
 		!props.isMyAccount && !props.isMyFollower ? 'none' : 'block'};
+`;
+
+// 팔로우 요청 수락 or 거절 컨테이너
+const FollowRequestContainer = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 1.5rem;
+
+	& p {
+		margin: 0 1rem;
+	}
+
+	& div {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+
+	& button {
+		padding: 0.5rem 1rem;
+
+		border: none;
+		border-radius: 0.5rem;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
 `;
 
 // 사진, 게시물, 팔로워, 팔로잉
@@ -182,14 +220,14 @@ const PostContainer = styled.div`
 	align-items: center;
 `;
 
-// 모달 상태 관리
-type modalState = 'open' | 'closed' | 'closing';
+// 모달 상태 관리 타입
+type modalStateType = 'open' | 'closed' | 'closing';
 
 export default function Profile() {
 	// 모달 관련
-	const [addPostModal, setAddPostModal] = useState<modalState>('closed');
-	const [menuModal, setMenuModal] = useState<modalState>('closed');
-	const [followerModal, setFollowerModal] = useState<modalState>('closed');
+	const [addPostModal, setAddPostModal] = useState<modalStateType>('closed');
+	const [menuModal, setMenuModal] = useState<modalStateType>('closed');
+	const [followerModal, setFollowerModal] = useState<modalStateType>('closed');
 
 	// 페이지 이동
 	const navigate = useNavigate();
@@ -199,7 +237,7 @@ export default function Profile() {
 
 	// id로 유저 정보 가져오기
 	const { id } = useParams();
-	const { username, accessToken } = useUserContext();
+	const { username, accessToken, isMyAccountPrivate } = useUserContext();
 	const [user, setUser] = useState<UserType | undefined>();
 	const [isMyAccount, setIsMyAccount] = useState(false);
 	const [isFollow, setIsFollow] = useState(false);
@@ -207,6 +245,7 @@ export default function Profile() {
 	const [isFollowRequestToPrivate, setIsFollowRequestToPrivate] =
 		useState(false);
 	const [isMyFollower, setIsMyFollower] = useState(false); // 독립적
+	const [isFollowRequestToMe, setIsFollowRequestToMe] = useState(false); // 내가 비공개일 때 나에게 팔로우 요청을 보냈는지 확인
 
 	useEffect(() => {
 		const fetchUserData = async () => {
@@ -238,7 +277,7 @@ export default function Profile() {
 						// 팔로잉 하지 않으면 비공개 여부 판단
 						if (userInfo.isPrivate) {
 							setIsPrivate(true);
-							const followRequestStatus = await getUserFollowStatus(
+							const followRequestStatus = await getFollowRequestStatus(
 								userInfo.username,
 								accessToken
 							);
@@ -255,6 +294,17 @@ export default function Profile() {
 					);
 					if (followMeStatus) {
 						setIsMyFollower(followMeStatus);
+					} else {
+						// 내가 비공개 계정일 때 나에게 팔로우 요청을 보냈는지 판단
+						if (isMyAccountPrivate) {
+							const followRequestToMeStatus = await getFollowRequestToMeStatus(
+								userInfo.username,
+								accessToken
+							);
+							if (followRequestToMeStatus) {
+								setIsFollowRequestToMe(followRequestToMeStatus);
+							}
+						}
 					}
 				}
 			} catch {
@@ -289,11 +339,36 @@ export default function Profile() {
 		return isMyFollower ? '맞팔로우' : '팔로우';
 	};
 
+	// 계정 조건에 따라 버튼 클릭 시 동작 변경
+	const handleButtonClick = async () => {
+		if (!user) return;
+
+		try {
+			if (isMyAccount) {
+				navigate('/id/edit');
+			} else if (isFollow) {
+				await unfollowUser(user.username, accessToken);
+			} else if (isPrivate) {
+				if (isFollowRequestToPrivate) {
+					// await cancelRequestFollowToPrivateUser(user.username, accessToken);
+				} else {
+					await requestFollowToPrivateUser(user.username, accessToken);
+				}
+			} else {
+				await followPublicUser(user.username, accessToken);
+			}
+		} catch {
+			alert('오류가 발생했습니다.');
+		}
+	};
+
 	return !user ? (
 		() => navigate('/')
 	) : (
 		<ProfileLayout>
 			<HeaderContainer>
+				{!isMyAccount && <Icon src={menu}>뒤로 가기</Icon>}
+				{isMyAccountPrivate && <p>좌물쇠</p>}
 				<h2>{id}</h2>
 				<IconContainer isMyAccount={isMyAccount} isMyFollower={isMyFollower}>
 					{isMyAccount && (
@@ -313,7 +388,7 @@ export default function Profile() {
 					{!isMyAccount && isMyFollower && (
 						<div>
 							<Icon
-								src={menu} // 수정 필요
+								src={menu}
 								alt="팔로워 삭제"
 								onClick={() => setFollowerModal('open')}
 							/>
@@ -321,10 +396,20 @@ export default function Profile() {
 					)}
 				</IconContainer>
 			</HeaderContainer>
+			{/* 팔로우 요청 왔을 때에만 띄우기*/}
+			{isFollowRequestToMe && (
+				<FollowRequestContainer>
+					<p>{user.username}님이 팔로우를 요청했습니다</p>
+					<div>
+						<button>확인</button>
+						<button>삭제</button>
+					</div>
+				</FollowRequestContainer>
+			)}
 			<UserInfoContainer>
 				<img src={defaultProfile} alt="프로필 사진" />
 				<div>
-					<h2>포스트 숫자</h2>
+					<h2>{user.postNumber}</h2>
 					<p>게시물</p>
 				</div>
 				<div onClick={handleFollowersClick}>
@@ -339,6 +424,9 @@ export default function Profile() {
 			<UserProfileContainer>
 				<h3>{user.username}</h3>
 				<p>{user.bio}</p>
+				{user.userLinks.map((UserLink) => (
+					<a href={UserLink.links}>{UserLink.links}</a>
+				))}
 			</UserProfileContainer>
 			<ButtonContainer
 				isMyAccount={isMyAccount}
@@ -346,7 +434,7 @@ export default function Profile() {
 				isPrivate={isPrivate}
 				isFollowRequestToPrivate={isFollowRequestToPrivate}
 			>
-				<button onClick={() => navigate('/id/edit')} className="leftButton">
+				<button onClick={handleButtonClick} className="leftButton">
 					{getButtonLabel()}
 				</button>
 				<button className="rightButton">
@@ -364,7 +452,6 @@ export default function Profile() {
 					<div>태그됨</div>
 				</ToggleBar>
 			</PostContainer>
-
 			{/*	Modals */}
 			{addPostModal !== 'closed' && (
 				<AddPostModal
@@ -382,6 +469,7 @@ export default function Profile() {
 						setTimeout(() => setMenuModal('closed'), 300);
 					}}
 					isClosing={menuModal === 'closing'}
+					isPrivate={isPrivate}
 				/>
 			)}
 			{followerModal !== 'closed' && (
