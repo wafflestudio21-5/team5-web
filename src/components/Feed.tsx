@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import { getColor } from '../styles/Theme.tsx';
 import { FeedType } from '../types.ts';
 
+import CommentModal from './Comment/CommentModal.tsx';
 import Post from './Post/Post.tsx';
 import PostMenuModal from './Post/PostMenuModal.tsx';
 
 const Container = styled.div`
-	background-color: white;
+	background-color: ${getColor('white')};
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -56,21 +58,33 @@ const feed: FeedType = {
 	total: 12,
 };
 
-export default function PostList() {
+export default function Feed() {
 	const [menuModal, setMenuModal] = useState<ModalState>('closed');
+	const [commentModal, setCommentModal] = useState<ModalState>('closed');
 
 	const [menuPostId, setMenuPostId] = useState<number | null>(null);
+	const [commentPostId, setCommentPostId] = useState<number | null>(null);
 
 	const openMenuModal = (postId: number) => {
 		setMenuPostId(postId);
 		setMenuModal('open');
 	};
 
+	const openCommentModal = (postId: number) => {
+		setCommentPostId(postId);
+		console.log('?');
+		setCommentModal('open');
+	};
+
 	return (
 		<>
 			<Container>
 				{feed.posts.map((post) => (
-					<Post postData={post} openMenuModal={openMenuModal} />
+					<Post
+						postData={post}
+						openMenuModal={openMenuModal}
+						openCommentModal={openCommentModal}
+					/>
 				))}
 			</Container>
 			{menuModal !== 'closed' && (
@@ -80,10 +94,23 @@ export default function PostList() {
 						setTimeout(() => {
 							setMenuModal('closed');
 							setMenuPostId(null);
-						}, 500);
+						}, 300);
 					}}
 					isClosing={menuModal === 'closing'}
 					postId={menuPostId}
+				/>
+			)}
+			{commentModal !== 'closed' && (
+				<CommentModal
+					postId={commentPostId}
+					isClosing={commentModal === 'closing'}
+					close={() => {
+						setCommentModal('closing');
+						setTimeout(() => {
+							setCommentModal('closed');
+							setCommentPostId(null);
+						}, 300);
+					}}
 				/>
 			)}
 		</>

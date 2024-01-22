@@ -19,9 +19,14 @@ const Container = styled.article`
 type Props = {
 	postData: PostType | null;
 	openMenuModal: (postId: number) => void;
+	openCommentModal: (postId: number) => void;
 };
 
-export default function Post({ postData, openMenuModal }: Props) {
+export default function Post({
+	postData,
+	openMenuModal,
+	openCommentModal,
+}: Props) {
 	return (
 		postData && (
 			<Container>
@@ -32,7 +37,12 @@ export default function Post({ postData, openMenuModal }: Props) {
 					}}
 				/>
 				<PostImage imageUrl={postData.imageUrl} />
-				<ReactSection postData={postData} />
+				<ReactSection
+					postData={postData}
+					showComment={() => {
+						openCommentModal(postData.postId);
+					}}
+				/>
 			</Container>
 		)
 	);
