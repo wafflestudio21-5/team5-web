@@ -3,7 +3,7 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import { useUserContext } from "./contexts/UserContext.tsx";
+import { useAuthContext } from "./contexts/AuthContext.tsx";
 import Explore from "./pages/Explore.tsx";
 import Profile from "./pages/Profile/Profile.tsx";
 import Reels from "./pages/Reels.tsx";
@@ -27,6 +27,7 @@ import { ThemeProvider } from "styled-components";
 import Theme from "./styles/Theme.tsx";
 import NavBar from "./components/NavBar.tsx";
 import Home from "./pages/Home.tsx";
+import AskPhone from "./pages/Login/signUp/AskPhone.tsx";
 
 const router = createBrowserRouter([
   {
@@ -107,6 +108,10 @@ const loginRouter = createBrowserRouter([
     element: <AskEmail />,
   },
   {
+    path: "signUp/phone/",
+    element: <AskPhone />,
+  },
+  {
     path: "signUp/certification/",
     element: <CertificationSignUp />,
   },
@@ -126,7 +131,7 @@ const loginRouter = createBrowserRouter([
 
 
 function App() {
-  const { isLoggedin } = useUserContext();
+  const { isLoggedin } = useAuthContext();
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyles />

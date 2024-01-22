@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext";
-import { convert } from "hangul-romanization";
 
 interface InputProps {
   isvalid: boolean;
-  type: string; // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
+  type: string; 
   value: string;
   placeholder: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -36,10 +35,11 @@ const Input = styled.input<InputProps>`
 `;
 const Div = styled.div`
   &.notice {
-    color: red;
+    width: 90%;
     font-size: 0.7rem;
     margin-left: 1.5rem;
     margin-top: -0.5rem;
+    color: red;
   }
   &.text {
     width: 90%;
@@ -58,6 +58,16 @@ const Button = styled.button`
     background-color: blue;
     color: white;
   }
+  &.option {
+    display: block;
+    margin: 1rem auto;
+    width: 93%;
+    height: 2.5rem;
+    border-radius: 1.2rem;
+    border: 1px solid gainsboro;
+    background-color: white;
+    color: black;
+  }
   &.already {
     display: block;
     width: 90%;
@@ -70,46 +80,44 @@ const Button = styled.button`
   }
 `;
 
-export default function MakeAuthname() {
-  const { name, username, setUsername } = useAuthContext();
+export default function AskPhone() {
   const navigate = useNavigate();
-  const [isValid, setIsValid] = useState(false);
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    console.log(e.target.value);
-    setUsername(e.target.value);
+  const { email, setEmail } = useAuthContext();
+  const [isValid, setIsValid] = useState(true);
+  const handleClick = () => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (emailRegex.test(email)) {
+      setIsValid(true);
+      navigate("/signUp/certification");
+    } else setIsValid(false);
   };
-  useEffect(() => {
-    if (username === "")
-      setUsername(convert(name) + Math.floor(Math.random() * 1000 + 1));
-  }, []);
-  useEffect(() => {
-    setIsValid(username.length > 0);
-  }, [username]);
   return (
     <>
-      <Link to="/signUp/birthday">
+      <Link to="/signUp/username">
         <Img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsl8RBI7W6MLf98a-xSu5HLLUasmcPAkIU1A&usqp=CAU"
           alt="뒤로가기"
         />
       </Link>
-      <H2>사용자 이름 만들기</H2>
+      <H2>휴대폰 번호 입력</H2>
       <Div className="text">
-        사용자 이름을 추가하거나 추천 이름을 사용하세요. 언제든지 변경할 수
-        있습니다.
+        회원님에게 연락할 수 있는 휴대폰 번호를 입력하세요. 이 휴대폰 번호는 프로필에서 다른 사람에게 공개되지 않습니다.
       </Div>
       <Input
         isvalid={isValid}
         type="text"
-        value={username}
-        placeholder="사용자 이름"
-        onChange={handleChange}
+        value={email}
+        placeholder="휴대폰 번호"
+        onChange={(e) => setEmail(e.target.value)}
       />
       {!isValid && (
-        <Div className="notice">계속하려면 사용자 이름을 작성하세요.</Div>
+        <Div className="notice">휴대폰 번호가 정확하지 않습니다. 국가 번호를 포함한 전체 휴대폰 번호를 입력해주세요.</Div>
       )}
-      <Button className="next" onClick={() => navigate("/signUp/email")}>
+      <Button className="next" onClick={handleClick}>
         다음
+      </Button>
+      <Button className="option" onClick={() => navigate("/signUp/email")}>
+        이메일 주소로 가입하기
       </Button>
       <Button className="already" onClick={() => navigate("/")}>
         이미 계정이 있으신가요?

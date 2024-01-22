@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../../contexts/UserContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -94,13 +95,15 @@ export default function Login() {
     setAccessToken,
     refreshToken,
     setRefreshToken,
+  } = useUserContext();
+  const {
     setPath,
     username,
     setUsername,
     password,
     setPassword,
-    setIsLoggedin,
-  } = useUserContext();
+    setIsLoggedin
+  } = useAuthContext();
   const [isActive, setIsActive] = useState(false);
   useEffect(() => {
     if (username.length > 0 && password.length > 0) setIsActive(true);

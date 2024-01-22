@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-import { useUserContext } from "../../../contexts/UserContext";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 interface InputProps {
   isvalid: boolean;
@@ -82,7 +82,7 @@ const Button = styled.button`
 
 export default function AskEmail() {
   const navigate = useNavigate();
-  const { email, setEmail } = useUserContext();
+  const { email, setEmail } = useAuthContext();
   const [isValid, setIsValid] = useState(true);
   const handleClick = () => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -117,7 +117,7 @@ export default function AskEmail() {
       <Button className="next" onClick={handleClick}>
         다음
       </Button>
-      <Button className="option" onClick={() => navigate("/signUp/email")}>
+      <Button className="option" onClick={() => navigate("/signUp/phone")}>
         휴대폰 번호로 가입
       </Button>
       <Button className="already" onClick={() => navigate("/")}>

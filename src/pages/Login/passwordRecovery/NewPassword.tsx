@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useUserContext } from "../../../contexts/UserContext";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 interface InputProps {
   isvalid: boolean;
@@ -71,7 +71,7 @@ const Button = styled.button`
 `;
 
 export default function NewPassword() {
-  const { password, setPassword, setIsLoggedin } = useUserContext();
+  const { password, setPassword, setIsLoggedin } = useAuthContext();
   const [isValid, setIsValid] = useState(true);
   const navigate = useNavigate();
   const handleClick = () => {

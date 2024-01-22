@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 
-
 const Div = styled.div`
     &.header {
         width: 100%;
