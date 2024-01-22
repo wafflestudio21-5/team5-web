@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useUserContext } from "../../../contexts/UserContext";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 
 const Img = styled.img`
@@ -61,7 +61,7 @@ const Button = styled.button`
 `;
 
 export default function SignUp() {
-  const { name, setName } = useUserContext();
+  const { name, setName } = useAuthContext();
   const navigate = useNavigate();
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setName(e.target.value);

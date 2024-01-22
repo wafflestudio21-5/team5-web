@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useUserContext } from "../../../contexts/UserContext";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 const Img = styled.img`
   width: 2rem;
@@ -111,7 +111,7 @@ const A = styled.a`
 `;
 
 export default function Agree() {
-  const { trySignUp } = useUserContext()
+  const { trySignUp } = useAuthContext()
   const navigate = useNavigate();
   const addr = "/signUp/photo";
   const [selectAll, setSelectAll] = useState(false);

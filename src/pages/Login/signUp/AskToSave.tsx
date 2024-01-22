@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useUserContext } from "../../../contexts/UserContext";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 
 const Img = styled.img`
@@ -57,7 +57,7 @@ const Button = styled.button`
 `;
 
 export default function AskToSave() {
-  const { name, setIsSaved } = useUserContext();
+  const { name, setIsSaved } = useAuthContext();
   const navigate = useNavigate();
   const handleClick = (b: boolean) => {
     navigate("/signUp/birthday");

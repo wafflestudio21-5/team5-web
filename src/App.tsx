@@ -3,7 +3,7 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import { useUserContext } from "./contexts/UserContext.tsx";
+import { useAuthContext } from "./contexts/AuthContext.tsx";
 import Explore from "./pages/Explore.tsx";
 import Profile from "./pages/Profile/Profile.tsx";
 import Reels from "./pages/Reels.tsx";
@@ -131,7 +131,7 @@ const loginRouter = createBrowserRouter([
 
 
 function App() {
-  const { isLoggedin } = useUserContext();
+  const { isLoggedin } = useAuthContext();
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyles />

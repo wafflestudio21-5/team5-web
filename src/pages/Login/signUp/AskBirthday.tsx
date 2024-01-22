@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useUserContext } from "../../../contexts/UserContext";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 interface InputProps {
   isvalid: boolean;
@@ -113,7 +113,7 @@ const A = styled.a`
 `;
 
 export default function AskBirthday() {
-  const { birthday, setBirthday } = useUserContext();
+  const { birthday, setBirthday } = useAuthContext();
   const [isValid, setIsValid] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
