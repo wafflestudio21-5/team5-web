@@ -1,11 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 import { baseURL } from '../constants.ts';
-import { MiniProfileType, UserType } from '../types.ts';
-
-type APIErrorResponseType = {
-	error: string;
-};
+import { APIErrorResponseType, MiniProfileType, UserType } from '../types.ts';
 
 // 1. 유저 정보 가져오기
 export const getUserInformation = async (

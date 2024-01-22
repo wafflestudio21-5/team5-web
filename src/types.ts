@@ -1,6 +1,12 @@
 // 모든 변수는 CamelCase로 작성한다.
 // export되는 모든 타입 이름은 끝에 Type을 붙여준다.
 
+// api
+export type APIErrorResponseType = {
+	error: string;
+};
+
+// User
 type UserLink = {
 	linkId: number;
 	links: string;
@@ -36,6 +42,7 @@ export type MiniProfileType = {
 	profileImageUrl: string;
 };
 
+// Post
 export type PostType = {
 	postId: number;
 	userId: number;
