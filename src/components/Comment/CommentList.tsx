@@ -1,8 +1,18 @@
 import { useEffect } from 'react';
+import styled from 'styled-components';
 
 import { CommentType } from '../../types';
 
 import Comment from './Comment';
+
+const CommentListWrapper = styled.ul`
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	gap: 1rem;
+	display: flex;
+	flex-direction: column;
+`;
 
 export default function CommentList() {
 	const comments: CommentType[] = [
@@ -32,10 +42,10 @@ export default function CommentList() {
 	useEffect(() => {});
 
 	return (
-		<ul>
+		<CommentListWrapper>
 			{comments.map((comment) => (
-				<Comment comment={comment} />
+				<Comment comment={comment} key={comment.commentId} />
 			))}
-		</ul>
+		</CommentListWrapper>
 	);
 }
