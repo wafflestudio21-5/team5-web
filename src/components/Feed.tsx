@@ -1,14 +1,12 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-
-import { getColor } from '../../styles/Theme';
-import { FeedType } from '../../types';
-
-import Post from './Post';
-import PostMenuModal from './PostMenuModal';
+import Post from './Post/Post.tsx';
+import { useState } from 'react';
+import PostMenuModal from './Post/PostMenuModal.tsx';
+import { FeedDataType } from '../contexts/PostContext.tsx';
+import React from 'react';
 
 const Container = styled.div`
-	background-color: ${getColor('white')};
+	background-color: white;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -17,7 +15,7 @@ const Container = styled.div`
 
 type ModalState = 'open' | 'closed' | 'closing';
 
-const feed: FeedType = {
+const feed: FeedDataType = {
 	posts: [
 		{
 			postId: 1,
@@ -81,7 +79,7 @@ export default function PostList() {
 						setTimeout(() => {
 							setMenuModal('closed');
 							setMenuPostId(null);
-						}, 300);
+						}, 500);
 					}}
 					isClosing={menuModal === 'closing'}
 					postId={menuPostId}
