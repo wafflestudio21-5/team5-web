@@ -1,5 +1,5 @@
 // 모든 변수는 CamelCase로 작성한다.
-// 모든 타입 이름은 끝에 Type을 붙여준다.
+// export되는 모든 타입 이름은 끝에 Type을 붙여준다.
 
 type UserLink = {
 	linkId: number;
@@ -27,6 +27,13 @@ export type UserType = {
 	postNumber: number;
 	followingNumber: number;
 	followerNumber: number;
+};
+
+export type MiniProfileType = {
+	userId: number;
+	username: string;
+	name: string;
+	profileImageUrl: string;
 };
 
 export type PostType = {

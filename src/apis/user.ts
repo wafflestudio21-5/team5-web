@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 import { baseURL } from '../constants.ts';
-import { UserType } from '../types.ts';
+import { MiniProfileType, UserType } from '../types.ts';
 
 type APIErrorResponseType = {
 	error: string;
@@ -330,22 +330,15 @@ export const deleteFollower = async (
 	}
 };
 
-type MiniProfile = {
-	userId: number;
-	username: string;
-	name: string;
-	profileImageUrl: string;
-};
-
 type MiniProfileListResponseType = {
-	miniProfiles: MiniProfile[];
+	miniProfiles: MiniProfileType[];
 };
 
 // 팔로워 목록 가져오기
 export const getFollowerList = async (
 	username: string,
 	accessToken: string
-): Promise<MiniProfile[] | null> => {
+): Promise<MiniProfileType[] | null> => {
 	try {
 		const response = await axios.get<MiniProfileListResponseType>(
 			`${baseURL}/api/v1/friendship/${username}/followerlist`,
@@ -374,7 +367,7 @@ export const getFollowerList = async (
 export const getFollowingList = async (
 	username: string,
 	accessToken: string
-): Promise<MiniProfile[] | null> => {
+): Promise<MiniProfileType[] | null> => {
 	try {
 		const response = await axios.get<MiniProfileListResponseType>(
 			`${baseURL}/api/v1/friendship/${username}/followinglist`,

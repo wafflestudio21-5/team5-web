@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { getColor } from '../styles/Theme.tsx';
-import { UserType } from '../types.ts';
+import { MiniProfileType } from '../types.ts';
 
 const MiniProfileContainer = styled.div`
 	display: flex;
@@ -50,7 +50,7 @@ const MiniProfileContainer = styled.div`
 	}
 `;
 
-export default function MiniProfile({ user }: { user: UserType }) {
+export default function MiniProfile({ user }: { user: MiniProfileType }) {
 	return (
 		<MiniProfileContainer>
 			<img src={user.profileImageUrl} alt="프로필 사진" />
