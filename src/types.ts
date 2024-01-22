@@ -25,3 +25,12 @@ export type FeedType = {
 	page: number;
 	total: number;
 };
+
+export type CommentType = {
+	commentId: number;
+	userId: number;
+	username: string;
+	userImage?: string;
+	content: string;
+	createdAt: string;
+};
