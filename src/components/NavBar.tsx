@@ -57,7 +57,7 @@ export default function NavBar() {
 				<Icon
 					src={defaultProfile}
 					alt="Profile"
-					onClick={() => navigatxwe('/id')}
+					onClick={() => navigate('/id')}
 				></Icon>
 			</NavBarLayout>
 		</div>
