@@ -90,8 +90,7 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
-	const { accessToken, setAccessToken, refreshToken, setRefreshToken } =
-		useUserContext();
+	const { setAccessToken, setRefreshToken } = useUserContext();
 	const {
 		setPath,
 		username,
@@ -134,11 +133,9 @@ export default function Login() {
 				const tempPath = Cookies.get('Path');
 				if (tempRefreshToken) setRefreshToken(tempRefreshToken);
 				if (tempPath) setPath(tempPath);
+				console.log(Cookies);
+				console.log(Cookies.get('refresh_token'));
 				console.log(response);
-				console.log(tempRefreshToken);
-				console.log(response.data.access_token);
-				console.log(accessToken);
-				console.log(refreshToken);
 				console.log(document.cookie);
 			} catch {
 				alert('아이디나 비밀번호가 다릅니다.');
