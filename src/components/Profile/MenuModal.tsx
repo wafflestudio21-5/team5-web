@@ -1,6 +1,10 @@
 import axios from 'axios';
 import styled from 'styled-components';
 
+import {
+	updateAccountToPrivate,
+	updateAccountToOpen,
+} from '../../apis/user.ts';
 import post from '../../assets/Images/Profile/AddPost/post.png';
 import story from '../../assets/Images/Profile/AddPost/story.png';
 import { baseURL } from '../../constants.ts';
@@ -48,43 +52,19 @@ type Props = {
 export default function MenuModal({ close, isClosing, isPrivate }: Props) {
 	const { accessToken } = useUserContext();
 
-	const updateAccountToPrivate = async () => {
+	const onClickUpdateAccountToOpen = async () => {
 		try {
-			const response = await axios.put(
-				`${baseURL}/api/v1/account/toprivate`,
-				{
-					message: 'Change non-private account to private account.',
-				},
-				{
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-					},
-				}
-			);
-
-			return response.data;
+			await updateAccountToOpen(accessToken);
 		} catch {
-			alert('공개 계정을 비공개 계정으로 전환할 수 없습니다.');
+			alert('Error occurred.');
 		}
 	};
 
-	const updateAccountToOpen = async () => {
+	const onClickUpdateAccountToPrivate = async () => {
 		try {
-			const response = await axios.put(
-				`${baseURL}/api/v1/account/toopen`,
-				{
-					message: 'Change private account to non-private account.',
-				},
-				{
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-					},
-				}
-			);
-
-			return response.data;
+			await updateAccountToPrivate(accessToken);
 		} catch {
-			alert('비공개 계정을 공개 계정으로 전환할 수 없습니다.');
+			alert('Error occurred.');
 		}
 	};
 
@@ -97,12 +77,12 @@ export default function MenuModal({ close, isClosing, isPrivate }: Props) {
 						<p>저장됨</p>
 					</Cell>
 					({isPrivate} ? (
-					<Cell onClick={updateAccountToOpen}>
+					<Cell onClick={onClickUpdateAccountToOpen}>
 						<Icon src={post} alt="계정 공개 여부 설정" />
 						<p>계정 공개 전환</p>
 					</Cell>
 					) : (
-					<Cell onClick={updateAccountToPrivate}>
+					<Cell onClick={onClickUpdateAccountToPrivate}>
 						<Icon src={post} alt="계정 공개 여부 설정" />
 						<p>계정 비공개 전환</p>
 					</Cell>
