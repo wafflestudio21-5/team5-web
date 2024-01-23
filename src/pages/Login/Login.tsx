@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useUserContext } from '../../contexts/UserContext';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const Img = styled.img`
 	&.instagram {
@@ -90,9 +87,14 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
-	const { setAccessToken } = useUserContext();
-	const { username, setUsername, password, setPassword, setIsLoggedin } =
-		useAuthContext();
+	const {
+		username,
+		setUsername,
+		password,
+		setPassword,
+		setIsLoggedin,
+		tryLogin,
+	} = useAuthContext();
 	const [isActive, setIsActive] = useState(false);
 	useEffect(() => {
 		if (username.length > 0 && password.length > 0) setIsActive(true);
@@ -106,34 +108,6 @@ export default function Login() {
 			else if (numberRegex.test(username)) return "phone" 
 			else return "username"	
 		} */
-		const data = {
-			username: username,
-			password: password,
-			/* type: checkType() */
-		};
-		const tryLogin = async () => {
-			try {
-				const response = await axios.post(
-					'https://waffle5gram.shop/api/v1/auth/login',
-					data,
-					{
-						headers: {
-							'Content-Type': 'application/json',
-						},
-					}
-				);
-				setAccessToken(response.data.access_token);
-				const tempRefreshToken = document.cookie
-					.split('; ')
-					.find((cookie) => cookie.startsWith('refreshToken='));
-				console.log(Cookies);
-				console.log(tempRefreshToken);
-				console.log(response);
-				console.log(document.cookie);
-			} catch {
-				alert('아이디나 비밀번호가 다릅니다.');
-			}
-		};
 		tryLogin();
 		setIsLoggedin(true);
 	};
