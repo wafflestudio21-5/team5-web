@@ -1,11 +1,12 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../../contexts/AuthContext';
+import Modal from '../../../shared/Modal/Modal';
 
 interface InputProps {
 	isvalid: boolean;
-	type: string; // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
+	type: string;
 	value: string;
 	placeholder: string;
 	onChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -17,8 +18,9 @@ const Img = styled.img`
 		margin-left: 1rem;
 	}
 	&.X {
+		position: relative;
 		width: 2rem;
-		margin: 1rem 0 0 1rem;
+		margin-top: 1rem;
 	}
 `;
 const H2 = styled.h2`
@@ -102,6 +104,8 @@ const Button = styled.button`
 	&.X {
 		border: none;
 		background-color: transparent;
+		margin-left: -85%;
+		margin-bottom: -2rem;
 	}
 `;
 const Span = styled.span`
@@ -112,10 +116,12 @@ const A = styled.a`
 	color: blue;
 `;
 
+type modalState = 'open' | 'closed' | 'closing';
+
 export default function AskBirthday() {
 	const { birthday, setBirthday } = useAuthContext();
 	const [isValid, setIsValid] = useState(true);
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [modal, setModal] = useState<modalState>('closed');
 	const navigate = useNavigate();
 	const handleClick = () => {
 		if (birthday.getFullYear() < 2022) {
@@ -137,7 +143,7 @@ export default function AskBirthday() {
 				비즈니스, 반려동물 또는 기타 목적으로 이 계정을 만드는 경우에도 회원님의
 				실제 생년월일을 사용하세요. 이 생년월일 정보는 회원님이 공유하지 않는 한
 				다른 사람에게 공개되지 않습니다.{' '}
-				<Span className="why" onClick={() => setIsModalOpen(true)}>
+				<Span className="why" onClick={() => setModal('open')}>
 					왜 생년월일을 입력해야 하나요?
 				</Span>
 			</Div>
@@ -160,33 +166,36 @@ export default function AskBirthday() {
 				이미 계정이 있으신가요?
 			</Button>
 
-			{isModalOpen && <Modal setIsModalOpen={setIsModalOpen} />}
+			{modal !== 'closed' && <NoticeModal modal={modal} setModal={setModal} />}
 		</>
 	);
 }
+type Props = {
+	modal: string;
+	setModal: (s: modalState) => void;
+};
 
-function Modal(props: { setIsModalOpen: (b: boolean) => void }) {
-	const { setIsModalOpen } = props;
-	const modalBackground = useRef<HTMLDivElement>(null);
+function NoticeModal({ modal, setModal }: Props) {
 	return (
-		<Div
-			className="background"
-			ref={modalBackground}
-			onClick={(e) => {
-				if (e.target === modalBackground.current) {
-					setIsModalOpen(false);
-				}
+		<Modal
+			onBackgroundClick={() => {
+				setModal('closing');
+				setTimeout(() => setModal('closed'), 300);
 			}}
+			isClosing={modal === 'closing'}
 		>
-			<Div className="modal">
+			<Div>
 				<Div className="grayBar"></Div>
-				<Button className="X" onClick={() => setIsModalOpen(false)}>
+				{/* <Button className="X" onClick={() => {
+					setModal('closing')
+					setTimeout(() => setModal('closed'), 300);
+				}}>
 					<Img
 						className="X"
 						src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAPFBMVEX///8AAABbW1teXl5YWFhPT09UVFRVVVXq6upOTk7BwcGRkZHu7u4dHR3e3t49PT2Xl5fIyMhkZGQKCgpPrCJfAAADp0lEQVR4nO2dCXqjMAyFQ7plsraZ+991SvncCcECA5Ijvbz/ADxsSZYMXjYbQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEkMdz3FUW3B1rqu23zTenQ61W7g6nVnC7r6R3vjSJzyqCn796l3MNva/mhmsFweut4Je93rnp8WouuO0L2lvx0hds3oz13u70LsZ6m31zj60VXwd61sPNdqDYbA3lXurKtQwVm+bDTG1owW/M1H445iTNYvE9q2ab+ndZTSPPybhoi3GdkRc1aaLQQGMv3ZwEWX1HvU8TiZO6Up+DoKs+3GQHmZaDstA9QiA22o4quah5GN6Wwfdopn7RgjWK/asorheLUgzWKfVzZY2yFe0VJsgn4hadWJRj0LrM/0Xu43eFp8sxWMmCLZa9bO0hhcj9vPY15M6zK/CzyD29zpUcxOD0q/xZ8VQnLtph4U52zr8I/f525KIdco8vs6KchCoPMv/RjUVXMZjQLK8eXqrl0et3dzGYkHt+3ot9+LRgi9z3c2pUuYEPjMGERg7T6SYz1juYlqubsTZpuEwTfeQmllhRtqCbBq6zgts00Wd5Aadd+pmxNBYDxGBiWTSti+DKLLFGkBhMzH9dq08hZsytTJzN6EuYV106L9XyzCngbD8rm1Eei4HSRJ/SmbrTGX0JZbYJlib6lMSXi58vy5m2T9gYTEzlOTc/X5YzXquEjsHEWCPCu2iH3ESZUA0cc1TZusGQh5s8rku1PPMcNZiLdsipf0iIRD+kPBbDxWCi1IpBLdhSFoshYzBRMqIGHEVvmY7FsDGYmHLU0C7aMd5EgAaOO2p4F+34K7fw0a+mA7wNx+MwcLJPwI+l8PkQvqaBr0vh5xbw80P4OT78dxr4b23w30vhv3nD/7cYb4TNbpuqwP8/hP8HDP8ff+1aDPexCL+eBn5NFPy6Nq21iW4LOPj1pfN3vgRbI6y7ztth0tBeq++ugFs6bIRJGvB7Zmz2PTmKRau9a25G1LWp230srs9qzveQwu8Dht/LrTVDcLsfH/5MBc2B3uVmS91+d5g0tL+YuZv1w58xBH9OlE1/O4pFq1dx46jwZ+5Z9rSLAg7+7Ev480vhz6CFP0e4zlnQshXNz4LGP88b/0z2eufqSyO29bn6gizO3Qj491vg31GCf8/ME9wVVPu+p2GPml8vB39n1xPcu4Z/d94T3H+4wb/D8gfwe0gJIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCBP4BAyMhUrpvY7EAAAAASUVORK5CYII="
 						alt="X"
 					/>
-				</Button>
+				</Button> */}
 				<H2>생일</H2>
 				<Div className="text">
 					생년월일을 입력하면 회원님에게 제공되는 기능 및 광고가 개선되면
@@ -194,7 +203,11 @@ function Modal(props: { setIsModalOpen: (b: boolean) => void }) {
 					생년월일 정보는 개인 정보 계정 설정에서 확인할 수 있습니다.
 					<A href="https://privacycenter.instagram.com/"> 더 알아보기</A>
 				</Div>
+				<br />
+				<br />
+				<br />
+				<br />
 			</Div>
-		</Div>
+		</Modal>
 	);
 }

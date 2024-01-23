@@ -1,9 +1,12 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 type trySignUpProps = {
 	navigate: (to: string) => void;
 	addr: string;
+};
+type APIErrorResponseType = {
+	error: string;
 };
 
 export type AuthContextData = {
@@ -57,7 +60,15 @@ export function AuthProvider({ children }: ProviderProps) {
 			console.log(response);
 			navigate(addr);
 		} catch (error) {
-			alert('회원가입 실패');
+			const err = error as AxiosError<APIErrorResponseType>;
+
+			if (err.response && err.response.data) {
+				alert(err.response.data.error);
+			} else {
+				alert('Error occurred');
+			}
+
+			return null;
 		}
 	};
 	return (

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 export type UserContextData = {
@@ -9,6 +9,10 @@ export type UserContextData = {
 	username: string;
 	setUsername: (s: string) => void;
 	resetAccessToken: () => void;
+};
+
+type APIErrorResponseType = {
+	error: string;
 };
 
 export const UserContext = createContext<UserContextData | null>(null);
@@ -28,8 +32,16 @@ export function UserProvider({ children }: ProviderProps) {
 			);
 			setAccessToken(response.data.access_token);
 			console.log('액세스 토큰 : ' + response.data.access_token);
-		} catch (e) {
-			alert('액세스 토큰 재발급 실패');
+		} catch (error) {
+			const err = error as AxiosError<APIErrorResponseType>;
+
+			if (err.response && err.response.data) {
+				alert(err.response.data.error);
+			} else {
+				alert('Error occurred');
+			}
+
+			return null;
 		}
 	};
 	return (

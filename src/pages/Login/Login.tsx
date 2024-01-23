@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../../contexts/UserContext';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+
+type APIErrorResponseType = {
+	error: string;
+};
 
 const Img = styled.img`
 	&.instagram {
@@ -122,8 +126,16 @@ export default function Login() {
 				);
 				setAccessToken(response.data.access_token);
 				console.log('액세스 토큰 : ' + response.data.access_token);
-			} catch {
-				alert('아이디나 비밀번호가 다릅니다.');
+			} catch (error) {
+				const err = error as AxiosError<APIErrorResponseType>;
+
+				if (err.response && err.response.data) {
+					alert(err.response.data.error);
+				} else {
+					alert('Error occurred');
+				}
+
+				return null;
 			}
 		};
 		tryLogin();
