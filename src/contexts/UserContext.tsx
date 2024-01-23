@@ -1,5 +1,4 @@
-/* import axios from "axios";
- */ import axios from 'axios';
+import axios from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 export type UserContextData = {
@@ -21,6 +20,7 @@ export function UserProvider({ children }: ProviderProps) {
 	const [accessToken, setAccessToken] = useState('');
 	const [name, setName] = useState('');
 	const [username, setUsername] = useState('');
+
 	const resetAccessToken = async () => {
 		try {
 			const response = await axios.get(
