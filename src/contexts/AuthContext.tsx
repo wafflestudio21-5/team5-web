@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { useUserContext } from './UserContext';
 
 type trySignUpProps = {
 	navigate: (to: string) => void;
@@ -23,7 +22,7 @@ export type AuthContextData = {
 	isLoggedin: boolean;
 	setIsLoggedin: (b: boolean) => void;
 	trySignUp: (props: trySignUpProps) => void;
-	tryLogin: () => void;
+	tryLogin: () => Promise<string>;
 };
 
 export const AuthContext = createContext<AuthContextData | null>(null);
@@ -32,7 +31,6 @@ type ProviderProps = {
 	children: ReactNode;
 };
 export function AuthProvider({ children }: ProviderProps) {
-	const { setAccessToken, accessToken } = useUserContext();
 	const [name, setName] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
@@ -64,6 +62,7 @@ export function AuthProvider({ children }: ProviderProps) {
 		}
 	};
 	const tryLogin = async () => {
+		const [accessToken, setAccessToken] = useState('');
 		try {
 			const data = {
 				username: username,
@@ -80,10 +79,10 @@ export function AuthProvider({ children }: ProviderProps) {
 				}
 			);
 			setAccessToken(response.data.accessToken);
-			console.log(accessToken);
 		} catch {
 			alert('아이디나 비밀번호가 다릅니다.');
 		}
+		return accessToken;
 	};
 	return (
 		<AuthContext.Provider

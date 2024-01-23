@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
+import { useUserContext } from '../../contexts/UserContext';
 
 const Img = styled.img`
 	&.instagram {
@@ -95,12 +96,13 @@ export default function Login() {
 		setIsLoggedin,
 		tryLogin,
 	} = useAuthContext();
+	const { setAccessToken } = useUserContext();
 	const [isActive, setIsActive] = useState(false);
 	useEffect(() => {
 		if (username.length > 0 && password.length > 0) setIsActive(true);
 		else setIsActive(false);
 	}, [username, password]);
-	const handleClick = () => {
+	const handleClick = async () => {
 		/* const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
 		const numberRegex = /^010[0-9]{8}$/
 		function checkType() {
@@ -108,7 +110,7 @@ export default function Login() {
 			else if (numberRegex.test(username)) return "phone" 
 			else return "username"	
 		} */
-		tryLogin();
+		setAccessToken(await tryLogin());
 		setIsLoggedin(true);
 	};
 
