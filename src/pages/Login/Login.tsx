@@ -129,12 +129,11 @@ export default function Login() {
 					}
 				);
 				setAccessToken(response.data.access_token);
-				const tempRefreshToken = Cookies.get('refresh_token');
-				const tempPath = Cookies.get('Path');
-				if (tempRefreshToken) setRefreshToken(tempRefreshToken);
-				if (tempPath) setPath(tempPath);
+				const tempRefreshToken = document.cookie
+					.split('; ')
+					.find((cookie) => cookie.startsWith('refresh_token='));
 				console.log(Cookies);
-				console.log(Cookies.get('refresh_token'));
+				console.log(tempRefreshToken);
 				console.log(response);
 				console.log(document.cookie);
 			} catch {
