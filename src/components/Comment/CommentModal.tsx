@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
 import { PostType } from '../../types';
+import { users } from '../Feed';
 
 import CommentInput from './CommentInput';
 import CommentList from './CommentList';
@@ -32,7 +33,8 @@ export default function CommentModal({
 				<ModalContent>
 					<h3>댓글</h3>
 					<CommentList />
-					<CommentInput post={post} commentType={'comment'} />
+					<CommentInput post={post} user={users[1]} commentType={'comment'} />
+					{/*위 user props에는 로그인한 사용자의 정보가 전달되어야함*/}
 				</ModalContent>
 			</Modal>
 		)
