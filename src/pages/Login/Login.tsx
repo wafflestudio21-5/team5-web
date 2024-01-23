@@ -122,8 +122,8 @@ export default function Login() {
 						},
 					}
 				);
-				setAccessToken(response.data.accessToken);
-				console.log('액세스 토큰 : ' + response.data.accessToken);
+				setAccessToken(response.data.access_token);
+				console.log('액세스 토큰 : ' + response.data.access_token);
 			} catch {
 				alert('아이디나 비밀번호가 다릅니다.');
 			}
