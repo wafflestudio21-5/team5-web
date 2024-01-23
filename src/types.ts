@@ -11,8 +11,7 @@ export type UserType = {
 
 export type PostType = {
 	postId: number;
-	userId: number;
-	username: string;
+	user: UserType;
 	content: string;
 	imageUrl: string;
 	createdAt: string;
@@ -28,9 +27,7 @@ export type FeedType = {
 
 export type CommentType = {
 	commentId: number;
-	userId: number;
-	username: string;
-	userImage?: string;
+	user: UserType;
 	content: string;
 	createdAt: string;
 };
