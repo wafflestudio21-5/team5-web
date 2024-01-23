@@ -26,8 +26,8 @@ export function UserProvider({ children }: ProviderProps) {
 			const response = await axios.get(
 				'https://waffle5gram.shop/api/v1/auth/refresh_token'
 			);
-			setAccessToken(response.data.accessToken);
-			console.log('액세스 토큰 : ' + response.data.accessToken);
+			setAccessToken(response.data.access_token);
+			console.log('액세스 토큰 : ' + response.data.access_token);
 		} catch (e) {
 			alert('액세스 토큰 재발급 실패');
 		}
