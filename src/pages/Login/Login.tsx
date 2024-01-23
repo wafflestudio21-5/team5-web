@@ -4,7 +4,6 @@ import { useUserContext } from '../../contexts/UserContext';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const Img = styled.img`
 	&.instagram {
@@ -90,15 +89,9 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
-	const { accessToken, setAccessToken } = useUserContext();
-	const {
-		setPath,
-		username,
-		setUsername,
-		password,
-		setPassword,
-		setIsLoggedin,
-	} = useAuthContext();
+	const { setAccessToken } = useUserContext();
+	const { username, setUsername, password, setPassword, setIsLoggedin } =
+		useAuthContext();
 	const [isActive, setIsActive] = useState(false);
 	useEffect(() => {
 		if (username.length > 0 && password.length > 0) setIsActive(true);
@@ -129,6 +122,7 @@ export default function Login() {
 					}
 				);
 				setAccessToken(response.data.accessToken);
+				console.log(response.data.accessToken);
 			} catch {
 				alert('아이디나 비밀번호가 다릅니다.');
 			}

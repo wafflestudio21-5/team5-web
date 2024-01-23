@@ -27,6 +27,7 @@ export function UserProvider({ children }: ProviderProps) {
 				'https://waffle5gram.shop/api/v1/auth/refresh_token'
 			);
 			setAccessToken(response.data.accessToken);
+			console.log(response.data.accessToken);
 		} catch (e) {
 			alert('액세스 토큰 재발급 실패');
 		}
