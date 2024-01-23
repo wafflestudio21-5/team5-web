@@ -221,7 +221,34 @@ export const requestFollowToPrivateUser = async (
 };
 
 // 비공개 유저에게 보낸 팔로우 요청 취소
-// export const cancelRequestFollowToPrivateUser
+export const cancelRequestFollowToPrivateUser = async (
+	username: string,
+	accessToken: string
+): Promise<boolean | null> => {
+	try {
+		const response = await axios.delete(
+			`${baseURL}/api/v1/friendship/${username}/follow/request`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+				data: {
+					message: 'Delete follow request to private user.',
+				},
+			}
+		);
+
+		return response.data.requestFollow;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+		return null;
+	}
+};
 
 type FollowResponseType = {
 	followsId: number;

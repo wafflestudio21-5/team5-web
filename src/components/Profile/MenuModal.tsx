@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
@@ -7,7 +7,6 @@ import {
 } from '../../apis/user.ts';
 import post from '../../assets/Images/Profile/AddPost/post.png';
 import story from '../../assets/Images/Profile/AddPost/story.png';
-import { baseURL } from '../../constants.ts';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 import Modal from '../../shared/Modal/Modal.tsx';
@@ -43,14 +42,16 @@ const Cell = styled.div`
 	}
 `;
 
-type Props = {
+export default function MenuModal({
+	close,
+	isClosing,
+	isPrivate,
+}: {
 	close: () => void;
 	isClosing: boolean;
 	isPrivate: boolean;
-};
-
-export default function MenuModal({ close, isClosing, isPrivate }: Props) {
-	const { accessToken } = useUserContext();
+}) {
+	const { username, accessToken } = useUserContext();
 
 	const onClickUpdateAccountToOpen = async () => {
 		try {
@@ -68,11 +69,13 @@ export default function MenuModal({ close, isClosing, isPrivate }: Props) {
 		}
 	};
 
+	const navigate = useNavigate();
+
 	return (
 		<Modal onBackgroundClick={close} isClosing={isClosing}>
 			<MenuModalContainer>
 				<CellContainer>
-					<Cell>
+					<Cell onClick={() => navigate(`/${username}/saved`)}>
 						<Icon src={story} alt="저장됨" />
 						<p>저장됨</p>
 					</Cell>
