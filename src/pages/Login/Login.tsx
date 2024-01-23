@@ -90,15 +90,9 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
-	const { setAccessToken, setRefreshToken } = useUserContext();
-	const {
-		setPath,
-		username,
-		setUsername,
-		password,
-		setPassword,
-		setIsLoggedin,
-	} = useAuthContext();
+	const { setAccessToken } = useUserContext();
+	const { username, setUsername, password, setPassword, setIsLoggedin } =
+		useAuthContext();
 	const [isActive, setIsActive] = useState(false);
 	useEffect(() => {
 		if (username.length > 0 && password.length > 0) setIsActive(true);
