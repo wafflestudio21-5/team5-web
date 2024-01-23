@@ -76,6 +76,7 @@ const Button = styled.button`
 		bottom: 1rem;
 		border: none;
 		background-color: white;
+		color: blue;
 	}
 `;
 

@@ -52,11 +52,12 @@ const Button = styled.button`
 		bottom: 1rem;
 		border: none;
 		background-color: white;
+		color: blue;
 	}
 `;
 
 export default function AskToSave() {
-	const { setIsSaved } = useAuthContext();
+	const { name, setIsSaved } = useAuthContext();
 	const navigate = useNavigate();
 	const handleClick = (b: boolean) => {
 		navigate('/signUp/birthday');
@@ -72,7 +73,7 @@ export default function AskToSave() {
 			</Link>
 			<H2>로그인 정보를 저장하시겠어요?</H2>
 			<Div className="text">
-				송원영 로그인 정보가 저장되므로 다음에 로그인할 때 iCloud 기기에서
+				{name} 로그인 정보가 저장되므로 다음에 로그인할 때 iCloud® 기기에서
 				로그인 정보를 다시 입력하지 않아도 됩니다.
 			</Div>
 			<Button className="save" onClick={() => handleClick(true)}>

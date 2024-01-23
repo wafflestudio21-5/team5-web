@@ -75,7 +75,6 @@ const Button = styled.button`
 	border: none;
 	background-color: blue;
 	color: white;
-	$
 `;
 const Span = styled.span`
 	background: #fff;
@@ -92,7 +91,6 @@ export default function Login() {
 	const { setAccessToken } = useUserContext();
 	const { username, setUsername, password, setPassword, setIsLoggedin } =
 		useAuthContext();
-
 	const [isActive, setIsActive] = useState(false);
 	useEffect(() => {
 		if (username.length > 0 && password.length > 0) setIsActive(true);
