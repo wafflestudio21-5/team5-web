@@ -123,8 +123,7 @@ export default function Login() {
 					}
 				);
 				setAccessToken(response.data.accessToken);
-				console.log(response.data.accessToken);
-
+				console.log('액세스 토큰 : ' + response.data.accessToken);
 			} catch {
 				alert('아이디나 비밀번호가 다릅니다.');
 			}
