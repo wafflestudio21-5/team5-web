@@ -18,20 +18,21 @@ type ProviderProps = {
 };
 export function UserProvider({ children }: ProviderProps) {
 	const [accessToken, setAccessToken] = useState('');
+	const [name, setName] = useState('');
+	const [username, setUsername] = useState('');
+
 	const resetAccessToken = async () => {
 		try {
 			const response = await axios.get(
 				'https://waffle5gram.shop/api/v1/auth/refresh_token'
 			);
-			console.log(response);
 			setAccessToken(response.data.accessToken);
-			console.log(accessToken);
+			console.log(response.data.accessToken);
+
 		} catch (e) {
 			alert('액세스 토큰 재발급 실패');
 		}
 	};
-	const [name, setName] = useState('');
-	const [username, setUsername] = useState('');
 	return (
 		<UserContext.Provider
 			value={{

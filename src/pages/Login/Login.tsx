@@ -89,9 +89,10 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
+	const { setAccessToken } = useUserContext();
 	const { username, setUsername, password, setPassword, setIsLoggedin } =
 		useAuthContext();
-	const { setAccessToken } = useUserContext();
+
 	const [isActive, setIsActive] = useState(false);
 	useEffect(() => {
 		if (username.length > 0 && password.length > 0) setIsActive(true);
@@ -122,6 +123,8 @@ export default function Login() {
 					}
 				);
 				setAccessToken(response.data.accessToken);
+				console.log(response.data.accessToken);
+
 			} catch {
 				alert('아이디나 비밀번호가 다릅니다.');
 			}
