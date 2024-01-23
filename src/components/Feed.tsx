@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import { getColor } from '../styles/Theme.tsx';
-import { FeedType, UserType } from '../types.ts';
+import { FeedType, PostType, UserType } from '../types.ts';
 
 import CommentModal from './Comment/CommentModal.tsx';
 import Post from './Post/Post.tsx';
@@ -48,7 +48,7 @@ const users: UserType[] = [
 const feed: FeedType = {
 	posts: [
 		{
-			postId: 1,
+			id: 1,
 			user: users[0],
 			content: 'ㅎㅇ',
 			imageUrl:
@@ -58,7 +58,7 @@ const feed: FeedType = {
 			commentsCount: 300,
 		},
 		{
-			postId: 2,
+			id: 2,
 			user: users[0],
 			content: 'ㅂㅇ',
 			imageUrl:
@@ -68,7 +68,7 @@ const feed: FeedType = {
 			commentsCount: 100,
 		},
 		{
-			postId: 3,
+			id: 3,
 			user: users[1],
 			content: '안녕하세요 반갑습니다',
 			imageUrl:
@@ -87,15 +87,15 @@ export default function Feed() {
 	const [commentModal, setCommentModal] = useState<ModalState>('closed');
 
 	const [menuPostId, setMenuPostId] = useState<number | null>(null);
-	const [commentPostId, setCommentPostId] = useState<number | null>(null);
+	const [commentPost, setCommentPost] = useState<PostType | null>(null);
 
 	const openMenuModal = (postId: number) => {
 		setMenuPostId(postId);
 		setMenuModal('open');
 	};
 
-	const openCommentModal = (postId: number) => {
-		setCommentPostId(postId);
+	const openCommentModal = (post: PostType) => {
+		setCommentPost(post);
 		console.log('?');
 		setCommentModal('open');
 	};
@@ -126,13 +126,13 @@ export default function Feed() {
 			)}
 			{commentModal !== 'closed' && (
 				<CommentModal
-					postId={commentPostId}
+					post={commentPost}
 					isClosing={commentModal === 'closing'}
 					close={() => {
 						setCommentModal('closing');
 						setTimeout(() => {
 							setCommentModal('closed');
-							setCommentPostId(null);
+							setCommentPost(null);
 						}, 300);
 					}}
 				/>

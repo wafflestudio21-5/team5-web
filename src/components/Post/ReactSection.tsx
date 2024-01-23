@@ -88,9 +88,9 @@ export default function ReactSection({ postData, showComment }: Props) {
 							className="icon-box"
 							onClick={() => {
 								if (liked) {
-									axios.post(`/api/v1/posts/${postData.postId}/likes`);
+									axios.post(`/api/v1/posts/${postData.id}/likes`);
 								} else {
-									axios.delete(`/api/v1/posts/${postData.postId}/likes`);
+									axios.delete(`/api/v1/posts/${postData.id}/likes`);
 								}
 								setLiked(!liked);
 							}}
@@ -112,9 +112,9 @@ export default function ReactSection({ postData, showComment }: Props) {
 						className="save"
 						onClick={() => {
 							if (saved) {
-								axios.post(`/api/v1/posts/${postData.postId}/save`);
+								axios.post(`/api/v1/posts/${postData.id}/save`);
 							} else {
-								axios.delete(`/api/v1/posts/${postData.postId}/save`);
+								axios.delete(`/api/v1/posts/${postData.id}/save`);
 							}
 							setSaved(!saved);
 						}}
