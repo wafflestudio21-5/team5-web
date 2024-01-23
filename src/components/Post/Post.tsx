@@ -31,7 +31,7 @@ export default function Post({
 		postData && (
 			<Container>
 				<PostHeader
-					username={postData.username}
+					user={postData.user}
 					showMenu={() => {
 						openMenuModal(postData.postId);
 					}}
