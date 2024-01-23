@@ -23,6 +23,7 @@ const CommentContainer = styled.div`
 		border: 1px solid ${getColor('grey')};
 	}
 	& > .profile > img {
+		margin: 0;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
@@ -54,16 +55,10 @@ export default function Comment({ comment }: CommentProps) {
 	return (
 		<CommentContainer>
 			<div className="profile">
-				<img
-					src={
-						comment.userImage ??
-						'https://wafflestudio.com/static/images/DefaultProfileImage.svg'
-					}
-					alt="프로필 이미지"
-				/>
+				<img src={comment.user.profileImageUrl} alt="프로필 이미지" />
 			</div>
 			<div className="username-content-box">
-				<span className="username">{comment.username}</span>
+				<span className="username">{comment.user.username}</span>
 				<span>{comment.content}</span>
 			</div>
 			<div className="like-box">
