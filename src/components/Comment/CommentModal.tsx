@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
+import { PostType } from '../../types';
 
+import CommentInput from './CommentInput';
 import CommentList from './CommentList';
 
 const ModalContent = styled.div`
@@ -16,20 +18,23 @@ const ModalContent = styled.div`
 `;
 
 export default function CommentModal({
-	postId,
+	post,
 	close,
 	isClosing,
 }: {
-	postId: number | null;
+	post: PostType | null;
 	close: () => void;
 	isClosing: boolean;
 }) {
 	return (
-		<Modal onBackgroundClick={close} isClosing={isClosing}>
-			<ModalContent>
-				<h1>댓글</h1>
-				<CommentList />
-			</ModalContent>
-		</Modal>
+		post && (
+			<Modal onBackgroundClick={close} isClosing={isClosing}>
+				<ModalContent>
+					<h3>댓글</h3>
+					<CommentList />
+					<CommentInput post={post} commentType={'comment'} />
+				</ModalContent>
+			</Modal>
+		)
 	);
 }
