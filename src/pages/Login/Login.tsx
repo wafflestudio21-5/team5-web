@@ -125,7 +125,7 @@ export default function Login() {
 				setAccessToken(response.data.access_token);
 				const tempRefreshToken = document.cookie
 					.split('; ')
-					.find((cookie) => cookie.startsWith('refresh_token='));
+					.find((cookie) => cookie.startsWith('refreshToken='));
 				console.log(Cookies);
 				console.log(tempRefreshToken);
 				console.log(response);
