@@ -18,7 +18,7 @@ const Container = styled.div`
 
 type ModalState = 'open' | 'closed' | 'closing';
 
-const users: UserType[] = [
+export const users: UserType[] = [
 	{
 		name: '상추',
 		username: 'sangchu',
@@ -45,7 +45,7 @@ const users: UserType[] = [
 	},
 ];
 
-const feed: FeedType = {
+export const feed: FeedType = {
 	posts: [
 		{
 			id: 1,
