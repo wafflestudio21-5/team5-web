@@ -22,7 +22,6 @@ export type AuthContextData = {
 	isLoggedin: boolean;
 	setIsLoggedin: (b: boolean) => void;
 	trySignUp: (props: trySignUpProps) => void;
-	tryLogin: () => Promise<string>;
 };
 
 export const AuthContext = createContext<AuthContextData | null>(null);
@@ -61,29 +60,6 @@ export function AuthProvider({ children }: ProviderProps) {
 			alert('회원가입 실패');
 		}
 	};
-	const tryLogin = async () => {
-		const [accessToken, setAccessToken] = useState('');
-		try {
-			const data = {
-				username: username,
-				password: password,
-				/* type: checkType() */
-			};
-			const response = await axios.post(
-				'https://waffle5gram.shop/api/v1/auth/login',
-				data,
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				}
-			);
-			setAccessToken(response.data.accessToken);
-		} catch {
-			alert('아이디나 비밀번호가 다릅니다.');
-		}
-		return accessToken;
-	};
 	return (
 		<AuthContext.Provider
 			value={{
@@ -102,7 +78,6 @@ export function AuthProvider({ children }: ProviderProps) {
 				isLoggedin,
 				setIsLoggedin,
 				trySignUp,
-				tryLogin,
 			}}
 		>
 			{children}

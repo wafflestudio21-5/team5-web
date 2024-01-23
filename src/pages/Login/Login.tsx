@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../../contexts/UserContext';
+import axios from 'axios';
 
 const Img = styled.img`
 	&.instagram {
@@ -88,14 +89,8 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
-	const {
-		username,
-		setUsername,
-		password,
-		setPassword,
-		setIsLoggedin,
-		tryLogin,
-	} = useAuthContext();
+	const { username, setUsername, password, setPassword, setIsLoggedin } =
+		useAuthContext();
 	const { setAccessToken } = useUserContext();
 	const [isActive, setIsActive] = useState(false);
 	useEffect(() => {
@@ -110,7 +105,28 @@ export default function Login() {
 			else if (numberRegex.test(username)) return "phone" 
 			else return "username"	
 		} */
-		setAccessToken(await tryLogin());
+		const tryLogin = async () => {
+			try {
+				const data = {
+					username: username,
+					password: password,
+					/* type: checkType() */
+				};
+				const response = await axios.post(
+					'https://waffle5gram.shop/api/v1/auth/login',
+					data,
+					{
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					}
+				);
+				setAccessToken(response.data.accessToken);
+			} catch {
+				alert('아이디나 비밀번호가 다릅니다.');
+			}
+		};
+		tryLogin();
 		setIsLoggedin(true);
 	};
 
