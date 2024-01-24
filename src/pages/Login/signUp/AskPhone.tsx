@@ -5,7 +5,7 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface InputProps {
 	isvalid: boolean;
-	type: string; // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
+	type: string;
 	value: string;
 	placeholder: string;
 	onChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -80,13 +80,13 @@ const Button = styled.button`
 	}
 `;
 
-export default function AskEmail() {
+export default function AskPhone() {
 	const navigate = useNavigate();
 	const { email, setEmail } = useAuthContext();
 	const [isValid, setIsValid] = useState(true);
 	const handleClick = () => {
-		const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-		if (emailRegex.test(email)) {
+		const phoneRegex = /^010\d{8}$/;
+		if (phoneRegex.test(email)) {
 			setIsValid(true);
 			navigate('/signUp/certification');
 		} else setIsValid(false);
@@ -99,26 +99,29 @@ export default function AskEmail() {
 					alt="뒤로가기"
 				/>
 			</Link>
-			<H2>이메일 주소 입력</H2>
+			<H2>휴대폰 번호 입력</H2>
 			<Div className="text">
-				회원님에게 연락할 수 있는 이메일 주소를 입력하세요. 이 이메일 주소는
+				회원님에게 연락할 수 있는 휴대폰 번호를 입력하세요. 이 휴대폰 번호는
 				프로필에서 다른 사람에게 공개되지 않습니다.
 			</Div>
 			<Input
 				isvalid={isValid}
 				type="text"
 				value={email}
-				placeholder="이메일 주소"
+				placeholder="휴대폰 번호"
 				onChange={(e) => setEmail(e.target.value)}
 			/>
 			{!isValid && (
-				<Div className="notice">유효한 이메일 주소를 입력하세요.</Div>
+				<Div className="notice">
+					휴대폰 번호가 정확하지 않습니다. 국가 번호를 포함한 전체 휴대폰 번호를
+					입력해주세요.
+				</Div>
 			)}
 			<Button className="next" onClick={handleClick}>
 				다음
 			</Button>
-			<Button className="option" onClick={() => navigate('/signUp/phone')}>
-				휴대폰 번호로 가입
+			<Button className="option" onClick={() => navigate('/signUp/email')}>
+				이메일 주소로 가입하기
 			</Button>
 			<Button className="already" onClick={() => navigate('/')}>
 				이미 계정이 있으신가요?

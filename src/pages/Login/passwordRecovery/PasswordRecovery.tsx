@@ -1,6 +1,6 @@
-import { Link, useNavigate } from 'react-router-dom';
+// import { useState } from 'react'
 import styled from 'styled-components';
-
+import { Link, useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../../contexts/UserContext';
 
 const Img = styled.img`

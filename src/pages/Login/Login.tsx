@@ -1,10 +1,8 @@
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { useUserContext } from '../../contexts/UserContext';
+import { Link } from 'react-router-dom';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { useEffect, useState } from 'react';
+import { tryLogin } from '../../apis/login';
 
 const Img = styled.img`
 	&.instagram {
@@ -89,59 +87,15 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
-	const {
-		accessToken,
-		setAccessToken,
-		refreshToken,
-		setRefreshToken,
-		setPath,
-		username,
-		setUsername,
-		password,
-		setPassword,
-		setIsLoggedin,
-	} = useUserContext();
+	const { username, setUsername, password, setPassword, setIsLoggedin } =
+		useAuthContext();
 	const [isActive, setIsActive] = useState(false);
 	useEffect(() => {
 		if (username.length > 0 && password.length > 0) setIsActive(true);
 		else setIsActive(false);
 	}, [username, password]);
-	const handleClick = () => {
-		/* const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
-		const numberRegex = /^010[0-9]{8}$/
-		function checkType() {
-			if (emailRegex.test(username)) return "email"
-			else if (numberRegex.test(username)) return "phone" 
-			else return "username"	
-		} */
-		const data = {
-			username: username,
-			password: password,
-			/* type: checkType() */
-		};
-		const tryLogin = async () => {
-			try {
-				const response = await axios.post(
-					'https://waffle5gram.shop/api/v1/auth/login',
-					data,
-					{
-						headers: {
-							'Content-Type': 'application/json',
-						},
-					}
-				);
-				setAccessToken(response.data.access_token);
-				const tempRefreshToken = Cookies.get('refresh_token');
-				const tempPath = Cookies.get('Path');
-				if (tempRefreshToken) setRefreshToken(tempRefreshToken);
-				if (tempPath) setPath(tempPath);
-				console.log(accessToken);
-				console.log(refreshToken);
-			} catch {
-				alert('아이디나 비밀번호가 다릅니다.');
-			}
-		};
-		tryLogin();
+	const handleClick = async () => {
+		tryLogin({ username, password });
 		setIsLoggedin(true);
 	};
 

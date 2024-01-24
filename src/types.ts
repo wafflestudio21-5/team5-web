@@ -7,12 +7,12 @@ export type APIErrorResponseType = {
 };
 
 // User
-type UserLink = {
+export type UserLink = {
 	linkId: number;
 	links: string;
 };
 
-type UserContact = {
+export type UserContact = {
 	contactType: string; // e.g., "EMAIL"
 	contactValue: string; // e.g., an email address
 	isConfirmed: number; // 0 or 1, assuming this is a boolean-like field
@@ -25,7 +25,8 @@ export type UserType = {
 	password: string;
 	birthday: string; // or Date if you're going to convert it
 	isPrivate: boolean;
-	pronoun: string;
+	gender: string;
+	isCustomGender: boolean;
 	profileImageUrl: string;
 	bio: string;
 	userLinks: UserLink[];
