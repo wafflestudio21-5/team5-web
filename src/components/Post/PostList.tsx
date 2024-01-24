@@ -17,6 +17,11 @@ const Wrapper = styled.div`
 		justify-content: center;
 		align-items: center;
 	}
+	& > .image-wrapper > img {
+		object-fit: cover;
+		height: 100%;
+		width: 100%;
+	}
 `;
 
 type PostListProps = {
