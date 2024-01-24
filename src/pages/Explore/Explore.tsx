@@ -1,5 +1,5 @@
-import { feed } from '../../components/Feed';
 import PostList from '../../components/Post/PostList';
+import feed from '../../test/data/feed.json';
 
 export default function Explore() {
 	return (

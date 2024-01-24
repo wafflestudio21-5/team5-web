@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
+import users from '../../test/data/users.json';
 import { PostType } from '../../types';
-import { users } from '../Feed';
 
 import CommentInput from './CommentInput';
 import CommentList from './CommentList';
