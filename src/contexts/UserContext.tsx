@@ -1,16 +1,40 @@
 import axios, { AxiosError } from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
-
+import { UserLink, UserContact } from '../types';
 export type UserContextData = {
 	accessToken: string;
-	setAccessToken: (s: string) => void;
+	userId: number;
 	name: string;
-	setName: (s: string) => void;
 	username: string;
-	setUsername: (s: string) => void;
-	resetAccessToken: () => void;
+	password: string;
+	birthday: Date;
+	gender: string;
+	isCustomGender: boolean;
+	profileImageUrl: string;
+	bio: string;
+	userLinks: UserLink[];
+	contacts: UserContact[];
+	postNumber: number;
+	followingNumber: number;
+	followerNumber: number;
 	isMyAccountPrivate: boolean;
+	setAccessToken: (s: string) => void;
+	setUserId: (n: number) => void;
+	setName: (s: string) => void;
+	setUsername: (s: string) => void;
+	setPassword: (s: string) => void;
+	setBirthday: (d: Date) => void;
+	setGender: (s: string) => void;
+	setIsCustomGender: (b: boolean) => void;
+	setProfileImageUrl: (s: string) => void;
+	setBio: (s: string) => void;
+	setUserLinks: (links: UserLink[]) => void;
+	setContacts: (contacts: UserContact[]) => void;
+	setPostNumber: (n: number) => void;
+	setFollowerNumber: (n: number) => void;
+	setFollowingNumber: (n: number) => void;
 	setIsMyAccountPrivate: (b: boolean) => void;
+	resetAccessToken: () => void;
 };
 
 type APIErrorResponseType = {
@@ -24,9 +48,21 @@ type ProviderProps = {
 };
 export function UserProvider({ children }: ProviderProps) {
 	const [accessToken, setAccessToken] = useState('');
+	const [userId, setUserId] = useState(0);
 	const [name, setName] = useState('');
 	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const [birthday, setBirthday] = useState(new Date());
 	const [isMyAccountPrivate, setIsMyAccountPrivate] = useState(false);
+	const [gender, setGender] = useState('');
+	const [isCustomGender, setIsCustomGender] = useState(false);
+	const [profileImageUrl, setProfileImageUrl] = useState('');
+	const [bio, setBio] = useState('');
+	const [userLinks, setUserLinks] = useState<UserLink[]>([]);
+	const [contacts, setContacts] = useState<UserContact[]>([]);
+	const [postNumber, setPostNumber] = useState(0);
+	const [followingNumber, setFollowingNumber] = useState(0);
+	const [followerNumber, setFollowerNumber] = useState(0);
 	const resetAccessToken = async () => {
 		try {
 			const response = await axios.get(
@@ -50,14 +86,38 @@ export function UserProvider({ children }: ProviderProps) {
 		<UserContext.Provider
 			value={{
 				accessToken,
-				setAccessToken,
+				userId,
 				name,
-				setName,
 				username,
-				setUsername,
-				resetAccessToken,
+				password,
+				birthday,
+				gender,
+				isCustomGender,
+				profileImageUrl,
+				bio,
+				userLinks,
+				contacts,
+				postNumber,
+				followingNumber,
+				followerNumber,
 				isMyAccountPrivate,
+				setAccessToken,
+				setUserId,
+				setName,
+				setUsername,
+				setPassword,
+				setBirthday,
+				setGender,
+				setIsCustomGender,
+				setProfileImageUrl,
+				setBio,
+				setUserLinks,
+				setContacts,
+				setPostNumber,
+				setFollowerNumber,
+				setFollowingNumber,
 				setIsMyAccountPrivate,
+				resetAccessToken,
 			}}
 		>
 			{children}

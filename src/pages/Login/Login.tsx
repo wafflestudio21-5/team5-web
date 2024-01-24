@@ -4,6 +4,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../../contexts/UserContext';
 import axios, { AxiosError } from 'axios';
+import { getUserInformation } from '../../apis/user';
 
 type APIErrorResponseType = {
 	error: string;
@@ -92,7 +93,7 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
-	const { setAccessToken } = useUserContext();
+	const { accessToken, setAccessToken } = useUserContext();
 	const { username, setUsername, password, setPassword, setIsLoggedin } =
 		useAuthContext();
 	const [isActive, setIsActive] = useState(false);
@@ -109,6 +110,23 @@ export default function Login() {
 			else return "username"	
 		} */
 		const tryLogin = async () => {
+			const {
+				setUserId,
+				setName,
+				setUsername,
+				setPassword,
+				setBirthday,
+				setGender,
+				setIsCustomGender,
+				setProfileImageUrl,
+				setBio,
+				setUserLinks,
+				setContacts,
+				setPostNumber,
+				setFollowerNumber,
+				setFollowingNumber,
+				setIsMyAccountPrivate,
+			} = useUserContext();
 			try {
 				const data = {
 					username: username,
@@ -125,6 +143,44 @@ export default function Login() {
 					}
 				);
 				setAccessToken(response.data.access_token);
+				const info = getUserInformation(username, accessToken);
+				info.then((info) => {
+					if (info) {
+						const {
+							userId,
+							name,
+							username,
+							password,
+							birthday,
+							gender,
+							isCustomGender,
+							profileImageUrl,
+							bio,
+							userLinks,
+							contacts,
+							postNumber,
+							followerNumber,
+							followingNumber,
+							isPrivate,
+						} = info;
+
+						setUserId(userId);
+						setName(name);
+						setUsername(username);
+						setPassword(password);
+						setBirthday(new Date(birthday));
+						setGender(gender);
+						setIsCustomGender(isCustomGender);
+						setProfileImageUrl(profileImageUrl);
+						setBio(bio);
+						setUserLinks(userLinks);
+						setContacts(contacts);
+						setPostNumber(postNumber);
+						setFollowerNumber(followerNumber);
+						setFollowingNumber(followingNumber);
+						setIsMyAccountPrivate(isPrivate);
+					}
+				});
 				console.log('액세스 토큰 : ' + response.data.access_token);
 			} catch (error) {
 				const err = error as AxiosError<APIErrorResponseType>;
