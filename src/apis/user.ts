@@ -15,6 +15,9 @@ export const getUserInformation = async (
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
+				data: {
+					message: 'Retrieve user profile.',
+				},
 			}
 		);
 
@@ -47,6 +50,9 @@ export const getUserFollowStatus = async (
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
+				},
+				data: {
+					message: 'Retrieve user follow.',
 				},
 			}
 		);
@@ -83,6 +89,9 @@ export const getUserFollowMeStatus = async (
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
+				},
+				data: {
+					message: 'Retrieve follower.',
 				},
 			}
 		);
@@ -128,6 +137,9 @@ export const getFollowRequestStatus = async (
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
+				data: {
+					message: 'Request follow to private user.',
+				},
 			}
 		);
 
@@ -163,6 +175,9 @@ export const getFollowRequestToMeStatus = async (
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
+				},
+				data: {
+					message: 'Retrieve user follow request.',
 				},
 			}
 		);
@@ -202,6 +217,9 @@ export const requestFollowToPrivateUser = async (
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
+				},
+				data: {
+					message: 'Request follow to private user.',
 				},
 			}
 		);

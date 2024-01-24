@@ -10,13 +10,13 @@ export type APIErrorResponseType = {
 export type UserLinkType = {
 	linkId: number;
 	linkTitle: string;
-	links: string;
+	link: string;
 };
 
 export type UserContactType = {
 	contactType: string; // e.g., "EMAIL"
 	contactValue: string; // e.g., an email address
-	isConfirmed: number; // 0 or 1, assuming this is a boolean-like field
+	isConfirmed: boolean;
 };
 
 export type UserType = {
@@ -26,7 +26,8 @@ export type UserType = {
 	password: string;
 	birthday: Date;
 	isPrivate: boolean;
-	pronoun: string;
+	gender: string;
+	isCustomGender: boolean;
 	profileImageUrl: string;
 	bio: string;
 	userLinks: UserLinkType[];

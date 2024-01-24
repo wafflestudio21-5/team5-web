@@ -27,7 +27,7 @@ import Edit from './pages/Profile/Edit/Edit.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Saved from './pages/Profile/Saved.tsx';
-import Reels from './pages/Reels.tsx';
+import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
 
@@ -41,12 +41,12 @@ const router = createBrowserRouter([
 				element: <Home />,
 			},
 			{
-				path: 'explore/',
-				element: <Explore />,
+				path: 'search/',
+				element: <Search />,
 			},
 			{
-				path: 'reels/',
-				element: <Reels />,
+				path: 'explore/',
+				element: <Explore />,
 			},
 			{
 				path: ':id/',

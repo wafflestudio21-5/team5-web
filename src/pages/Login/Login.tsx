@@ -1,10 +1,11 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { useAuthContext } from '../../contexts/AuthContext';
-import { useEffect, useState } from 'react';
-import { useUserContext } from '../../contexts/UserContext';
 import axios, { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { getUserInformation } from '../../apis/user';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { useUserContext } from '../../contexts/UserContext';
 
 type APIErrorResponseType = {
 	error: string;
