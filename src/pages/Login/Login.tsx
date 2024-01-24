@@ -2,13 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
-import { useUserContext } from '../../contexts/UserContext';
-import axios, { AxiosError } from 'axios';
-import { getUserInformation } from '../../apis/user';
-
-type APIErrorResponseType = {
-	error: string;
-};
+import { tryLogin } from '../../apis/login';
 
 const Img = styled.img`
 	&.instagram {
@@ -93,7 +87,6 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
-	const { accessToken, setAccessToken } = useUserContext();
 	const { username, setUsername, password, setPassword, setIsLoggedin } =
 		useAuthContext();
 	const [isActive, setIsActive] = useState(false);
@@ -102,98 +95,7 @@ export default function Login() {
 		else setIsActive(false);
 	}, [username, password]);
 	const handleClick = async () => {
-		/* const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
-		const numberRegex = /^010[0-9]{8}$/
-		function checkType() {
-			if (emailRegex.test(username)) return "email"
-			else if (numberRegex.test(username)) return "phone" 
-			else return "username"	
-		} */
-		const tryLogin = async () => {
-			const {
-				setUserId,
-				setName,
-				setUsername,
-				setPassword,
-				setBirthday,
-				setGender,
-				setIsCustomGender,
-				setProfileImageUrl,
-				setBio,
-				setUserLinks,
-				setContacts,
-				setPostNumber,
-				setFollowerNumber,
-				setFollowingNumber,
-				setIsMyAccountPrivate,
-			} = useUserContext();
-			try {
-				const data = {
-					username: username,
-					password: password,
-					/* type: checkType() */
-				};
-				const response = await axios.post(
-					'https://waffle5gram.shop/api/v1/auth/login',
-					data,
-					{
-						headers: {
-							'Content-Type': 'application/json',
-						},
-					}
-				);
-				setAccessToken(response.data.access_token);
-				const info = getUserInformation(username, accessToken);
-				info.then((info) => {
-					if (info) {
-						const {
-							userId,
-							name,
-							username,
-							password,
-							birthday,
-							gender,
-							isCustomGender,
-							profileImageUrl,
-							bio,
-							userLinks,
-							contacts,
-							postNumber,
-							followerNumber,
-							followingNumber,
-							isPrivate,
-						} = info;
-
-						setUserId(userId);
-						setName(name);
-						setUsername(username);
-						setPassword(password);
-						setBirthday(new Date(birthday));
-						setGender(gender);
-						setIsCustomGender(isCustomGender);
-						setProfileImageUrl(profileImageUrl);
-						setBio(bio);
-						setUserLinks(userLinks);
-						setContacts(contacts);
-						setPostNumber(postNumber);
-						setFollowerNumber(followerNumber);
-						setFollowingNumber(followingNumber);
-						setIsMyAccountPrivate(isPrivate);
-					}
-				});
-			} catch (error) {
-				const err = error as AxiosError<APIErrorResponseType>;
-
-				if (err.response && err.response.data) {
-					alert(err.response.data.error);
-				} else {
-					alert('Error occurred');
-				}
-
-				return null;
-			}
-		};
-		tryLogin();
+		tryLogin({ username, password });
 		setIsLoggedin(true);
 	};
 

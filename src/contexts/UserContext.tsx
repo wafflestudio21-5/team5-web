@@ -1,4 +1,3 @@
-import axios, { AxiosError } from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { UserLink, UserContact } from '../types';
 export type UserContextData = {
@@ -34,11 +33,6 @@ export type UserContextData = {
 	setFollowerNumber: (n: number) => void;
 	setFollowingNumber: (n: number) => void;
 	setIsMyAccountPrivate: (b: boolean) => void;
-	resetAccessToken: () => void;
-};
-
-type APIErrorResponseType = {
-	error: string;
 };
 
 export const UserContext = createContext<UserContextData | null>(null);
@@ -63,25 +57,7 @@ export function UserProvider({ children }: ProviderProps) {
 	const [postNumber, setPostNumber] = useState(0);
 	const [followingNumber, setFollowingNumber] = useState(0);
 	const [followerNumber, setFollowerNumber] = useState(0);
-	const resetAccessToken = async () => {
-		try {
-			const response = await axios.get(
-				'https://waffle5gram.shop/api/v1/auth/refresh_token'
-			);
-			setAccessToken(response.data.access_token);
-			console.log('액세스 토큰 : ' + response.data.access_token);
-		} catch (error) {
-			const err = error as AxiosError<APIErrorResponseType>;
 
-			if (err.response && err.response.data) {
-				alert(err.response.data.error);
-			} else {
-				alert('Error occurred');
-			}
-
-			return null;
-		}
-	};
 	return (
 		<UserContext.Provider
 			value={{
@@ -117,7 +93,6 @@ export function UserProvider({ children }: ProviderProps) {
 				setFollowerNumber,
 				setFollowingNumber,
 				setIsMyAccountPrivate,
-				resetAccessToken,
 			}}
 		>
 			{children}

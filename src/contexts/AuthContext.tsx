@@ -1,13 +1,4 @@
-import axios, { AxiosError } from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
-
-type trySignUpProps = {
-	navigate: (to: string) => void;
-	addr: string;
-};
-type APIErrorResponseType = {
-	error: string;
-};
 
 export type AuthContextData = {
 	name: string;
@@ -24,7 +15,6 @@ export type AuthContextData = {
 	setIsSaved: (b: boolean) => void;
 	isLoggedin: boolean;
 	setIsLoggedin: (b: boolean) => void;
-	trySignUp: (props: trySignUpProps) => void;
 };
 
 export const AuthContext = createContext<AuthContextData | null>(null);
@@ -40,37 +30,7 @@ export function AuthProvider({ children }: ProviderProps) {
 	const [birthday, setBirthday] = useState(new Date());
 	const [isSaved, setIsSaved] = useState(false);
 	const [isLoggedin, setIsLoggedin] = useState(false);
-	const trySignUp = async ({ navigate, addr }: trySignUpProps) => {
-		try {
-			const year = birthday.getFullYear();
-			const month = String(birthday.getMonth() + 1).padStart(2, '0');
-			const day = String(birthday.getDate()).padStart(2, '0');
-			const formatted = `${year}-${month}-${day}`;
-			const response = await axios.post(
-				'https://waffle5gram.shop/api/v1/auth/signup',
-				{
-					username: username,
-					name: name,
-					password: password,
-					contact: email,
-					contactType: 'email',
-					birthday: formatted,
-				}
-			);
-			console.log(response);
-			navigate(addr);
-		} catch (error) {
-			const err = error as AxiosError<APIErrorResponseType>;
 
-			if (err.response && err.response.data) {
-				alert(err.response.data.error);
-			} else {
-				alert('Error occurred');
-			}
-
-			return null;
-		}
-	};
 	return (
 		<AuthContext.Provider
 			value={{
@@ -88,7 +48,6 @@ export function AuthProvider({ children }: ProviderProps) {
 				setIsSaved,
 				isLoggedin,
 				setIsLoggedin,
-				trySignUp,
 			}}
 		>
 			{children}
