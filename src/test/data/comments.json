@@ -1,0 +1,38 @@
+[
+	{
+		"id": 1,
+		"user": {
+			"name": "상추",
+			"username": "sangchu",
+			"id": 1,
+			"profileImageUrl": "https://wafflestudio.com/static/images/DefaultProfileImage.svg",
+			"isPrivate": false
+		},
+		"content": "안녕하세요",
+		"createdAt": "2023-01-01T12:30:00.000Z"
+	},
+	{
+		"id": 2,
+		"user": {
+			"name": "감자",
+			"username": "gamja",
+			"id": 2,
+			"profileImageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYeYsx-pISnYjDS1YiUL4uGA-I6yAcf1sSuA&usqp=CAU",
+			"isPrivate": false
+		},
+		"content": "멋있어요!",
+		"createdAt": "2023-01-01T12:31:00.000Z"
+	},
+	{
+		"id": 3,
+		"user": {
+			"name": "배추",
+			"username": "baechu",
+			"id": 3,
+			"profileImageUrl": "https://wafflestudio.com/static/images/DefaultProfileImage.svg",
+			"isPrivate": false
+		},
+		"content": "좋은 정보 감사합니다.",
+		"createdAt": "2023-01-01T12:35:00.000Z"
+	}
+]

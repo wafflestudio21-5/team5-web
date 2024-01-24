@@ -1,92 +1,47 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getColor } from '../../styles/Theme';
-import { FeedType } from '../../types';
+import { PostType } from '../../types';
 
-import Post from './Post';
-import PostMenuModal from './PostMenuModal';
-
-const Container = styled.div`
-	background-color: ${getColor('white')};
+const Wrapper = styled.div`
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 2px;
 	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	& > .image-wrapper {
+		cursor: pointer;
+		width: 100%;
+		overflow: hidden;
+		aspect-ratio: 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	& > .image-wrapper > img {
+		object-fit: cover;
+		height: 100%;
+		width: 100%;
+	}
 `;
 
-type ModalState = 'open' | 'closed' | 'closing';
-
-const feed: FeedType = {
-	posts: [
-		{
-			postId: 1,
-			userId: 1,
-			username: 'sangchu',
-			content: 'ㅎㅇ',
-			imageUrl:
-				'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw1QiRIXaQiWe1n9p_1CzPwg_GY2SmZQcF4A&usqp=CAU',
-			createdAt: '2023-01-01T12:00:00.000Z',
-			likesCount: 150,
-			commentsCount: 300,
-		},
-		{
-			postId: 2,
-			userId: 1,
-			username: 'sangchu',
-			content: 'ㅂㅇ',
-			imageUrl:
-				'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReVugfHzy-mUGOXAtWbyKQoymn4HPeLL9y-Q&usqp=CAU',
-			createdAt: '2023-01-02T12:00:00.000Z',
-			likesCount: 1500,
-			commentsCount: 100,
-		},
-		{
-			postId: 3,
-			userId: 2,
-			username: 'gamja',
-			content: '안녕하세요 반갑습니다',
-			imageUrl:
-				'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO8zd7aBnlOGUacRY6WB2FEokHlnw3DvxJiw&usqp=CAU',
-			createdAt: '2023-01-01T13:00:00.000Z',
-			likesCount: 300,
-			commentsCount: 30,
-		},
-	],
-	page: 1,
-	total: 12,
+type PostListProps = {
+	posts: PostType[];
 };
 
-export default function PostList() {
-	const [menuModal, setMenuModal] = useState<ModalState>('closed');
-
-	const [menuPostId, setMenuPostId] = useState<number | null>(null);
-
-	const openMenuModal = (postId: number) => {
-		setMenuPostId(postId);
-		setMenuModal('open');
-	};
-
+export default function PostList({ posts }: PostListProps) {
+	const navigate = useNavigate();
 	return (
-		<>
-			<Container>
-				{feed.posts.map((post) => (
-					<Post postData={post} openMenuModal={openMenuModal} />
-				))}
-			</Container>
-			{menuModal !== 'closed' && (
-				<PostMenuModal
-					close={() => {
-						setMenuModal('closing');
-						setTimeout(() => {
-							setMenuModal('closed');
-							setMenuPostId(null);
-						}, 300);
+		<Wrapper>
+			{posts.map((post) => (
+				<div
+					className="image-wrapper"
+					onClick={() => {
+						navigate(`/feed/${post.id}`);
 					}}
-					isClosing={menuModal === 'closing'}
-					postId={menuPostId}
-				/>
-			)}
-		</>
+				>
+					<img src={post.imageUrl} alt="게시물 이미지" />
+				</div>
+			))}
+		</Wrapper>
 	);
 }
