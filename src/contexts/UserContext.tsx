@@ -9,6 +9,8 @@ export type UserContextData = {
 	username: string;
 	setUsername: (s: string) => void;
 	resetAccessToken: () => void;
+	isMyAccountPrivate: boolean;
+	setIsMyAccountPrivate: (b: boolean) => void;
 };
 
 type APIErrorResponseType = {
@@ -24,7 +26,7 @@ export function UserProvider({ children }: ProviderProps) {
 	const [accessToken, setAccessToken] = useState('');
 	const [name, setName] = useState('');
 	const [username, setUsername] = useState('');
-
+	const [isMyAccountPrivate, setIsMyAccountPrivate] = useState(false);
 	const resetAccessToken = async () => {
 		try {
 			const response = await axios.get(
@@ -54,6 +56,8 @@ export function UserProvider({ children }: ProviderProps) {
 				username,
 				setUsername,
 				resetAccessToken,
+				isMyAccountPrivate,
+				setIsMyAccountPrivate,
 			}}
 		>
 			{children}

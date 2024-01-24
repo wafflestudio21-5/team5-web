@@ -22,6 +22,7 @@ import Agree from './pages/Login/signUp/Agree.tsx';
 import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
 import EditProfile from './pages/Profile/EditProfile.tsx';
 import Follow from './pages/Profile/Follow.tsx';
+import Saved from './pages/Profile/Saved.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import { ThemeProvider } from 'styled-components';
 import Theme from './styles/Theme.tsx';
@@ -51,12 +52,20 @@ const router = createBrowserRouter([
 				element: <Profile />,
 			},
 			{
-				path: 'id/edit/',
-				element: <EditProfile />,
+				path: ':id/followers/',
+				element: <Follow />,
 			},
 			{
-				path: 'id/follow/',
+				path: ':id/following/',
 				element: <Follow />,
+			},
+			{
+				path: ':id/saved/',
+				element: <Saved />,
+			},
+			{
+				path: 'account/edit/',
+				element: <EditProfile />,
 			},
 			{
 				path: '*',
