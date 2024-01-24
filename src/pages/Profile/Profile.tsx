@@ -424,7 +424,7 @@ export default function Profile() {
 					<h3>{user.username}</h3>
 					<p>{user.bio}</p>
 					{user.userLinks.map((UserLink) => (
-						<a href={UserLink.links}>{UserLink.links}</a>
+						<a href={UserLink.link}>{UserLink.link}</a>
 					))}
 				</UserProfileContainer>
 				<ButtonContainer

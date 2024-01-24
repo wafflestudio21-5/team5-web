@@ -72,9 +72,10 @@ const TextBox = styled.div`
 
 type Props = {
 	postData: PostType | null;
+	showComment: () => void;
 };
 
-export default function ReactSection({ postData }: Props) {
+export default function ReactSection({ postData, showComment }: Props) {
 	const [liked, setLiked] = useState(false);
 	const [saved, setSaved] = useState(false);
 
@@ -87,9 +88,9 @@ export default function ReactSection({ postData }: Props) {
 							className="icon-box"
 							onClick={() => {
 								if (liked) {
-									axios.post(`/api/v1/posts/${postData.postId}/likes`);
+									axios.post(`/api/v1/posts/${postData.id}/likes`);
 								} else {
-									axios.delete(`/api/v1/posts/${postData.postId}/likes`);
+									axios.delete(`/api/v1/posts/${postData.id}/likes`);
 								}
 								setLiked(!liked);
 							}}
@@ -100,7 +101,7 @@ export default function ReactSection({ postData }: Props) {
 								<Icon src={likeIcon} alt="좋아요" />
 							)}
 						</div>
-						<div className="icon-box">
+						<div className="icon-box" onClick={showComment}>
 							<Icon src={commentIcon} />
 						</div>
 						<div className="icon-box">
@@ -111,9 +112,9 @@ export default function ReactSection({ postData }: Props) {
 						className="save"
 						onClick={() => {
 							if (saved) {
-								axios.post(`/api/v1/posts/${postData.postId}/save`);
+								axios.post(`/api/v1/posts/${postData.id}/save`);
 							} else {
-								axios.delete(`/api/v1/posts/${postData.postId}/save`);
+								axios.delete(`/api/v1/posts/${postData.id}/save`);
 							}
 							setSaved(!saved);
 						}}
@@ -127,10 +128,13 @@ export default function ReactSection({ postData }: Props) {
 					<span className="like-num">좋아요 {postData.likesCount}개</span>
 				</TextBox>
 				<TextBox className="margin">
-					<span className="username">{postData.username}</span>{' '}
+					<span className="username">{postData.user.username}</span>{' '}
 					{postData.content}
 				</TextBox>
-				<TextBox className="margin secondary-text more-comment">
+				<TextBox
+					className="margin secondary-text more-comment"
+					onClick={showComment}
+				>
 					댓글 {postData.commentsCount}개 모두 보기
 				</TextBox>
 			</Container>

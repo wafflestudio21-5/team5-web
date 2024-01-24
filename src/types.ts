@@ -14,8 +14,8 @@ export type UserLinkType = {
 };
 
 export type UserContactType = {
-	contactType: string; // e.g., "EMAIL"
-	contactValue: string; // e.g., an email address
+	contactType: string;
+	contactValue: string;
 	isConfirmed: boolean;
 };
 
@@ -46,9 +46,8 @@ export type MiniProfileType = {
 
 // Post
 export type PostType = {
-	postId: number;
-	userId: number;
-	username: string;
+	id: number;
+	user: UserType;
 	content: string;
 	imageUrl: string;
 	createdAt: string;
@@ -59,4 +58,11 @@ export type PostType = {
 export type FeedType = {
 	posts: PostType[];
 	page: number;
+};
+
+export type CommentType = {
+	id: number;
+	user: UserType;
+	content: string;
+	createdAt: string;
 };
