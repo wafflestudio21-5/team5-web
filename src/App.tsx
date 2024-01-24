@@ -22,7 +22,7 @@ import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx';
 import MakePassword from './pages/Login/signUp/MakePassword.tsx';
 import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
 import SignUp from './pages/Login/signUp/SignUp.tsx';
-import EditProfile from './pages/Profile/EditProfile.tsx';
+import EditProfile from './pages/Profile/Edit/Edit.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Saved from './pages/Profile/Saved.tsx';
@@ -66,6 +66,21 @@ const router = createBrowserRouter([
 			{
 				path: 'account/edit/',
 				element: <EditProfile />,
+			},
+			{
+				path: 'account/edit/username/',
+			},
+			{
+				path: 'account/edit/name/',
+			},
+			{
+				path: 'account/edit/bio/',
+			},
+			{
+				path: 'account/edit/link/',
+			},
+			{
+				path: 'account/edit/gender/',
 			},
 			{
 				path: '*',

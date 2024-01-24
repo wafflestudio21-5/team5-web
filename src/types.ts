@@ -24,7 +24,7 @@ export type UserType = {
 	username: string;
 	name: string;
 	password: string;
-	birthday: string;
+	birthday: Date;
 	isPrivate: boolean;
 	pronoun: string;
 	profileImageUrl: string;

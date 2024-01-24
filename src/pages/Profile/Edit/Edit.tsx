@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
-import editCancel from '../../assets/Images/Profile/EditProfile/edit-cancel.png';
-import editSave from '../../assets/Images/Profile/EditProfile/edit-save.png';
-import { useUserContext } from '../../contexts/UserContext.tsx';
-import Icon from '../../shared/Icon.tsx';
-import { getColor } from '../../styles/Theme.tsx';
+import defaultProfile from '../../../assets/Images/Profile/default-profile.svg';
+import editCancel from '../../../assets/Images/Profile/EditProfile/edit-cancel.png';
+import editSave from '../../../assets/Images/Profile/EditProfile/edit-save.png';
+import { useUserContext } from '../../../contexts/UserContext.tsx';
+import Icon from '../../../shared/Icon.tsx';
+import { getColor } from '../../../styles/Theme.tsx';
 
 const EditProfileLayout = styled.main`
 	width: 100%;
@@ -88,29 +88,36 @@ const EditProfileContainer = styled.div`
 export default function Profile() {
 	const { username } = useUserContext();
 	const navigate = useNavigate();
-	const navigateBack = () => {
-		navigate(`/${username}`);
-	};
 
 	return (
 		<EditProfileLayout>
 			<HeaderContainer>
-				<Icon src={editCancel} alt="취소" onClick={navigateBack} />
+				<Icon
+					src={editCancel}
+					alt="취소"
+					onClick={() => navigate(`/${username}`)}
+				/>
 				<h2>프로필 편집</h2>
-				<Icon src={editSave} alt="저장" />
 			</HeaderContainer>
 			<ProfileImageContainer>
 				<img src={defaultProfile} alt="프로필 사진" />
 				<p>프로필 사진 변경</p>
 			</ProfileImageContainer>
 			<EditProfileContainer>
-				<label htmlFor="name">이름</label>
-				<input type="text" id="name" />
-				{/* nickname은 30자 제한 */}
-				<label htmlFor="nickname">사용자 이름</label>
-				<input type="text" id="nickname" maxLength={30} />
-				<label htmlFor="introduction">소개</label>
-				<input type="text" id="introduction" />
+				<div onClick={() => navigate('/account/edit/name')}>
+					<label htmlFor="name">이름</label>
+					<input type="text" id="name" />
+				</div>
+				<div onClick={() => navigate('/account/edit/username')}>
+					<label htmlFor="nickname">사용자 이름</label>
+					<input type="text" id="nickname" maxLength={30} />
+				</div>
+				<div onClick={() => navigate('/account/edit/bio')}>
+					<label htmlFor="introduction">소개</label>
+					<input type="text" id="introduction" />
+				</div>
+				<div onClick={() => navigate('/account/edit/link')}>링크 추가</div>
+				<div onClick={() => navigate('/account/edit/gender')}>성별</div>
 			</EditProfileContainer>
 		</EditProfileLayout>
 	);
