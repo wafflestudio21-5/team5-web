@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { useUserContext } from '../../../contexts/UserContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface InputProps {
 	issixormore: boolean;
@@ -86,7 +85,7 @@ const Button = styled.button`
 `;
 
 export default function MakePassword() {
-	const { password, setPassword } = useUserContext();
+	const { password, setPassword } = useAuthContext();
 	const navigate = useNavigate();
 	const [isSixOrMore, setIsSixOrMore] = useState(true);
 	const [isVisible, setIsVisible] = useState(false);

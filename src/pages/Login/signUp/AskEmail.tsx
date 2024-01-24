@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { useUserContext } from '../../../contexts/UserContext';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface InputProps {
 	isvalid: boolean;
@@ -83,7 +82,7 @@ const Button = styled.button`
 
 export default function AskEmail() {
 	const navigate = useNavigate();
-	const { email, setEmail } = useUserContext();
+	const { email, setEmail } = useAuthContext();
 	const [isValid, setIsValid] = useState(true);
 	const handleClick = () => {
 		const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;

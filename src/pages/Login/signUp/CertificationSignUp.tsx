@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { useUserContext } from '../../../contexts/UserContext';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface InputProps {
 	isvalid: boolean;
@@ -82,7 +81,7 @@ const Button = styled.button`
 
 export default function CertificationSignUp() {
 	const navigate = useNavigate();
-	const { email } = useUserContext();
+	const { email } = useAuthContext();
 	const [code, setCode] = useState('');
 	const [isValid, setIsValid] = useState(true);
 	// const [isModalOpen, setIsModalOpen] = useState(false)

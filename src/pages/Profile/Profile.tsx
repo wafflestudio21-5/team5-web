@@ -9,7 +9,6 @@ import {
 	getFollowRequestStatus,
 	getFollowRequestToMeStatus,
 	requestFollowToPrivateUser,
-	// cancelRequestFollowToPrivateUser,
 	followPublicUser,
 	unfollowUser,
 	cancelRequestFollowToPrivateUser,

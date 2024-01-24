@@ -1,35 +1,45 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-type trySignUpProps = {
-	navigate: (to: string) => void;
-	addr: string;
-};
-
+import { UserLinkType, UserContactType } from '../types';
 export type UserContextData = {
 	accessToken: string;
-	setAccessToken: (s: string) => void;
-	refreshToken: string;
-	setRefreshToken: (s: string) => void;
-	path: string;
-	setPath: (s: string) => void;
+	userId: number;
 	name: string;
-	setName: (s: string) => void;
 	username: string;
-	setUsername: (s: string) => void;
 	password: string;
-	setPassword: (s: string) => void;
-	email: string;
-	setEmail: (s: string) => void;
 	birthday: Date;
-	setBirthday: (d: Date) => void;
-	isSaved: boolean;
-	setIsSaved: (b: boolean) => void;
-	isLoggedin: boolean;
-	setIsLoggedin: (b: boolean) => void;
-	trySignUp: (props: trySignUpProps) => void;
+	gender: string;
+	isCustomGender: boolean;
+	profileImageUrl: string;
+	bio: string;
+	userLinks: UserLinkType[];
+	contacts: UserContactType[];
+	postNumber: number;
+	followingNumber: number;
+	followerNumber: number;
 	isMyAccountPrivate: boolean;
+	setAccessToken: (s: string) => void;
+	setUserId: (n: number) => void;
+	setName: (s: string) => void;
+	setUsername: (s: string) => void;
+	setPassword: (s: string) => void;
+	setBirthday: (d: Date) => void;
+	setGender: (s: string) => void;
+	setIsCustomGender: (b: boolean) => void;
+	setProfileImageUrl: (s: string) => void;
+	setBio: (s: string) => void;
+	setUserLinks: (links: UserLinkType[]) => void;
+	setContacts: (contacts: UserContactType[]) => void;
+	setPostNumber: (n: number) => void;
+	setFollowerNumber: (n: number) => void;
+	setFollowingNumber: (n: number) => void;
 	setIsMyAccountPrivate: (b: boolean) => void;
+	resetAccessToken: () => void;
+};
+
+type APIErrorResponseType = {
+	error: string;
 };
 
 export const UserContext = createContext<UserContextData | null>(null);
@@ -39,60 +49,76 @@ type ProviderProps = {
 };
 export function UserProvider({ children }: ProviderProps) {
 	const [accessToken, setAccessToken] = useState('');
-	const [refreshToken, setRefreshToken] = useState('');
-	const [path, setPath] = useState('');
+	const [userId, setUserId] = useState(0);
 	const [name, setName] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
-	const [email, setEmail] = useState('');
 	const [birthday, setBirthday] = useState(new Date());
-	const [isSaved, setIsSaved] = useState(false);
-	const [isLoggedin, setIsLoggedin] = useState(false);
 	const [isMyAccountPrivate, setIsMyAccountPrivate] = useState(false);
-	const trySignUp = async ({ navigate, addr }: trySignUpProps) => {
+	const [gender, setGender] = useState('');
+	const [isCustomGender, setIsCustomGender] = useState(false);
+	const [profileImageUrl, setProfileImageUrl] = useState('');
+	const [bio, setBio] = useState('');
+	const [userLinks, setUserLinks] = useState<UserLinkType[]>([]);
+	const [contacts, setContacts] = useState<UserContactType[]>([]);
+	const [postNumber, setPostNumber] = useState(0);
+	const [followingNumber, setFollowingNumber] = useState(0);
+	const [followerNumber, setFollowerNumber] = useState(0);
+	const resetAccessToken = async () => {
 		try {
-			const response = await axios.post(
-				'https://waffle5gram.shop/api/v1/auth/signup',
-				{
-					username: username,
-					name: name,
-					password: password,
-					contact: email,
-					contact_type: email,
-				}
+			const response = await axios.get(
+				'https://waffle5gram.shop/api/v1/auth/refresh_token'
 			);
-			console.log(response);
-			navigate(addr);
+			setAccessToken(response.data.access_token);
+			console.log('액세스 토큰 : ' + response.data.access_token);
 		} catch (error) {
-			alert('회원가입 실패');
+			const err = error as AxiosError<APIErrorResponseType>;
+
+			if (err.response && err.response.data) {
+				alert(err.response.data.error);
+			} else {
+				alert('Error occurred');
+			}
+
+			return null;
 		}
 	};
 	return (
 		<UserContext.Provider
 			value={{
 				accessToken,
-				setAccessToken,
-				refreshToken,
-				setRefreshToken,
-				path,
-				setPath,
+				userId,
 				name,
-				setName,
 				username,
-				setUsername,
 				password,
-				setPassword,
-				email,
-				setEmail,
 				birthday,
-				setBirthday,
-				isSaved,
-				setIsSaved,
-				isLoggedin,
-				setIsLoggedin,
-				trySignUp,
+				gender,
+				isCustomGender,
+				profileImageUrl,
+				bio,
+				userLinks,
+				contacts,
+				postNumber,
+				followingNumber,
+				followerNumber,
 				isMyAccountPrivate,
+				setAccessToken,
+				setUserId,
+				setName,
+				setUsername,
+				setPassword,
+				setBirthday,
+				setGender,
+				setIsCustomGender,
+				setProfileImageUrl,
+				setBio,
+				setUserLinks,
+				setContacts,
+				setPostNumber,
+				setFollowerNumber,
+				setFollowingNumber,
 				setIsMyAccountPrivate,
+				resetAccessToken,
 			}}
 		>
 			{children}
