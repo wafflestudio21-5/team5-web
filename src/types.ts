@@ -21,8 +21,13 @@ export type PostType = {
 
 export type FeedType = {
 	posts: PostType[];
-	page: number;
-	total: number;
+	pageInfo: {
+		page: number;
+		size: number;
+		offset: number;
+		hasNext: boolean;
+		elements: number;
+	};
 };
 
 export type CommentType = {
