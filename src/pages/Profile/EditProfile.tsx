@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
 import editCancel from '../../assets/Images/Profile/EditProfile/edit-cancel.png';
 import editSave from '../../assets/Images/Profile/EditProfile/edit-save.png';
+import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 import { getColor } from '../../styles/Theme.tsx';
 
@@ -85,9 +86,10 @@ const EditProfileContainer = styled.div`
 `;
 
 export default function Profile() {
+	const { username } = useUserContext();
 	const navigate = useNavigate();
 	const navigateBack = () => {
-		navigate('/id');
+		navigate(`/${username}`);
 	};
 
 	return (

@@ -28,6 +28,8 @@ export type UserContextData = {
 	isLoggedin: boolean;
 	setIsLoggedin: (b: boolean) => void;
 	trySignUp: (props: trySignUpProps) => void;
+	isMyAccountPrivate: boolean;
+	setIsMyAccountPrivate: (b: boolean) => void;
 };
 
 export const UserContext = createContext<UserContextData | null>(null);
@@ -46,6 +48,7 @@ export function UserProvider({ children }: ProviderProps) {
 	const [birthday, setBirthday] = useState(new Date());
 	const [isSaved, setIsSaved] = useState(false);
 	const [isLoggedin, setIsLoggedin] = useState(false);
+	const [isMyAccountPrivate, setIsMyAccountPrivate] = useState(false);
 	const trySignUp = async ({ navigate, addr }: trySignUpProps) => {
 		try {
 			const response = await axios.post(
@@ -88,6 +91,8 @@ export function UserProvider({ children }: ProviderProps) {
 				isLoggedin,
 				setIsLoggedin,
 				trySignUp,
+				isMyAccountPrivate,
+				setIsMyAccountPrivate,
 			}}
 		>
 			{children}

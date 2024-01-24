@@ -25,6 +25,7 @@ import SignUp from './pages/Login/signUp/SignUp.tsx';
 import EditProfile from './pages/Profile/EditProfile.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
+import Saved from './pages/Profile/Saved.tsx';
 import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
@@ -51,16 +52,20 @@ const router = createBrowserRouter([
 				element: <Profile />,
 			},
 			{
-				path: ':id/edit/',
-				element: <EditProfile />,
-			},
-			{
 				path: ':id/followers/',
 				element: <Follow />,
 			},
 			{
 				path: ':id/following/',
 				element: <Follow />,
+			},
+			{
+				path: ':id/saved/',
+				element: <Saved />,
+			},
+			{
+				path: 'account/edit/',
+				element: <EditProfile />,
 			},
 			{
 				path: '*',
@@ -134,10 +139,10 @@ function App() {
 	return (
 		<ThemeProvider theme={Theme}>
 			<GlobalStyles />
-			{/*<RouterProvider router={router}>*/}
-			{/* const { isLoggedin } = useUserContext() */}
-			<RouterProvider router={isLoggedin ? router : loginRouter} />
-			{/*</RouterProvider>*/}
+			<RouterProvider router={router}>
+				{/* const { isLoggedin } = useUserContext() */}
+				{/*<RouterProvider router={isLoggedin ? router : loginRouter} />*/}
+			</RouterProvider>
 		</ThemeProvider>
 	);
 }

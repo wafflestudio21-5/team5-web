@@ -1,6 +1,12 @@
 // 모든 변수는 CamelCase로 작성한다.
-// 모든 타입 이름은 끝에 Type을 붙여준다.
+// export되는 모든 타입 이름은 끝에 Type을 붙여준다.
 
+// api
+export type APIErrorResponseType = {
+	error: string;
+};
+
+// User
 type UserLink = {
 	linkId: number;
 	links: string;
@@ -18,16 +24,25 @@ export type UserType = {
 	name: string;
 	password: string;
 	birthday: string; // or Date if you're going to convert it
-	isPrivate: number; // 0 or 1, assuming this is a boolean-like field
+	isPrivate: boolean;
 	pronoun: string;
 	profileImageUrl: string;
 	bio: string;
 	userLinks: UserLink[];
 	contacts: UserContact[];
+	postNumber: number;
 	followingNumber: number;
 	followerNumber: number;
 };
 
+export type MiniProfileType = {
+	userId: number;
+	username: string;
+	name: string;
+	profileImageUrl: string;
+};
+
+// Post
 export type PostType = {
 	postId: number;
 	userId: number;
