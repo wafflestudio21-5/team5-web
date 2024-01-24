@@ -181,7 +181,6 @@ export default function Login() {
 						setIsMyAccountPrivate(isPrivate);
 					}
 				});
-				console.log('액세스 토큰 : ' + response.data.access_token);
 			} catch (error) {
 				const err = error as AxiosError<APIErrorResponseType>;
 
