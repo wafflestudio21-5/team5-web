@@ -72,10 +72,9 @@ export const tryLogin = async ({
 			}
 		);
 
-		const accessToken = response.data.accessToken;
-		setAccessToken(accessToken);
-		console.log('data: ' + response.data);
+		const { accessToken } = response.data;
 		console.log('액세스 토큰 : ' + accessToken);
+		setAccessToken(accessToken);
 
 		const info = await getUserInformation(username, accessToken);
 		if (info) {
