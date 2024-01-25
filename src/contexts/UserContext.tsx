@@ -1,38 +1,39 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { UserLink, UserContact } from '../types';
+
+import { UserLinkType, UserContactType } from '../types';
+
 export type UserContextData = {
 	accessToken: string;
 	userId: number;
-	name: string;
 	username: string;
-	password: string;
+	name: string;
 	birthday: Date;
+	isMyAccountPrivate: boolean;
 	gender: string;
 	isCustomGender: boolean;
 	profileImageUrl: string;
 	bio: string;
-	userLinks: UserLink[];
-	contacts: UserContact[];
+	userLinks: UserLinkType[];
+	contacts: UserContactType[];
 	postNumber: number;
 	followingNumber: number;
 	followerNumber: number;
-	isMyAccountPrivate: boolean;
+
 	setAccessToken: (s: string) => void;
 	setUserId: (n: number) => void;
-	setName: (s: string) => void;
 	setUsername: (s: string) => void;
-	setPassword: (s: string) => void;
+	setName: (s: string) => void;
 	setBirthday: (d: Date) => void;
+	setIsMyAccountPrivate: (b: boolean) => void;
 	setGender: (s: string) => void;
 	setIsCustomGender: (b: boolean) => void;
 	setProfileImageUrl: (s: string) => void;
 	setBio: (s: string) => void;
-	setUserLinks: (links: UserLink[]) => void;
-	setContacts: (contacts: UserContact[]) => void;
+	setUserLinks: (links: UserLinkType[]) => void;
+	setContacts: (contacts: UserContactType[]) => void;
 	setPostNumber: (n: number) => void;
-	setFollowerNumber: (n: number) => void;
 	setFollowingNumber: (n: number) => void;
-	setIsMyAccountPrivate: (b: boolean) => void;
+	setFollowerNumber: (n: number) => void;
 };
 
 export const UserContext = createContext<UserContextData | null>(null);
@@ -43,17 +44,16 @@ type ProviderProps = {
 export function UserProvider({ children }: ProviderProps) {
 	const [accessToken, setAccessToken] = useState('');
 	const [userId, setUserId] = useState(0);
-	const [name, setName] = useState('');
 	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
+	const [name, setName] = useState('');
 	const [birthday, setBirthday] = useState(new Date());
 	const [isMyAccountPrivate, setIsMyAccountPrivate] = useState(false);
 	const [gender, setGender] = useState('');
 	const [isCustomGender, setIsCustomGender] = useState(false);
 	const [profileImageUrl, setProfileImageUrl] = useState('');
 	const [bio, setBio] = useState('');
-	const [userLinks, setUserLinks] = useState<UserLink[]>([]);
-	const [contacts, setContacts] = useState<UserContact[]>([]);
+	const [userLinks, setUserLinks] = useState<UserLinkType[]>([]);
+	const [contacts, setContacts] = useState<UserContactType[]>([]);
 	const [postNumber, setPostNumber] = useState(0);
 	const [followingNumber, setFollowingNumber] = useState(0);
 	const [followerNumber, setFollowerNumber] = useState(0);
@@ -63,11 +63,11 @@ export function UserProvider({ children }: ProviderProps) {
 			value={{
 				accessToken,
 				userId,
-				name,
 				username,
-				password,
+				name,
 				birthday,
 				gender,
+				isMyAccountPrivate,
 				isCustomGender,
 				profileImageUrl,
 				bio,
@@ -76,13 +76,12 @@ export function UserProvider({ children }: ProviderProps) {
 				postNumber,
 				followingNumber,
 				followerNumber,
-				isMyAccountPrivate,
 				setAccessToken,
 				setUserId,
-				setName,
 				setUsername,
-				setPassword,
+				setName,
 				setBirthday,
+				setIsMyAccountPrivate,
 				setGender,
 				setIsCustomGender,
 				setProfileImageUrl,
@@ -90,9 +89,8 @@ export function UserProvider({ children }: ProviderProps) {
 				setUserLinks,
 				setContacts,
 				setPostNumber,
-				setFollowerNumber,
 				setFollowingNumber,
-				setIsMyAccountPrivate,
+				setFollowerNumber,
 			}}
 		>
 			{children}

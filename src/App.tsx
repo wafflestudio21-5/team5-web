@@ -3,32 +3,33 @@ import {
 	Navigate,
 	RouterProvider,
 } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+
+import NavBar from './components/NavBar.tsx';
 import { useAuthContext } from './contexts/AuthContext.tsx';
 import Explore from './pages/Explore/Explore.tsx';
-import Profile from './pages/Profile/Profile.tsx';
-import Reels from './pages/Reels.tsx';
+import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
-import PasswordRecovery from './pages/Login/passwordRecovery/PasswordRecovery.tsx';
-import SignUp from './pages/Login/signUp/SignUp.tsx';
 import Certification from './pages/Login/passwordRecovery/Certification.tsx';
 import NewPassword from './pages/Login/passwordRecovery/NewPassword.tsx';
-import MakePassword from './pages/Login/signUp/MakePassword.tsx';
-import AskToSave from './pages/Login/signUp/AskToSave.tsx';
-import AskBirthday from './pages/Login/signUp/AskBirthday.tsx';
-import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
-import AskEmail from './pages/Login/signUp/AskEmail.tsx';
-import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx';
-import Agree from './pages/Login/signUp/Agree.tsx';
+import PasswordRecovery from './pages/Login/passwordRecovery/PasswordRecovery.tsx';
 import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
-import EditProfile from './pages/Profile/EditProfile.tsx';
-import Follow from './pages/Profile/Follow.tsx';
-import Saved from './pages/Profile/Saved.tsx';
-import GlobalStyles from './styles/GlobalStyles.tsx';
-import { ThemeProvider } from 'styled-components';
-import Theme from './styles/Theme.tsx';
-import NavBar from './components/NavBar.tsx';
-import Home from './pages/Home.tsx';
+// import Agree from './pages/Login/signUp/Agree.tsx';
+import AskBirthday from './pages/Login/signUp/AskBirthday.tsx';
+import AskEmail from './pages/Login/signUp/AskEmail.tsx';
 import AskPhone from './pages/Login/signUp/AskPhone.tsx';
+import AskToSave from './pages/Login/signUp/AskToSave.tsx';
+import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx';
+import MakePassword from './pages/Login/signUp/MakePassword.tsx';
+import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
+import SignUp from './pages/Login/signUp/SignUp.tsx';
+import Edit from './pages/Profile/Edit/Edit.tsx';
+import Follow from './pages/Profile/Follow.tsx';
+import Profile from './pages/Profile/Profile.tsx';
+import Saved from './pages/Profile/Saved.tsx';
+import Search from './pages/Search.tsx';
+import GlobalStyles from './styles/GlobalStyles.tsx';
+import Theme from './styles/Theme.tsx';
 
 const router = createBrowserRouter([
 	{
@@ -40,12 +41,12 @@ const router = createBrowserRouter([
 				element: <Home />,
 			},
 			{
-				path: 'explore/',
-				element: <Explore />,
+				path: 'search/',
+				element: <Search />,
 			},
 			{
-				path: 'reels/',
-				element: <Reels />,
+				path: 'explore/',
+				element: <Explore />,
 			},
 			{
 				path: ':id/',
@@ -65,7 +66,22 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'account/edit/',
-				element: <EditProfile />,
+				element: <Edit />,
+			},
+			{
+				path: 'account/edit/username/',
+			},
+			{
+				path: 'account/edit/name/',
+			},
+			{
+				path: 'account/edit/bio/',
+			},
+			{
+				path: 'account/edit/link/',
+			},
+			{
+				path: 'account/edit/gender/',
 			},
 			{
 				path: '*',
@@ -126,7 +142,7 @@ const loginRouter = createBrowserRouter([
 	},
 	{
 		path: 'signUp/agreeToTerm/',
-		element: <Agree />,
+		// element: <Agree />,
 	},
 	{
 		path: 'signUp/photo/',

@@ -197,9 +197,6 @@ export const requestFollowToPrivateUser = async (
 		const response = await axios.post<FollowRequestResponseType>(
 			`${baseURL}/api/v1/friendship/${username}/follow/request`,
 			{
-				message: 'Request follow to private user.',
-			},
-			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
@@ -221,7 +218,31 @@ export const requestFollowToPrivateUser = async (
 };
 
 // 비공개 유저에게 보낸 팔로우 요청 취소
-// export const cancelRequestFollowToPrivateUser
+export const cancelRequestFollowToPrivateUser = async (
+	username: string,
+	accessToken: string
+): Promise<boolean | null> => {
+	try {
+		const response = await axios.delete(
+			`${baseURL}/api/v1/friendship/${username}/follow/request`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		return response.data.requestFollow;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+		return null;
+	}
+};
 
 type FollowResponseType = {
 	followsId: number;
@@ -238,9 +259,6 @@ export const followPublicUser = async (
 	try {
 		const response = await axios.post<FollowResponseType>(
 			`${baseURL}/api/v1/friendship/${username}/follow`,
-			{
-				message: 'Follow Non-private user.',
-			},
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -274,9 +292,6 @@ export const unfollowUser = async (
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
-				data: {
-					message: 'Unfollow user.',
-				},
 			}
 		);
 
@@ -306,9 +321,6 @@ export const deleteFollower = async (
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
-				data: {
-					message: 'Delete follower.',
-				},
 			}
 		);
 
@@ -326,18 +338,19 @@ export const deleteFollower = async (
 	}
 };
 
-type MiniProfileListResponseType = {
+type FollowListResponseType = {
+	followNumber: number;
 	miniProfiles: MiniProfileType[];
 };
 
-// 팔로워 목록 가져오기
-export const getFollowerList = async (
+// 팔로워 중에서 내가 팔로우 하는 사람 목록 가져오기, 유저 본인의 팔로워도 이거로 가져옴
+export const getFollowerCommon = async (
 	username: string,
 	accessToken: string
-): Promise<MiniProfileType[] | null> => {
+): Promise<FollowListResponseType | null> => {
 	try {
-		const response = await axios.get<MiniProfileListResponseType>(
-			`${baseURL}/api/v1/friendship/${username}/followerlist`,
+		const response = await axios.get<FollowListResponseType>(
+			`${baseURL}/api/v1/friendship/${username}/follower/common`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -345,7 +358,7 @@ export const getFollowerList = async (
 			}
 		);
 
-		return response.data.miniProfiles;
+		return response.data;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -359,14 +372,14 @@ export const getFollowerList = async (
 	}
 };
 
-// 팔로잉 목록 가져오기
-export const getFollowingList = async (
+// 팔로워 중에서 내가 팔로우 하지 않는 사람 목록 가져오기
+export const getFollowerDiff = async (
 	username: string,
 	accessToken: string
-): Promise<MiniProfileType[] | null> => {
+): Promise<FollowListResponseType | null> => {
 	try {
-		const response = await axios.get<MiniProfileListResponseType>(
-			`${baseURL}/api/v1/friendship/${username}/followinglist`,
+		const response = await axios.get<FollowListResponseType>(
+			`${baseURL}/api/v1/friendship/${username}/follower/diff`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -374,7 +387,7 @@ export const getFollowingList = async (
 			}
 		);
 
-		return response.data.miniProfiles;
+		return response.data;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -388,16 +401,14 @@ export const getFollowingList = async (
 	}
 };
 
-// 계정 비공개로 변경
-export const updateAccountToPrivate = async (
+// 팔로잉 중에서 내가 팔로우 하는 사람 목록 가져오기, 유저 본인의 팔로잉도 이거로 가져옴
+export const getFollowingCommon = async (
+	username: string,
 	accessToken: string
-): Promise<string | null> => {
+): Promise<FollowListResponseType | null> => {
 	try {
-		const response = await axios.put(
-			`${baseURL}/api/v1/account/toprivate`,
-			{
-				message: 'Change non-private account to private account.',
-			},
+		const response = await axios.get<FollowListResponseType>(
+			`${baseURL}/api/v1/friendship/${username}/following/common`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -405,30 +416,26 @@ export const updateAccountToPrivate = async (
 			}
 		);
 
-		return response.data.message;
+		return response.data;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
-
 		if (err.response && err.response.data) {
 			alert(err.response.data.error);
 		} else {
 			alert('Error occurred');
 		}
-
 		return null;
 	}
 };
 
-// 계정 공개로 변경
-export const updateAccountToOpen = async (
+// 팔로잉 중에서 내가 팔로우 하지 않는 사람 목록 가져오기
+export const getFollowingDiff = async (
+	username: string,
 	accessToken: string
-): Promise<string | null> => {
+): Promise<FollowListResponseType | null> => {
 	try {
-		const response = await axios.put(
-			`${baseURL}/api/v1/account/toopen`,
-			{
-				message: 'Change private account to non-private account.',
-			},
+		const response = await axios.get<FollowListResponseType>(
+			`${baseURL}/api/v1/friendship/${username}/following/diff`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -436,16 +443,14 @@ export const updateAccountToOpen = async (
 			}
 		);
 
-		return response.data.message;
+		return response.data;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
-
 		if (err.response && err.response.data) {
 			alert(err.response.data.error);
 		} else {
 			alert('Error occurred');
 		}
-
 		return null;
 	}
 };
