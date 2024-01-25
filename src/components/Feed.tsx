@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import { getColor } from '../styles/Theme.tsx';
-import feed from '../test/data/feed.json';
 import { PostType } from '../types.ts';
 
 import CommentModal from './Comment/CommentModal.tsx';
@@ -19,7 +18,7 @@ const Container = styled.div`
 
 type ModalState = 'open' | 'closed' | 'closing';
 
-export default function Feed() {
+export default function Feed({ posts }: { posts: PostType[] }) {
 	const [menuModal, setMenuModal] = useState<ModalState>('closed');
 	const [commentModal, setCommentModal] = useState<ModalState>('closed');
 
@@ -40,7 +39,7 @@ export default function Feed() {
 	return (
 		<>
 			<Container>
-				{feed.posts.map((post) => (
+				{posts.map((post) => (
 					<Post
 						postData={post}
 						openMenuModal={openMenuModal}
