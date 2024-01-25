@@ -76,42 +76,40 @@ export const tryLogin = async ({
 
 		setAccessToken(response.data.accessToken);
 
-		const info = getUserInformation(username, accessToken);
-		info.then((info) => {
-			if (info) {
-				const {
-					userId,
-					username,
-					name,
-					birthday,
-					isPrivate,
-					gender,
-					isCustomGender,
-					profileImageUrl,
-					bio,
-					userLinks,
-					contacts,
-					postNumber,
-					followingNumber,
-					followerNumber,
-				} = info;
+		const info = await getUserInformation(username, accessToken);
+		if (info) {
+			const {
+				userId,
+				username,
+				name,
+				birthday,
+				isPrivate,
+				gender,
+				isCustomGender,
+				profileImageUrl,
+				bio,
+				userLinks,
+				contacts,
+				postNumber,
+				followingNumber,
+				followerNumber,
+			} = info;
 
-				setUserId(userId);
-				setUsername(username);
-				setName(name);
-				setBirthday(birthday);
-				setIsMyAccountPrivate(isPrivate);
-				setGender(gender);
-				setIsCustomGender(isCustomGender);
-				setProfileImageUrl(profileImageUrl);
-				setBio(bio);
-				setUserLinks(userLinks);
-				setContacts(contacts);
-				setPostNumber(postNumber);
-				setFollowingNumber(followingNumber);
-				setFollowerNumber(followerNumber);
-			}
-		});
+			setUserId(userId);
+			setUsername(username);
+			setName(name);
+			setBirthday(birthday);
+			setIsMyAccountPrivate(isPrivate);
+			setGender(gender);
+			setIsCustomGender(isCustomGender);
+			setProfileImageUrl(profileImageUrl);
+			setBio(bio);
+			setUserLinks(userLinks);
+			setContacts(contacts);
+			setPostNumber(postNumber);
+			setFollowingNumber(followingNumber);
+			setFollowerNumber(followerNumber);
+		}
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
