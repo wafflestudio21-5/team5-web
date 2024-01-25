@@ -1,5 +1,7 @@
-import { useRef, useState } from 'react'
-import styled from 'styled-components'
+import { useRef, useState } from 'react';
+import styled from 'styled-components';
+
+import { getColor } from '../../styles/Theme';
 
 const Img = styled.img`
 	&.logo {
@@ -25,46 +27,43 @@ const Img = styled.img`
 		width: 1.3rem;
 		bottom: 0.6rem;
 	}
-`
+`;
 const Div = styled.div`
-    &.headerBox {
-        position: relative;
-        width: 30rem;
-        height: 4rem; 
-        margin: 0 auto;
-        background-color: white;  
-    }
-    &.modalBox {
-        position: absolute;
-        z-index: 1;
-        left: 50%;
-        top : 5rem;
-        transform: translateX(-14rem);
-        width: 9rem;
-        box-shadow: 0 0 3rem gainsboro;
-        border-radius: 1rem;
-        height: 5rem;
-        t
-    }
-    &.line {
+	&.headerBox {
+		position: relative;
+		width: 100%;
+		height: 4rem;
+		margin: 0 auto;
+		background-color: ${getColor('white')};
+	}
+	&.modalBox {
+		position: absolute;
+		z-index: 100;
+		left: 5%;
+		top: 5rem;
+		width: 9rem;
+		box-shadow: 0 0 3rem gainsboro;
+		border-radius: 1rem;
+		height: 5rem;
+	}
+	&.line {
 		width: 100%;
 		border-bottom: 1px solid gainsboro;
 	}
-    &.background {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: transparent;
-        z-index: 2;
-
-    }
-`
+	&.background {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: transparent;
+		z-index: 2;
+	}
+`;
 const Button = styled.button`
 	border: none;
 	height: 4rem;
-	background-color: white;
+	background-color: ${getColor('white')};
 	&.logo {
 		width: 9rem;
 		float: left;
@@ -86,7 +85,7 @@ const Button = styled.button`
 		width: 100%;
 		height: 2.5rem;
 		padding-left: 0.7rem;
-		background-color: white;
+		background-color: ${getColor('white')};
 		font-size: 0.9rem;
 		text-align: left;
 	}
@@ -99,10 +98,10 @@ const Button = styled.button`
 	&#third {
 		border-radius: 0 0 1rem 1rem;
 	}
-`
+`;
 
 export default function Header() {
-	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	return (
 		<>
 			<Div className="headerBox">
@@ -139,15 +138,15 @@ export default function Header() {
 				<Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 			)}
 		</>
-	)
+	);
 }
 
 function Modal(props: {
-	isModalOpen: boolean
-	setIsModalOpen: (b: boolean) => void
+	isModalOpen: boolean;
+	setIsModalOpen: (b: boolean) => void;
 }) {
-	const { isModalOpen, setIsModalOpen } = props
-	const modalBackground = useRef<HTMLDivElement>(null)
+	const { isModalOpen, setIsModalOpen } = props;
+	const modalBackground = useRef<HTMLDivElement>(null);
 
 	return (
 		<>
@@ -157,7 +156,7 @@ function Modal(props: {
 					ref={modalBackground}
 					onClick={(e) => {
 						if (e.target === modalBackground.current) {
-							setIsModalOpen(false)
+							setIsModalOpen(false);
 						}
 					}}
 				>
@@ -183,5 +182,5 @@ function Modal(props: {
 				</Div>
 			)}
 		</>
-	)
+	);
 }

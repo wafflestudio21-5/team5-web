@@ -1,8 +1,8 @@
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import { useUserContext } from '../../contexts/UserContext'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { useEffect, useState } from 'react';
+import { tryLogin } from '../../apis/login';
 
 const Img = styled.img`
 	&.instagram {
@@ -15,7 +15,7 @@ const Img = styled.img`
 		width: 25px;
 		margin-right: 10px;
 	}
-`
+`;
 const Input = styled.input`
 	display: block;
 	margin: 0 auto 10px;
@@ -29,7 +29,7 @@ const Input = styled.input`
 	&:focus {
 		outline: none;
 	}
-`
+`;
 const Div = styled.div`
 	&.passwordRecovery {
 		display: block;
@@ -64,7 +64,7 @@ const Div = styled.div`
 		text-align: center;
 		padding-top: 10px;
 	}
-`
+`;
 const Button = styled.button`
 	display: block;
 	margin: 10px auto;
@@ -74,54 +74,30 @@ const Button = styled.button`
 	border: none;
 	background-color: blue;
 	color: white;
-	$
-`
+`;
 const Span = styled.span`
 	background: #fff;
 	padding: 0 10px;
 	font-size: small;
 	text-decoration: none;
-`
+`;
 const StyledLink = styled(Link)`
 	text-decoration: none;
 	color: blue;
-`
+`;
 
 export default function Login() {
 	const { username, setUsername, password, setPassword, setIsLoggedin } =
-		useUserContext()
-	const [isActive, setIsActive] = useState(false)
+		useAuthContext();
+	const [isActive, setIsActive] = useState(false);
 	useEffect(() => {
-		if (username.length > 0 && password.length > 0) setIsActive(true)
-		else setIsActive(false)
-	}, [username, password])
-	const handleClick = () => {
-		const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
-		const numberRegex = /^010[0-9]{8}$/
-		function checkType() {
-			if (emailRegex.test(username)) return "email"
-			else if (numberRegex.test(username)) return "phone" 
-			else return "username"	
-		}
-		const data = {
-			id: username,
-			password: password,
-			type: checkType()
-		}
-		const tryLogin = async () => {
-			try {
-				const response = await axios.post(
-					'/api/v1/auth/login',
-					data
-				)
-				console.log(response)
-			} catch {
-				alert("아이디나 비밀번호가 다릅니다.")
-			}
-		}
-		tryLogin()
-		setIsLoggedin(true)
-	}
+		if (username.length > 0 && password.length > 0) setIsActive(true);
+		else setIsActive(false);
+	}, [username, password]);
+	const handleClick = async () => {
+		tryLogin({ username, password });
+		setIsLoggedin(true);
+	};
 
 	return (
 		<div>
@@ -171,5 +147,5 @@ export default function Login() {
 				</StyledLink>
 			</Div>
 		</div>
-	)
+	);
 }

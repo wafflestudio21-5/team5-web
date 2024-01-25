@@ -1,17 +1,17 @@
 // import { useState } from 'react'
-import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
-import { useUserContext } from '../../../contexts/UserContext'
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const Div = styled.div`
 	&.notice {
 		width: 94%;
@@ -22,7 +22,7 @@ const Div = styled.div`
 		margin: 0 1.5rem;
 		font-size: 0.9rem;
 	}
-`
+`;
 const Button = styled.button`
 	&.save {
 		display: block;
@@ -52,16 +52,17 @@ const Button = styled.button`
 		bottom: 1rem;
 		border: none;
 		background-color: white;
+		color: blue;
 	}
-`
+`;
 
 export default function AskToSave() {
-	const { setIsSaved } = useUserContext()
-	const navigate = useNavigate()
+	const { name, setIsSaved } = useAuthContext();
+	const navigate = useNavigate();
 	const handleClick = (b: boolean) => {
-		navigate('/signUp/birthday')
-		setIsSaved(b)
-	}
+		navigate('/signUp/birthday');
+		setIsSaved(b);
+	};
 	return (
 		<>
 			<Link to="/signUp/password">
@@ -72,7 +73,7 @@ export default function AskToSave() {
 			</Link>
 			<H2>로그인 정보를 저장하시겠어요?</H2>
 			<Div className="text">
-				송원영 로그인 정보가 저장되므로 다음에 로그인할 때 iCloud 기기에서
+				{name} 로그인 정보가 저장되므로 다음에 로그인할 때 iCloud® 기기에서
 				로그인 정보를 다시 입력하지 않아도 됩니다.
 			</Div>
 			<Button className="save" onClick={() => handleClick(true)}>
@@ -85,5 +86,5 @@ export default function AskToSave() {
 				이미 계정이 있으신가요?
 			</Button>
 		</>
-	)
+	);
 }

@@ -1,9 +1,12 @@
-import styled from 'styled-components'
-import defaultProfile from '../../assets/Images/Profile/default-profile.svg'
-import editCancel from '../../assets/Images/Profile/EditProfile/edit-cancel.png'
-import editSave from '../../assets/Images/Profile/EditProfile/edit-save.png'
-import { useNavigate } from 'react-router-dom'
-import { getColor } from '../../styles/Theme.tsx'
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
+import editCancel from '../../assets/Images/Profile/EditProfile/edit-cancel.png';
+import editSave from '../../assets/Images/Profile/EditProfile/edit-save.png';
+import { useUserContext } from '../../contexts/UserContext.tsx';
+import Icon from '../../shared/Icon.tsx';
+import { getColor } from '../../styles/Theme.tsx';
 
 const EditProfileLayout = styled.main`
 	width: 100%;
@@ -11,7 +14,7 @@ const EditProfileLayout = styled.main`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-`
+`;
 
 const HeaderContainer = styled.div`
 	width: 95%;
@@ -21,19 +24,10 @@ const HeaderContainer = styled.div`
 	align-items: center;
 	margin-bottom: 2.5rem;
 
-	& img {
-		width: 1.7rem;
-		height: 1.7rem;
-
-		&:hover {
-			cursor: pointer;
-		}
-	}
-
 	& h2 {
 		margin: 0 auto 0 2rem;
 	}
-`
+`;
 
 const ProfileImageContainer = styled.div`
 	width: 100%;
@@ -55,14 +49,14 @@ const ProfileImageContainer = styled.div`
 
 	& p {
 		font-size: 1.2rem;
-		color: ${getColor('blue')}};
+		color: ${getColor('blue')};
 		margin: 1.5rem 0;
 
 		&:hover {
 			cursor: pointer;
 		}
 	}
-`
+`;
 
 const EditProfileContainer = styled.div`
 	width: 95%;
@@ -89,29 +83,25 @@ const EditProfileContainer = styled.div`
 			outline: none;
 		}
 	}
-`
+`;
 
 export default function Profile() {
-	const navigate = useNavigate()
-
-	const onClickEditCancel = () => {
-		navigate('/id')
-	}
+	const { username } = useUserContext();
+	const navigate = useNavigate();
+	const navigateBack = () => {
+		navigate(`/${username}`);
+	};
 
 	return (
 		<EditProfileLayout>
 			<HeaderContainer>
-				<img
-					src={editCancel}
-					alt="프로필 편집 취소"
-					onClick={onClickEditCancel}
-				/>
+				<Icon src={editCancel} alt="취소" onClick={navigateBack} />
 				<h2>프로필 편집</h2>
-				<img src={editSave} alt="프로필 편집 저장" />
+				<Icon src={editSave} alt="저장" />
 			</HeaderContainer>
 			<ProfileImageContainer>
 				<img src={defaultProfile} alt="프로필 사진" />
-				<p className="profile-image-edit">프로필 사진 변경</p>
+				<p>프로필 사진 변경</p>
 			</ProfileImageContainer>
 			<EditProfileContainer>
 				<label htmlFor="name">이름</label>
@@ -123,5 +113,5 @@ export default function Profile() {
 				<input type="text" id="introduction" />
 			</EditProfileContainer>
 		</EditProfileLayout>
-	)
+	);
 }

@@ -3,5 +3,5 @@ export default function Reels() {
 		<>
 			<div>릴스</div>
 		</>
-	)
+	);
 }

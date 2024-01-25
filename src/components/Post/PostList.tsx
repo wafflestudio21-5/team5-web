@@ -1,50 +1,47 @@
-import styled from 'styled-components'
-import Post from './Post'
-import { useState } from 'react'
-import PostModal from './PostModal.tsx'
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-const Container = styled.div`
-	background-color: white;
+import { PostType } from '../../types';
+
+const Wrapper = styled.div`
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 2px;
 	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-`
-
-type PostModalState =
-	| { state: 'open' | 'closing'; postId: number | null }
-	| { state: 'closed' }
-
-export default function PostList() {
-	const [postModal, setPostModal] = useState<PostModalState>({
-		state: 'closed',
-	})
-
-	const openPostModal = (postId: number) => {
-		setPostModal({
-			state: 'open',
-			postId: postId,
-		})
+	& > .image-wrapper {
+		cursor: pointer;
+		width: 100%;
+		overflow: hidden;
+		aspect-ratio: 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
+	& > .image-wrapper > img {
+		object-fit: cover;
+		height: 100%;
+		width: 100%;
+	}
+`;
 
+type PostListProps = {
+	posts: PostType[];
+};
+
+export default function PostList({ posts }: PostListProps) {
+	const navigate = useNavigate();
 	return (
-		<>
-			<Container>
-				<Post postId={1} openPostModal={openPostModal} />
-				<Post postId={1} openPostModal={openPostModal} />
-				<Post postId={1} openPostModal={openPostModal} />
-				<Post postId={1} openPostModal={openPostModal} />
-			</Container>
-			{postModal.state !== 'closed' && (
-				<PostModal
-					isClosing={postModal.state === 'closing'}
-					close={() => {
-						setPostModal({ state: 'closing', postId: postModal.postId })
-						setTimeout(() => setPostModal({ state: 'closed' }), 500)
+		<Wrapper>
+			{posts.map((post) => (
+				<div
+					className="image-wrapper"
+					onClick={() => {
+						navigate(`/feed/${post.id}`);
 					}}
-					postId={postModal.postId}
-				/>
-			)}
-		</>
-	)
+				>
+					<img src={post.imageUrl} alt="게시물 이미지" />
+				</div>
+			))}
+		</Wrapper>
+	);
 }

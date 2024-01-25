@@ -1,25 +1,26 @@
-import { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
-import { useUserContext } from '../../../contexts/UserContext'
+import { useAuthContext } from '../../../contexts/AuthContext';
+import { convert } from 'hangul-romanization';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 interface InputProps {
-	isvalid: boolean
-	type: string // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
-	value: string
-	placeholder: string
-	onChange: React.ChangeEventHandler<HTMLInputElement>
+	isvalid: boolean;
+	type: string; // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
+	value: string;
+	placeholder: string;
+	onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const Input = styled.input<InputProps>`
 	display: block;
 	width: 90%;
@@ -32,7 +33,7 @@ const Input = styled.input<InputProps>`
 	&:focus {
 		outline: none;
 	}
-`
+`;
 const Div = styled.div`
 	&.notice {
 		color: red;
@@ -45,7 +46,7 @@ const Div = styled.div`
 		margin: 0 1.5rem;
 		font-size: 0.9rem;
 	}
-`
+`;
 const Button = styled.button`
 	&.next {
 		display: block;
@@ -65,20 +66,25 @@ const Button = styled.button`
 		bottom: 1rem;
 		border: none;
 		background-color: white;
+		color: blue;
 	}
-`
+`;
 
 export default function MakeUsername() {
-	const { username, setUsername } = useUserContext()
-	const navigate = useNavigate()
-	const [isValid, setIsValid] = useState(false)
+	const { name, username, setUsername } = useAuthContext();
+	const navigate = useNavigate();
+	const [isValid, setIsValid] = useState(false);
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-		setUsername(e.target.value)
-	}
+		console.log(e.target.value);
+		setUsername(e.target.value);
+	};
 	useEffect(() => {
-		if (username.length === 0) setIsValid(false)
-		else setIsValid(true)
-	}, [username])
+		if (username === '')
+			setUsername(convert(name) + Math.floor(Math.random() * 1000 + 1));
+	}, []);
+	useEffect(() => {
+		setIsValid(username.length > 0);
+	}, [username]);
 	return (
 		<>
 			<Link to="/signUp/birthday">
@@ -109,5 +115,5 @@ export default function MakeUsername() {
 				이미 계정이 있으신가요?
 			</Button>
 		</>
-	)
+	);
 }

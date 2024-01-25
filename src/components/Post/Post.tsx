@@ -1,30 +1,49 @@
-import styled from 'styled-components'
-import PostImage from './PostImage'
-import ReactSection from './ReactSection'
-import PostHeader from './PostHeader'
+import styled from 'styled-components';
+
+import { PostType } from '../../types';
+
+import PostHeader from './PostHeader';
+import PostImage from './PostImage';
+import ReactSection from './ReactSection';
 
 const Container = styled.article`
 	display: flex;
 	flex-direction: column;
 	height: fit-content;
-	width: 30rem;
+	width: 100%;
 	border-bottom: 1px solid gray;
 	margin-bottom: 1rem;
 	padding-bottom: 1rem;
-	box-sizing: border-box;
-`
+`;
 
 type Props = {
-	postId: number | null
-	openPostModal: (postId: number) => void
-}
+	postData: PostType | null;
+	openMenuModal: (postId: number) => void;
+	openCommentModal: (post: PostType) => void;
+};
 
-export default function Post({ postId, openPostModal }: Props) {
+export default function Post({
+	postData,
+	openMenuModal,
+	openCommentModal,
+}: Props) {
 	return (
-		<Container>
-			<PostHeader />
-			<PostImage />
-			<ReactSection postId={postId} openPostModal={openPostModal} />
-		</Container>
-	)
+		postData && (
+			<Container>
+				<PostHeader
+					user={postData.user}
+					showMenu={() => {
+						openMenuModal(postData.id);
+					}}
+				/>
+				<PostImage imageUrl={postData.imageUrl} />
+				<ReactSection
+					postData={postData}
+					showComment={() => {
+						openCommentModal(postData);
+					}}
+				/>
+			</Container>
+		)
+	);
 }

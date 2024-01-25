@@ -1,17 +1,17 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
-import { useUserContext } from '../../../contexts/AuthContext'
+import React from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
-`
+`;
 const H2 = styled.h2`
 	display: block;
 	width: 90%;
 	margin-left: 1.5rem;
-`
+`;
 const Input = styled.input`
 	display: block;
 	width: 90%;
@@ -24,7 +24,7 @@ const Input = styled.input`
 	&:focus {
 		outline: none;
 	}
-`
+`;
 const Div = styled.div`
 	&.notice {
 		width: 94%;
@@ -35,25 +35,37 @@ const Div = styled.div`
 		margin: 0 1.5rem;
 		font-size: 0.9rem;
 	}
-`
+`;
 const Button = styled.button`
-	display: block;
-	margin: 1rem auto;
-	width: 93%;
-	height: 2.5rem;
-	border-radius: 1.2rem;
-	border: none;
-	background-color: blue;
-	color: white;
-`
+	&.next {
+		display: block;
+		margin: 1rem auto;
+		width: 93%;
+		height: 2.5rem;
+		border-radius: 1.2rem;
+		border: none;
+		background-color: blue;
+		color: white;
+	}
+	&.already {
+		display: block;
+		width: 90%;
+		position: fixed;
+		left: 5%;
+		bottom: 1rem;
+		border: none;
+		background-color: white;
+		color: blue;
+	}
+`;
 
 export default function SignUp() {
-	const { name, setName } = useUserContext()
-	const navigate = useNavigate()
+	const { name, setName } = useAuthContext();
+	const navigate = useNavigate();
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-		setName(e.target.value)
-		console.log(name)
-	}
+		setName(e.target.value);
+		console.log(name);
+	};
 	return (
 		<>
 			<Link to="/">
@@ -73,7 +85,12 @@ export default function SignUp() {
 				placeholder="성명"
 				onChange={handleChange}
 			/>
-			<Button onClick={() => navigate('password/')}>다음</Button>
+			<Button className="next" onClick={() => navigate('password/')}>
+				다음
+			</Button>
+			<Button className="already" onClick={() => navigate('/')}>
+				이미 계정이 있으신가요?
+			</Button>
 		</>
-	)
+	);
 }
