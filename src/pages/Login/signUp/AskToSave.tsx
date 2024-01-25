@@ -1,7 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
+// import { useState } from 'react'
 import styled from 'styled-components';
-
-import { useUserContext } from '../../../contexts/UserContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 const Img = styled.img`
 	width: 2rem;
@@ -57,7 +57,7 @@ const Button = styled.button`
 `;
 
 export default function AskToSave() {
-	const { name, setIsSaved } = useUserContext();
+	const { name, setIsSaved } = useAuthContext();
 	const navigate = useNavigate();
 	const handleClick = (b: boolean) => {
 		navigate('/signUp/birthday');

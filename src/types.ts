@@ -1,14 +1,49 @@
 // 모든 변수는 CamelCase로 작성한다.
-// 모든 타입은 뒤에 Type을 붙여준다.
+// export되는 모든 타입 이름은 끝에 Type을 붙여준다.
 
-export type UserType = {
-	id: number;
-	name: string;
-	username: string;
-	profileImageUrl: string;
-	isPrivate: boolean;
+// api
+export type APIErrorResponseType = {
+	error: string;
 };
 
+// User
+export type UserLink = {
+	linkId: number;
+	links: string;
+};
+
+export type UserContact = {
+	contactType: string; // e.g., "EMAIL"
+	contactValue: string; // e.g., an email address
+	isConfirmed: number; // 0 or 1, assuming this is a boolean-like field
+};
+
+export type UserType = {
+	userId: number;
+	username: string;
+	name: string;
+	password: string;
+	birthday: string; // or Date if you're going to convert it
+	isPrivate: boolean;
+	gender: string;
+	isCustomGender: boolean;
+	profileImageUrl: string;
+	bio: string;
+	userLinks: UserLink[];
+	contacts: UserContact[];
+	postNumber: number;
+	followingNumber: number;
+	followerNumber: number;
+};
+
+export type MiniProfileType = {
+	userId: number;
+	username: string;
+	name: string;
+	profileImageUrl: string;
+};
+
+// Post
 export type PostType = {
 	id: number;
 	user: UserType;

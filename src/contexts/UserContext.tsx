@@ -1,33 +1,38 @@
-import axios from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
-
-type trySignUpProps = {
-	navigate: (to: string) => void;
-	addr: string;
-};
-
+import { UserLink, UserContact } from '../types';
 export type UserContextData = {
 	accessToken: string;
-	setAccessToken: (s: string) => void;
-	refreshToken: string;
-	setRefreshToken: (s: string) => void;
-	path: string;
-	setPath: (s: string) => void;
+	userId: number;
 	name: string;
-	setName: (s: string) => void;
 	username: string;
-	setUsername: (s: string) => void;
 	password: string;
-	setPassword: (s: string) => void;
-	email: string;
-	setEmail: (s: string) => void;
 	birthday: Date;
+	gender: string;
+	isCustomGender: boolean;
+	profileImageUrl: string;
+	bio: string;
+	userLinks: UserLink[];
+	contacts: UserContact[];
+	postNumber: number;
+	followingNumber: number;
+	followerNumber: number;
+	isMyAccountPrivate: boolean;
+	setAccessToken: (s: string) => void;
+	setUserId: (n: number) => void;
+	setName: (s: string) => void;
+	setUsername: (s: string) => void;
+	setPassword: (s: string) => void;
 	setBirthday: (d: Date) => void;
-	isSaved: boolean;
-	setIsSaved: (b: boolean) => void;
-	isLoggedin: boolean;
-	setIsLoggedin: (b: boolean) => void;
-	trySignUp: (props: trySignUpProps) => void;
+	setGender: (s: string) => void;
+	setIsCustomGender: (b: boolean) => void;
+	setProfileImageUrl: (s: string) => void;
+	setBio: (s: string) => void;
+	setUserLinks: (links: UserLink[]) => void;
+	setContacts: (contacts: UserContact[]) => void;
+	setPostNumber: (n: number) => void;
+	setFollowerNumber: (n: number) => void;
+	setFollowingNumber: (n: number) => void;
+	setIsMyAccountPrivate: (b: boolean) => void;
 };
 
 export const UserContext = createContext<UserContextData | null>(null);
@@ -37,57 +42,57 @@ type ProviderProps = {
 };
 export function UserProvider({ children }: ProviderProps) {
 	const [accessToken, setAccessToken] = useState('');
-	const [refreshToken, setRefreshToken] = useState('');
-	const [path, setPath] = useState('');
+	const [userId, setUserId] = useState(0);
 	const [name, setName] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
-	const [email, setEmail] = useState('');
 	const [birthday, setBirthday] = useState(new Date());
-	const [isSaved, setIsSaved] = useState(false);
-	const [isLoggedin, setIsLoggedin] = useState(false);
-	const trySignUp = async ({ navigate, addr }: trySignUpProps) => {
-		try {
-			const response = await axios.post(
-				'https://waffle5gram.shop/api/v1/auth/signup',
-				{
-					username: username,
-					name: name,
-					password: password,
-					contact: email,
-					contact_type: email,
-				}
-			);
-			console.log(response);
-			navigate(addr);
-		} catch (error) {
-			alert('회원가입 실패');
-		}
-	};
+	const [isMyAccountPrivate, setIsMyAccountPrivate] = useState(false);
+	const [gender, setGender] = useState('');
+	const [isCustomGender, setIsCustomGender] = useState(false);
+	const [profileImageUrl, setProfileImageUrl] = useState('');
+	const [bio, setBio] = useState('');
+	const [userLinks, setUserLinks] = useState<UserLink[]>([]);
+	const [contacts, setContacts] = useState<UserContact[]>([]);
+	const [postNumber, setPostNumber] = useState(0);
+	const [followingNumber, setFollowingNumber] = useState(0);
+	const [followerNumber, setFollowerNumber] = useState(0);
+
 	return (
 		<UserContext.Provider
 			value={{
 				accessToken,
-				setAccessToken,
-				refreshToken,
-				setRefreshToken,
-				path,
-				setPath,
+				userId,
 				name,
-				setName,
 				username,
-				setUsername,
 				password,
-				setPassword,
-				email,
-				setEmail,
 				birthday,
+				gender,
+				isCustomGender,
+				profileImageUrl,
+				bio,
+				userLinks,
+				contacts,
+				postNumber,
+				followingNumber,
+				followerNumber,
+				isMyAccountPrivate,
+				setAccessToken,
+				setUserId,
+				setName,
+				setUsername,
+				setPassword,
 				setBirthday,
-				isSaved,
-				setIsSaved,
-				isLoggedin,
-				setIsLoggedin,
-				trySignUp,
+				setGender,
+				setIsCustomGender,
+				setProfileImageUrl,
+				setBio,
+				setUserLinks,
+				setContacts,
+				setPostNumber,
+				setFollowerNumber,
+				setFollowingNumber,
+				setIsMyAccountPrivate,
 			}}
 		>
 			{children}

@@ -1,9 +1,8 @@
+import { useAuthContext } from '../../../contexts/AuthContext';
 import { convert } from 'hangul-romanization';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { useUserContext } from '../../../contexts/UserContext';
 
 interface InputProps {
 	isvalid: boolean;
@@ -72,7 +71,7 @@ const Button = styled.button`
 `;
 
 export default function MakeUsername() {
-	const { name, username, setUsername } = useUserContext();
+	const { name, username, setUsername } = useAuthContext();
 	const navigate = useNavigate();
 	const [isValid, setIsValid] = useState(false);
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
