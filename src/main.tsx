@@ -1,18 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import { AuthProvider } from "./contexts/AuthContext.tsx";
-import { UserProvider } from "./contexts/UserContext.tsx";
-import { PostProvider } from './contexts/PostContext.tsx'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+import { AuthProvider } from './contexts/AuthContext.tsx';
+import { UserProvider } from './contexts/UserContext.tsx';
+import { PostProvider } from './contexts/PostContext.tsx';
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <UserProvider>
-        	<PostProvider>
-            <App />
-          </PostProvider>
-      </UserProvider>
-    </AuthProvider>
-  </React.StrictMode>,
+ReactDOM.createRoot(document.getElementById('root')!).render(
+	<React.StrictMode>
+		<AuthProvider>
+			<UserProvider>
+				<PostProvider>
+					<App />
+				</PostProvider>
+			</UserProvider>
+		</AuthProvider>
+	</React.StrictMode>
 );

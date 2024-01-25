@@ -48,7 +48,11 @@ export default function NavBar() {
 					alt="Search"
 					onClick={() => navigate('/search')}
 				></Icon>
-				<Icon src={addPost} alt="AddPost" onClick={()=>navigate('/addPost')}></Icon>
+				<Icon
+					src={addPost}
+					alt="AddPost"
+					onClick={() => navigate('/addPost')}
+				></Icon>
 				<Icon
 					src={reels}
 					alt="Reels"
