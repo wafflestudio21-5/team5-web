@@ -15,9 +15,6 @@ export const getUserInformation = async (
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
-				data: {
-					message: 'Retrieve user profile.',
-				},
 			}
 		);
 

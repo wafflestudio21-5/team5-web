@@ -72,9 +72,10 @@ export const tryLogin = async ({
 			}
 		);
 
-		setAccessToken(response.data.accessToken);
+		const accessToken = response.data.accessToken;
+		setAccessToken(accessToken);
 
-		const info = await getUserInformation(username, response.data.accessToken);
+		const info = await getUserInformation(username, accessToken);
 		if (info) {
 			const {
 				userId,
