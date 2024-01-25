@@ -338,18 +338,19 @@ export const deleteFollower = async (
 	}
 };
 
-type MiniProfileListResponseType = {
+type FollowListResponseType = {
+	followNumber: number;
 	miniProfiles: MiniProfileType[];
 };
 
-// 팔로워 목록 가져오기
-export const getFollowerList = async (
+// 팔로워 중에서 내가 팔로우 하는 사람 목록 가져오기, 유저 본인의 팔로워도 이거로 가져옴
+export const getFollowerCommon = async (
 	username: string,
 	accessToken: string
-): Promise<MiniProfileType[] | null> => {
+): Promise<FollowListResponseType | null> => {
 	try {
-		const response = await axios.get<MiniProfileListResponseType>(
-			`${baseURL}/api/v1/friendship/${username}/followerlist`,
+		const response = await axios.get<FollowListResponseType>(
+			`${baseURL}/api/v1/friendship/${username}/follower/common`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -357,7 +358,7 @@ export const getFollowerList = async (
 			}
 		);
 
-		return response.data.miniProfiles;
+		return response.data;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -371,14 +372,14 @@ export const getFollowerList = async (
 	}
 };
 
-// 팔로잉 목록 가져오기
-export const getFollowingList = async (
+// 팔로워 중에서 내가 팔로우 하지 않는 사람 목록 가져오기
+export const getFollowerDiff = async (
 	username: string,
 	accessToken: string
-): Promise<MiniProfileType[] | null> => {
+): Promise<FollowListResponseType | null> => {
 	try {
-		const response = await axios.get<MiniProfileListResponseType>(
-			`${baseURL}/api/v1/friendship/${username}/followinglist`,
+		const response = await axios.get<FollowListResponseType>(
+			`${baseURL}/api/v1/friendship/${username}/follower/diff`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -386,7 +387,7 @@ export const getFollowingList = async (
 			}
 		);
 
-		return response.data.miniProfiles;
+		return response.data;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -396,6 +397,60 @@ export const getFollowingList = async (
 			alert('Error occurred');
 		}
 
+		return null;
+	}
+};
+
+// 팔로잉 중에서 내가 팔로우 하는 사람 목록 가져오기, 유저 본인의 팔로잉도 이거로 가져옴
+export const getFollowingCommon = async (
+	username: string,
+	accessToken: string
+): Promise<FollowListResponseType | null> => {
+	try {
+		const response = await axios.get<FollowListResponseType>(
+			`${baseURL}/api/v1/friendship/${username}/following/common`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		return response.data;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+		return null;
+	}
+};
+
+// 팔로잉 중에서 내가 팔로우 하지 않는 사람 목록 가져오기
+export const getFollowingDiff = async (
+	username: string,
+	accessToken: string
+): Promise<FollowListResponseType | null> => {
+	try {
+		const response = await axios.get<FollowListResponseType>(
+			`${baseURL}/api/v1/friendship/${username}/following/diff`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		return response.data;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
 		return null;
 	}
 };
