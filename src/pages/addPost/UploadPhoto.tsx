@@ -1,7 +1,8 @@
-import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
-import { usePostContext } from '../../contexts/PostContext';
 import { ChangeEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { usePostContext } from '../../contexts/PostContext';
 
 const Background = styled.div`
 	background-color: white;

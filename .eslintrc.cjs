@@ -39,6 +39,5 @@ module.exports = {
 			},
 		],
 		'import/no-duplicates': 'error',
-		'import/no-named-as-default': 'off', // styled import에 대한 오류 방지
 	},
 };

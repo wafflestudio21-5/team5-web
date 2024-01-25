@@ -1,4 +1,3 @@
-import axios from 'axios';
 import styled from 'styled-components';
 
 import {
@@ -7,7 +6,6 @@ import {
 } from '../../apis/user.ts';
 import post from '../../assets/Images/Profile/AddPost/post.png';
 import story from '../../assets/Images/Profile/AddPost/story.png';
-import { baseURL } from '../../constants.ts';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 import Modal from '../../shared/Modal/Modal.tsx';

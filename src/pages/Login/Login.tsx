@@ -1,8 +1,9 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { tryLogin } from '../../apis/login';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 const Img = styled.img`
 	&.instagram {

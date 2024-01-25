@@ -1,8 +1,10 @@
 import axios, { AxiosError } from 'axios';
-import { useUserContext } from '../contexts/UserContext';
-import { getUserInformation } from './user';
-import { APIErrorResponseType } from '../types';
+
 import { useAuthContext } from '../contexts/AuthContext';
+import { useUserContext } from '../contexts/UserContext';
+import { APIErrorResponseType } from '../types';
+
+import { getUserInformation } from './user';
 
 type LoginType = {
 	username: string;
