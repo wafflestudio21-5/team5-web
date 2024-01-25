@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
-	updateAccountToPrivate,
 	updateAccountToOpen,
-} from '../../apis/user.ts';
+	updateAccountToPrivate,
+} from '../../apis/account.ts';
 import post from '../../assets/Images/Profile/AddPost/post.png';
 import story from '../../assets/Images/Profile/AddPost/story.png';
 import { useUserContext } from '../../contexts/UserContext.tsx';

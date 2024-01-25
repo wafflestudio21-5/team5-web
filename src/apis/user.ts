@@ -48,9 +48,6 @@ export const getUserFollowStatus = async (
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
-				data: {
-					message: 'Retrieve user follow.',
-				},
 			}
 		);
 
@@ -86,9 +83,6 @@ export const getUserFollowMeStatus = async (
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
-				},
-				data: {
-					message: 'Retrieve follower.',
 				},
 			}
 		);
@@ -134,9 +128,6 @@ export const getFollowRequestStatus = async (
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
-				data: {
-					message: 'Request follow to private user.',
-				},
 			}
 		);
 
@@ -173,9 +164,6 @@ export const getFollowRequestToMeStatus = async (
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
-				data: {
-					message: 'Retrieve user follow request.',
-				},
 			}
 		);
 
@@ -209,14 +197,8 @@ export const requestFollowToPrivateUser = async (
 		const response = await axios.post<FollowRequestResponseType>(
 			`${baseURL}/api/v1/friendship/${username}/follow/request`,
 			{
-				message: 'Request follow to private user.',
-			},
-			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
-				},
-				data: {
-					message: 'Request follow to private user.',
 				},
 			}
 		);
@@ -246,9 +228,6 @@ export const cancelRequestFollowToPrivateUser = async (
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
-				},
-				data: {
-					message: 'Delete follow request to private user.',
 				},
 			}
 		);
@@ -280,9 +259,6 @@ export const followPublicUser = async (
 	try {
 		const response = await axios.post<FollowResponseType>(
 			`${baseURL}/api/v1/friendship/${username}/follow`,
-			{
-				message: 'Follow Non-private user.',
-			},
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -316,9 +292,6 @@ export const unfollowUser = async (
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
-				data: {
-					message: 'Unfollow user.',
-				},
 			}
 		);
 
@@ -347,9 +320,6 @@ export const deleteFollower = async (
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
-				},
-				data: {
-					message: 'Delete follower.',
 				},
 			}
 		);
@@ -417,68 +387,6 @@ export const getFollowingList = async (
 		);
 
 		return response.data.miniProfiles;
-	} catch (error) {
-		const err = error as AxiosError<APIErrorResponseType>;
-
-		if (err.response && err.response.data) {
-			alert(err.response.data.error);
-		} else {
-			alert('Error occurred');
-		}
-
-		return null;
-	}
-};
-
-// 계정 비공개로 변경
-export const updateAccountToPrivate = async (
-	accessToken: string
-): Promise<string | null> => {
-	try {
-		const response = await axios.put(
-			`${baseURL}/api/v1/account/toprivate`,
-			{
-				message: 'Change non-private account to private account.',
-			},
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
-
-		return response.data.message;
-	} catch (error) {
-		const err = error as AxiosError<APIErrorResponseType>;
-
-		if (err.response && err.response.data) {
-			alert(err.response.data.error);
-		} else {
-			alert('Error occurred');
-		}
-
-		return null;
-	}
-};
-
-// 계정 공개로 변경
-export const updateAccountToOpen = async (
-	accessToken: string
-): Promise<string | null> => {
-	try {
-		const response = await axios.put(
-			`${baseURL}/api/v1/account/toopen`,
-			{
-				message: 'Change private account to non-private account.',
-			},
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
-
-		return response.data.message;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
