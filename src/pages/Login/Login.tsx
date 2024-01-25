@@ -95,7 +95,6 @@ export default function Login() {
 	const { setIsLoggedin } = useAuthContext();
 
 	const {
-		accessToken,
 		setAccessToken,
 		setUserId,
 		setName,
@@ -125,7 +124,6 @@ export default function Login() {
 			username: usernameInput,
 			password: passwordInput,
 
-			accessToken,
 			setAccessToken,
 
 			setUserId,

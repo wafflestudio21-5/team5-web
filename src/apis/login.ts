@@ -13,7 +13,6 @@ type LoginType = {
 	password: string;
 
 	// 로그인 성공 시 accessToken 받아와서 저장
-	accessToken: string;
 	setAccessToken: (accessToken: string) => void;
 
 	// 받아온 accessToken 이용해 유저 정보 받아오기
@@ -42,7 +41,6 @@ export const tryLogin = async ({
 	username,
 	password,
 
-	accessToken,
 	setAccessToken,
 
 	setUserId,
@@ -76,7 +74,7 @@ export const tryLogin = async ({
 
 		setAccessToken(response.data.accessToken);
 
-		const info = await getUserInformation(username, accessToken);
+		const info = await getUserInformation(username, response.data.accessToken);
 		if (info) {
 			const {
 				userId,
