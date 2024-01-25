@@ -61,15 +61,18 @@ export const tryLogin = async ({
 	setFollowerNumber,
 }: LoginType) => {
 	try {
-		const response = await axios.post(`${baseURL}/api/v1/auth/login`, {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			data: {
+		const response = await axios.post(
+			`${baseURL}/api/v1/auth/login`,
+			{
 				username: username,
 				password: password,
 			},
-		});
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 
 		setAccessToken(response.data.accessToken);
 
