@@ -28,7 +28,7 @@ import { ThemeProvider } from 'styled-components';
 import Theme from './styles/Theme.tsx';
 import NavBar from './components/NavBar.tsx';
 import Home from './pages/Home.tsx';
-import AddPhoto from './pages/addPost/AddPhoto.tsx';
+import UploadPhoto from './pages/addPost/UploadPhoto.tsx';
 import AddText from './pages/addPost/AddText.tsx';
 import AskPhone from './pages/Login/signUp/AskPhone.tsx';
 
@@ -51,11 +51,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'addPost/',
-				element: <AddPhoto />
+				element: <UploadPhoto />,
 			},
 			{
 				path: 'addText/',
-				element: <AddText />
+				element: <AddText />,
 			},
 			{
 				path: ':id/',
