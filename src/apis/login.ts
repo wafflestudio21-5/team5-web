@@ -41,7 +41,7 @@ export const tryLogin = async ({
 	username,
 	password,
 
-	setAccessToken,
+	// setAccessToken,
 
 	setUserId,
 	setUsername,
@@ -59,24 +59,26 @@ export const tryLogin = async ({
 	setFollowerNumber,
 }: LoginType) => {
 	try {
-		const response = await axios.post(
-			`${baseURL}/api/v1/auth/login`,
-			{
-				username: username,
-				password: password,
-			},
-			{
-				headers: {
-					'Content-Type': 'application/json',
+		await axios
+			.post(
+				`${baseURL}/api/v1/auth/login`,
+				{
+					username: username,
+					password: password,
 				},
-			}
-		);
+				{
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				}
+			)
+			.then((res) => {
+				console.log(res);
+				console.log(res.data);
+				console.log(res.data.accessToken);
+			});
 
-		const { accessToken } = response.data;
-		console.log('액세스 토큰 : ' + accessToken);
-		setAccessToken(accessToken);
-
-		const info = await getUserInformation(username, accessToken);
+		const info = await getUserInformation(username, 'asdf');
 		if (info) {
 			const {
 				userId,
