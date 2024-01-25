@@ -1,11 +1,12 @@
 import axios, { AxiosError } from 'axios';
 
 import { baseURL } from '../constants.ts';
-import { CommentType, FeedType, PostType } from '../types.ts';
-
-type APIErrorResponseType = {
-	error: string;
-};
+import {
+	APIErrorResponseType,
+	CommentType,
+	FeedType,
+	PostType,
+} from '../types.ts';
 
 type PostResponseType = {
 	post_id: number;
@@ -46,7 +47,7 @@ export const getHomeFeed = async (page: number): Promise<FeedType | null> => {
 				likesCount: post.likes_count,
 				commentsCount: post.comments_count,
 				user: {
-					id: post.user_id,
+					userId: post.user_id,
 					username: post.username,
 					profileImageUrl:
 						'https://wafflestudio.com/static/images/DefaultProfileImage.svg', // TODO: 유저의 프로필 이미지로 바꾸기
@@ -106,7 +107,7 @@ export const getPostComment = async (
 				content: comment.content,
 				createdAt: comment.created_at,
 				user: {
-					id: comment.user_id,
+					userId: comment.user_id,
 					username: comment.username,
 					profileImageUrl:
 						'https://wafflestudio.com/static/images/DefaultProfileImage.svg', // TODO: 유저의 프로필 이미지로 바꾸기
