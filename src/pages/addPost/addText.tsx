@@ -1,10 +1,9 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-import MenuElement from '../../components/CreatePost/MenuElement';
-import Select from '../../components/CreatePost/SubjectBar';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { usePostContext } from '../../contexts/PostContext';
+import Select from '../../components/CreatePost/SubjectBar';
+import MenuElement from '../../components/CreatePost/MenuElement';
 
 const Background = styled.div`
 	background-color: white;
@@ -69,7 +68,8 @@ const Prev = styled.img`
 const Photo = styled.img`
 	display: block;
 	width: 60%;
-	margin: 2rem 0.5rem 1rem 0.5rem;
+	margin: 2rem auto 1rem auto;
+	padding: 0 0.5rem;
 `;
 const Textarea = styled.textarea`
 	width: 100%;
