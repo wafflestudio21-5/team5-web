@@ -1,64 +1,87 @@
 import axios, { AxiosError } from 'axios';
 
-import { useAuthContext } from '../contexts/AuthContext';
-import { useUserContext } from '../contexts/UserContext';
-import { APIErrorResponseType } from '../types';
+import { baseURL } from '../constants.ts';
+// import { useAuthContext } from '../contexts/AuthContext';
+// import { useUserContext } from '../contexts/UserContext';
+import { APIErrorResponseType, UserContactType, UserLinkType } from '../types';
 
 import { getUserInformation } from './user';
 
 type LoginType = {
+	// username, password로 로그인
 	username: string;
 	password: string;
+
+	// 로그인 성공 시 accessToken 받아와서 저장
+	accessToken: string;
+	setAccessToken: (accessToken: string) => void;
+
+	// 받아온 accessToken 이용해 유저 정보 받아오기
+	setUserId: (userId: number) => void;
+	setUsername: (username: string) => void;
+	setName: (name: string) => void;
+	setBirthday: (birthday: Date) => void;
+	setIsMyAccountPrivate: (isMyAccountPrivate: boolean) => void;
+	setGender: (gender: string) => void;
+	setIsCustomGender: (isCustomGender: boolean) => void;
+	setProfileImageUrl: (profileImageUrl: string) => void;
+	setBio: (bio: string) => void;
+	setUserLinks: (userLinks: UserLinkType[]) => void;
+	setContacts: (contacts: UserContactType[]) => void;
+	setPostNumber: (postNumber: number) => void;
+	setFollowingNumber: (followingNumber: number) => void;
+	setFollowerNumber: (followerNumber: number) => void;
 };
 
-type SignUpProps = {
-	navigate: (to: string) => void;
-	addr: string;
-};
+// type SignUpProps = {
+// 	navigate: (to: string) => void;
+// 	addr: string;
+// };
 
-export const tryLogin = async ({ username, password }: LoginType) => {
-	const { accessToken, setAccessToken } = useUserContext();
-	const {
-		setUserId,
-		setName,
-		setUsername,
-		setPassword,
-		setBirthday,
-		setGender,
-		setIsCustomGender,
-		setProfileImageUrl,
-		setBio,
-		setUserLinks,
-		setContacts,
-		setPostNumber,
-		setFollowerNumber,
-		setFollowingNumber,
-		setIsMyAccountPrivate,
-	} = useUserContext();
+export const tryLogin = async ({
+	username,
+	password,
+
+	accessToken,
+	setAccessToken,
+
+	setUserId,
+	setUsername,
+	setName,
+	setBirthday,
+	setIsMyAccountPrivate,
+	setGender,
+	setIsCustomGender,
+	setProfileImageUrl,
+	setBio,
+	setUserLinks,
+	setContacts,
+	setPostNumber,
+	setFollowingNumber,
+	setFollowerNumber,
+}: LoginType) => {
 	try {
-		const data = {
-			username: username,
-			password: password,
-		};
-		const response = await axios.post(
-			'https://waffle5gram.shop/api/v1/auth/login',
-			data,
-			{
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
-		setAccessToken(response.data.access_token);
+		const response = await axios.post(`${baseURL}/api/v1/auth/login`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			data: {
+				username: username,
+				password: password,
+			},
+		});
+
+		setAccessToken(response.data.accessToken);
+
 		const info = getUserInformation(username, accessToken);
 		info.then((info) => {
 			if (info) {
 				const {
 					userId,
-					name,
 					username,
-					password,
+					name,
 					birthday,
+					isPrivate,
 					gender,
 					isCustomGender,
 					profileImageUrl,
@@ -66,16 +89,15 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 					userLinks,
 					contacts,
 					postNumber,
-					followerNumber,
 					followingNumber,
-					isPrivate,
+					followerNumber,
 				} = info;
 
 				setUserId(userId);
-				setName(name);
 				setUsername(username);
-				setPassword(password);
-				setBirthday(new Date(birthday));
+				setName(name);
+				setBirthday(birthday);
+				setIsMyAccountPrivate(isPrivate);
 				setGender(gender);
 				setIsCustomGender(isCustomGender);
 				setProfileImageUrl(profileImageUrl);
@@ -83,9 +105,8 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 				setUserLinks(userLinks);
 				setContacts(contacts);
 				setPostNumber(postNumber);
-				setFollowerNumber(followerNumber);
 				setFollowingNumber(followingNumber);
-				setIsMyAccountPrivate(isPrivate);
+				setFollowerNumber(followerNumber);
 			}
 		});
 	} catch (error) {
@@ -101,53 +122,53 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 	}
 };
 
-export const trySignUp = async ({ navigate, addr }: SignUpProps) => {
-	try {
-		const { username, password, name, email, birthday } = useAuthContext();
-		const phoneRegex = /^010\d{8}$/i;
-		const year = birthday.getFullYear();
-		const month = String(birthday.getMonth() + 1).padStart(2, '0');
-		const day = String(birthday.getDate()).padStart(2, '0');
-		const formatted = `${year}-${month}-${day}`;
-		await axios.post('https://waffle5gram.shop/api/v1/auth/signup', {
-			username: username,
-			name: name,
-			password: password,
-			contact: email,
-			contactType: phoneRegex.test(email) ? 'phone' : 'email',
-			birthday: formatted,
-		});
-		tryLogin({ username, password });
-		navigate(addr);
-	} catch (error) {
-		const err = error as AxiosError<APIErrorResponseType>;
-
-		if (err.response && err.response.data) {
-			alert(err.response.data.error);
-		} else {
-			alert('Error occurred');
-		}
-
-		return null;
-	}
-};
-
-export const resetAccessToken = async () => {
-	const { setAccessToken } = useUserContext();
-	try {
-		const response = await axios.get(
-			'https://waffle5gram.shop/api/v1/auth/refresh_token'
-		);
-		setAccessToken(response.data.access_token);
-		console.log('액세스 토큰 : ' + response.data.access_token);
-	} catch (error) {
-		const err = error as AxiosError<APIErrorResponseType>;
-		if (err.response && err.response.data) {
-			alert(err.response.data.error);
-		} else {
-			alert('Error occurred');
-		}
-
-		return null;
-	}
-};
+// export const trySignUp = async ({ navigate, addr }: SignUpProps) => {
+// 	try {
+// 		const { username, password, name, email, birthday } = useAuthContext();
+// 		const phoneRegex = /^010\d{8}$/i;
+// 		const year = birthday.getFullYear();
+// 		const month = String(birthday.getMonth() + 1).padStart(2, '0');
+// 		const day = String(birthday.getDate()).padStart(2, '0');
+// 		const formatted = `${year}-${month}-${day}`;
+// 		await axios.post('https://waffle5gram.shop/api/v1/auth/signup', {
+// 			username: username,
+// 			name: name,
+// 			password: password,
+// 			contact: email,
+// 			contactType: phoneRegex.test(email) ? 'phone' : 'email',
+// 			birthday: formatted,
+// 		});
+// 		tryLogin({ username, password });
+// 		navigate(addr);
+// 	} catch (error) {
+// 		const err = error as AxiosError<APIErrorResponseType>;
+//
+// 		if (err.response && err.response.data) {
+// 			alert(err.response.data.error);
+// 		} else {
+// 			alert('Error occurred');
+// 		}
+//
+// 		return null;
+// 	}
+// };
+//
+// export const resetAccessToken = async () => {
+// 	const { setAccessToken } = useUserContext();
+// 	try {
+// 		const response = await axios.get(
+// 			'https://waffle5gram.shop/api/v1/auth/refresh_token'
+// 		);
+// 		setAccessToken(response.data.access_token);
+// 		console.log('액세스 토큰 : ' + response.data.access_token);
+// 	} catch (error) {
+// 		const err = error as AxiosError<APIErrorResponseType>;
+// 		if (err.response && err.response.data) {
+// 			alert(err.response.data.error);
+// 		} else {
+// 			alert('Error occurred');
+// 		}
+//
+// 		return null;
+// 	}
+// };

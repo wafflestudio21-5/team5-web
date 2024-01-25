@@ -23,7 +23,6 @@ export type UserType = {
 	userId: number;
 	username: string;
 	name: string;
-	password: string;
 	birthday: Date;
 	isPrivate: boolean;
 	gender: string;

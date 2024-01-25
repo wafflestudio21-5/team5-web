@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { tryLogin } from '../../apis/login';
 import { useAuthContext } from '../../contexts/AuthContext';
+import { useUserContext } from '../../contexts/UserContext.tsx';
 
 const Img = styled.img`
 	&.instagram {
@@ -88,15 +89,60 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
-	const { username, setUsername, password, setPassword, setIsLoggedin } =
-		useAuthContext();
+	const [usernameInput, setUsernameInput] = useState('');
+	const [passwordInput, setPasswordInput] = useState('');
+
+	const { setIsLoggedin } = useAuthContext();
+
+	const {
+		accessToken,
+		setAccessToken,
+		setUserId,
+		setName,
+		setUsername,
+		setBirthday,
+		setGender,
+		setIsCustomGender,
+		setProfileImageUrl,
+		setBio,
+		setUserLinks,
+		setContacts,
+		setPostNumber,
+		setFollowerNumber,
+		setFollowingNumber,
+		setIsMyAccountPrivate,
+	} = useUserContext();
+
 	const [isActive, setIsActive] = useState(false);
+
 	useEffect(() => {
-		if (username.length > 0 && password.length > 0) setIsActive(true);
+		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
 		else setIsActive(false);
-	}, [username, password]);
+	}, [usernameInput, passwordInput]);
+
 	const handleClick = async () => {
-		tryLogin({ username, password });
+		await tryLogin({
+			username: usernameInput,
+			password: passwordInput,
+
+			accessToken,
+			setAccessToken,
+
+			setUserId,
+			setUsername,
+			setName,
+			setBirthday,
+			setIsMyAccountPrivate,
+			setGender,
+			setIsCustomGender,
+			setProfileImageUrl,
+			setBio,
+			setUserLinks,
+			setContacts,
+			setPostNumber,
+			setFollowerNumber,
+			setFollowingNumber,
+		});
 		setIsLoggedin(true);
 	};
 
@@ -111,16 +157,16 @@ export default function Login() {
 			<Input
 				type="text"
 				name="username"
-				value={username}
+				value={usernameInput}
 				placeholder="사용자 이름, 이메일 주소 또는 휴대폰 번호"
-				onChange={(e) => setUsername(e.target.value)}
+				onChange={(e) => setUsernameInput(e.target.value)}
 			/>
 			<Input
 				type="password"
 				name="password"
-				value={password}
+				value={passwordInput}
 				placeholder="비밀번호"
-				onChange={(e) => setPassword(e.target.value)}
+				onChange={(e) => setPasswordInput(e.target.value)}
 			/>
 			<StyledLink to="passwordRecovery/">
 				<Div className="passwordRecovery">비밀번호를 잊으셨나요?</Div>
