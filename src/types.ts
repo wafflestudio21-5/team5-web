@@ -46,7 +46,7 @@ export type MiniProfileType = {
 // Post
 export type PostType = {
 	id: number;
-	user: UserType;
+	user: MiniProfileType;
 	content: string;
 	imageUrl: string;
 	createdAt: string;
@@ -67,7 +67,7 @@ export type FeedType = {
 
 export type CommentType = {
 	id: number;
-	user: UserType;
+	user: MiniProfileType;
 	content: string;
 	createdAt: string;
 };
