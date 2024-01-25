@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 import { baseURL } from '../constants.ts';
-import { APIErrorResponseType, UserLinkType } from '../types.ts';
+import { APIErrorResponseType } from '../types.ts';
 
 // 계정 비공개로 변경
 export const updateAccountToPrivate = async (
