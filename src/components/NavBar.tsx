@@ -34,7 +34,7 @@ const NavBarLayout = styled.nav`
 export default function NavBar() {
 	const navigate = useNavigate();
 	const currentURL = useLocation().pathname;
-	const { username, setUsername } = useUserContext();
+	const { username } = useUserContext();
 
 	return (
 		<div>
