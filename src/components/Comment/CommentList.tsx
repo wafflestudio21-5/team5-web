@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import comments from '../../test/data/comments.json';
+import { CommentType } from '../../types';
 
 import Comment from './Comment';
 
@@ -14,9 +13,7 @@ const CommentListWrapper = styled.ul`
 	flex-direction: column;
 `;
 
-export default function CommentList() {
-	useEffect(() => {});
-
+export default function CommentList({ comments }: { comments: CommentType[] }) {
 	return (
 		<CommentListWrapper>
 			{comments.map((comment) => (
