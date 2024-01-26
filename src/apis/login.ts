@@ -7,6 +7,14 @@ import { APIErrorResponseType, UserContactType, UserLinkType } from '../types';
 
 import { getUserInformation } from './user';
 
+type SignUpType = {
+	username: string;
+	password: string;
+	name: string;
+	email: string;
+	birthday: Date;
+};
+
 type LoginType = {
 	// username, password로 로그인
 	username: string;
@@ -31,11 +39,6 @@ type LoginType = {
 	setFollowingNumber: (followingNumber: number) => void;
 	setFollowerNumber: (followerNumber: number) => void;
 };
-
-// type SignUpProps = {
-// 	navigate: (to: string) => void;
-// 	addr: string;
-// };
 
 export const tryLogin = async ({
 	username,
@@ -109,6 +112,7 @@ export const tryLogin = async ({
 			setFollowingNumber(followingNumber);
 			setFollowerNumber(followerNumber);
 		}
+		return response;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -172,3 +176,61 @@ export const tryLogin = async ({
 // 		return null;
 // 	}
 // };
+export const trySignUp = async ({
+	username,
+	password,
+	name,
+	email,
+	birthday,
+}: SignUpType) => {
+	try {
+		const phoneRegex = /^010\d{8}$/i;
+		const year = birthday.getFullYear();
+		const month = String(birthday.getMonth() + 1).padStart(2, '0');
+		const day = String(birthday.getDate()).padStart(2, '0');
+		const formatted = `${year}-${month}-${day}`;
+		const response = await axios.post(
+			'https://waffle5gram.shop/api/v1/auth/signup',
+			{
+				username: username,
+				name: name,
+				password: password,
+				contact: email,
+				contactType: phoneRegex.test(email) ? 'phone' : 'email',
+				birthday: formatted,
+			}
+		);
+		return response;
+		// tryLogin({ username, password });
+		// navigate(addr);
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+export const resetAccessToken = async (setAccessToken: (s: string) => void) => {
+	try {
+		const response = await axios.get(
+			'https://waffle5gram.shop/api/v1/auth/refresh_token'
+		);
+		setAccessToken(response.data.access_token);
+		console.log('액세스 토큰 : ' + response.data.access_token);
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};

@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-/* import { trySignUp } from '../../../apis/login';
- */
+import { tryLogin, trySignUp } from '../../../apis/login';
+import { useUserContext } from '../../../contexts/UserContext';
+import { useAuthContext } from '../../../contexts/AuthContext';
+
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
@@ -120,10 +122,60 @@ export default function Agree() {
 		checkbox2: false,
 		checkbox3: false,
 	});
-	const handleClick = () => {
-		/* 		trySignUp({ navigate, addr });
-		 */
+	const { username, password, name, email, birthday, setIsLoggedin } =
+		useAuthContext();
+	const {
+		setAccessToken,
+		setUserId,
+		setUsername,
+		setName,
+		setBirthday,
+		setIsMyAccountPrivate,
+		setGender,
+		setIsCustomGender,
+		setProfileImageUrl,
+		setBio,
+		setUserLinks,
+		setContacts,
+		setPostNumber,
+		setFollowingNumber,
+		setFollowerNumber,
+	} = useUserContext();
+	const handleClick = async () => {
+		const signupResponse = await trySignUp({
+			username,
+			password,
+			name,
+			email,
+			birthday,
+		});
+		if (signupResponse) {
+			const loginResponse = await tryLogin({
+				username,
+				password,
+				setAccessToken,
+				setUserId,
+				setUsername,
+				setName,
+				setBirthday,
+				setIsMyAccountPrivate,
+				setGender,
+				setIsCustomGender,
+				setProfileImageUrl,
+				setBio,
+				setUserLinks,
+				setContacts,
+				setPostNumber,
+				setFollowingNumber,
+				setFollowerNumber,
+			});
+			if (loginResponse) {
+				setIsLoggedin(true);
+				console.log('signup success');
+			}
+		}
 	};
+
 	const setCheckbox = (num: number) => {
 		const boxNumber = 'checkbox' + num;
 		setCheckboxes((prevCheckboxes) => ({
