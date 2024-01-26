@@ -141,7 +141,10 @@ export default function Login() {
 			setFollowerNumber,
 			setFollowingNumber,
 		});
-		if (response) setIsLoggedin(true);
+		if (response) {
+			setIsLoggedin(true);
+			console.log('success');
+		}
 	};
 
 	return (
