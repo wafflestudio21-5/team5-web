@@ -33,12 +33,12 @@ type LoginType = {
 };
 
 type SignUpType = {
-	username: string,
-	password: string,
-	name: string, 
-	email: string, 
-	birthday: Date
-}
+	username: string;
+	password: string;
+	name: string;
+	email: string;
+	birthday: Date;
+};
 
 // type SignUpProps = {
 // 	navigate: (to: string) => void;
@@ -184,21 +184,30 @@ export const resetAccessToken = async () => {
 	}
 }; */
 
-export const trySignUp = async ({username, password, name, email, birthday}: SignUpType) => {
+export const trySignUp = async ({
+	username,
+	password,
+	name,
+	email,
+	birthday,
+}: SignUpType) => {
 	try {
 		const phoneRegex = /^010\d{8}$/i;
 		const year = birthday.getFullYear();
 		const month = String(birthday.getMonth() + 1).padStart(2, '0');
 		const day = String(birthday.getDate()).padStart(2, '0');
 		const formatted = `${year}-${month}-${day}`;
-		const response = await axios.post('https://waffle5gram.shop/api/v1/auth/signup', {
-			username: username,
-			name: name,
-			password: password,
-			contact: email,
-			contactType: phoneRegex.test(email) ? 'phone' : 'email',
-			birthday: formatted,
-		});
+		const response = await axios.post(
+			'https://waffle5gram.shop/api/v1/auth/signup',
+			{
+				username: username,
+				name: name,
+				password: password,
+				contact: email,
+				contactType: phoneRegex.test(email) ? 'phone' : 'email',
+				birthday: formatted,
+			}
+		);
 		return response;
 		// tryLogin({ username, password });
 		// navigate(addr);
@@ -215,7 +224,7 @@ export const trySignUp = async ({username, password, name, email, birthday}: Sig
 	}
 };
 
-export const resetAccessToken = async (setAccessToken: (s:string) => void) => {
+export const resetAccessToken = async (setAccessToken: (s: string) => void) => {
 	try {
 		const response = await axios.get(
 			'https://waffle5gram.shop/api/v1/auth/refresh_token'
@@ -232,4 +241,4 @@ export const resetAccessToken = async (setAccessToken: (s:string) => void) => {
 
 		return null;
 	}
-}; 
+};
