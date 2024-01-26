@@ -36,11 +36,14 @@ export type UserContextData = {
 	setFollowerNumber: (n: number) => void;
 };
 
-export const UserContext = createContext<UserContextData | null>(null);
+export const UserContext = createContext<UserContextData>(
+	{} as UserContextData
+);
 
 type ProviderProps = {
 	children: ReactNode;
 };
+
 export function UserProvider({ children }: ProviderProps) {
 	const [accessToken, setAccessToken] = useState('');
 	const [userId, setUserId] = useState(0);
@@ -98,10 +101,4 @@ export function UserProvider({ children }: ProviderProps) {
 	);
 }
 
-export function useUserContext() {
-	const context = useContext(UserContext);
-	if (!context) {
-		throw new Error('useUserContext must be used within a UserProvider');
-	}
-	return context;
-}
+export const useUserContext = () => useContext(UserContext);
