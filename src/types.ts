@@ -71,3 +71,10 @@ export type CommentType = {
 	content: string;
 	createdAt: string;
 };
+
+export type CommentPageType = {
+	comments: CommentType[];
+	page: number;
+	limit: number;
+	total: number;
+};
