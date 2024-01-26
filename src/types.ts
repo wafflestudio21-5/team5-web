@@ -2,8 +2,15 @@
 // export되는 모든 타입 이름은 끝에 Type을 붙여준다.
 
 // api
+import { ReactNode } from 'react';
+
 export type APIErrorResponseType = {
 	error: string;
+};
+
+// context
+export type ProviderPropsType = {
+	children: ReactNode;
 };
 
 // User

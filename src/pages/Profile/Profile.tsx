@@ -238,6 +238,7 @@ export default function Profile() {
 	// id로 유저 정보 가져오기
 	const { id } = useParams();
 	const { username, accessToken, isMyAccountPrivate } = useUserContext();
+
 	const [user, setUser] = useState<UserType | undefined>();
 	const [isMyAccount, setIsMyAccount] = useState(false);
 	const [isFollow, setIsFollow] = useState(false);
