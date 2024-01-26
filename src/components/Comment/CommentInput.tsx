@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { getColor } from '../../styles/Theme';
-import { CommentType, PostType, UserType } from '../../types';
+import { CommentType, MiniProfileType, PostType } from '../../types';
 
 const CommentInputContainer = styled.div`
 	display: flex;
@@ -61,7 +61,7 @@ const CommentInputContainer = styled.div`
 
 type CommentInputProps = {
 	post: PostType;
-	user: UserType; // 댓글을 쓰는 사용자 정보
+	user: MiniProfileType; // 댓글을 쓰는 사용자 정보
 	commentType: 'comment' | 'reply'; // 입력하는 댓글이 게시물의 댓글인지 댓글의 대댓글인지
 	comment?: CommentType; // 만약 댓글의 대댓글의 경우 해당 댓글을 입력받음
 };
