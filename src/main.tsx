@@ -13,7 +13,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 				<PostProvider>
 					<App />
 				</PostProvider>
-				<App />
 			</UserProvider>
 		</AuthProvider>
 	</React.StrictMode>

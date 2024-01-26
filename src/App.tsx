@@ -4,6 +4,8 @@ import {
 	RouterProvider,
 } from 'react-router-dom';
 import { useAuthContext } from './contexts/AuthContext.tsx';
+import AddText from './pages/addPost/AddText.tsx';
+import UploadPhoto from './pages/addPost/UploadPhoto.tsx';
 import Explore from './pages/Explore/Explore.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Login from './pages/Login/Login.tsx';

@@ -114,8 +114,8 @@ const A = styled.a`
 
 export default function Agree() {
 	const navigate = useNavigate();
-/* 	const addr = '/signUp/photo';
- */	const [selectAll, setSelectAll] = useState(false);
+	/* 	const addr = '/signUp/photo';
+	 */ const [selectAll, setSelectAll] = useState(false);
 	const [checkboxes, setCheckboxes] = useState({
 		checkbox1: false,
 		checkbox2: false,
