@@ -17,8 +17,8 @@ import AskBirthday from './pages/Login/signUp/AskBirthday.tsx';
 import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
 import AskEmail from './pages/Login/signUp/AskEmail.tsx';
 import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx';
-/* import Agree from './pages/Login/signUp/Agree.tsx';
- */import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
+import Agree from './pages/Login/signUp/Agree.tsx';
+import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
 import Edit from './pages/Profile/Edit/Edit.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Saved from './pages/Profile/Saved.tsx';
@@ -146,7 +146,7 @@ const loginRouter = createBrowserRouter([
 	},
 	{
 		path: 'signUp/agreeToTerm/',
-		// element: <Agree />,
+		element: <Agree />,
 	},
 	{
 		path: 'signUp/photo/',
