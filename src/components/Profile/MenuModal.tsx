@@ -1,4 +1,7 @@
+<<<<<<< HEAD
+=======
 import { useNavigate } from 'react-router-dom';
+>>>>>>> develope
 import styled from 'styled-components';
 
 import {

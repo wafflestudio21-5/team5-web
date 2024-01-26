@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { tryLogin } from '../../apis/login';
 import { useAuthContext } from '../../contexts/AuthContext';
-import { useUserContext } from '../../contexts/UserContext.tsx';
+import { useUserContext } from '../../contexts/UserContext';
 
 const Img = styled.img`
 	&.instagram {

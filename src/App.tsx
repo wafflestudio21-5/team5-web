@@ -7,6 +7,8 @@ import { ThemeProvider } from 'styled-components';
 
 import NavBar from './components/NavBar.tsx';
 import { useAuthContext } from './contexts/AuthContext.tsx';
+import AddText from './pages/addPost/addText.tsx';
+import UploadPhoto from './pages/addPost/UploadPhoto.tsx';
 import Explore from './pages/Explore/Explore.tsx';
 import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
@@ -47,6 +49,14 @@ const router = createBrowserRouter([
 			{
 				path: 'explore/',
 				element: <Explore />,
+			},
+			{
+				path: 'addPost/',
+				element: <UploadPhoto />,
+			},
+			{
+				path: 'addText/',
+				element: <AddText />,
 			},
 			{
 				path: ':id/',

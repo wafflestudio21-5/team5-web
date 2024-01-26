@@ -50,9 +50,17 @@ export default function NavBar() {
 					alt="Search"
 					onClick={() => navigate('/search')}
 				></Icon>
+<<<<<<< HEAD
+				<Icon
+					src={addPost}
+					alt="AddPost"
+					onClick={() => navigate('/addPost')}
+				></Icon>
+=======
 				<Icon src={addPost} alt="AddPost">
 					{/*	게시물 추가 관련 기능 추가 예정*/}
 				</Icon>
+>>>>>>> develope
 				<Icon
 					src={reels}
 					alt="Explore"
