@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import comments from '../../test/data/comments.json';
-
-import Comment from './Comment';
+// import comments from '../../test/data/comments.json';
+//
+// import Comment from './Comment';
 
 const CommentListWrapper = styled.ul`
 	padding: 0;
@@ -19,9 +19,9 @@ export default function CommentList() {
 
 	return (
 		<CommentListWrapper>
-			{comments.map((comment) => (
-				<Comment comment={comment} key={comment.id} />
-			))}
+			{/*{comments.map((comment) => (*/}
+			{/*	<Comment comment={comment} key={comment.id} />*/}
+			{/*))}*/}
 		</CommentListWrapper>
 	);
 }

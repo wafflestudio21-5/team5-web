@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { trySignUp } from '../../../apis/login';
-
+/* import { trySignUp } from '../../../apis/login';
+ */
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
@@ -113,16 +113,16 @@ const A = styled.a`
 
 export default function Agree() {
 	const navigate = useNavigate();
-	const addr = '/signUp/photo';
-	const [selectAll, setSelectAll] = useState(false);
+/* 	const addr = '/signUp/photo';
+ */	const [selectAll, setSelectAll] = useState(false);
 	const [checkboxes, setCheckboxes] = useState({
 		checkbox1: false,
 		checkbox2: false,
 		checkbox3: false,
 	});
 	const handleClick = () => {
-		trySignUp({ navigate, addr });
-	};
+/* 		trySignUp({ navigate, addr });
+ */	};
 	const setCheckbox = (num: number) => {
 		const boxNumber = 'checkbox' + num;
 		setCheckboxes((prevCheckboxes) => ({
