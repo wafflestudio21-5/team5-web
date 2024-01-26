@@ -94,6 +94,9 @@ export const tryLogin = async ({
 				followerNumber,
 			} = info;
 
+			console.log(info);
+			console.log(username);
+
 			setUserId(userId);
 			setUsername(username);
 			setName(name);
