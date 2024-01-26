@@ -97,8 +97,8 @@ export default function Login() {
 	const {
 		setAccessToken,
 		setUserId,
-		setName,
 		setUsername,
+		setName,
 		setBirthday,
 		setGender,
 		setIsCustomGender,

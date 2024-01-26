@@ -8,7 +8,7 @@ import search from '../assets/Images/NavBar/search.png';
 import searchBold from '../assets/Images/NavBar/searchBold.png';
 import addPost from '../assets/Images/Profile/add-post.png';
 import defaultProfile from '../assets/Images/Profile/default-profile.svg';
-import { useUserContext } from '../contexts/UserContext.tsx';
+// import { useUserContext } from '../contexts/UserContext.tsx';
 import Icon from '../shared/Icon.tsx';
 import { getColor } from '../styles/Theme.tsx';
 
@@ -34,7 +34,7 @@ const NavBarLayout = styled.nav`
 export default function NavBar() {
 	const navigate = useNavigate();
 	const currentURL = useLocation().pathname;
-	const { username } = useUserContext();
+	// const { username } = useUserContext();
 
 	return (
 		<div>
@@ -63,7 +63,8 @@ export default function NavBar() {
 				<Icon
 					src={defaultProfile}
 					alt="Profile"
-					onClick={() => navigate(`/${username}`)}
+					// onClick={() => navigate(`/${username}`)}
+					onClick={() => navigate('/user-0')}
 				></Icon>
 			</NavBarLayout>
 		</div>
