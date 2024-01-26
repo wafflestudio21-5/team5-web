@@ -117,6 +117,7 @@ export const tryLogin = async ({
 			setFollowingNumber(followingNumber);
 			setFollowerNumber(followerNumber);
 		}
+		return response;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
