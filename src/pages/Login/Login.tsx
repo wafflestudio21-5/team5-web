@@ -120,7 +120,7 @@ export default function Login() {
 	}, [usernameInput, passwordInput]);
 
 	const handleClick = async () => {
-		await tryLogin({
+		const response = await tryLogin({
 			username: usernameInput,
 			password: passwordInput,
 
@@ -141,7 +141,7 @@ export default function Login() {
 			setFollowerNumber,
 			setFollowingNumber,
 		});
-		setIsLoggedin(true);
+		if (response) setIsLoggedin(true);
 	};
 
 	return (
