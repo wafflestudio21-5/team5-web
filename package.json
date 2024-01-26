@@ -10,7 +10,7 @@
 		"preview": "vite preview",
 		"format": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|css|md)\"",
 		"prepare": "husky install",
-		"postinstall": "husky add .husky/pre-commit \"npx lint-staged\""
+		"postinstall": "npx husky add .husky/pre-commit \"npx lint-staged\""
 	},
 	"prettier": {
 		"tabWidth": 2,
