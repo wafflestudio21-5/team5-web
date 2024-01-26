@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { baseURL } from '../constants.ts';
 import {
 	APIErrorResponseType,
+	CommentPageType,
 	CommentType,
 	FeedType,
 	PostType,
@@ -95,7 +96,7 @@ type PostCommentResponseType = {
 export const getPostComment = async (
 	postId: number,
 	page: number
-): Promise<CommentType[] | null> => {
+): Promise<CommentPageType | null> => {
 	try {
 		const response = await axios.get<PostCommentResponseType>(
 			`${baseURL}/api/v1/posts/${postId}/comments?page=${page}`
@@ -117,7 +118,12 @@ export const getPostComment = async (
 			};
 		});
 
-		return comments;
+		return {
+			comments: comments,
+			page: result.page,
+			limit: result.limit,
+			total: result.total,
+		};
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
