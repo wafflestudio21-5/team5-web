@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import MenuElement from '../../components/CreatePost/MenuElement';
 import Select from '../../components/CreatePost/SubjectBar';
 import { usePostContext } from '../../contexts/PostContext';
+import { useUserContext } from '../../contexts/UserContext';
 
 const Background = styled.div`
 	background-color: white;
@@ -86,6 +87,7 @@ const Textarea = styled.textarea`
 
 export default function AddText() {
 	const navigate = useNavigate();
+	const { accessToken } = useUserContext();
 	const { files, setContent, content, tryPost } = usePostContext();
 	const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 	if (files && files.length > 0) {
@@ -105,7 +107,7 @@ export default function AddText() {
 	}
 	const handleClick = async () => {
 		const addr = '/id';
-		tryPost({ navigate, addr });
+		tryPost({ navigate, addr, accessToken });
 	};
 	const menuname = [
 		'사람 태그',
