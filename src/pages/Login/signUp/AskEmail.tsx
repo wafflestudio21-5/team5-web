@@ -76,6 +76,7 @@ const Button = styled.button`
 		bottom: 1rem;
 		border: none;
 		background-color: white;
+		color: blue;
 	}
 `;
 
@@ -116,7 +117,7 @@ export default function AskEmail() {
 			<Button className="next" onClick={handleClick}>
 				다음
 			</Button>
-			<Button className="option" onClick={() => navigate('/signUp/email')}>
+			<Button className="option" onClick={() => navigate('/signUp/phone')}>
 				휴대폰 번호로 가입
 			</Button>
 			<Button className="already" onClick={() => navigate('/')}>

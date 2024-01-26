@@ -1,9 +1,10 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { tryLogin } from '../../apis/login';
+import { useAuthContext } from '../../contexts/AuthContext';
 import { useUserContext } from '../../contexts/UserContext';
-import axios from 'axios';
 
 const Img = styled.img`
 	&.instagram {
@@ -75,7 +76,6 @@ const Button = styled.button`
 	border: none;
 	background-color: blue;
 	color: white;
-	$
 `;
 const Span = styled.span`
 	background: #fff;
@@ -89,46 +89,58 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
-	const { setAccessToken } = useUserContext();
-	const { username, setUsername, password, setPassword, setIsLoggedin } =
-		useAuthContext();
+	const [usernameInput, setUsernameInput] = useState('');
+	const [passwordInput, setPasswordInput] = useState('');
+
+	const { setIsLoggedin } = useAuthContext();
+
+	const {
+		setAccessToken,
+		setUserId,
+		setName,
+		setUsername,
+		setBirthday,
+		setGender,
+		setIsCustomGender,
+		setProfileImageUrl,
+		setBio,
+		setUserLinks,
+		setContacts,
+		setPostNumber,
+		setFollowerNumber,
+		setFollowingNumber,
+		setIsMyAccountPrivate,
+	} = useUserContext();
 
 	const [isActive, setIsActive] = useState(false);
+
 	useEffect(() => {
-		if (username.length > 0 && password.length > 0) setIsActive(true);
+		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
 		else setIsActive(false);
-	}, [username, password]);
+	}, [usernameInput, passwordInput]);
+
 	const handleClick = async () => {
-		/* const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
-		const numberRegex = /^010[0-9]{8}$/
-		function checkType() {
-			if (emailRegex.test(username)) return "email"
-			else if (numberRegex.test(username)) return "phone" 
-			else return "username"	
-		} */
-		const tryLogin = async () => {
-			try {
-				const data = {
-					username: username,
-					password: password,
-					/* type: checkType() */
-				};
-				const response = await axios.post(
-					'https://waffle5gram.shop/api/v1/auth/login',
-					data,
-					{
-						headers: {
-							'Content-Type': 'application/json',
-						},
-					}
-				);
-				setAccessToken(response.data.access_token);
-				console.log('액세스 토큰 : ' + response.data.access_token);
-			} catch {
-				alert('아이디나 비밀번호가 다릅니다.');
-			}
-		};
-		tryLogin();
+		await tryLogin({
+			username: usernameInput,
+			password: passwordInput,
+
+			setAccessToken,
+
+			setUserId,
+			setUsername,
+			setName,
+			setBirthday,
+			setIsMyAccountPrivate,
+			setGender,
+			setIsCustomGender,
+			setProfileImageUrl,
+			setBio,
+			setUserLinks,
+			setContacts,
+			setPostNumber,
+			setFollowerNumber,
+			setFollowingNumber,
+		});
 		setIsLoggedin(true);
 	};
 
@@ -143,16 +155,16 @@ export default function Login() {
 			<Input
 				type="text"
 				name="username"
-				value={username}
+				value={usernameInput}
 				placeholder="사용자 이름, 이메일 주소 또는 휴대폰 번호"
-				onChange={(e) => setUsername(e.target.value)}
+				onChange={(e) => setUsernameInput(e.target.value)}
 			/>
 			<Input
 				type="password"
 				name="password"
-				value={password}
+				value={passwordInput}
 				placeholder="비밀번호"
-				onChange={(e) => setPassword(e.target.value)}
+				onChange={(e) => setPasswordInput(e.target.value)}
 			/>
 			<StyledLink to="passwordRecovery/">
 				<Div className="passwordRecovery">비밀번호를 잊으셨나요?</Div>

@@ -1,7 +1,7 @@
 // import { useState } from 'react'
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../../contexts/AuthContext';
+import { useUserContext } from '../../../contexts/UserContext';
 
 const Img = styled.img`
 	width: 2rem;
@@ -47,7 +47,7 @@ const Button = styled.button`
 `;
 
 export default function Login() {
-	const { username, setUsername } = useAuthContext();
+	const { username, setUsername } = useUserContext();
 	const navigate = useNavigate();
 	const onClick = () => {
 		if (username !== '') navigate('certification/');
