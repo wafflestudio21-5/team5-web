@@ -141,8 +141,9 @@ export default function Login() {
 			setFollowerNumber,
 			setFollowingNumber,
 		});
-		if (response) {
+		if (response !== null) {
 			setIsLoggedin(true);
+			console.log(response);
 			console.log('login success');
 		}
 	};
