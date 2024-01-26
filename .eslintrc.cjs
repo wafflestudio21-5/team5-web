@@ -29,5 +29,6 @@ module.exports = {
       'alphabetize': { 'order': 'asc', 'caseInsensitive': true }
     }],
     'import/no-duplicates': 'error',
+    "import/no-named-as-default": "off"
   },
 }
