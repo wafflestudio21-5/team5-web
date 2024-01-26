@@ -1,9 +1,10 @@
-import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { usePostContext } from '../../contexts/PostContext';
-import Select from '../../components/CreatePost/SubjectBar';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
 import MenuElement from '../../components/CreatePost/MenuElement';
+import Select from '../../components/CreatePost/SubjectBar';
+import { usePostContext } from '../../contexts/PostContext';
 
 const Background = styled.div`
 	background-color: white;
@@ -76,7 +77,7 @@ const Textarea = styled.textarea`
 	height: 4rem;
 	border: none;
 	margin-top: 1rem;
-	margin-bottom: none;
+	margin-bottom: 0;
 	border-bottom: 1px solid gainsboro;
 	resize: none;
 	outline: none;
