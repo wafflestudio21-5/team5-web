@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components';
 
 import NavBar from './components/NavBar.tsx';
 import { useAuthContext } from './contexts/AuthContext.tsx';
-import AddText from './pages/addPost/addText.tsx';
+import AddText from './pages/addPost/AddText.tsx';
 import UploadPhoto from './pages/addPost/UploadPhoto.tsx';
 import Explore from './pages/Explore/Explore.tsx';
 import Home from './pages/Home.tsx';
