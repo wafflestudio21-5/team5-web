@@ -65,7 +65,6 @@ export default function NavBar() {
 					alt="Profile"
 					onClick={() => navigate(`/${username}`)}
 				></Icon>
-				<Icon onClick={() => setUsername()}></Icon>
 				<Icon onClick={() => console.log(username)}>test</Icon>
 			</NavBarLayout>
 		</div>
