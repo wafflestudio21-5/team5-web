@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import ellipsis from '../../assets/Images/Post/ellipsis.svg';
 import Icon from '../../shared/Icon';
+import { UserType } from '../../types';
 
 import UserInfo from './UserInfo';
 
@@ -27,19 +28,14 @@ const ExtraButton = styled.button`
 `;
 
 type PostHeaderType = {
-	username: string;
-	userImage?: string;
+	user: UserType;
 	showMenu: () => void;
 };
 
-export default function PostHeader({
-	username,
-	userImage,
-	showMenu,
-}: PostHeaderType) {
+export default function PostHeader({ user, showMenu }: PostHeaderType) {
 	return (
 		<Wrapper>
-			<UserInfo username={username} userImage={userImage} />
+			<UserInfo user={user} />
 			<ExtraButton onClick={showMenu}>
 				<Icon src={ellipsis} alt="ellipsis" />
 			</ExtraButton>

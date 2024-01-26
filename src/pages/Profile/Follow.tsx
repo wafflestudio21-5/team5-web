@@ -4,8 +4,10 @@ import styled from 'styled-components';
 
 import {
 	getUserInformation,
-	getFollowerList,
-	getFollowingList,
+	getFollowerCommon,
+	getFollowerDiff,
+	getFollowingCommon,
+	getFollowingDiff,
 } from '../../apis/user.ts';
 import back from '../../assets/Images/Profile/back.png';
 import MiniProfile from '../../components/MiniProfile.tsx';
@@ -60,8 +62,18 @@ export default function Follow() {
 	const { id } = useParams();
 	const [activeTab, setActiveTab] = useState<'left' | 'right'>('left');
 	const [user, setUser] = useState<UserType | null>(null);
-	const [followerList, setFollowerList] = useState<MiniProfileType[]>([]);
-	const [followingList, setFollowingList] = useState<MiniProfileType[]>([]);
+	const [followerCommonList, setFollowerCommonList] = useState<
+		MiniProfileType[]
+	>([]);
+	const [followerDiffList, setFollowerDiffList] = useState<MiniProfileType[]>(
+		[]
+	);
+	const [followingCommonList, setFollowingList] = useState<MiniProfileType[]>(
+		[]
+	);
+	const [followingDiffList, setFollowingDiffList] = useState<MiniProfileType[]>(
+		[]
+	);
 
 	useEffect(() => {
 		const fetchUserData = async () => {
@@ -82,45 +94,83 @@ export default function Follow() {
 			}
 		};
 
-		const fetchFollowerList = async () => {
+		const fetchFollowerCommonList = async () => {
 			if (!user) {
 				navigate('/');
 				return;
 			}
 
 			try {
-				const followers = await getFollowerList(user.username, accessToken);
+				const followers = await getFollowerCommon(user.username, accessToken);
 				if (!followers) {
 					navigate('/');
 					return;
 				}
-				setFollowerList(followers);
+				setFollowerCommonList(followers.miniProfiles);
 			} catch {
 				navigate('/');
 			}
 		};
 
-		const fetchFollowingList = async () => {
+		const fetchFollowerDiffList = async () => {
 			if (!user) {
 				navigate('/');
 				return;
 			}
 
 			try {
-				const followings = await getFollowingList(user.username, accessToken);
+				const followers = await getFollowerDiff(user.username, accessToken);
+				if (!followers) {
+					navigate('/');
+					return;
+				}
+				setFollowerDiffList(followers.miniProfiles);
+			} catch {
+				navigate('/');
+			}
+		};
+
+		const fetchFollowingCommonList = async () => {
+			if (!user) {
+				navigate('/');
+				return;
+			}
+
+			try {
+				const followings = await getFollowingCommon(user.username, accessToken);
 				if (!followings) {
 					navigate('/');
 					return;
 				}
-				setFollowingList(followings);
+				setFollowingList(followings.miniProfiles);
+			} catch {
+				navigate('/');
+			}
+		};
+
+		const fetchFollowingDiffList = async () => {
+			if (!user) {
+				navigate('/');
+				return;
+			}
+
+			try {
+				const followings = await getFollowingDiff(user.username, accessToken);
+				if (!followings) {
+					navigate('/');
+					return;
+				}
+				setFollowingDiffList(followings.miniProfiles);
 			} catch {
 				navigate('/');
 			}
 		};
 
 		fetchUserData();
-		fetchFollowerList();
-		fetchFollowingList();
+		fetchFollowerCommonList();
+		fetchFollowerDiffList();
+		fetchFollowingCommonList();
+		fetchFollowingDiffList();
 
 		const active = location.pathname.includes('/followers') ? 'left' : 'right';
 		setActiveTab(active);
@@ -148,13 +198,19 @@ export default function Follow() {
 					>
 						<FollowList>
 							<SearchBar />
-							{followerList.map((follower) => (
+							{followerCommonList.map((follower) => (
+								<MiniProfile user={follower} />
+							))}
+							{followerDiffList.map((follower) => (
 								<MiniProfile user={follower} />
 							))}
 						</FollowList>
 						<FollowList>
 							<SearchBar />
-							{followingList.map((following) => (
+							{followingCommonList.map((following) => (
+								<MiniProfile user={following} />
+							))}
+							{followingDiffList.map((following) => (
 								<MiniProfile user={following} />
 							))}
 						</FollowList>

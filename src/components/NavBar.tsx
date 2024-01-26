@@ -8,6 +8,7 @@ import search from '../assets/Images/NavBar/search.png';
 import searchBold from '../assets/Images/NavBar/searchBold.png';
 import addPost from '../assets/Images/Profile/add-post.png';
 import defaultProfile from '../assets/Images/Profile/default-profile.svg';
+import { useUserContext } from '../contexts/UserContext.tsx';
 import Icon from '../shared/Icon.tsx';
 import { getColor } from '../styles/Theme.tsx';
 
@@ -33,6 +34,7 @@ const NavBarLayout = styled.nav`
 export default function NavBar() {
 	const navigate = useNavigate();
 	const currentURL = useLocation().pathname;
+	const { username } = useUserContext();
 
 	return (
 		<div>
@@ -48,16 +50,26 @@ export default function NavBar() {
 					alt="Search"
 					onClick={() => navigate('/search')}
 				></Icon>
-				<Icon src={addPost} alt="AddPost"></Icon>
+<<<<<<< HEAD
+				<Icon
+					src={addPost}
+					alt="AddPost"
+					onClick={() => navigate('/addPost')}
+				></Icon>
+=======
+				<Icon src={addPost} alt="AddPost">
+					{/*	게시물 추가 관련 기능 추가 예정*/}
+				</Icon>
+>>>>>>> develope
 				<Icon
 					src={reels}
-					alt="Reels"
+					alt="Explore"
 					onClick={() => navigate('/explore')}
 				></Icon>
 				<Icon
 					src={defaultProfile}
 					alt="Profile"
-					onClick={() => navigate('/id')}
+					onClick={() => navigate(`/${username}`)}
 				></Icon>
 			</NavBarLayout>
 		</div>

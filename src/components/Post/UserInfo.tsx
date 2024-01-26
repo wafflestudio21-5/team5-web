@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { getColor } from '../../styles/Theme';
+import { UserType } from '../../types';
 
 const Container = styled.div`
 	display: flex;
@@ -33,26 +34,19 @@ const NameBox = styled.div`
 `;
 
 type UserInfoProps = {
-	username: string;
-	userImage?: string;
+	user: UserType;
 };
 
-export default function UserInfo({ username, userImage }: UserInfoProps) {
+export default function UserInfo({ user }: UserInfoProps) {
 	return (
 		<StyledLink>
 			<Container>
 				<ImageBox>
-					<ProfileImage
-						src={
-							userImage ??
-							'https://wafflestudio.com/static/images/DefaultProfileImage.svg'
-						}
-						alt="profile image"
-					/>
+					<ProfileImage src={user.profileImageUrl} alt="profile image" />
 				</ImageBox>
 				<NameBox>
 					<span>
-						<b>{username}</b>
+						<b>{user.username}</b>
 					</span>
 				</NameBox>
 			</Container>

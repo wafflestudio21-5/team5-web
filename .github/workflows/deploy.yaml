@@ -3,7 +3,11 @@ name: Build and Deploy to AWS S3
 on:
   push:
     branches:
+<<<<<<< HEAD
       - test/login
+=======
+      - test2/login
+>>>>>>> 6293c39bf0e9876a8cfc643ac9e3775dfa6d7e32
 
 jobs:
   build-and-deploy:
