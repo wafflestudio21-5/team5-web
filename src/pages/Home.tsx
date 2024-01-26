@@ -36,7 +36,7 @@ export default function Home() {
 	const [feedData, setFeedData] = useState<FeedType>({
 		posts: [],
 		pageInfo: {
-			page: 1,
+			page: 0,
 			size: 0,
 			offset: 0,
 			hasNext: true,
