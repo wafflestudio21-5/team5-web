@@ -1,6 +1,9 @@
+import axios from 'axios';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import likeIcon from '../../assets/Images/Post/like.svg';
+import likedIcon from '../../assets/Images/Post/liked.svg';
 import Icon from '../../shared/Icon';
 import { getColor } from '../../styles/Theme';
 import { CommentType } from '../../types';
@@ -52,6 +55,7 @@ const CommentContainer = styled.div`
 `;
 
 export default function Comment({ comment }: CommentProps) {
+	const [liked, setLiked] = useState(true);
 	return (
 		<CommentContainer>
 			<div className="profile">
@@ -62,7 +66,17 @@ export default function Comment({ comment }: CommentProps) {
 				<span>{comment.content}</span>
 			</div>
 			<div className="like-box">
-				<Icon src={likeIcon} />
+				<Icon
+					src={liked ? likedIcon : likeIcon}
+					onClick={() => {
+						if (liked) {
+							axios.post(`/api/v1/comments/${comment.id}/likes`);
+						} else {
+							axios.delete(`/api/v1/comments/${comment.id}/likes`);
+						}
+						setLiked(!liked);
+					}}
+				/>
 				<span className="like-num">30</span>
 			</div>
 		</CommentContainer>
