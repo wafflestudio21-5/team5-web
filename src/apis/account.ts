@@ -8,11 +8,15 @@ import { getUserInformation } from './user.ts';
 // 유저 정보 userContext에 fetch
 export const fetchUserInformation = async (
 	accessToken: string,
-	currentUsername: string,
+	currentUser: UserType,
 	setCurrentUser: (user: UserType) => void
 ) => {
 	try {
-		const response = await getUserInformation(currentUsername, accessToken);
+		const response = await getUserInformation(
+			currentUser.username,
+			accessToken
+		);
+
 		setCurrentUser(response);
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
@@ -29,11 +33,17 @@ export const updateAccountToPrivate = async (
 	accessToken: string
 ): Promise<string | null> => {
 	try {
-		const response = await axios.put(`${baseURL}/api/v1/account/toPrivate`, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
+		const response = await axios.put(
+			`${baseURL}/api/v1/account/toPrivate`,
+			{
+				message: 'Change non-private account to private account.',
 			},
-		});
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
 
 		return response.data.message;
 	} catch (error) {
@@ -54,11 +64,17 @@ export const updateAccountToOpen = async (
 	accessToken: string
 ): Promise<string | null> => {
 	try {
-		const response = await axios.put(`${baseURL}/api/v1/account/toOpen`, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
+		const response = await axios.put(
+			`${baseURL}/api/v1/account/toOpen`,
+			{
+				message: 'Change private account to non-private account.',
 			},
-		});
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
 
 		return response.data.message;
 	} catch (error) {
@@ -171,6 +187,7 @@ export const editUsername = async (accessToken: string, username: string) => {
 			`${baseURL}/api/v1/account/profileEdit/username`,
 			{
 				username: username,
+				message: 'Update name in profile.',
 			},
 			{
 				headers: {
@@ -201,6 +218,7 @@ export const editBio = async (accessToken: string, bio: string) => {
 			`${baseURL}/api/v1/account/profileEdit/bio`,
 			{
 				bio: bio,
+				message: 'Update name in profile.',
 			},
 			{
 				headers: {
@@ -236,6 +254,7 @@ export const editGender = async (
 			{
 				gender: gender,
 				isCustomGender: isCustomGender,
+				message: 'Update pronoun in profile.',
 			},
 			{
 				headers: {

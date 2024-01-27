@@ -422,7 +422,7 @@ export default function Profile() {
 					</div>
 				</UserInfoContainer>
 				<UserProfileContainer>
-					<h3>{user.username}</h3>
+					<h3>{user.name}</h3>
 					<p>{user.bio}</p>
 					{user.userLinks.map((UserLink) => (
 						<a href={UserLink.link}>{UserLink.link}</a>

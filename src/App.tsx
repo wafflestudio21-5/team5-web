@@ -28,7 +28,7 @@ import SignUp from './pages/Login/signUp/SignUp.tsx';
 import Bio from './pages/Profile/Edit/Bio.tsx';
 import Edit from './pages/Profile/Edit/Edit.tsx';
 import Gender from './pages/Profile/Edit/Gender.tsx';
-import Link from './pages/Profile/Edit/Link.tsx';
+import Link from './pages/Profile/Edit/Link/Link.tsx';
 import Name from './pages/Profile/Edit/Name.tsx';
 import Username from './pages/Profile/Edit/Username.tsx';
 import Follow from './pages/Profile/Follow.tsx';
