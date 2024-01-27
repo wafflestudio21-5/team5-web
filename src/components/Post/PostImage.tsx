@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { PostType } from '../../types';
+import { MediaType } from '../../types';
 
 const Container = styled.div`
 	position: relative;
@@ -59,14 +59,10 @@ const Image = styled.img`
 // 	}
 // `
 
-export default function PostImage({
-	imageUrl,
-}: {
-	imageUrl: PostType['imageUrl'];
-}) {
+export default function PostImage({ media }: { media: MediaType[] }) {
 	return (
 		<Container>
-			<Image src={imageUrl} alt="post image" />
+			<Image src={media[0].url} alt="post image" />
 			{/* <MoveButton className="left">&lt;</MoveButton>
 			<MoveButton className="right">&gt;</MoveButton>
 			<IndexBar>

@@ -36,7 +36,7 @@ export default function Post({
 						openMenuModal(postData.id);
 					}}
 				/>
-				<PostImage imageUrl={postData.imageUrl} />
+				<PostImage media={postData.media} />
 				<ReactSection
 					postData={postData}
 					showComment={() => {

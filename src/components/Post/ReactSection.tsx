@@ -71,12 +71,12 @@ const TextBox = styled.div`
 `;
 
 type Props = {
-	postData: PostType | null;
+	postData: PostType;
 	showComment: () => void;
 };
 
 export default function ReactSection({ postData, showComment }: Props) {
-	const [liked, setLiked] = useState(false);
+	const [liked, setLiked] = useState(postData.liked);
 	const [saved, setSaved] = useState(false);
 
 	return (
@@ -125,7 +125,7 @@ export default function ReactSection({ postData, showComment }: Props) {
 					</div>
 				</IconBar>
 				<TextBox>
-					<span className="like-num">좋아요 {postData.likesCount}개</span>
+					<span className="like-num">좋아요 {postData.likeCount}개</span>
 				</TextBox>
 				<TextBox className="margin">
 					<span className="username">{postData.user.username}</span>{' '}
@@ -135,7 +135,7 @@ export default function ReactSection({ postData, showComment }: Props) {
 					className="margin secondary-text more-comment"
 					onClick={showComment}
 				>
-					댓글 {postData.commentsCount}개 모두 보기
+					댓글 {postData.commentCount}개 모두 보기
 				</TextBox>
 			</Container>
 		)

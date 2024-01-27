@@ -39,7 +39,7 @@ export default function PostList({ posts }: PostListProps) {
 						navigate(`/feed/${post.id}`);
 					}}
 				>
-					<img src={post.imageUrl} alt="게시물 이미지" />
+					<img src={post.media[0].url} alt="게시물 이미지" />
 				</div>
 			))}
 		</Wrapper>
