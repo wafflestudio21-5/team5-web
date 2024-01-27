@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { getHomeFeed } from '../apis/post';
 import Feed from '../components/Feed';
 import Header from '../components/Post/Header';
+import { useUserContext } from '../contexts/UserContext';
 import { FeedType } from '../types';
 
 const HomeLayout = styled.main`
@@ -45,6 +46,7 @@ export default function Home() {
 	});
 
 	const [status, setStatus] = useState<FeedFetchStatus>('pending');
+	const { accessToken } = useUserContext();
 
 	const navigate = useNavigate();
 
@@ -85,7 +87,10 @@ export default function Home() {
 		const fetchHomeFeedData = async () => {
 			if (status === 'pending' && feedData.pageInfo.hasNext) {
 				try {
-					const homeFeed = await getHomeFeed(feedData.pageInfo.page + 1);
+					const homeFeed = await getHomeFeed(
+						feedData.pageInfo.page + 1,
+						accessToken
+					);
 					if (!homeFeed) {
 						setStatus('fail');
 						return;
@@ -97,7 +102,6 @@ export default function Home() {
 					});
 					setStatus('complete');
 				} catch {
-					navigate('/');
 					setStatus('fail');
 				}
 			} else {
@@ -107,6 +111,7 @@ export default function Home() {
 
 		fetchHomeFeedData();
 	}, [
+		accessToken,
 		feedData.pageInfo.hasNext,
 		feedData.pageInfo.page,
 		feedData.posts,
