@@ -6,7 +6,7 @@ import {
 import { ThemeProvider } from 'styled-components';
 
 import NavBar from './components/NavBar.tsx';
-import { useAuthContext } from './contexts/AuthContext.tsx';
+import { useUserContext } from './contexts/UserContext.tsx';
 import AddText from './pages/addPost/AddText.tsx';
 import UploadPhoto from './pages/addPost/UploadPhoto.tsx';
 import Explore from './pages/Explore/Explore.tsx';
@@ -165,14 +165,12 @@ const loginRouter = createBrowserRouter([
 ]);
 
 export default function App() {
-	const { isLoggedin } = useAuthContext();
+	const { isLoggedIn } = useUserContext();
+
 	return (
 		<ThemeProvider theme={Theme}>
 			<GlobalStyles />
-			{/*<RouterProvider router={router}>*/}
-			{/* const { isLoggedin } = useUserContext() */}
-			<RouterProvider router={isLoggedin ? router : loginRouter} />
-			{/* </RouterProvider> */}
+			<RouterProvider router={isLoggedIn ? router : loginRouter} />
 		</ThemeProvider>
 	);
 }

@@ -238,6 +238,7 @@ export default function Profile() {
 	// id로 유저 정보 가져오기
 	const { id } = useParams();
 	const { username, accessToken, isMyAccountPrivate } = useUserContext();
+
 	const [user, setUser] = useState<UserType | undefined>();
 	const [isMyAccount, setIsMyAccount] = useState(false);
 	const [isFollow, setIsFollow] = useState(false);
@@ -313,7 +314,7 @@ export default function Profile() {
 		};
 
 		fetchUserData();
-	}, [id, accessToken, navigate, username]);
+	}, [id, accessToken, navigate, username, isMyAccountPrivate]);
 
 	// 계정 공개 여부에 따라 팔로워, 팔로잉 버튼 클릭 여부 결정
 	const handleFollowersClick = () => {
