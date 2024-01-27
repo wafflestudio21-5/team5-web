@@ -9,7 +9,7 @@ import { getColor } from '../../styles/Theme';
 import users from '../../test/data/users.json';
 import { CommentPageType, PostType } from '../../types';
 
-// import CommentInput from './CommentInput';
+import CommentInput from './CommentInput';
 import CommentList from './CommentList';
 
 const ModalContent = styled.div`
