@@ -29,6 +29,10 @@ const NavBarLayout = styled.nav`
 	border-top: 1px solid ${getColor('grey')};
 	padding: 0.8rem 1.5rem;
 	box-sizing: border-box;
+
+	&.hidden {
+		display: none;
+	}
 `;
 
 export default function NavBar() {
@@ -36,10 +40,12 @@ export default function NavBar() {
 	const currentURL = useLocation().pathname;
 	const { username } = useUserContext();
 
+	const isHidden = currentURL.includes('account');
+
 	return (
 		<div>
 			<Outlet />
-			<NavBarLayout>
+			<NavBarLayout className={isHidden ? 'hidden' : ''}>
 				<Icon
 					src={currentURL === '/' ? homeBlack : homeWhite}
 					alt="Home"
