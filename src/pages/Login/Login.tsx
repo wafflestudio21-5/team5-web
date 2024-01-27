@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { tryLogin } from '../../apis/login';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useUserContext } from '../../contexts/UserContext';
+import FacebookLogin from '@greatsumini/react-facebook-login';
 
 const Img = styled.img`
 	&.instagram {
@@ -188,6 +189,7 @@ export default function Login() {
 				<StyledLink to="/">
 					<Div>Facebook으로 로그인</Div>
 				</StyledLink>
+				<FacebookLogin appId="1576699423161136" fields="name, email" />
 			</Div>
 			<Div className="footer">
 				계정이 없으신가요?

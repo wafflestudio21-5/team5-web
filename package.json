@@ -21,7 +21,9 @@
 		"trailingComma": "es5"
 	},
 	"dependencies": {
+		"@greatsumini/react-facebook-login": "^3.3.3",
 		"@react-native-community/datetimepicker": "^7.6.2",
+		"@types/react-facebook-login": "^4.1.11",
 		"axios": "^1.6.7",
 		"hangul-romanization": "^1.0.1",
 		"react": "^18.2.0",
