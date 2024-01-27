@@ -1,14 +1,35 @@
 import axios, { AxiosError } from 'axios';
 
 import { baseURL } from '../constants.ts';
-import { APIErrorResponseType } from '../types.ts';
+import { APIErrorResponseType, UserType } from '../types.ts';
+
+import { getUserInformation } from './user.ts';
+
+// 유저 정보 userContext에 fetch
+export const fetchUserInformation = async (
+	accessToken: string,
+	currentUsername: string,
+	setCurrentUser: (user: UserType) => void
+) => {
+	try {
+		const response = await getUserInformation(currentUsername, accessToken);
+		setCurrentUser(response);
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+	}
+};
 
 // 계정 비공개로 변경
 export const updateAccountToPrivate = async (
 	accessToken: string
 ): Promise<string | null> => {
 	try {
-		const response = await axios.put(`${baseURL}/api/v1/account/toprivate`, {
+		const response = await axios.put(`${baseURL}/api/v1/account/toPrivate`, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 			},
@@ -33,7 +54,7 @@ export const updateAccountToOpen = async (
 	accessToken: string
 ): Promise<string | null> => {
 	try {
-		const response = await axios.put(`${baseURL}/api/v1/account/toopen`, {
+		const response = await axios.put(`${baseURL}/api/v1/account/toOpen`, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 			},
