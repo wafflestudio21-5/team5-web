@@ -1,12 +1,13 @@
-import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import { handleLike, handleSave } from '../../apis/post';
 import commentIcon from '../../assets/Images/Post/comment.svg';
 import likeIcon from '../../assets/Images/Post/like.svg';
 import likedIcon from '../../assets/Images/Post/liked.svg';
 import saveIcon from '../../assets/Images/Post/save.svg';
 import shareIcon from '../../assets/Images/Post/share.svg';
+import { useUserContext } from '../../contexts/UserContext';
 import Icon from '../../shared/Icon';
 import { getColor } from '../../styles/Theme';
 import { PostType } from '../../types';
@@ -77,7 +78,9 @@ type Props = {
 
 export default function ReactSection({ postData, showComment }: Props) {
 	const [liked, setLiked] = useState(postData.liked);
-	const [saved, setSaved] = useState(false);
+	const [saved, setSaved] = useState(postData.saved);
+
+	const { accessToken } = useUserContext();
 
 	return (
 		postData && (
@@ -86,13 +89,13 @@ export default function ReactSection({ postData, showComment }: Props) {
 					<div className="like-comment-share">
 						<div
 							className="icon-box"
-							onClick={() => {
-								if (liked) {
-									axios.post(`/api/v1/posts/${postData.id}/likes`);
-								} else {
-									axios.delete(`/api/v1/posts/${postData.id}/likes`);
-								}
-								setLiked(!liked);
+							onClick={async () => {
+								const result = await handleLike(
+									postData.id,
+									liked,
+									accessToken
+								);
+								if (result?.status === 'success') setLiked(!liked);
 							}}
 						>
 							{liked ? (
@@ -110,13 +113,9 @@ export default function ReactSection({ postData, showComment }: Props) {
 					</div>
 					<div
 						className="save"
-						onClick={() => {
-							if (saved) {
-								axios.post(`/api/v1/posts/${postData.id}/save`);
-							} else {
-								axios.delete(`/api/v1/posts/${postData.id}/save`);
-							}
-							setSaved(!saved);
+						onClick={async () => {
+							const result = await handleSave(postData.id, saved, accessToken);
+							if (result?.status === 'success') setSaved(!saved);
 						}}
 					>
 						<div className="icon-box">

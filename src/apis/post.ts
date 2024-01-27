@@ -160,3 +160,79 @@ export const getPostComment = async (
 		return null;
 	}
 };
+
+type HandleLikeResponseType = {
+	status: 'success' | 'failed';
+};
+
+export const handleLike = async (
+	postId: number,
+	isLiked: boolean,
+	accessToken: string
+): Promise<HandleLikeResponseType | null> => {
+	try {
+		if (isLiked) {
+			await axios.delete(`${baseURL}/api/v1/posts/${postId}/likes`, {
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			});
+		} else {
+			await axios.post(`${baseURL}/api/v1/posts/${postId}/likes`, {
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			});
+		}
+
+		return { status: 'success' };
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+type HandleSaveResponseType = {
+	status: 'success' | 'failed';
+};
+
+export const handleSave = async (
+	postId: number,
+	isSaved: boolean,
+	accessToken: string
+): Promise<HandleSaveResponseType | null> => {
+	try {
+		if (isSaved) {
+			await axios.delete(`${baseURL}/api/v1/posts/${postId}/save`, {
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			});
+		} else {
+			await axios.post(`${baseURL}/api/v1/posts/${postId}/save`, {
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			});
+		}
+
+		return { status: 'success' };
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
