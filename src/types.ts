@@ -55,10 +55,12 @@ export type PostType = {
 	id: number;
 	user: MiniProfileType;
 	content: string;
-	imageUrl: string;
+	media: MediaType[];
 	createdAt: string;
-	likesCount: number;
-	commentsCount: number;
+	likeCount: number;
+	liked: boolean;
+	commentCount: number;
+	saved: boolean;
 };
 
 export type FeedType = {
@@ -84,4 +86,12 @@ export type CommentPageType = {
 	page: number;
 	limit: number;
 	total: number;
+};
+
+export type MediaType = {
+	id: number;
+	mediaType: string;
+	order: number;
+	postId: number;
+	url: string;
 };
