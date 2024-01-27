@@ -25,7 +25,12 @@ import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx';
 import MakePassword from './pages/Login/signUp/MakePassword.tsx';
 import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
 import SignUp from './pages/Login/signUp/SignUp.tsx';
+import Bio from './pages/Profile/Edit/Bio.tsx';
 import Edit from './pages/Profile/Edit/Edit.tsx';
+import Gender from './pages/Profile/Edit/Gender.tsx';
+import Link from './pages/Profile/Edit/Link.tsx';
+import Name from './pages/Profile/Edit/Name.tsx';
+import Username from './pages/Profile/Edit/Username.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Saved from './pages/Profile/Saved.tsx';
@@ -80,22 +85,27 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'account/edit/username/',
+				element: <Username />,
 			},
 			{
 				path: 'account/edit/name/',
+				element: <Name />,
 			},
 			{
 				path: 'account/edit/bio/',
+				element: <Bio />,
 			},
 			{
 				path: 'account/edit/link/',
+				element: <Link />,
 			},
 			{
 				path: 'account/edit/gender/',
+				element: <Gender />,
 			},
 			{
 				path: '*',
-				element: <Navigate to="" />, // 이상한 url이 home이 아닌 profile로 가는 원인 모를 현상이 있음. useparams 도입 후 고칠 것
+				element: <Navigate to="" />,
 			},
 		],
 	},

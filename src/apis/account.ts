@@ -140,6 +140,7 @@ export const editName = async (accessToken: string, name: string) => {
 			`${baseURL}/api/v1/account/profileEdit/name`,
 			{
 				name: name,
+				message: 'Update name in profile.',
 			},
 			{
 				headers: {
