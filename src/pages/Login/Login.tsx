@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { tryLogin } from '../../apis/login';
-import { useAuthContext } from '../../contexts/AuthContext';
+import { getUserInformation } from '../../apis/user.ts';
 import { useUserContext } from '../../contexts/UserContext';
 import FacebookLogin from '@greatsumini/react-facebook-login';
 
@@ -92,28 +92,9 @@ const StyledLink = styled(Link)`
 export default function Login() {
 	const [usernameInput, setUsernameInput] = useState('');
 	const [passwordInput, setPasswordInput] = useState('');
-
-	const { setIsLoggedin } = useAuthContext();
-
-	const {
-		setAccessToken,
-		setUserId,
-		setUsername,
-		setName,
-		setBirthday,
-		setGender,
-		setIsCustomGender,
-		setProfileImageUrl,
-		setBio,
-		setUserLinks,
-		setContacts,
-		setPostNumber,
-		setFollowerNumber,
-		setFollowingNumber,
-		setIsMyAccountPrivate,
-	} = useUserContext();
-
 	const [isActive, setIsActive] = useState(false);
+
+	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
 
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
@@ -121,31 +102,20 @@ export default function Login() {
 	}, [usernameInput, passwordInput]);
 
 	const handleClick = async () => {
-		const response = await tryLogin({
+		const accessToken = await tryLogin({
 			username: usernameInput,
 			password: passwordInput,
-
-			setAccessToken,
-
-			setUserId,
-			setUsername,
-			setName,
-			setBirthday,
-			setIsMyAccountPrivate,
-			setGender,
-			setIsCustomGender,
-			setProfileImageUrl,
-			setBio,
-			setUserLinks,
-			setContacts,
-			setPostNumber,
-			setFollowerNumber,
-			setFollowingNumber,
 		});
-		if (response !== null) {
-			setIsLoggedin(true);
-			console.log(response);
-			console.log('login success');
+
+		if (accessToken !== null) {
+			setIsLoggedIn(true);
+			setAccessToken(accessToken);
+
+			const currentUserInfo = await getUserInformation(
+				usernameInput,
+				accessToken
+			);
+			setCurrentUser(currentUserInfo);
 		}
 	};
 

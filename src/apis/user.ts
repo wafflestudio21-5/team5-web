@@ -7,7 +7,7 @@ import { APIErrorResponseType, MiniProfileType, UserType } from '../types.ts';
 export const getUserInformation = async (
 	username: string,
 	accessToken: string
-): Promise<UserType | null> => {
+): Promise<UserType> => {
 	try {
 		const response = await axios.get<UserType>(
 			`${baseURL}/api/v1/account/${username}`,
@@ -27,7 +27,7 @@ export const getUserInformation = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return {} as UserType;
 	}
 };
 

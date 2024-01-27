@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { tryLogin, trySignUp } from '../../../apis/login';
 import { useUserContext } from '../../../contexts/UserContext';
 import { useAuthContext } from '../../../contexts/AuthContext';
+import { getUserInformation } from '../../../apis/user';
 
 const Img = styled.img`
 	width: 2rem;
@@ -124,23 +125,7 @@ export default function Agree() {
 	});
 	const { username, password, name, email, birthday, setIsLoggedin } =
 		useAuthContext();
-	const {
-		setAccessToken,
-		setUserId,
-		setUsername,
-		setName,
-		setBirthday,
-		setIsMyAccountPrivate,
-		setGender,
-		setIsCustomGender,
-		setProfileImageUrl,
-		setBio,
-		setUserLinks,
-		setContacts,
-		setPostNumber,
-		setFollowingNumber,
-		setFollowerNumber,
-	} = useUserContext();
+	const { setAccessToken, setCurrentUser } = useUserContext();
 	const handleClick = async () => {
 		const signupResponse = await trySignUp({
 			username,
@@ -150,28 +135,17 @@ export default function Agree() {
 			birthday,
 		});
 		if (signupResponse) {
-			const loginResponse = await tryLogin({
-				username,
-				password,
-				setAccessToken,
-				setUserId,
-				setUsername,
-				setName,
-				setBirthday,
-				setIsMyAccountPrivate,
-				setGender,
-				setIsCustomGender,
-				setProfileImageUrl,
-				setBio,
-				setUserLinks,
-				setContacts,
-				setPostNumber,
-				setFollowingNumber,
-				setFollowerNumber,
+			const accessToken = await tryLogin({
+				username: username,
+				password: password,
 			});
-			if (loginResponse) {
+
+			if (accessToken !== null) {
 				setIsLoggedin(true);
-				console.log('signup success');
+				setAccessToken(accessToken);
+
+				const currentUserInfo = await getUserInformation(username, accessToken);
+				setCurrentUser(currentUserInfo);
 			}
 		}
 	};
