@@ -6,18 +6,27 @@ import {
 	CommentPageType,
 	CommentType,
 	FeedType,
+	MediaType,
+	MiniProfileType,
 	PostType,
 } from '../types.ts';
 
-type PostResponseType = {
-	post_id: number;
-	user_id: number;
+type AuthorResponseType = {
+	id: number;
+	profileImageUrl: string;
 	username: string;
+};
+
+type PostResponseType = {
+	id: number;
+	author: AuthorResponseType;
 	content: string;
-	image_url: string;
-	created_at: string;
-	likes_count: number;
-	comments_count: number;
+	media: MediaType[];
+	createdAt: string;
+	likeCount: number;
+	commentCount: number;
+	liked: boolean;
+	saved: boolean;
 };
 
 type HomeFeedResponseType = {
@@ -41,28 +50,29 @@ export const getHomeFeed = async (
 			`${baseURL}/api/v1/feed/timeline?page=${page}`,
 			{
 				headers: {
-					Authorization: accessToken,
+					Authorization: `Bearer ${accessToken}`,
 				},
 			}
 		);
 		const result = response.data;
 
 		const posts: PostType[] = result.posts.map((post) => {
+			const user: MiniProfileType = {
+				userId: post.author.id,
+				profileImageUrl: post.author.profileImageUrl,
+				username: post.author.username,
+				name: '',
+			};
 			return {
-				id: post.post_id,
+				id: post.id,
 				content: post.content,
-				imageUrl: post.image_url,
-				createdAt: post.created_at,
-				likesCount: post.likes_count,
-				commentsCount: post.comments_count,
-				user: {
-					userId: post.user_id,
-					username: post.username,
-					profileImageUrl:
-						'https://wafflestudio.com/static/images/DefaultProfileImage.svg', // TODO: 유저의 프로필 이미지로 바꾸기
-					name: '홍길동', // TODO: 유저의 실제 이름을 받기
-					isPrivate: true, // TODO
-				},
+				media: post.media,
+				createdAt: post.createdAt,
+				likeCount: post.likeCount,
+				commentCount: post.commentCount,
+				user: user,
+				liked: post.liked,
+				saved: post.saved,
 			};
 		});
 
@@ -111,7 +121,7 @@ export const getPostComment = async (
 			`${baseURL}/api/v1/posts/${postId}/comments?page=${page}`,
 			{
 				headers: {
-					Authorization: accessToken,
+					Authorization: `Bearer ${accessToken}`,
 				},
 			}
 		);
