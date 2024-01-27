@@ -41,7 +41,12 @@ const CommentInputContainer = styled.div`
 		overflow: hidden;
 		padding: 1px;
 	}
-	& > .input-btn-wrapper > textarea {
+	& > .input-btn-wrapper > .input-wrapper {
+		width: 100%;
+		display: flex;
+		align-items: center;
+	}
+	& > .input-btn-wrapper > .input-wrapper > textarea {
 		width: 100%;
 		overflow-y: hidden;
 		resize: none;
@@ -88,16 +93,19 @@ export default function CommentInput({
 				<img src={user.profileImageUrl} />
 			</div>
 			<div className="input-btn-wrapper">
-				<textarea
-					rows={1}
-					value={content}
-					onChange={(e) => {
-						setContent(e.target.value);
-						e.currentTarget.style.height = 'auto';
-						e.currentTarget.style.height = e.currentTarget.scrollHeight + 'px';
-					}}
-					placeholder={user.username + '(으)로 댓글 달기...'}
-				></textarea>
+				<div className="input-wrapper">
+					<textarea
+						rows={1}
+						value={content}
+						onChange={(e) => {
+							setContent(e.target.value);
+							e.currentTarget.style.height = 'auto';
+							e.currentTarget.style.height =
+								e.currentTarget.scrollHeight + 'px';
+						}}
+						placeholder={user.username + '(으)로 댓글 달기...'}
+					></textarea>
+				</div>
 				{content !== '' && (
 					<button
 						onClick={() => {
