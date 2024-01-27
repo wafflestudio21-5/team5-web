@@ -32,10 +32,18 @@ type HomeFeedResponseType = {
 };
 
 // 홈 피드 게시물 가져오기
-export const getHomeFeed = async (page: number): Promise<FeedType | null> => {
+export const getHomeFeed = async (
+	page: number,
+	accessToken: string
+): Promise<FeedType | null> => {
 	try {
 		const response = await axios.get<HomeFeedResponseType>(
-			`${baseURL}/api/v1/feed/timeline?page=${page}`
+			`${baseURL}/api/v1/feed/timeline?page=${page}`,
+			{
+				headers: {
+					Authorization: accessToken,
+				},
+			}
 		);
 		const result = response.data;
 
@@ -95,11 +103,17 @@ type PostCommentResponseType = {
 // 게시물 댓글 가져오기
 export const getPostComment = async (
 	postId: number,
-	page: number
+	page: number,
+	accessToken: string
 ): Promise<CommentPageType | null> => {
 	try {
 		const response = await axios.get<PostCommentResponseType>(
-			`${baseURL}/api/v1/posts/${postId}/comments?page=${page}`
+			`${baseURL}/api/v1/posts/${postId}/comments?page=${page}`,
+			{
+				headers: {
+					Authorization: accessToken,
+				},
+			}
 		);
 		const result = response.data;
 		const comments: CommentType[] = result.comments.map((comment) => {
