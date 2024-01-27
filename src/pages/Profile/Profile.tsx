@@ -9,9 +9,9 @@ import {
 	getFollowRequestStatus,
 	getFollowRequestToMeStatus,
 	requestFollowToPrivateUser,
-	// cancelRequestFollowToPrivateUser,
 	followPublicUser,
 	unfollowUser,
+	cancelRequestFollowToPrivateUser,
 } from '../../apis/user.ts';
 import addPost from '../../assets/Images/Profile/add-post.png';
 import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
@@ -238,6 +238,7 @@ export default function Profile() {
 	// id로 유저 정보 가져오기
 	const { id } = useParams();
 	const { username, accessToken, isMyAccountPrivate } = useUserContext();
+
 	const [user, setUser] = useState<UserType | undefined>();
 	const [isMyAccount, setIsMyAccount] = useState(false);
 	const [isFollow, setIsFollow] = useState(false);
@@ -313,7 +314,7 @@ export default function Profile() {
 		};
 
 		fetchUserData();
-	}, [id, accessToken, navigate, username]);
+	}, [id, accessToken, navigate, username, isMyAccountPrivate]);
 
 	// 계정 공개 여부에 따라 팔로워, 팔로잉 버튼 클릭 여부 결정
 	const handleFollowersClick = () => {
@@ -350,7 +351,7 @@ export default function Profile() {
 				await unfollowUser(user.username, accessToken);
 			} else if (isPrivate) {
 				if (isFollowRequestToPrivate) {
-					// await cancelRequestFollowToPrivateUser(user.username, accessToken);
+					await cancelRequestFollowToPrivateUser(user.username, accessToken);
 				} else {
 					await requestFollowToPrivateUser(user.username, accessToken);
 				}
@@ -424,7 +425,7 @@ export default function Profile() {
 					<h3>{user.username}</h3>
 					<p>{user.bio}</p>
 					{user.userLinks.map((UserLink) => (
-						<a href={UserLink.links}>{UserLink.links}</a>
+						<a href={UserLink.link}>{UserLink.link}</a>
 					))}
 				</UserProfileContainer>
 				<ButtonContainer

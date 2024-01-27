@@ -1,98 +1,71 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
-import { UserLink, UserContact } from '../types';
-export type UserContextData = {
+import { createContext, useContext, useState } from 'react';
+
+import {
+	ProviderPropsType,
+	UserContactType,
+	UserLinkType,
+	UserType,
+} from '../types';
+
+type UserContextType = {
+	isLoggedIn: boolean;
+	setIsLoggedIn: (b: boolean) => void;
+
 	accessToken: string;
+	setAccessToken: (s: string) => void;
+
+	currentUser: UserType | null;
+	setCurrentUser: (user: UserType) => void;
+
 	userId: number;
-	name: string;
 	username: string;
-	password: string;
+	name: string;
 	birthday: Date;
+	isMyAccountPrivate: boolean;
 	gender: string;
 	isCustomGender: boolean;
 	profileImageUrl: string;
 	bio: string;
-	userLinks: UserLink[];
-	contacts: UserContact[];
+	userLinks: UserLinkType[];
+	contacts: UserContactType[];
 	postNumber: number;
 	followingNumber: number;
 	followerNumber: number;
-	isMyAccountPrivate: boolean;
-	setAccessToken: (s: string) => void;
-	setUserId: (n: number) => void;
-	setName: (s: string) => void;
-	setUsername: (s: string) => void;
-	setPassword: (s: string) => void;
-	setBirthday: (d: Date) => void;
-	setGender: (s: string) => void;
-	setIsCustomGender: (b: boolean) => void;
-	setProfileImageUrl: (s: string) => void;
-	setBio: (s: string) => void;
-	setUserLinks: (links: UserLink[]) => void;
-	setContacts: (contacts: UserContact[]) => void;
-	setPostNumber: (n: number) => void;
-	setFollowerNumber: (n: number) => void;
-	setFollowingNumber: (n: number) => void;
-	setIsMyAccountPrivate: (b: boolean) => void;
 };
 
-export const UserContext = createContext<UserContextData | null>(null);
+const UserContext = createContext<UserContextType>({} as UserContextType);
 
-type ProviderProps = {
-	children: ReactNode;
-};
-export function UserProvider({ children }: ProviderProps) {
+export function UserProvider({ children }: ProviderPropsType) {
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [accessToken, setAccessToken] = useState('');
-	const [userId, setUserId] = useState(0);
-	const [name, setName] = useState('');
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
-	const [birthday, setBirthday] = useState(new Date());
-	const [isMyAccountPrivate, setIsMyAccountPrivate] = useState(false);
-	const [gender, setGender] = useState('');
-	const [isCustomGender, setIsCustomGender] = useState(false);
-	const [profileImageUrl, setProfileImageUrl] = useState('');
-	const [bio, setBio] = useState('');
-	const [userLinks, setUserLinks] = useState<UserLink[]>([]);
-	const [contacts, setContacts] = useState<UserContact[]>([]);
-	const [postNumber, setPostNumber] = useState(0);
-	const [followingNumber, setFollowingNumber] = useState(0);
-	const [followerNumber, setFollowerNumber] = useState(0);
+	const [currentUser, setCurrentUser] = useState<UserType>({} as UserType);
 
 	return (
 		<UserContext.Provider
 			value={{
+				isLoggedIn,
+				setIsLoggedIn,
+
 				accessToken,
-				userId,
-				name,
-				username,
-				password,
-				birthday,
-				gender,
-				isCustomGender,
-				profileImageUrl,
-				bio,
-				userLinks,
-				contacts,
-				postNumber,
-				followingNumber,
-				followerNumber,
-				isMyAccountPrivate,
 				setAccessToken,
-				setUserId,
-				setName,
-				setUsername,
-				setPassword,
-				setBirthday,
-				setGender,
-				setIsCustomGender,
-				setProfileImageUrl,
-				setBio,
-				setUserLinks,
-				setContacts,
-				setPostNumber,
-				setFollowerNumber,
-				setFollowingNumber,
-				setIsMyAccountPrivate,
+
+				currentUser,
+				setCurrentUser,
+
+				userId: currentUser.userId,
+				username: currentUser.username,
+				name: currentUser.name,
+				birthday: currentUser.birthday,
+				isMyAccountPrivate: currentUser.isPrivate,
+				gender: currentUser.gender,
+				isCustomGender: currentUser.isCustomGender,
+				profileImageUrl: currentUser.profileImageUrl,
+				bio: currentUser.bio,
+				userLinks: currentUser.userLinks,
+				contacts: currentUser.contacts,
+				postNumber: currentUser.postNumber,
+				followingNumber: currentUser.followingNumber,
+				followerNumber: currentUser.followerNumber,
 			}}
 		>
 			{children}
@@ -100,10 +73,4 @@ export function UserProvider({ children }: ProviderProps) {
 	);
 }
 
-export function useUserContext() {
-	const context = useContext(UserContext);
-	if (!context) {
-		throw new Error('useUserContext must be used within a UserProvider');
-	}
-	return context;
-}
+export const useUserContext = () => useContext(UserContext);

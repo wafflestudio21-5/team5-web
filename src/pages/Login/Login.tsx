@@ -1,8 +1,10 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { tryLogin } from '../../apis/login';
+import { getUserInformation } from '../../apis/user.ts';
+import { useUserContext } from '../../contexts/UserContext';
 
 const Img = styled.img`
 	&.instagram {
@@ -87,16 +89,33 @@ const StyledLink = styled(Link)`
 `;
 
 export default function Login() {
-	const { username, setUsername, password, setPassword, setIsLoggedin } =
-		useAuthContext();
+	const [usernameInput, setUsernameInput] = useState('');
+	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
+
+	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
+
 	useEffect(() => {
-		if (username.length > 0 && password.length > 0) setIsActive(true);
+		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
 		else setIsActive(false);
-	}, [username, password]);
+	}, [usernameInput, passwordInput]);
+
 	const handleClick = async () => {
-		tryLogin({ username, password });
-		setIsLoggedin(true);
+		const accessToken = await tryLogin({
+			username: usernameInput,
+			password: passwordInput,
+		});
+
+		if (accessToken !== null) {
+			setIsLoggedIn(true);
+			setAccessToken(accessToken);
+
+			const currentUserInfo = await getUserInformation(
+				usernameInput,
+				accessToken
+			);
+			setCurrentUser(currentUserInfo);
+		}
 	};
 
 	return (
@@ -110,16 +129,16 @@ export default function Login() {
 			<Input
 				type="text"
 				name="username"
-				value={username}
+				value={usernameInput}
 				placeholder="사용자 이름, 이메일 주소 또는 휴대폰 번호"
-				onChange={(e) => setUsername(e.target.value)}
+				onChange={(e) => setUsernameInput(e.target.value)}
 			/>
 			<Input
 				type="password"
 				name="password"
-				value={password}
+				value={passwordInput}
 				placeholder="비밀번호"
-				onChange={(e) => setPassword(e.target.value)}
+				onChange={(e) => setPasswordInput(e.target.value)}
 			/>
 			<StyledLink to="passwordRecovery/">
 				<Div className="passwordRecovery">비밀번호를 잊으셨나요?</Div>

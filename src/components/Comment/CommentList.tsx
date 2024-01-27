@@ -16,9 +16,9 @@ const CommentListWrapper = styled.ul`
 export default function CommentList({ comments }: { comments: CommentType[] }) {
 	return (
 		<CommentListWrapper>
-			{comments.map((comment) => (
-				<Comment comment={comment} key={comment.id} />
-			))}
+			{/*{comments.map((comment) => (*/}
+			{/*	<Comment comment={comment} key={comment.id} />*/}
+			{/*))}*/}
 		</CommentListWrapper>
 	);
 }

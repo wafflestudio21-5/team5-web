@@ -2,35 +2,42 @@
 // export되는 모든 타입 이름은 끝에 Type을 붙여준다.
 
 // api
+import { ReactNode } from 'react';
+
 export type APIErrorResponseType = {
 	error: string;
 };
 
-// User
-export type UserLink = {
-	linkId: number;
-	links: string;
+// context
+export type ProviderPropsType = {
+	children: ReactNode;
 };
 
-export type UserContact = {
-	contactType: string; // e.g., "EMAIL"
-	contactValue: string; // e.g., an email address
-	isConfirmed: number; // 0 or 1, assuming this is a boolean-like field
+// User
+export type UserLinkType = {
+	linkId: number;
+	linkTitle: string;
+	link: string;
+};
+
+export type UserContactType = {
+	contactType: string;
+	contactValue: string;
+	isConfirmed: boolean;
 };
 
 export type UserType = {
 	userId: number;
 	username: string;
 	name: string;
-	password: string;
-	birthday: string; // or Date if you're going to convert it
+	birthday: Date;
 	isPrivate: boolean;
 	gender: string;
 	isCustomGender: boolean;
 	profileImageUrl: string;
 	bio: string;
-	userLinks: UserLink[];
-	contacts: UserContact[];
+	userLinks: UserLinkType[];
+	contacts: UserContactType[];
 	postNumber: number;
 	followingNumber: number;
 	followerNumber: number;
