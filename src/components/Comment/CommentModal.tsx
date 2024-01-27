@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getPostComment } from '../../apis/post';
+import { useUserContext } from '../../contexts/UserContext';
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
 import users from '../../test/data/users.json';
@@ -49,6 +50,8 @@ export default function CommentModal({
 
 	const [status, setStatus] = useState<CommentFetchStatus>('pending');
 
+	const { accessToken } = useUserContext();
+
 	const navigate = useNavigate();
 
 	const lockScroll = useCallback(() => {
@@ -94,7 +97,8 @@ export default function CommentModal({
 				try {
 					const commentsFetch = await getPostComment(
 						post.id,
-						comments.page + 1
+						comments.page + 1,
+						accessToken
 					);
 					if (!commentsFetch) {
 						setStatus('fail');
@@ -118,7 +122,7 @@ export default function CommentModal({
 		};
 
 		fetchHomeFeedData();
-	}, [comments, navigate, post, status]);
+	}, [accessToken, comments, navigate, post, status]);
 
 	const { isEnd } = useInfiniteScroll({
 		onScrollEnd: () => {
