@@ -5,7 +5,7 @@ import { getColor } from '../styles/Theme.tsx';
 import { PostType } from '../types.ts';
 
 import CommentModal from './Comment/CommentModal.tsx';
-// import Post from './Post/Post.tsx';
+import Post from './Post/Post.tsx';
 import PostMenuModal from './Post/PostMenuModal.tsx';
 
 const Container = styled.div`
