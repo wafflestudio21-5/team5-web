@@ -6,8 +6,7 @@ import { getPostComment } from '../../apis/post';
 import { useUserContext } from '../../contexts/UserContext';
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
-import users from '../../test/data/users.json';
-import { CommentPageType, PostType } from '../../types';
+import { CommentPageType, MiniProfileType, PostType } from '../../types';
 
 import CommentInput from './CommentInput';
 import CommentList from './CommentList';
@@ -41,16 +40,18 @@ export default function CommentModal({
 	close: () => void;
 	isClosing: boolean;
 }) {
-	const [comments, setComments] = useState<CommentPageType>({
-		comments: [],
-		page: 0,
-		total: 0,
-		limit: 0,
-	});
+	const [comments, setComments] = useState<CommentPageType>();
 
 	const [status, setStatus] = useState<CommentFetchStatus>('pending');
 
-	const { accessToken } = useUserContext();
+	const { accessToken, currentUser } = useUserContext();
+
+	const profile: MiniProfileType = {
+		userId: currentUser?.userId ?? 0,
+		username: currentUser?.username ?? '',
+		profileImageUrl: currentUser?.profileImageUrl ?? '',
+		name: currentUser?.name ?? '',
+	};
 
 	const navigate = useNavigate();
 
@@ -88,28 +89,17 @@ export default function CommentModal({
 	};
 
 	useEffect(() => {
-		const fetchHomeFeedData = async () => {
-			if (
-				post &&
-				status === 'pending' &&
-				comments.total / comments.limit > comments.page
-			) {
+		const fetchCommentData = async () => {
+			if (post && status === 'pending') {
 				try {
-					const commentsFetch = await getPostComment(
-						post.id,
-						comments.page + 1,
-						accessToken
-					);
+					const commentsFetch = await getPostComment(post.id, 1, accessToken);
 					if (!commentsFetch) {
 						setStatus('fail');
 						return;
 					}
 
 					setComments({
-						comments: [...comments.comments, ...commentsFetch.comments],
-						page: commentsFetch.page,
-						total: commentsFetch.total,
-						limit: commentsFetch.limit,
+						...commentsFetch,
 					});
 					setStatus('complete');
 				} catch {
@@ -121,8 +111,8 @@ export default function CommentModal({
 			}
 		};
 
-		fetchHomeFeedData();
-	}, [accessToken, comments, navigate, post, status]);
+		fetchCommentData();
+	}, []);
 
 	const { isEnd } = useInfiniteScroll({
 		onScrollEnd: () => {
@@ -135,9 +125,9 @@ export default function CommentModal({
 			<Modal onBackgroundClick={close} isClosing={isClosing}>
 				<ModalContent>
 					<h3>댓글</h3>
-					<CommentList comments={comments.comments} />
+					{comments && <CommentList comments={comments.content} />}
 					{isEnd && <>loading...</>}
-					<CommentInput post={post} user={users[1]} commentType={'comment'} />
+					<CommentInput post={post} user={profile} commentType={'comment'} />
 					{/*위 user props에는 로그인한 사용자의 정보가 전달되어야함*/}
 				</ModalContent>
 			</Modal>

@@ -96,18 +96,28 @@ export const getHomeFeed = async (
 };
 
 type CommentResponseType = {
-	comment_id: number;
-	user_id: number;
+	id: number;
+	text: string;
+	createdAt: string;
+	postId: number;
+	replyCount: number;
+	likeCount: number;
+	userId: number;
+	userProfileImageUrl: string;
 	username: string;
-	content: string;
-	created_at: string;
 };
 
 type PostCommentResponseType = {
-	comments: CommentResponseType[];
-	page: number;
-	limit: number;
-	total: number;
+	content: CommentResponseType[];
+	pageable: CommentPageType['pageable'];
+	sort: CommentPageType['sort'];
+	empty: false;
+	first: true;
+	last: true;
+	number: number;
+	numberOfElements: number;
+	totalElements: number;
+	totalPages: number;
 };
 
 // 게시물 댓글 가져오기
@@ -126,27 +136,35 @@ export const getPostComment = async (
 			}
 		);
 		const result = response.data;
-		const comments: CommentType[] = result.comments.map((comment) => {
+		const comments: CommentType[] = result.content.map((comment) => {
+			const user: MiniProfileType = {
+				userId: comment.userId,
+				username: comment.username,
+				profileImageUrl: comment.userProfileImageUrl,
+				name: '',
+			};
 			return {
-				id: comment.comment_id,
-				content: comment.content,
-				createdAt: comment.created_at,
-				user: {
-					userId: comment.user_id,
-					username: comment.username,
-					profileImageUrl:
-						'https://wafflestudio.com/static/images/DefaultProfileImage.svg', // TODO: 유저의 프로필 이미지로 바꾸기
-					name: '홍길동', // TODO: 유저의 실제 이름을 받기
-					isPrivate: true, // TODO
-				},
+				id: comment.id,
+				text: comment.text,
+				createdAt: comment.createdAt,
+				user: user,
+				postId: comment.postId,
+				replyCount: comment.replyCount,
+				likeCount: comment.likeCount,
 			};
 		});
 
 		return {
-			comments: comments,
-			page: result.page,
-			limit: result.limit,
-			total: result.total,
+			content: comments,
+			pageable: result.pageable,
+			sort: result.sort,
+			empty: result.empty,
+			first: result.first,
+			last: result.last,
+			number: result.number,
+			numberOfElements: result.numberOfElements,
+			totalElements: result.totalElements,
+			totalPages: result.totalPages,
 		};
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
@@ -165,6 +183,7 @@ type HandleLikeResponseType = {
 	status: 'success' | 'failed';
 };
 
+// 좋아요 버튼 눌렀을 때 처리
 export const handleLike = async (
 	postId: number,
 	isLiked: boolean,
@@ -203,6 +222,7 @@ type HandleSaveResponseType = {
 	status: 'success' | 'failed';
 };
 
+// 저장 버튼 눌렀을 때 처리
 export const handleSave = async (
 	postId: number,
 	isSaved: boolean,

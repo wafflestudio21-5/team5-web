@@ -77,15 +77,37 @@ export type FeedType = {
 export type CommentType = {
 	id: number;
 	user: MiniProfileType;
-	content: string;
+	text: string;
 	createdAt: string;
+	postId: number;
+	replyCount: number;
+	likeCount: number;
 };
 
 export type CommentPageType = {
-	comments: CommentType[];
-	page: number;
-	limit: number;
-	total: number;
+	content: CommentType[];
+	empty: false;
+	first: true;
+	last: true;
+	number: number;
+	numberOfElements: number;
+	pageable: {
+		offset: number;
+		pageNumber: number;
+		pageSize: number;
+		paged: boolean;
+		sort: SortType;
+		size: number;
+	};
+	sort: SortType;
+	totalElements: number;
+	totalPages: number;
+};
+
+export type SortType = {
+	empty: boolean;
+	sorted: boolean;
+	unsorted: boolean;
 };
 
 export type MediaType = {

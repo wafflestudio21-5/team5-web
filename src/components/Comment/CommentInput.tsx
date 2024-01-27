@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import DefaultProfile from '../../assets/Images/Profile/default-profile.svg';
 import { getColor } from '../../styles/Theme';
 import { CommentType, MiniProfileType, PostType } from '../../types';
 
@@ -90,7 +91,11 @@ export default function CommentInput({
 	return (
 		<CommentInputContainer>
 			<div className="profile-image-wrapper">
-				<img src={user.profileImageUrl} />
+				<img
+					src={
+						user.profileImageUrl !== '' ? user.profileImageUrl : DefaultProfile
+					}
+				/>
 			</div>
 			<div className="input-btn-wrapper">
 				<div className="input-wrapper">

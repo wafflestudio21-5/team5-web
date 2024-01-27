@@ -63,7 +63,7 @@ export default function Comment({ comment }: CommentProps) {
 			</div>
 			<div className="username-content-box">
 				<span className="username">{comment.user.username}</span>
-				<span>{comment.content}</span>
+				<span>{comment.text}</span>
 			</div>
 			<div className="like-box">
 				<Icon
@@ -77,7 +77,7 @@ export default function Comment({ comment }: CommentProps) {
 						setLiked(!liked);
 					}}
 				/>
-				<span className="like-num">30</span>
+				<span className="like-num">{comment.likeCount}</span>
 			</div>
 		</CommentContainer>
 	);
