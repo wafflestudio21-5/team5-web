@@ -32,7 +32,6 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 
 	const openCommentModal = (post: PostType) => {
 		setCommentPost(post);
-		console.log('?');
 		setCommentModal('open');
 	};
 
