@@ -7,8 +7,8 @@ import { ThemeProvider } from 'styled-components';
 
 import NavBar from './components/NavBar.tsx';
 import { useUserContext } from './contexts/UserContext.tsx';
-import AddText from './pages/addPost/AddText.tsx';
-import UploadPhoto from './pages/addPost/UploadPhoto.tsx';
+import AddText from './pages/AddPost/AddText.tsx';
+import UploadPhoto from './pages/AddPost/UploadPhoto.tsx';
 import Explore from './pages/Explore/Explore.tsx';
 import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
