@@ -49,11 +49,11 @@ export default function MenuModal({
 	close: () => void;
 	isClosing: boolean;
 }) {
-	const { username, userAccessToken, isMyAccountPrivate } = useUserContext();
+	const { username, accessToken, isMyAccountPrivate } = useUserContext();
 
 	const onClickUpdateAccountToOpen = async () => {
 		try {
-			await updateAccountToOpen(userAccessToken);
+			await updateAccountToOpen(accessToken);
 		} catch {
 			alert('Error occurred.');
 		}
@@ -61,7 +61,7 @@ export default function MenuModal({
 
 	const onClickUpdateAccountToPrivate = async () => {
 		try {
-			await updateAccountToPrivate(userAccessToken);
+			await updateAccountToPrivate(accessToken);
 		} catch {
 			alert('Error occurred.');
 		}

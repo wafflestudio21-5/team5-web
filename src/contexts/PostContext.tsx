@@ -4,7 +4,7 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 type tryPostProps = {
 	navigate: (to: string) => void;
 	addr: string;
-	userAccessToken: string;
+	accessToken: string;
 };
 
 export type PostContextData = {
@@ -32,7 +32,7 @@ export function PostProvider({ children }: ProviderProps) {
 	const [hideComments, setHideComments] = useState(false);
 	const [hideLikes, setHideLikes] = useState(false);
 	const [files, setFiles] = useState<FileList | null>(null);
-	const tryPost = async ({ navigate, addr, userAccessToken }: tryPostProps) => {
+	const tryPost = async ({ navigate, addr, accessToken }: tryPostProps) => {
 		const formData = new FormData();
 		formData.append('content', content);
 		formData.append('hideComments', '' + hideComments);
@@ -47,7 +47,7 @@ export function PostProvider({ children }: ProviderProps) {
 				formData,
 				{
 					headers: {
-						Authorization: `Bearer ${userAccessToken}`,
+						Authorization: `Bearer ${accessToken}`,
 						'Content-Type': 'multipart/form-data',
 					},
 				}

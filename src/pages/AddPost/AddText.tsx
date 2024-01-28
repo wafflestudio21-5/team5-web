@@ -87,7 +87,7 @@ const Textarea = styled.textarea`
 
 export default function AddText() {
 	const navigate = useNavigate();
-	const { userAccessToken, username } = useUserContext();
+	const { accessToken, username } = useUserContext();
 	const { files, setContent, content, tryPost } = usePostContext();
 	const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 	if (files && files.length > 0) {
@@ -107,7 +107,7 @@ export default function AddText() {
 	}
 	const handleClick = async () => {
 		const addr = `/${username}`;
-		tryPost({ navigate, addr, userAccessToken });
+		tryPost({ navigate, addr, accessToken });
 	};
 	const menuname = [
 		'사람 태그',

@@ -45,15 +45,14 @@ const EditContainer = styled.div`
 `;
 
 export default function Bio() {
-	const { userAccessToken, currentUser, setCurrentUser, bio } =
-		useUserContext();
+	const { accessToken, currentUser, setCurrentUser, bio } = useUserContext();
 	const [editedBio, setEditedBio] = useState(bio);
 
 	const navigate = useNavigate();
 
 	const onSubmit = async () => {
-		await editBio(userAccessToken, editedBio);
-		await fetchUserInformation(userAccessToken, currentUser, setCurrentUser);
+		await editBio(accessToken, editedBio);
+		await fetchUserInformation(accessToken, currentUser, setCurrentUser);
 		navigate('/account/edit');
 	};
 

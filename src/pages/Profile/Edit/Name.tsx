@@ -45,15 +45,14 @@ const EditContainer = styled.div`
 `;
 
 export default function Name() {
-	const { userAccessToken, currentUser, setCurrentUser, name } =
-		useUserContext();
+	const { accessToken, currentUser, setCurrentUser, name } = useUserContext();
 	const [editedName, setEditedName] = useState(name);
 
 	const navigate = useNavigate();
 
 	const onSubmit = async () => {
-		await editName(userAccessToken, editedName);
-		await fetchUserInformation(userAccessToken, currentUser, setCurrentUser);
+		await editName(accessToken, editedName);
+		await fetchUserInformation(accessToken, currentUser, setCurrentUser);
 		navigate('/account/edit');
 	};
 

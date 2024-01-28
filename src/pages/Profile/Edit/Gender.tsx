@@ -92,13 +92,8 @@ const RadioButton = styled.input`
 `;
 
 export default function Gender() {
-	const {
-		userAccessToken,
-		currentUser,
-		setCurrentUser,
-		gender,
-		isCustomGender,
-	} = useUserContext();
+	const { accessToken, currentUser, setCurrentUser, gender, isCustomGender } =
+		useUserContext();
 	const [editedGender, setEditedGender] = useState(gender);
 	const [editedCustomGender, setEditedCustomGender] = useState(
 		isCustomGender ? gender : ''
@@ -110,15 +105,11 @@ export default function Gender() {
 
 	const onSubmit = async () => {
 		if (editedIsCustomGender) {
-			await editGender(
-				userAccessToken,
-				editedCustomGender,
-				editedIsCustomGender
-			);
+			await editGender(accessToken, editedCustomGender, editedIsCustomGender);
 		} else {
-			await editGender(userAccessToken, editedGender, editedIsCustomGender);
+			await editGender(accessToken, editedGender, editedIsCustomGender);
 		}
-		await fetchUserInformation(userAccessToken, currentUser, setCurrentUser);
+		await fetchUserInformation(accessToken, currentUser, setCurrentUser);
 		navigate('/account/edit');
 	};
 

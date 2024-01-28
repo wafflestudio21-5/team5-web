@@ -95,8 +95,7 @@ export default function Login() {
 	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
 
-	const { setIsLoggedIn, setUserAccessToken, setCurrentUser } =
-		useUserContext();
+	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
 
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
@@ -112,7 +111,7 @@ export default function Login() {
 		if (accessToken !== null) {
 			setIsLoggedIn(true);
 			axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-			setUserAccessToken(accessToken);
+			setAccessToken(accessToken);
 
 			const currentUserInfo = await getUserInformation(
 				usernameInput,
@@ -123,7 +122,6 @@ export default function Login() {
 	};
 	const handleFacebookClick = () => {
 		const response = tryFacebookLogin();
-		console.log('in');
 		console.log(response);
 	};
 	return (

@@ -125,7 +125,7 @@ export default function Agree() {
 	});
 	const { username, password, name, email, birthday, setIsLoggedin } =
 		useAuthContext();
-	const { setUserAccessToken, setCurrentUser } = useUserContext();
+	const { setAccessToken, setCurrentUser } = useUserContext();
 	const handleClick = async () => {
 		const signupResponse = await trySignUp({
 			username,
@@ -135,19 +135,16 @@ export default function Agree() {
 			birthday,
 		});
 		if (signupResponse) {
-			const userAccessToken = await tryLogin({
+			const accessToken = await tryLogin({
 				username: username,
 				password: password,
 			});
 
-			if (userAccessToken !== null) {
+			if (accessToken !== null) {
 				setIsLoggedin(true);
-				setUserAccessToken(userAccessToken);
+				setAccessToken(accessToken);
 
-				const currentUserInfo = await getUserInformation(
-					username,
-					userAccessToken
-				);
+				const currentUserInfo = await getUserInformation(username, accessToken);
 				setCurrentUser(currentUserInfo);
 			}
 		}
