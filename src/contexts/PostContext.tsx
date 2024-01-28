@@ -1,11 +1,4 @@
-import axios from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
-
-type tryPostProps = {
-	navigate: (to: string) => void;
-	addr: string;
-	accessToken: string;
-};
 
 export type PostContextData = {
 	content: string;
@@ -18,7 +11,6 @@ export type PostContextData = {
 	setFiles: (f: FileList | null) => void;
 	setContent: (s: string) => void;
 	setSubject: (s: string) => void;
-	tryPost: (props: tryPostProps) => void;
 };
 
 export const PostContext = createContext<PostContextData | null>(null);
@@ -32,32 +24,7 @@ export function PostProvider({ children }: ProviderProps) {
 	const [hideComments, setHideComments] = useState(false);
 	const [hideLikes, setHideLikes] = useState(false);
 	const [files, setFiles] = useState<FileList | null>(null);
-	const tryPost = async ({ navigate, addr, accessToken }: tryPostProps) => {
-		const formData = new FormData();
-		formData.append('content', content);
-		formData.append('hideComments', '' + hideComments);
-		formData.append('hideLikes', '' + hideLikes);
-		formData.append(
-			'files',
-			'https://littledeep.com/wp-content/uploads/2020/11/night-sky-illustration-v2-style2-1024x854.png'
-		);
-		try {
-			const response = await axios.post(
-				'https://waffle5gram.shop/api/v1/posts',
-				formData,
-				{
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-						'Content-Type': 'multipart/form-data',
-					},
-				}
-			);
-			console.log(response);
-		} catch (error) {
-			alert('포스트 생성 실패');
-		}
-		navigate(addr);
-	};
+
 	return (
 		<PostContext.Provider
 			value={{
@@ -71,7 +38,6 @@ export function PostProvider({ children }: ProviderProps) {
 				setFiles,
 				setContent,
 				setSubject,
-				tryPost,
 			}}
 		>
 			{children}

@@ -58,17 +58,14 @@ export const trySignUp = async ({
 		const month = String(birthday.getMonth() + 1).padStart(2, '0');
 		const day = String(birthday.getDate()).padStart(2, '0');
 		const formatted = `${year}-${month}-${day}`;
-		const response = await axios.post(
-			'https://waffle5gram.shop/api/v1/auth/signup',
-			{
-				username: username,
-				name: name,
-				password: password,
-				contact: email,
-				contactType: phoneRegex.test(email) ? 'phone' : 'email',
-				birthday: formatted,
-			}
-		);
+		const response = await axios.post(`${baseURL}/api/v1/auth/signup`, {
+			username: username,
+			name: name,
+			password: password,
+			contact: email,
+			contactType: phoneRegex.test(email) ? 'phone' : 'email',
+			birthday: formatted,
+		});
 		return response;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
@@ -85,9 +82,7 @@ export const trySignUp = async ({
 
 export const resetAccessToken = async (setAccessToken: (s: string) => void) => {
 	try {
-		const response = await axios.get(
-			'https://waffle5gram.shop/api/v1/auth/refresh_token'
-		);
+		const response = await axios.get(`${baseURL}/api/v1/auth/refresh_token`);
 		setAccessToken(response.data.accessToken);
 		console.log('액세스 토큰 : ' + response.data.accessToken);
 	} catch (error) {
@@ -103,9 +98,7 @@ export const resetAccessToken = async (setAccessToken: (s: string) => void) => {
 };
 export const tryFacebookLogin = async () => {
 	try {
-		const response = await axios.get(
-			'https://waffle5gram.shop/api/v1/auth/facebook_login'
-		);
+		const response = await axios.get(`${baseURL}/api/v1/auth/facebook_login`);
 		return response;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;

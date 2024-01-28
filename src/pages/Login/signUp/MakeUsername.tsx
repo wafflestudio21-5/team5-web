@@ -76,7 +76,6 @@ export default function MakeUsername() {
 	const navigate = useNavigate();
 	const [isValid, setIsValid] = useState(false);
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-		console.log(e.target.value);
 		setUsername(e.target.value);
 	};
 	useEffect(() => {

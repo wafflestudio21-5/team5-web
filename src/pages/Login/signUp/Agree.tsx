@@ -92,7 +92,7 @@ const Button = styled.button`
 	}
 	&.selectAll {
 		display: inline;
-		width: 23%;
+		width: 40%;
 		margin-left: 14rem;
 		text-align: right;
 		border: transparent;

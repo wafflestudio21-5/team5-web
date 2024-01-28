@@ -6,6 +6,8 @@ import MenuElement from '../../components/CreatePost/MenuElement';
 import Select from '../../components/CreatePost/SubjectBar';
 import { usePostContext } from '../../contexts/PostContext';
 import { useUserContext } from '../../contexts/UserContext';
+import { fetchUserInformation } from '../../apis/account';
+import { tryPost } from '../../apis/post';
 
 const Background = styled.div`
 	background-color: white;
@@ -87,8 +89,10 @@ const Textarea = styled.textarea`
 
 export default function AddText() {
 	const navigate = useNavigate();
-	const { accessToken, username } = useUserContext();
-	const { files, setContent, content, tryPost } = usePostContext();
+	const { accessToken, username, currentUser, setCurrentUser } =
+		useUserContext();
+	const { files, setContent, content, hideComments, hideLikes } =
+		usePostContext();
 	const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 	if (files && files.length > 0) {
 		Promise.all(
@@ -107,7 +111,19 @@ export default function AddText() {
 	}
 	const handleClick = async () => {
 		const addr = `/${username}`;
-		tryPost({ navigate, addr, accessToken });
+		if (files) {
+			const response = await tryPost({
+				content,
+				hideComments,
+				hideLikes,
+				files,
+				accessToken,
+			});
+			if (response) {
+				await fetchUserInformation(accessToken, currentUser, setCurrentUser);
+				navigate(addr);
+			}
+		}
 	};
 	const menuname = [
 		'사람 태그',
