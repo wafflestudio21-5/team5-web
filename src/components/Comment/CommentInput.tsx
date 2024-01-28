@@ -9,6 +9,7 @@ import { CommentType, MiniProfileType, PostType } from '../../types';
 const CommentInputContainer = styled.div`
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 	position: sticky;
 	bottom: 0;
 	border-top: 1px solid ${getColor('grey')};
@@ -40,10 +41,12 @@ const CommentInputContainer = styled.div`
 		border: 1px solid ${getColor('blue')};
 		border-radius: 1rem;
 		overflow: hidden;
-		padding: 1px;
+		padding: 0 1rem 0 1rem;
+		gap: 0.5rem;
 	}
 	& > .input-btn-wrapper > .input-wrapper {
 		width: 100%;
+		height: 100%;
 		display: flex;
 		align-items: center;
 	}
@@ -56,12 +59,28 @@ const CommentInputContainer = styled.div`
 		::placeholder {
 			text-align: center;
 		}
-		:focus {
-			outline: none;
-		}
-		:focus-visible {
-			outline: none;
-		}
+	}
+	& > .input-btn-wrapper > .input-wrapper > textarea:focus {
+		outline: none;
+	}
+	& > .input-btn-wrapper > .btn-wrapper {
+		display: flex;
+		height: 100%;
+		align-content: baseline;
+		cursor: pointer;
+	}
+	& > .input-btn-wrapper > .btn-wrapper > button {
+		border: none;
+		background-color: transparent;
+		width: 2rem;
+		padding: 0;
+		color: ${getColor('blue')};
+		font-weight: 600;
+		margin-bottom: 1px;
+		margin-top: 1px;
+	}
+	& > .input-btn-wrapper > .btn-wrapper > button:focus {
+		outline: none;
 	}
 `;
 
@@ -112,33 +131,37 @@ export default function CommentInput({
 					></textarea>
 				</div>
 				{content !== '' && (
-					<button
-						onClick={() => {
-							if (content !== '') {
-								if (commentType === 'reply' && comment) {
-									axios
-										.post(`/api/v1/comments/${comment.id}/replies`, {
-											content: content,
-										})
-										.then((res) => {
-											if (res.status === 201) {
-												setContent('');
-											}
-										});
-								} else if (commentType === 'comment' && post.id) {
-									axios
-										.post(`/api/v1/posts/${post.id}/comments`, {
-											content: content,
-										})
-										.then((res) => {
-											if (res.status === 201) {
-												setContent('');
-											}
-										});
+					<div className="btn-wrapper">
+						<button
+							onClick={() => {
+								if (content !== '') {
+									if (commentType === 'reply' && comment) {
+										axios
+											.post(`/api/v1/comments/${comment.id}/replies`, {
+												content: content,
+											})
+											.then((res) => {
+												if (res.status === 201) {
+													setContent('');
+												}
+											});
+									} else if (commentType === 'comment' && post.id) {
+										axios
+											.post(`/api/v1/posts/${post.id}/comments`, {
+												content: content,
+											})
+											.then((res) => {
+												if (res.status === 201) {
+													setContent('');
+												}
+											});
+									}
 								}
-							}
-						}}
-					></button>
+							}}
+						>
+							게시
+						</button>
+					</div>
 				)}
 			</div>
 		</CommentInputContainer>
