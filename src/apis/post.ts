@@ -142,7 +142,7 @@ export const getPostComment = async (
 			const user: MiniProfileType = {
 				userId: comment.userId,
 				username: comment.username,
-				profileImageUrl: comment.userProfileImageUrl,
+				profileImageUrl: comment.userProfileImageUrl ?? '',
 				name: '',
 			};
 			return {
