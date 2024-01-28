@@ -5,7 +5,9 @@
 import { ReactNode } from 'react';
 
 export type APIErrorResponseType = {
-	error: string;
+	status: number;
+	code: string;
+	message: string;
 };
 
 // context

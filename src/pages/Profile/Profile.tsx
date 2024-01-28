@@ -59,11 +59,11 @@ const HeaderContainer = styled.div`
 
 // 내 프로필 페이지 or 내 팔로워 아니면 우측 상단 아이콘 숨기기
 const IconContainer = styled.div<{
-	isMyAccount: boolean;
-	isMyFollower: boolean;
+	$isMyAccount: boolean;
+	$isMyFollower: boolean;
 }>`
 	display: ${(props) =>
-		!props.isMyAccount && !props.isMyFollower ? 'none' : 'block'};
+		!props.$isMyAccount && !props.$isMyFollower ? 'none' : 'block'};
 `;
 
 // 팔로우 요청 수락 or 거절 컨테이너
@@ -178,10 +178,10 @@ const UserProfileContainer = styled.div`
 `;
 
 type ButtonProps = {
-	isMyAccount: boolean;
-	isFollow: boolean;
-	isPrivate: boolean;
-	isFollowRequestToPrivate: boolean;
+	$isMyAccount: boolean;
+	$isFollow: boolean;
+	$isPrivate: boolean;
+	$isFollowRequestToPrivate: boolean;
 };
 
 const ButtonContainer = styled.div<ButtonProps>`
@@ -210,20 +210,21 @@ const ButtonContainer = styled.div<ButtonProps>`
 
 	& .leftButton {
 		width: ${(props) =>
-			!props.isMyAccount && props.isPrivate ? '100%' : '45%'};
-		font-weight: ${(props) => (props.isMyAccount ? '500' : '700')};
+			!props.$isMyAccount && props.$isPrivate ? '100%' : '45%'};
+		font-weight: ${(props) => (props.$isMyAccount ? '500' : '700')};
 		color: ${(props) =>
-			props.isMyAccount || props.isFollow || props.isFollowRequestToPrivate
+			props.$isMyAccount || props.$isFollow || props.$isFollowRequestToPrivate
 				? getColor('black')
 				: getColor('white')};
 		background-color: ${(props) =>
-			props.isMyAccount || props.isFollow || props.isFollowRequestToPrivate
+			props.$isMyAccount || props.$isFollow || props.$isFollowRequestToPrivate
 				? getColor('white')
 				: getColor('blue')};
 	}
 
 	& .rightButton {
-		width: ${(props) => (!props.isMyAccount && props.isPrivate ? '0%' : '45%')};
+		width: ${(props) =>
+			!props.$isMyAccount && props.$isPrivate ? '0%' : '45%'};
 	}
 `;
 
@@ -239,6 +240,9 @@ const PostContainer = styled.div`
 type modalStateType = 'open' | 'closed' | 'closing';
 
 export default function Profile() {
+	// test
+	const [isLoading, setIsLoading] = useState(true);
+
 	// 모달 관련
 	const [addPostModal, setAddPostModal] = useState<modalStateType>('closed');
 	const [menuModal, setMenuModal] = useState<modalStateType>('closed');
@@ -264,14 +268,20 @@ export default function Profile() {
 	const [isMyFollower, setIsMyFollower] = useState(false); // 독립적
 	const [isFollowRequestToMe, setIsFollowRequestToMe] = useState(false); // 내가 비공개일 때 나에게 팔로우 요청을 보냈는지 확인
 
+	// test
+	const [buttonLabel, setButtonLabel] = useState('');
+
 	useEffect(() => {
 		const fetchUserData = async () => {
+			setIsLoading(true);
+
 			if (!id) {
 				navigate('/');
 				return;
 			}
 
 			try {
+				// 유저 정보 가져오기
 				const userInfo = await getUserInformation(id, accessToken);
 				if (!userInfo) {
 					navigate('/');
@@ -283,54 +293,96 @@ export default function Profile() {
 				if (userInfo.username === username) {
 					setIsMyAccount(true);
 				} else {
-					// 팔로잉 여부 판단
+					setIsMyAccount(false);
+
+					// 내 계정이 아니라면 팔로잉 여부 판단
 					const followStatus = await getUserFollowStatus(
 						userInfo.username,
 						accessToken
 					);
 					if (followStatus) {
-						setIsFollow(followStatus);
+						setIsFollow(true);
 					} else {
+						setIsFollow(false);
+
 						// 팔로잉 하지 않으면 비공개 여부 판단
 						if (userInfo.isPrivate) {
 							setIsPrivate(true);
+
+							// 비공개라면 팔로우 요청 여부 판단
 							const followRequestStatus = await getFollowRequestStatus(
 								userInfo.username,
 								accessToken
 							);
-							// 팔로우 요청 여부 판단
 							if (followRequestStatus) {
-								setIsFollowRequestToPrivate(followRequestStatus);
+								setIsFollowRequestToPrivate(true);
+							} else {
+								setIsFollowRequestToPrivate(false);
 							}
+						} else {
+							setIsPrivate(false);
 						}
 					}
+
 					// 내 팔로워인지 판단
 					const followMeStatus = await getUserFollowMeStatus(
 						userInfo.username,
 						accessToken
 					);
 					if (followMeStatus) {
-						setIsMyFollower(followMeStatus);
+						setIsMyFollower(true);
 					} else {
-						// 내가 비공개 계정일 때 나에게 팔로우 요청을 보냈는지 판단
+						setIsMyFollower(false);
+
+						// 내 팔로워가 아니라면 내가 비공개 계정일 때 나에게 팔로우 요청을 보냈는지 판단
 						if (isMyAccountPrivate) {
 							const followRequestToMeStatus = await getFollowRequestToMeStatus(
 								userInfo.username,
 								accessToken
 							);
 							if (followRequestToMeStatus) {
-								setIsFollowRequestToMe(followRequestToMeStatus);
+								setIsFollowRequestToMe(true);
+							} else {
+								setIsFollowRequestToMe(false);
 							}
 						}
 					}
 				}
 			} catch {
 				navigate('/');
+			} finally {
+				setIsLoading(false);
 			}
 		};
 
+		// 현재 보고 있는 유저의 상태 반영
 		fetchUserData();
-	}, []);
+
+		// 계정 조건에 따라 버튼 라벨 변경
+		if (isMyAccount) {
+			setButtonLabel('프로필 편집');
+		} else {
+			if (isFollow) {
+				setButtonLabel('팔로잉');
+			} else if (!isPrivate) {
+				setButtonLabel(isMyFollower ? '맞팔로우' : '팔로우');
+			} else if (isFollowRequestToPrivate) {
+				setButtonLabel('요청됨');
+			} else {
+				setButtonLabel(isMyFollower ? '맞팔로우' : '팔로우');
+			}
+		}
+	}, [
+		id,
+		isFollow,
+		isFollowRequestToPrivate,
+		isMyAccount,
+		isMyAccountPrivate,
+		isMyFollower,
+		isPrivate,
+		navigate,
+		username,
+	]);
 
 	// 계정 공개 여부에 따라 팔로워, 팔로잉 버튼 클릭 여부 결정
 	const handleFollowersClick = () => {
@@ -345,48 +397,56 @@ export default function Profile() {
 		}
 	};
 
-	// 계정 조건에 따라 버튼 라벨 변경
-	const getButtonLabel = () => {
-		if (isMyAccount) return '프로필 편집';
-		if (isFollow) return '팔로잉';
-		if (!isPrivate) {
-			return isMyFollower ? '맞팔로우' : '팔로우';
-		}
-		if (isFollowRequestToPrivate) return '요청됨';
-		return isMyFollower ? '맞팔로우' : '팔로우';
-	};
-
 	// 계정 조건에 따라 버튼 클릭 시 동작 변경
 	const handleButtonClick = async () => {
 		if (!user) return;
 
 		try {
+			// 내 계정이면 프로필 편집 페이지로 이동
 			if (isMyAccount) {
 				navigate('/account/edit');
+				// 팔로우 중이라면 unfollow
 			} else if (isFollow) {
 				await unfollowUser(user.username, accessToken);
+				setIsFollow(false);
+				// 비공개 계정
 			} else if (isPrivate) {
+				// 팔로우 요청 중이라면 요청 취소
 				if (isFollowRequestToPrivate) {
 					await cancelRequestFollowToPrivateUser(user.username, accessToken);
+					setIsFollowRequestToPrivate(false);
+					// 팔로우 요청 중이 아니라면 팔로우 요청
 				} else {
 					await requestFollowToPrivateUser(user.username, accessToken);
+					setIsFollowRequestToPrivate(true);
 				}
+				// 공개 계정이라면 팔로우 요청
 			} else {
+				console.log('follow public user');
+				console.log(user.username);
+				console.log(accessToken);
 				await followPublicUser(user.username, accessToken);
+				console.log('follow public user2');
+
+				setIsFollow(true);
 			}
 		} catch {
 			alert('Error occurred.');
 		}
 	};
 
+	if (isLoading) return <div></div>;
 	return (
 		user && (
 			<ProfileLayout>
 				<HeaderContainer>
-					{!isMyAccount && <Icon src={menu}>뒤로 가기</Icon>}
+					{!isMyAccount && <Icon src={menu} />}
 					{isMyAccountPrivate && <p>좌물쇠</p>}
 					<h2>{id}</h2>
-					<IconContainer isMyAccount={isMyAccount} isMyFollower={isMyFollower}>
+					<IconContainer
+						$isMyAccount={isMyAccount}
+						$isMyFollower={isMyFollower}
+					>
 						{isMyAccount && (
 							<div>
 								<Icon
@@ -459,13 +519,13 @@ export default function Profile() {
 					)}
 				</UserProfileContainer>
 				<ButtonContainer
-					isMyAccount={isMyAccount}
-					isFollow={isFollow}
-					isPrivate={isPrivate}
-					isFollowRequestToPrivate={isFollowRequestToPrivate}
+					$isMyAccount={isMyAccount}
+					$isFollow={isFollow}
+					$isPrivate={isPrivate}
+					$isFollowRequestToPrivate={isFollowRequestToPrivate}
 				>
 					<button onClick={handleButtonClick} className="leftButton">
-						{getButtonLabel()}
+						{buttonLabel}
 					</button>
 					<button className="rightButton">
 						{isMyAccount ? '프로필 공유' : '메시지'}
@@ -482,6 +542,13 @@ export default function Profile() {
 						<div>태그됨</div>
 					</ToggleBar>
 				</PostContainer>
+
+				{/* test */}
+				<div>
+					<h1>test</h1>
+					<button onClick={() => navigate('/user-1')}>user-1</button>
+					<button onClick={() => navigate('/user-2')}>user-2</button>
+				</div>
 
 				{/*	Modals */}
 				{addPostModal !== 'closed' && (
