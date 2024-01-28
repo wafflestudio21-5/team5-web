@@ -45,13 +45,11 @@ const Cell = styled.div`
 export default function MenuModal({
 	close,
 	isClosing,
-	isPrivate,
 }: {
 	close: () => void;
 	isClosing: boolean;
-	isPrivate: boolean;
 }) {
-	const { username, accessToken } = useUserContext();
+	const { username, accessToken, isMyAccountPrivate } = useUserContext();
 
 	const onClickUpdateAccountToOpen = async () => {
 		try {
@@ -79,17 +77,17 @@ export default function MenuModal({
 						<Icon src={story} alt="저장됨" />
 						<p>저장됨</p>
 					</Cell>
-					({isPrivate} ? (
-					<Cell onClick={onClickUpdateAccountToOpen}>
-						<Icon src={post} alt="계정 공개 여부 설정" />
-						<p>계정 공개 전환</p>
-					</Cell>
+					{isMyAccountPrivate ? (
+						<Cell onClick={onClickUpdateAccountToOpen}>
+							<Icon src={post} alt="계정 공개 여부 설정" />
+							<p>계정 공개 전환</p>
+						</Cell>
 					) : (
-					<Cell onClick={onClickUpdateAccountToPrivate}>
-						<Icon src={post} alt="계정 공개 여부 설정" />
-						<p>계정 비공개 전환</p>
-					</Cell>
-					))
+						<Cell onClick={onClickUpdateAccountToPrivate}>
+							<Icon src={post} alt="계정 공개 여부 설정" />
+							<p>계정 비공개 전환</p>
+						</Cell>
+					)}
 					<Cell>
 						<Icon src={story} alt="비밀번호 변경" />
 						<p>비밀번호 변경</p>
