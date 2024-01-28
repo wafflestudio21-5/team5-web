@@ -61,6 +61,7 @@ export type PostType = {
 	liked: boolean;
 	commentCount: number;
 	saved: boolean;
+	hideLike: boolean;
 };
 
 export type FeedType = {
