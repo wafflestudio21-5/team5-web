@@ -18,6 +18,7 @@ import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
 import menu from '../../assets/Images/Profile/menu.png';
 import AddPostModal from '../../components/Profile/AddPostModal.tsx';
 import FollowerModal from '../../components/Profile/FollowerModal.tsx';
+import LinkModal from '../../components/Profile/LinkModal.tsx';
 import MenuModal from '../../components/Profile/MenuModal.tsx';
 import ToggleBar from '../../components/Profile/ToggleBar.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
@@ -158,7 +159,21 @@ const UserProfileContainer = styled.div`
 	}
 
 	& p {
-		margin: 0.5rem 1rem 0 1rem;
+		margin: 0.2rem 1rem 0 1rem;
+	}
+
+	& a {
+		margin: 0.2rem 1rem 0 1rem;
+		color: ${getColor('darkBlue')};
+		text-decoration: none;
+	}
+
+	& p.links {
+		font-weight: 700;
+
+		&:hover {
+			cursor: pointer;
+		}
 	}
 `;
 
@@ -228,6 +243,7 @@ export default function Profile() {
 	const [addPostModal, setAddPostModal] = useState<modalStateType>('closed');
 	const [menuModal, setMenuModal] = useState<modalStateType>('closed');
 	const [followerModal, setFollowerModal] = useState<modalStateType>('closed');
+	const [linkModal, setLinkModal] = useState<modalStateType>('closed');
 
 	// 페이지 이동
 	const navigate = useNavigate();
@@ -319,13 +335,13 @@ export default function Profile() {
 	// 계정 공개 여부에 따라 팔로워, 팔로잉 버튼 클릭 여부 결정
 	const handleFollowersClick = () => {
 		if (!isPrivate) {
-			navigate('/id/followers');
+			navigate(`/${id}/followers`);
 		}
 	};
 
 	const handleFollowingClick = () => {
 		if (!isPrivate) {
-			navigate('/id/following');
+			navigate(`/${id}/following`);
 		}
 	};
 
@@ -424,9 +440,23 @@ export default function Profile() {
 				<UserProfileContainer>
 					<h3>{user.name}</h3>
 					<p>{user.bio}</p>
-					{user.userLinks.map((UserLink) => (
-						<a href={UserLink.link}>{UserLink.link}</a>
-					))}
+					{/* 랑크 1개일 땐 바로 연결*/}
+					{user.userLinks.length === 1 && (
+						<a href={user.userLinks[0].link} target={'_blank'}>
+							{user.userLinks[0].link}
+						</a>
+					)}
+					{/* 랑크 2개 이상일 땐 모달 */}
+					{user.userLinks.length > 1 && (
+						<p
+							className="links"
+							onClick={() => {
+								setLinkModal('open');
+							}}
+						>
+							{user.userLinks[0].link} 외 {user.userLinks.length - 1}개
+						</p>
+					)}
 				</UserProfileContainer>
 				<ButtonContainer
 					isMyAccount={isMyAccount}
@@ -452,6 +482,7 @@ export default function Profile() {
 						<div>태그됨</div>
 					</ToggleBar>
 				</PostContainer>
+
 				{/*	Modals */}
 				{addPostModal !== 'closed' && (
 					<AddPostModal
@@ -478,6 +509,15 @@ export default function Profile() {
 							setTimeout(() => setFollowerModal('closed'), 300);
 						}}
 						isClosing={followerModal === 'closing'}
+					/>
+				)}
+				{linkModal !== 'closed' && (
+					<LinkModal
+						close={() => {
+							setLinkModal('closing');
+							setTimeout(() => setLinkModal('closed'), 300);
+						}}
+						isClosing={linkModal === 'closing'}
 					/>
 				)}
 			</ProfileLayout>

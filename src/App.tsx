@@ -29,6 +29,7 @@ import Bio from './pages/Profile/Edit/Bio.tsx';
 import Edit from './pages/Profile/Edit/Edit.tsx';
 import Gender from './pages/Profile/Edit/Gender.tsx';
 import Link from './pages/Profile/Edit/Link/Link.tsx';
+import LinkDetail from './pages/Profile/Edit/Link/LinkDetail.tsx';
 import Name from './pages/Profile/Edit/Name.tsx';
 import Username from './pages/Profile/Edit/Username.tsx';
 import Follow from './pages/Profile/Follow.tsx';
@@ -98,6 +99,10 @@ const router = createBrowserRouter([
 			{
 				path: 'account/edit/link/',
 				element: <Link />,
+			},
+			{
+				path: 'account/edit/link/:linkParam/',
+				element: <LinkDetail />,
 			},
 			{
 				path: 'account/edit/gender/',

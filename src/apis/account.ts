@@ -181,6 +181,7 @@ export const editName = async (accessToken: string, name: string) => {
 };
 
 // 유저 사용자 이름(username) 편집
+// accessToken도 같이 온다
 export const editUsername = async (accessToken: string, username: string) => {
 	try {
 		const response = await axios.put(
@@ -315,8 +316,44 @@ export const addLink = async (
 	}
 };
 
+// 유저 링크 수정
+export const updateLink = async (
+	accessToken: string,
+	linkId: number,
+	linkTitle: string,
+	link: string
+) => {
+	try {
+		const response = await axios.put(
+			`${baseURL}/api/v1/account/profileEdit/link/${linkId}`,
+			{
+				linkTitle: linkTitle,
+				link: link,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+
+		return response.data;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
 // 유저 링크 삭제
-export const deleteLink = async (accessToken: string, linkId: string) => {
+export const deleteLink = async (accessToken: string, linkId: number) => {
 	try {
 		const response = await axios.delete(
 			`${baseURL}/api/v1/account/profileEdit/link/${linkId}`,
