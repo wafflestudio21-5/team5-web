@@ -124,7 +124,7 @@ export default function Login() {
 	const handleFacebookClick = () => {
 		const response = tryFacebookLogin();
 		console.log('in');
-		console.log(response);
+		console.log('response : ' + response);
 	};
 	return (
 		<div>
