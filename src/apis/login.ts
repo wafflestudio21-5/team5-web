@@ -157,6 +157,7 @@ export const resetAccessToken = async (
 };
 export const tryFacebookLogin = async () => {
 	try {
+		console.log('in2');
 		const response = await axios.get(
 			'https://waffle5gram.shop/api/v1/auth/facebook_login'
 		);
