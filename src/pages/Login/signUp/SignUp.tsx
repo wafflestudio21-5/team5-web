@@ -65,7 +65,6 @@ export default function SignUp() {
 	const navigate = useNavigate();
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		setName(e.target.value);
-		console.log(name);
 	};
 	return (
 		<>

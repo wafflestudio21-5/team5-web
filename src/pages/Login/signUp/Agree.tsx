@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-/* import { trySignUp } from '../../../apis/login';
- */
+import { tryLogin, trySignUp } from '../../../apis/login';
+import { useUserContext } from '../../../contexts/UserContext';
+import { useAuthContext } from '../../../contexts/AuthContext';
+import { getUserInformation } from '../../../apis/user';
+
 const Img = styled.img`
 	width: 2rem;
 	margin-left: 1rem;
@@ -120,10 +123,33 @@ export default function Agree() {
 		checkbox2: false,
 		checkbox3: false,
 	});
-	const handleClick = () => {
-		/* 		trySignUp({ navigate, addr });
-		 */
+	const { username, password, name, email, birthday, setIsLoggedin } =
+		useAuthContext();
+	const { setAccessToken, setCurrentUser } = useUserContext();
+	const handleClick = async () => {
+		const signupResponse = await trySignUp({
+			username,
+			password,
+			name,
+			email,
+			birthday,
+		});
+		if (signupResponse) {
+			const accessToken = await tryLogin({
+				username: username,
+				password: password,
+			});
+
+			if (accessToken !== null) {
+				setIsLoggedin(true);
+				setAccessToken(accessToken);
+
+				const currentUserInfo = await getUserInformation(username, accessToken);
+				setCurrentUser(currentUserInfo);
+			}
+		}
 	};
+
 	const setCheckbox = (num: number) => {
 		const boxNumber = 'checkbox' + num;
 		setCheckboxes((prevCheckboxes) => ({
