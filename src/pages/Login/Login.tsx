@@ -162,7 +162,21 @@ export default function Login() {
 				<StyledLink to="/">
 					<Div>Facebook으로 로그인</Div>
 				</StyledLink>
-				<FacebookLogin appId="1576699423161136" fields="name, email" />
+				<FacebookLogin
+					appId="1576699423161136"
+					onSuccess={(response) => {
+						console.log('Login Success!');
+						console.log(response);
+					}}
+					onFail={(error) => {
+						console.log('Login Failed!');
+						console.log('status: ', error.status);
+					}}
+					onProfileSuccess={(response) => {
+						console.log('Get Profile Success!');
+						console.log('name: ', response.name);
+					}}
+				/>
 			</Div>
 			<Div className="footer">
 				계정이 없으신가요?
