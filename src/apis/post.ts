@@ -27,6 +27,7 @@ type PostResponseType = {
 	commentCount: number;
 	liked: boolean;
 	saved: boolean;
+	hideLike: boolean;
 };
 
 type HomeFeedResponseType = {
@@ -73,6 +74,7 @@ export const getHomeFeed = async (
 				user: user,
 				liked: post.liked,
 				saved: post.saved,
+				hideLike: post.hideLike,
 			};
 		});
 
@@ -197,11 +199,15 @@ export const handleLike = async (
 				},
 			});
 		} else {
-			await axios.post(`${baseURL}/api/v1/posts/${postId}/likes`, {
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			});
+			await axios.post(
+				`${baseURL}/api/v1/posts/${postId}/likes`,
+				{},
+				{
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+					},
+				}
+			);
 		}
 
 		return { status: 'success' };
