@@ -1,3 +1,4 @@
+import FacebookLogin from '@greatsumini/react-facebook-login';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -5,7 +6,6 @@ import styled from 'styled-components';
 import { tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
 import { useUserContext } from '../../contexts/UserContext';
-import FacebookLogin from '@greatsumini/react-facebook-login';
 
 const Img = styled.img`
 	&.instagram {

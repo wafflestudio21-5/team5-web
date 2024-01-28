@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { tryLogin, trySignUp } from '../../../apis/login';
-import { useUserContext } from '../../../contexts/UserContext';
-import { useAuthContext } from '../../../contexts/AuthContext';
 import { getUserInformation } from '../../../apis/user';
+import { useAuthContext } from '../../../contexts/AuthContext';
+import { useUserContext } from '../../../contexts/UserContext';
 
 const Img = styled.img`
 	width: 2rem;
