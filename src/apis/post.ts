@@ -262,3 +262,42 @@ export const handleSave = async (
 		return null;
 	}
 };
+
+// 댓글 좋아요 버튼 처리
+export const handleCommentLike = async (
+	commentId: number,
+	isLiked: boolean,
+	accessToken: string
+): Promise<HandleLikeResponseType | null> => {
+	try {
+		if (isLiked) {
+			await axios.delete(`${baseURL}/api/v1/comments/${commentId}/likes`, {
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			});
+		} else {
+			await axios.post(
+				`${baseURL}/api/v1/comments/${commentId}/likes`,
+				{},
+				{
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+					},
+				}
+			);
+		}
+
+		return { status: 'success' };
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
