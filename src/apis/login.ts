@@ -135,13 +135,32 @@ export const trySignUp = async ({
 	}
 };
 
-export const resetAccessToken = async (setAccessToken: (s: string) => void) => {
+export const resetAccessToken = async (
+	setUserAccessToken: (s: string) => void
+) => {
 	try {
 		const response = await axios.get(
 			'https://waffle5gram.shop/api/v1/auth/refresh_token'
 		);
-		setAccessToken(response.data.access_token);
+		setUserAccessToken(response.data.access_token);
 		console.log('액세스 토큰 : ' + response.data.access_token);
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+export const tryFacebookLogin = async () => {
+	try {
+		const response = await axios.get(
+			'https://waffle5gram.shop/api/v1/auth/facebook_login'
+		);
+		return response;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
