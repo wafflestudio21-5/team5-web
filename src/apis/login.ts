@@ -80,11 +80,11 @@ export const trySignUp = async ({
 	}
 };
 
-export const resetAccessToken = async (setAccessToken: (s: string) => void) => {
+export const resetAccessToken = async () => {
 	try {
 		const response = await axios.get(`${baseURL}/api/v1/auth/refresh_token`);
-		setAccessToken(response.data.accessToken);
 		console.log('액세스 토큰 : ' + response.data.accessToken);
+		return response.data.accessToken;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
