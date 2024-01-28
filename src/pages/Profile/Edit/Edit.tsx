@@ -2,9 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import defaultProfile from '../../../assets/Images/Profile/default-profile.svg';
-import editCancel from '../../../assets/Images/Profile/EditProfile/edit-cancel.png';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
-import Icon from '../../../shared/Icon.tsx';
+import BackHeader from '../../../shared/BackHeader.tsx';
 import { getColor } from '../../../styles/Theme.tsx';
 
 const EditProfileLayout = styled.main`
@@ -13,19 +12,6 @@ const EditProfileLayout = styled.main`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-`;
-
-const HeaderContainer = styled.div`
-	width: 95%;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 2.5rem;
-
-	& h2 {
-		margin: 0 auto 0 2rem;
-	}
 `;
 
 const ProfileImageContainer = styled.div`
@@ -47,7 +33,8 @@ const ProfileImageContainer = styled.div`
 	}
 
 	& p {
-		font-size: 1.2rem;
+		font-size: 1.1rem;
+		font-weight: 500;
 		color: ${getColor('blue')};
 		margin: 1.5rem 0;
 
@@ -58,21 +45,43 @@ const ProfileImageContainer = styled.div`
 `;
 
 const EditProfileContainer = styled.div`
-	width: 95%;
+	width: 90%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;
+`;
 
-	& label {
-		color: ${getColor('grey')};
-		margin-bottom: 0.4rem;
+const Cell = styled.div`
+	width: 100%;
+
+	&.link {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		& p {
+			color: ${getColor('black')};
+			font-size: 1.2rem;
+		}
+
+		& p.linkCount {
+			color: ${getColor('grey')};
+			font-size: 1rem;
+		}
 	}
 
-	& input {
+	& p.label {
+		color: ${getColor('grey')};
+		margin-bottom: 0;
+		font-size: 0.9rem;
+	}
+
+	& p.content {
 		font-size: 1.2rem;
 		width: 100%;
-		margin-bottom: 1rem;
+		margin: 0.2rem 0 0.5rem 0;
 		padding: 0.5rem 0;
 
 		border: none;
@@ -81,42 +90,65 @@ const EditProfileContainer = styled.div`
 		&:focus {
 			outline: none;
 		}
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+	&:hover {
+		cursor: pointer;
 	}
 `;
 
-export default function Profile() {
-	const { username } = useUserContext();
+export default function Edit() {
+	const { name, username, bio, userLinks, gender, isCustomGender } =
+		useUserContext();
 	const navigate = useNavigate();
+
+	const selectedGender = (gender: string, isCustomGender: boolean) => {
+		if (isCustomGender) {
+			return gender;
+		}
+
+		switch (gender) {
+			case 'unknown':
+				return '밝히고 싶지 않음';
+			case 'male':
+				return '남성';
+			default:
+				return '여성';
+		}
+	};
 
 	return (
 		<EditProfileLayout>
-			<HeaderContainer>
-				<Icon
-					src={editCancel}
-					alt="취소"
-					onClick={() => navigate(`/${username}`)}
-				/>
-				<h2>프로필 편집</h2>
-			</HeaderContainer>
+			<BackHeader title="프로필 편집" backURL={`/${username}`} />
 			<ProfileImageContainer>
 				<img src={defaultProfile} alt="프로필 사진" />
 				<p>프로필 사진 변경</p>
 			</ProfileImageContainer>
 			<EditProfileContainer>
-				<div onClick={() => navigate('/account/edit/name')}>
-					<label htmlFor="name">이름</label>
-					<input type="text" id="name" />
-				</div>
-				<div onClick={() => navigate('/account/edit/username')}>
-					<label htmlFor="nickname">사용자 이름</label>
-					<input type="text" id="nickname" maxLength={30} />
-				</div>
-				<div onClick={() => navigate('/account/edit/bio')}>
-					<label htmlFor="introduction">소개</label>
-					<input type="text" id="introduction" />
-				</div>
-				<div onClick={() => navigate('/account/edit/link')}>링크 추가</div>
-				<div onClick={() => navigate('/account/edit/gender')}>성별</div>
+				<Cell onClick={() => navigate('/account/edit/name')}>
+					<p className="label">이름</p>
+					<p className="content">{name}</p>
+				</Cell>
+				<Cell onClick={() => navigate('/account/edit/username')}>
+					<p className="label">사용자 이름</p>
+					<p className="content">{username}</p>
+				</Cell>
+				<Cell onClick={() => navigate('/account/edit/bio')}>
+					<p className="label">소개</p>
+					<p className="content">{bio}</p>
+				</Cell>
+				<Cell className="link" onClick={() => navigate('/account/edit/link')}>
+					<p>링크</p>
+					<p className="linkCount">{userLinks.length}</p>
+				</Cell>
+				<Cell onClick={() => navigate('/account/edit/gender')}>
+					<p className="label">성별</p>
+					<p className="content">{selectedGender(gender, isCustomGender)}</p>
+				</Cell>
 			</EditProfileContainer>
 		</EditProfileLayout>
 	);

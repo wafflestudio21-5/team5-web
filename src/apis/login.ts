@@ -38,7 +38,7 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert('아이디 또는 비밀번호가 일치하지 않습니다.');
 		} else {
 			alert('Error occurred');
 		}

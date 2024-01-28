@@ -14,7 +14,7 @@ type UserContextType = {
 	accessToken: string;
 	setAccessToken: (s: string) => void;
 
-	currentUser: UserType | null;
+	currentUser: UserType;
 	setCurrentUser: (user: UserType) => void;
 
 	userId: number;

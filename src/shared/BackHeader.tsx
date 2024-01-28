@@ -6,12 +6,16 @@ import back from '../assets/Images//Profile/back.png';
 import Icon from './Icon.tsx';
 
 const BackHeaderContainer = styled.div`
-	width: 95%;
+	width: 90%;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 2.5rem;
+
+	& h2 {
+		margin: 0 auto 0 2rem;
+	}
 `;
 
 export default function BackHeader({
