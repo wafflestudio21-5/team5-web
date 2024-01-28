@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
 import { useUserContext } from '../../contexts/UserContext';
+import axios from 'axios';
 
 const Img = styled.img`
 	&.instagram {
@@ -94,7 +95,8 @@ export default function Login() {
 	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
 
-	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
+	const { setIsLoggedIn, setUserAccessToken, setCurrentUser } =
+		useUserContext();
 
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
@@ -109,7 +111,8 @@ export default function Login() {
 
 		if (accessToken !== null) {
 			setIsLoggedIn(true);
-			setAccessToken(accessToken);
+			axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+			setUserAccessToken(accessToken);
 
 			const currentUserInfo = await getUserInformation(
 				usernameInput,

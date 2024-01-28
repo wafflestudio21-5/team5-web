@@ -4,7 +4,7 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 type tryPostProps = {
 	navigate: (to: string) => void;
 	addr: string;
-	accessToken: string;
+	userAccessToken: string;
 };
 
 export type PostContextData = {
@@ -32,14 +32,14 @@ export function PostProvider({ children }: ProviderProps) {
 	const [hideComments, setHideComments] = useState(false);
 	const [hideLikes, setHideLikes] = useState(false);
 	const [files, setFiles] = useState<FileList | null>(null);
-	const tryPost = async ({ navigate, addr, accessToken }: tryPostProps) => {
+	const tryPost = async ({ navigate, addr, userAccessToken }: tryPostProps) => {
 		const formData = new FormData();
 		formData.append('content', content);
 		formData.append('hideComments', '' + hideComments);
 		formData.append('hideLikes', '' + hideLikes);
 		formData.append(
 			'files',
-			'https://assets.community.lomography.com/86/93d57e0bd8e88f6890c1687803700ab45f3007/576x576x2.jpg?auth=fb4474f73f10307f800cfe75a5a7052702f6d316'
+			'https://littledeep.com/wp-content/uploads/2020/11/night-sky-illustration-v2-style2-1024x854.png'
 		);
 		try {
 			const response = await axios.post(
@@ -47,7 +47,7 @@ export function PostProvider({ children }: ProviderProps) {
 				formData,
 				{
 					headers: {
-						Authorization: `Bearer ${accessToken}`,
+						Authorization: `Bearer ${userAccessToken}`,
 						'Content-Type': 'multipart/form-data',
 					},
 				}

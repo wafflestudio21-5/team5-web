@@ -237,7 +237,7 @@ export default function Profile() {
 
 	// id로 유저 정보 가져오기
 	const { id } = useParams();
-	const { username, accessToken, isMyAccountPrivate } = useUserContext();
+	const { username, userAccessToken, isMyAccountPrivate } = useUserContext();
 
 	const [user, setUser] = useState<UserType | undefined>();
 	const [isMyAccount, setIsMyAccount] = useState(false);
@@ -256,7 +256,7 @@ export default function Profile() {
 			}
 
 			try {
-				const userInfo = await getUserInformation(id, accessToken);
+				const userInfo = await getUserInformation(id, userAccessToken);
 				if (!userInfo) {
 					navigate('/');
 					return;
@@ -270,7 +270,7 @@ export default function Profile() {
 					// 팔로잉 여부 판단
 					const followStatus = await getUserFollowStatus(
 						userInfo.username,
-						accessToken
+						userAccessToken
 					);
 					if (followStatus) {
 						setIsFollow(followStatus);
@@ -280,7 +280,7 @@ export default function Profile() {
 							setIsPrivate(true);
 							const followRequestStatus = await getFollowRequestStatus(
 								userInfo.username,
-								accessToken
+								userAccessToken
 							);
 							// 팔로우 요청 여부 판단
 							if (followRequestStatus) {
@@ -291,7 +291,7 @@ export default function Profile() {
 					// 내 팔로워인지 판단
 					const followMeStatus = await getUserFollowMeStatus(
 						userInfo.username,
-						accessToken
+						userAccessToken
 					);
 					if (followMeStatus) {
 						setIsMyFollower(followMeStatus);
@@ -300,7 +300,7 @@ export default function Profile() {
 						if (isMyAccountPrivate) {
 							const followRequestToMeStatus = await getFollowRequestToMeStatus(
 								userInfo.username,
-								accessToken
+								userAccessToken
 							);
 							if (followRequestToMeStatus) {
 								setIsFollowRequestToMe(followRequestToMeStatus);
@@ -348,15 +348,18 @@ export default function Profile() {
 			if (isMyAccount) {
 				navigate('/account/edit');
 			} else if (isFollow) {
-				await unfollowUser(user.username, accessToken);
+				await unfollowUser(user.username, userAccessToken);
 			} else if (isPrivate) {
 				if (isFollowRequestToPrivate) {
-					await cancelRequestFollowToPrivateUser(user.username, accessToken);
+					await cancelRequestFollowToPrivateUser(
+						user.username,
+						userAccessToken
+					);
 				} else {
-					await requestFollowToPrivateUser(user.username, accessToken);
+					await requestFollowToPrivateUser(user.username, userAccessToken);
 				}
 			} else {
-				await followPublicUser(user.username, accessToken);
+				await followPublicUser(user.username, userAccessToken);
 			}
 		} catch {
 			alert('Error occurred.');

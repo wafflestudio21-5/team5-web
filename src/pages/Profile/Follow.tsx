@@ -58,7 +58,7 @@ const FollowList = styled.div`
 export default function Follow() {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { accessToken } = useUserContext();
+	const { userAccessToken } = useUserContext();
 	const { id } = useParams();
 	const [activeTab, setActiveTab] = useState<'left' | 'right'>('left');
 	const [user, setUser] = useState<UserType | null>(null);
@@ -83,7 +83,7 @@ export default function Follow() {
 			}
 
 			try {
-				const userInfo = await getUserInformation(id, accessToken);
+				const userInfo = await getUserInformation(id, userAccessToken);
 				if (!userInfo) {
 					navigate('/');
 					return;
@@ -101,7 +101,10 @@ export default function Follow() {
 			}
 
 			try {
-				const followers = await getFollowerCommon(user.username, accessToken);
+				const followers = await getFollowerCommon(
+					user.username,
+					userAccessToken
+				);
 				if (!followers) {
 					navigate('/');
 					return;
@@ -119,7 +122,7 @@ export default function Follow() {
 			}
 
 			try {
-				const followers = await getFollowerDiff(user.username, accessToken);
+				const followers = await getFollowerDiff(user.username, userAccessToken);
 				if (!followers) {
 					navigate('/');
 					return;
@@ -137,7 +140,10 @@ export default function Follow() {
 			}
 
 			try {
-				const followings = await getFollowingCommon(user.username, accessToken);
+				const followings = await getFollowingCommon(
+					user.username,
+					userAccessToken
+				);
 				if (!followings) {
 					navigate('/');
 					return;
@@ -155,7 +161,10 @@ export default function Follow() {
 			}
 
 			try {
-				const followings = await getFollowingDiff(user.username, accessToken);
+				const followings = await getFollowingDiff(
+					user.username,
+					userAccessToken
+				);
 				if (!followings) {
 					navigate('/');
 					return;
@@ -174,7 +183,7 @@ export default function Follow() {
 
 		const active = location.pathname.includes('/followers') ? 'left' : 'right';
 		setActiveTab(active);
-	}, [id, location, navigate, accessToken, user]);
+	}, [id, location, navigate, userAccessToken, user]);
 
 	const handleTabChange = (tab: 'left' | 'right') => {
 		setActiveTab(tab);

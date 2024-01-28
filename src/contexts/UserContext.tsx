@@ -11,8 +11,8 @@ type UserContextType = {
 	isLoggedIn: boolean;
 	setIsLoggedIn: (b: boolean) => void;
 
-	accessToken: string;
-	setAccessToken: (s: string) => void;
+	userAccessToken: string;
+	setUserAccessToken: (s: string) => void;
 
 	currentUser: UserType;
 	setCurrentUser: (user: UserType) => void;
@@ -37,7 +37,7 @@ const UserContext = createContext<UserContextType>({} as UserContextType);
 
 export function UserProvider({ children }: ProviderPropsType) {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [accessToken, setAccessToken] = useState('');
+	const [userAccessToken, setUserAccessToken] = useState('');
 	const [currentUser, setCurrentUser] = useState<UserType>({} as UserType);
 
 	return (
@@ -46,8 +46,8 @@ export function UserProvider({ children }: ProviderPropsType) {
 				isLoggedIn,
 				setIsLoggedIn,
 
-				accessToken,
-				setAccessToken,
+				userAccessToken,
+				setUserAccessToken,
 
 				currentUser,
 				setCurrentUser,
