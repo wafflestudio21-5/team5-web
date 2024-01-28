@@ -43,7 +43,7 @@ export const getUserFollowStatus = async (
 ): Promise<boolean | null> => {
 	try {
 		const response = await axios.get<FollowStatusResponseType>(
-			`{baseURL}/api/v1/friendship/${username}/follow`,
+			`${baseURL}/api/v1/friendship/${username}/follow`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
