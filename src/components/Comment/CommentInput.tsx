@@ -1,8 +1,9 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { postComment, postReply } from '../../apis/post';
 import DefaultProfile from '../../assets/Images/Profile/default-profile.svg';
+import { useUserContext } from '../../contexts/UserContext';
 import { getColor } from '../../styles/Theme';
 import { CommentType, MiniProfileType, PostType } from '../../types';
 
@@ -99,6 +100,8 @@ export default function CommentInput({
 }: CommentInputProps) {
 	const [content, setContent] = useState('');
 
+	const { accessToken } = useUserContext();
+
 	useEffect(() => {
 		if (commentType === 'reply' && comment) {
 			setContent(comment.user.username);
@@ -133,28 +136,22 @@ export default function CommentInput({
 				{content !== '' && (
 					<div className="btn-wrapper">
 						<button
-							onClick={() => {
+							onClick={async () => {
 								if (content !== '') {
 									if (commentType === 'reply' && comment) {
-										axios
-											.post(`/api/v1/comments/${comment.id}/replies`, {
-												content: content,
-											})
-											.then((res) => {
-												if (res.status === 201) {
-													setContent('');
-												}
-											});
+										const result = await postReply(
+											comment.id,
+											content,
+											accessToken
+										);
+										if (result?.status) setContent('');
 									} else if (commentType === 'comment' && post.id) {
-										axios
-											.post(`/api/v1/posts/${post.id}/comments`, {
-												content: content,
-											})
-											.then((res) => {
-												if (res.status === 201) {
-													setContent('');
-												}
-											});
+										const result = await postComment(
+											post.id,
+											content,
+											accessToken
+										);
+										if (result?.status) setContent('');
 									}
 								}
 							}}
