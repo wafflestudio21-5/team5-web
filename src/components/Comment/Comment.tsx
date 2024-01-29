@@ -12,6 +12,7 @@ import { CommentType } from '../../types';
 
 type CommentProps = {
 	comment: CommentType;
+	handlePostReply: (comment: CommentType) => void;
 };
 
 const CommentContainer = styled.div`
@@ -56,7 +57,16 @@ const CommentContainer = styled.div`
 	}
 `;
 
-export default function Comment({ comment }: CommentProps) {
+const TextBox = styled.div`
+	line-height: 18px;
+	font-size: 14px;
+	cursor: pointer;
+	&.secondary-text {
+		color: ${getColor('grey')};
+	}
+`;
+
+export default function Comment({ comment, handlePostReply }: CommentProps) {
 	const [liked, setLiked] = useState(comment.liked);
 
 	const { accessToken } = useUserContext();
@@ -76,6 +86,12 @@ export default function Comment({ comment }: CommentProps) {
 			<div className="username-content-box">
 				<span className="username">{comment.user.username}</span>
 				<span>{comment.text}</span>
+				<TextBox
+					className="secondary-text"
+					onClick={() => handlePostReply(comment)}
+				>
+					답글 달기
+				</TextBox>
 			</div>
 			<div className="like-box">
 				<Icon
