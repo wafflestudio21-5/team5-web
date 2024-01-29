@@ -82,6 +82,9 @@ export default function ReactSection({ postData, showComment }: Props) {
 
 	const { accessToken } = useUserContext();
 
+	const createdDate = new Date(postData.createdAt);
+	console.log(createdDate);
+
 	return (
 		postData && (
 			<Container>
@@ -135,6 +138,14 @@ export default function ReactSection({ postData, showComment }: Props) {
 					onClick={showComment}
 				>
 					댓글 {postData.commentCount}개 모두 보기
+				</TextBox>
+				<TextBox className="margin secondary-text more-comment">
+					{createdDate.getFullYear() +
+						'년 ' +
+						(createdDate.getMonth() + 1) +
+						'월 ' +
+						createdDate.getDate() +
+						'일'}
 				</TextBox>
 			</Container>
 		)
