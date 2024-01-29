@@ -88,7 +88,7 @@ export const getHomeFeed = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -174,7 +174,7 @@ export const getPostComment = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -217,7 +217,7 @@ export const handleLike = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -256,7 +256,7 @@ export const handleSave = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -291,7 +291,7 @@ export const postComment = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -327,7 +327,7 @@ export const postReply = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -366,7 +366,7 @@ export const handleCommentLike = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
