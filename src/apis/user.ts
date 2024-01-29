@@ -31,27 +31,19 @@ export const getUserInformation = async (
 	}
 };
 
-type FollowStatusResponseType = {
-	isFollow: boolean;
-	message: string;
-};
-
 // 2. 내가 이 유저를 팔로우 하는지 판단
 export const getUserFollowStatus = async (
 	username: string,
 	accessToken: string
 ): Promise<boolean | null> => {
 	try {
-		const response = await axios.get<FollowStatusResponseType>(
-			`${baseURL}/api/v1/friendship/${username}/follow`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
+		await axios.get(`${baseURL}/api/v1/friendship/${username}/follow`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
 
-		return response.data.isFollow;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -60,7 +52,6 @@ export const getUserFollowStatus = async (
 				err.response.data.status === 404 &&
 				err.response.data.message === 'User not follow.'
 			) {
-				console.log('safe');
 				return false;
 			} else {
 				alert(err.response.data.message);
@@ -109,30 +100,19 @@ export const getUserFollowMeStatus = async (
 	}
 };
 
-type FollowRequestResponseType = {
-	followRequestsId: number;
-	followerUserId: number;
-	followeeUserId: number;
-	requestFollow: boolean;
-	message: string;
-};
-
 // 4. 비공개 유저에게 팔로우 요청을 보내놨는지 판단
 export const getFollowRequestStatus = async (
 	username: string,
 	accessToken: string
 ): Promise<boolean | null> => {
 	try {
-		const response = await axios.get<FollowRequestResponseType>(
-			`${baseURL}/api/v1/friendship/${username}/follow/request`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
+		await axios.get(`${baseURL}/api/v1/friendship/${username}/follow/request`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
 
-		return response.data.requestFollow;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -159,7 +139,7 @@ export const getFollowRequestToMeStatus = async (
 	accessToken: string
 ): Promise<boolean | null> => {
 	try {
-		const response = await axios.get<FollowRequestResponseType>(
+		await axios.get(
 			`${baseURL}/api/v1/friendship/${followerusername}/request`,
 			{
 				headers: {
@@ -168,7 +148,7 @@ export const getFollowRequestToMeStatus = async (
 			}
 		);
 
-		return response.data.requestFollow;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -193,9 +173,9 @@ export const getFollowRequestToMeStatus = async (
 export const requestFollowToPrivateUser = async (
 	username: string,
 	accessToken: string
-): Promise<boolean | null> => {
+): Promise<{ message: string } | null> => {
 	try {
-		const response = await axios.post<FollowRequestResponseType>(
+		const response = await axios.post(
 			`${baseURL}/api/v1/friendship/${username}/follow/request`,
 			{
 				headers: {
@@ -204,7 +184,7 @@ export const requestFollowToPrivateUser = async (
 			}
 		);
 
-		return response.data.requestFollow;
+		return response.data.message;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -222,7 +202,7 @@ export const requestFollowToPrivateUser = async (
 export const cancelRequestFollowToPrivateUser = async (
 	username: string,
 	accessToken: string
-): Promise<boolean | null> => {
+): Promise<{ message: string } | null> => {
 	try {
 		const response = await axios.delete(
 			`${baseURL}/api/v1/friendship/${username}/follow/request`,
@@ -233,7 +213,7 @@ export const cancelRequestFollowToPrivateUser = async (
 			}
 		);
 
-		return response.data.requestFollow;
+		return response.data.message;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
@@ -245,20 +225,13 @@ export const cancelRequestFollowToPrivateUser = async (
 	}
 };
 
-type FollowResponseType = {
-	followsId: number;
-	followerUserId: number;
-	followeeUserId: number;
-	message: string;
-};
-
 // 공개 유저를 팔로우
 export const followPublicUser = async (
 	username: string,
 	accessToken: string
-): Promise<FollowResponseType | null> => {
+): Promise<{ message: string } | null> => {
 	try {
-		const response = await axios.post<FollowResponseType>(
+		const response = await axios.post(
 			`${baseURL}/api/v1/friendship/${username}/follow`,
 			{
 				headers: {
@@ -267,7 +240,7 @@ export const followPublicUser = async (
 			}
 		);
 
-		return response.data;
+		return response.data.message;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -314,7 +287,7 @@ export const unfollowUser = async (
 export const deleteFollower = async (
 	followerusername: string,
 	accessToken: string
-): Promise<string | null> => {
+): Promise<{ message: string } | null> => {
 	try {
 		const response = await axios.delete(
 			`${baseURL}/api/v1/friendship/${followerusername}/follower`,

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getColor } from '../styles/Theme.tsx';
@@ -37,6 +38,8 @@ export default function Feed() {
 	// 	setCommentModal('open');
 	// };
 
+	const navigate = useNavigate();
+
 	return (
 		<>
 			<Container>
@@ -47,6 +50,14 @@ export default function Feed() {
 				{/*		openCommentModal={openCommentModal}*/}
 				{/*	/>*/}
 				{/*))}*/}
+
+				{/* test */}
+				<div>
+					<h1>test</h1>
+					<button onClick={() => navigate('/user-1')}>user-1</button>
+					<button onClick={() => navigate('/user-2')}>user-2</button>
+					<button onClick={() => navigate('/kim_m')}>김민수</button>
+				</div>
 			</Container>
 			{menuModal !== 'closed' && (
 				<PostMenuModal
