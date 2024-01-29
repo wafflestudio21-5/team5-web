@@ -6,7 +6,12 @@ import { getPostComment } from '../../apis/post';
 import { useUserContext } from '../../contexts/UserContext';
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
-import { CommentPageType, MiniProfileType, PostType } from '../../types';
+import {
+	CommentPageType,
+	CommentType,
+	MiniProfileType,
+	PostType,
+} from '../../types';
 
 import CommentInput from './CommentInput';
 import CommentList from './CommentList';
@@ -43,6 +48,10 @@ export default function CommentModal({
 	const [comments, setComments] = useState<CommentPageType>();
 
 	const [status, setStatus] = useState<CommentFetchStatus>('pending');
+	const [commentType, setCommentType] = useState<'comment' | 'reply'>(
+		'comment'
+	);
+	const [replyComment, setReplyComment] = useState<CommentType | null>(null);
 
 	const { accessToken, currentUser } = useUserContext();
 
@@ -120,14 +129,29 @@ export default function CommentModal({
 		},
 	});
 
+	const handlePostReply = (comment: CommentType) => {
+		setCommentType('reply');
+		setReplyComment(comment);
+	};
+
 	return (
 		post && (
 			<Modal onBackgroundClick={close} isClosing={isClosing}>
 				<ModalContent>
 					<h3>댓글</h3>
-					{comments && <CommentList comments={comments.content} />}
+					{comments && (
+						<CommentList
+							comments={comments.content}
+							handlePostReply={handlePostReply}
+						/>
+					)}
 					{isEnd && <>loading...</>}
-					<CommentInput post={post} user={profile} commentType={'comment'} />
+					<CommentInput
+						post={post}
+						user={profile}
+						commentType={commentType}
+						comment={replyComment}
+					/>
 					{/*위 user props에는 로그인한 사용자의 정보가 전달되어야함*/}
 				</ModalContent>
 			</Modal>
