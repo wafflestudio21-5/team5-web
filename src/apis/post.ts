@@ -374,3 +374,29 @@ export const handleCommentLike = async (
 		return null;
 	}
 };
+
+// 댓글 삭제
+export const deleteComment = async (
+	commentId: number,
+	accessToken: string
+): Promise<SuccessFailResponse | null> => {
+	try {
+		await axios.delete(`${baseURL}/api/v1/comments/${commentId}`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		return { status: 'success' };
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
