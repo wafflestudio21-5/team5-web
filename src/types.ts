@@ -83,6 +83,7 @@ export type CommentType = {
 	postId: number;
 	replyCount: number;
 	likeCount: number;
+	liked: boolean;
 };
 
 export type CommentPageType = {
