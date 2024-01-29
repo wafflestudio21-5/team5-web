@@ -123,8 +123,7 @@ export default function Agree() {
 		checkbox2: false,
 		checkbox3: false,
 	});
-	const { username, password, name, email, birthday, setIsLoggedin } =
-		useAuthContext();
+	const { username, password, name, email, birthday } = useAuthContext();
 	const { setAccessToken, setCurrentUser } = useUserContext();
 	const handleClick = async () => {
 		const signupResponse = await trySignUp({
@@ -139,13 +138,12 @@ export default function Agree() {
 				username: username,
 				password: password,
 			});
-
+			console.log('로그인 정보 : ', accessToken);
 			if (accessToken !== null) {
-				setIsLoggedin(true);
 				setAccessToken(accessToken);
-
 				const currentUserInfo = await getUserInformation(username, accessToken);
 				setCurrentUser(currentUserInfo);
+				navigate('/signUp/photo');
 			}
 		}
 	};

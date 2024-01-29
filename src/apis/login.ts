@@ -36,7 +36,7 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+			alert(err.response.data);
 		} else {
 			alert('Error occurred');
 		}
@@ -58,6 +58,7 @@ export const trySignUp = async ({
 		const month = String(birthday.getMonth() + 1).padStart(2, '0');
 		const day = String(birthday.getDate()).padStart(2, '0');
 		const formatted = `${year}-${month}-${day}`;
+		console.log(username, password, email, birthday, name);
 		const response = await axios.post(`${baseURL}/api/v1/auth/signup`, {
 			username: username,
 			name: name,
