@@ -183,7 +183,7 @@ export const getPostComment = async (
 	}
 };
 
-type HandleLikeResponseType = {
+type SuccessFailResponse = {
 	status: 'success' | 'failed';
 };
 
@@ -192,7 +192,7 @@ export const handleLike = async (
 	postId: number,
 	isLiked: boolean,
 	accessToken: string
-): Promise<HandleLikeResponseType | null> => {
+): Promise<SuccessFailResponse | null> => {
 	try {
 		if (isLiked) {
 			await axios.delete(`${baseURL}/api/v1/posts/${postId}/likes`, {
@@ -226,16 +226,12 @@ export const handleLike = async (
 	}
 };
 
-type HandleSaveResponseType = {
-	status: 'success' | 'failed';
-};
-
 // 저장 버튼 눌렀을 때 처리
 export const handleSave = async (
 	postId: number,
 	isSaved: boolean,
 	accessToken: string
-): Promise<HandleSaveResponseType | null> => {
+): Promise<SuccessFailResponse | null> => {
 	try {
 		if (isSaved) {
 			await axios.delete(`${baseURL}/api/v1/posts/${postId}/save`, {
@@ -270,11 +266,11 @@ export const handleSave = async (
 };
 
 // 댓글 달기
-export const postPostComment = async (
+export const postComment = async (
 	postId: number,
 	content: string,
 	accessToken: string
-) => {
+): Promise<SuccessFailResponse | null> => {
 	try {
 		await axios.post(
 			`${baseURL}/api/v1/posts/${postId}/comments`,
@@ -287,6 +283,10 @@ export const postPostComment = async (
 				},
 			}
 		);
+
+		return {
+			status: 'success',
+		};
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -305,7 +305,7 @@ export const handleCommentLike = async (
 	commentId: number,
 	isLiked: boolean,
 	accessToken: string
-): Promise<HandleLikeResponseType | null> => {
+): Promise<SuccessFailResponse | null> => {
 	try {
 		if (isLiked) {
 			await axios.delete(`${baseURL}/api/v1/comments/${commentId}/likes`, {
