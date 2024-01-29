@@ -46,6 +46,7 @@ const CommentContainer = styled.div`
 		display: flex;
 		flex-direction: column;
 		align-content: center;
+		opacity: 0.5;
 	}
 	& > .like-box > img {
 		margin: 0;
