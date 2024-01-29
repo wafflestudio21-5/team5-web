@@ -104,6 +104,7 @@ type CommentResponseType = {
 	postId: number;
 	replyCount: number;
 	likeCount: number;
+	liked: boolean;
 	userId: number;
 	userProfileImageUrl: string;
 	username: string;
@@ -153,6 +154,7 @@ export const getPostComment = async (
 				postId: comment.postId,
 				replyCount: comment.replyCount,
 				likeCount: comment.likeCount,
+				liked: comment.liked,
 			};
 		});
 
@@ -242,11 +244,15 @@ export const handleSave = async (
 				},
 			});
 		} else {
-			await axios.post(`${baseURL}/api/v1/posts/${postId}/save`, {
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			});
+			await axios.post(
+				`${baseURL}/api/v1/posts/${postId}/save`,
+				{},
+				{
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+					},
+				}
+			);
 		}
 
 		return { status: 'success' };
