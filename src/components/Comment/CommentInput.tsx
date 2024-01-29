@@ -112,6 +112,7 @@ type CommentInputProps = {
 	user: MiniProfileType; // 댓글을 쓰는 사용자 정보
 	commentType: 'comment' | 'reply'; // 입력하는 댓글이 게시물의 댓글인지 댓글의 대댓글인지
 	comment: CommentType | null; // 만약 댓글의 대댓글의 경우 해당 댓글을 입력받음
+	handleCancelReply: () => void;
 };
 
 export default function CommentInput({
@@ -119,6 +120,7 @@ export default function CommentInput({
 	user,
 	commentType,
 	comment,
+	handleCancelReply,
 }: CommentInputProps) {
 	const [content, setContent] = useState('');
 
@@ -137,7 +139,7 @@ export default function CommentInput({
 			{commentType === 'reply' && comment !== null && (
 				<div className="reply-info">
 					<span>{comment.user.username}에게 남긴 답글</span>
-					<button>X</button>
+					<button onClick={handleCancelReply}>X</button>
 				</div>
 			)}
 			<CommentInputFeildWrapper>

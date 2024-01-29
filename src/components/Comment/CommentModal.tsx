@@ -134,6 +134,11 @@ export default function CommentModal({
 		setReplyComment(comment);
 	};
 
+	const handleCancelReply = () => {
+		setCommentType('comment');
+		setReplyComment(null);
+	};
+
 	return (
 		post && (
 			<Modal onBackgroundClick={close} isClosing={isClosing}>
@@ -151,6 +156,7 @@ export default function CommentModal({
 						user={profile}
 						commentType={commentType}
 						comment={replyComment}
+						handleCancelReply={handleCancelReply}
 					/>
 					{/*위 user props에는 로그인한 사용자의 정보가 전달되어야함*/}
 				</ModalContent>
