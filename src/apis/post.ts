@@ -300,6 +300,42 @@ export const postComment = async (
 	}
 };
 
+// 답글 달기
+export const postReply = async (
+	commentId: number,
+	content: string,
+	accessToken: string
+): Promise<SuccessFailResponse | null> => {
+	try {
+		await axios.post(
+			`${baseURL}/api/v1/comments/${commentId}/replies`,
+			{
+				content: content,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+
+		return {
+			status: 'success',
+		};
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
 // 댓글 좋아요 버튼 처리
 export const handleCommentLike = async (
 	commentId: number,
