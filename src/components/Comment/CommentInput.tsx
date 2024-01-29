@@ -89,7 +89,7 @@ type CommentInputProps = {
 	post: PostType;
 	user: MiniProfileType; // 댓글을 쓰는 사용자 정보
 	commentType: 'comment' | 'reply'; // 입력하는 댓글이 게시물의 댓글인지 댓글의 대댓글인지
-	comment?: CommentType; // 만약 댓글의 대댓글의 경우 해당 댓글을 입력받음
+	comment: CommentType | null; // 만약 댓글의 대댓글의 경우 해당 댓글을 입력받음
 };
 
 export default function CommentInput({
@@ -104,7 +104,7 @@ export default function CommentInput({
 
 	useEffect(() => {
 		if (commentType === 'reply' && comment) {
-			setContent(comment.user.username);
+			setContent('@' + comment.user.username + ' ');
 		} else {
 			setContent('');
 		}
