@@ -269,6 +269,37 @@ export const handleSave = async (
 	}
 };
 
+// 댓글 달기
+export const postPostComment = async (
+	postId: number,
+	content: string,
+	accessToken: string
+) => {
+	try {
+		await axios.post(
+			`${baseURL}/api/v1/posts/${postId}/comments`,
+			{
+				content: content,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.error);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
 // 댓글 좋아요 버튼 처리
 export const handleCommentLike = async (
 	commentId: number,
