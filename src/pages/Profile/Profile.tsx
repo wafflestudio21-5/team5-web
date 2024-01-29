@@ -291,8 +291,6 @@ export default function Profile() {
 	>(null); // 내가 비공개일 때 나에게 팔로우 요청을 보냈는지 확인
 
 	const fetchUserData = async () => {
-		setIsLoading(true);
-
 		try {
 			if (!id) {
 				navigate('/');
@@ -344,32 +342,34 @@ export default function Profile() {
 			);
 			if (followStatus) {
 				setIsFollow(true);
-				return;
 			}
 
-			// 팔로잉 하지 않으면 공개 계정인지 판단
+			// 공개 계정인지 판단
 			if (!userInfo.isPrivate) {
 				setIsOpen(true);
-				return;
+			} else {
+				// 비공개라면 팔로우 요청 여부 판단
+				const followRequestStatus = await getFollowRequestStatus(
+					userInfo.username,
+					accessToken
+				);
+				if (followRequestStatus) {
+					setIsFollowRequestToPrivate(true);
+				}
 			}
-
-			// 비공개라면 팔로우 요청 여부 판단
-			const followRequestStatus = await getFollowRequestStatus(
-				userInfo.username,
-				accessToken
-			);
-			if (followRequestStatus) {
-				setIsFollowRequestToPrivate(true);
-			}
-		} finally {
-			setIsLoading(false);
+		} catch {
+			alert('유저 정보를 가져오는 데 실패했습니다.');
 		}
 	};
 
+	const initialFetchUserData = async () => {
+		setIsLoading(true);
+		await fetchUserData();
+		setIsLoading(false);
+	};
+
 	useEffect(() => {
-		console.log('Profile useEffect 실행');
-		setUser(undefined);
-		fetchUserData();
+		initialFetchUserData();
 	}, [id, navigate]);
 
 	// 계정 공개 여부에 따라 팔로워, 팔로잉 버튼 클릭 여부 결정
@@ -378,63 +378,92 @@ export default function Profile() {
 			navigate(`/${id}/followers`);
 		}
 	};
-
 	const handleFollowingClick = () => {
 		if (isOpen) {
 			navigate(`/${id}/following`);
 		}
 	};
 
-	// 계정 조건에 따라 버튼 클릭 시 동작 변경
-	const handleButtonClick = async () => {
+	// 프로필 편집으로 이동
+	const onClickEditProfile = () => {
+		navigate('/account/edit');
+	};
+
+	// 언팔로우
+	const onClickUnfollow = async () => {
 		if (!user) return;
 
-		// 내 계정일 경우 프로필 편집
-		if (isMyAccount) {
-			navigate('/account/edit');
-			return;
-		}
+		setIsFollow(false);
 
-		// 팔로잉 중일 경우 취소
-		if (isFollow) {
+		try {
 			const unfollowResult = await unfollowUser(user.username, accessToken);
 			if (unfollowResult) {
-				setIsFollow(false);
-			}
-			return;
-		}
-
-		// 공개 계정일 경우 팔로우
-		if (isOpen) {
-			const followResult = await followPublicUser(user.username, accessToken);
-			if (followResult) {
+				await fetchUserData();
+			} else {
 				setIsFollow(true);
 			}
-			return;
+		} catch {
+			setIsFollow(true);
 		}
+	};
 
-		// 비공개 계정이면서, 팔로우 요청을 보낸 적이 없을 경우 팔로우 요청
-		if (!isFollowRequestToPrivate) {
-			const followRequestResult = await requestFollowToPrivateUser(
-				user.username,
-				accessToken
-			);
-			if (followRequestResult) {
-				setIsFollowRequestToPrivate(true);
+	// 공개 유저를 팔로우
+	const onClickFollow = async () => {
+		if (!user) return;
+
+		setIsFollow(true);
+
+		try {
+			const followResult = await followPublicUser(user.username, accessToken);
+			if (followResult) {
+				setIsFollow(false);
+			} else {
+				await fetchUserData();
 			}
-			return;
+		} catch {
+			setIsFollow(false);
 		}
+	};
 
-		// 비공개 계정이면서, 팔로우 요청을 보낸 적이 있을 경우 팔로우 요청 취소
-		if (isFollowRequestToPrivate) {
-			const cancelFollowRequestResult = await cancelRequestFollowToPrivateUser(
+	// 팔로우 요청 보내기
+	const onClickRequestFollow = async () => {
+		if (!user) return;
+
+		setIsFollowRequestToPrivate(true);
+
+		try {
+			const followResult = await requestFollowToPrivateUser(
 				user.username,
 				accessToken
 			);
-			if (cancelFollowRequestResult) {
+			if (followResult) {
+				await fetchUserData();
+			} else {
 				setIsFollowRequestToPrivate(false);
 			}
-			return;
+		} catch {
+			setIsFollowRequestToPrivate(false);
+		}
+	};
+
+	// 팔로우 요청 취소
+	const onClickCancelRequestFollow = async () => {
+		if (!user) return;
+
+		setIsFollowRequestToPrivate(false);
+
+		try {
+			const followResult = await cancelRequestFollowToPrivateUser(
+				user.username,
+				accessToken
+			);
+			if (followResult) {
+				await fetchUserData();
+			} else {
+				setIsFollowRequestToPrivate(true);
+			}
+		} catch {
+			setIsFollowRequestToPrivate(true);
 		}
 	};
 
@@ -523,47 +552,60 @@ export default function Profile() {
 				</UserProfileContainer>
 
 				{/* 유저 상태에 따른 버튼 */}
-				{/* 내 계정 */}
-				{isMyAccount && (
-					<ButtonContainer>
-						<button className="grey" onClick={handleButtonClick}>
-							프로필 편집
-						</button>
-						<button className="grey">프로필 공유</button>
-					</ButtonContainer>
-				)}
-				{/* 팔로잉 중인 남의 계정 */}
-				{isFollow && (
-					<ButtonContainer>
-						<button className="grey-bold" onClick={handleButtonClick}>
-							팔로잉
-						</button>
-						<button className="grey">메시지</button>
-					</ButtonContainer>
-				)}
-				{/* 팔로잉 중이지 않은 남의 공개 계정 */}
-				{isOpen && (
-					<ButtonContainer>
-						<button className="blue" onClick={handleButtonClick}>
-							{isMyFollower ? '맞팔로우' : '팔로우'}
-						</button>
-						<button className="grey">메시지</button>
-					</ButtonContainer>
-				)}
-				{/* 팔로잉 중이지 않은 남의 비공개 계정 */}
-				{!isMyAccount && !isFollow && !isOpen && (
-					<ButtonContainer>
-						{isFollowRequestToPrivate ? (
-							<button className="grey-big" onClick={handleButtonClick}>
-								요청됨
+				<ButtonContainer>
+					{/* 내 계정일 경우 */}
+					{isMyAccount ? (
+						<>
+							<button className="grey" onClick={onClickEditProfile}>
+								프로필 편집
 							</button>
-						) : (
-							<button className="blue-big" onClick={handleButtonClick}>
-								{isMyFollower ? '맞팔로우' : '팔로우'}
-							</button>
-						)}
-					</ButtonContainer>
-				)}
+							<button className="grey">프로필 공유</button>
+						</>
+					) : (
+						<>
+							{/* 팔로잉 중인 남의 계정 */}
+							{isFollow ? (
+								<>
+									<button className="grey-bold" onClick={onClickUnfollow}>
+										팔로잉
+									</button>
+									<button className="grey">메시지</button>
+								</>
+							) : (
+								<>
+									{/* 공개 계정 */}
+									{isOpen ? (
+										<>
+											<button className="blue" onClick={onClickFollow}>
+												{isMyFollower ? '맞팔로우' : '팔로우'}
+											</button>
+											<button className="grey">메시지</button>
+										</>
+									) : (
+										<>
+											{/* 비공개 계정 */}
+											{isFollowRequestToPrivate ? (
+												<button
+													className="grey-big"
+													onClick={onClickCancelRequestFollow}
+												>
+													요청됨
+												</button>
+											) : (
+												<button
+													className="blue-big"
+													onClick={onClickRequestFollow}
+												>
+													팔로우
+												</button>
+											)}
+										</>
+									)}
+								</>
+							)}
+						</>
+					)}
+				</ButtonContainer>
 
 				{/* 포스트, 태그된 포스트 토글 바*/}
 				<PostContainer>

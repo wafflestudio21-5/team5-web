@@ -35,7 +35,7 @@ export const getUserInformation = async (
 export const getUserFollowStatus = async (
 	username: string,
 	accessToken: string
-): Promise<boolean | null> => {
+): Promise<boolean> => {
 	try {
 		await axios.get(`${baseURL}/api/v1/friendship/${username}/follow`, {
 			headers: {
@@ -60,7 +60,7 @@ export const getUserFollowStatus = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -68,7 +68,7 @@ export const getUserFollowStatus = async (
 export const getUserFollowMeStatus = async (
 	followerUsername: string,
 	accessToken: string
-): Promise<boolean | null> => {
+): Promise<boolean> => {
 	try {
 		await axios.get(
 			`${baseURL}/api/v1/friendship/${followerUsername}/follower`,
@@ -96,7 +96,7 @@ export const getUserFollowMeStatus = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -104,7 +104,7 @@ export const getUserFollowMeStatus = async (
 export const getFollowRequestStatus = async (
 	username: string,
 	accessToken: string
-): Promise<boolean | null> => {
+): Promise<boolean> => {
 	try {
 		await axios.get(`${baseURL}/api/v1/friendship/${username}/follow/request`, {
 			headers: {
@@ -129,7 +129,7 @@ export const getFollowRequestStatus = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -137,7 +137,7 @@ export const getFollowRequestStatus = async (
 export const getFollowRequestToMeStatus = async (
 	followerusername: string,
 	accessToken: string
-): Promise<boolean | null> => {
+): Promise<boolean> => {
 	try {
 		await axios.get(
 			`${baseURL}/api/v1/friendship/${followerusername}/request`,
@@ -165,7 +165,7 @@ export const getFollowRequestToMeStatus = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -173,9 +173,9 @@ export const getFollowRequestToMeStatus = async (
 export const requestFollowToPrivateUser = async (
 	username: string,
 	accessToken: string
-): Promise<{ message: string } | null> => {
+): Promise<boolean> => {
 	try {
-		const response = await axios.post(
+		await axios.post(
 			`${baseURL}/api/v1/friendship/${username}/follow/request`,
 			{
 				headers: {
@@ -184,7 +184,7 @@ export const requestFollowToPrivateUser = async (
 			}
 		);
 
-		return response.data.message;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -194,7 +194,7 @@ export const requestFollowToPrivateUser = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -202,9 +202,9 @@ export const requestFollowToPrivateUser = async (
 export const cancelRequestFollowToPrivateUser = async (
 	username: string,
 	accessToken: string
-): Promise<{ message: string } | null> => {
+): Promise<boolean> => {
 	try {
-		const response = await axios.delete(
+		await axios.delete(
 			`${baseURL}/api/v1/friendship/${username}/follow/request`,
 			{
 				headers: {
@@ -213,7 +213,7 @@ export const cancelRequestFollowToPrivateUser = async (
 			}
 		);
 
-		return response.data.message;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
@@ -221,7 +221,8 @@ export const cancelRequestFollowToPrivateUser = async (
 		} else {
 			alert('Error occurred');
 		}
-		return null;
+
+		return false;
 	}
 };
 
@@ -229,18 +230,15 @@ export const cancelRequestFollowToPrivateUser = async (
 export const followPublicUser = async (
 	username: string,
 	accessToken: string
-): Promise<{ message: string } | null> => {
+): Promise<boolean> => {
 	try {
-		const response = await axios.post(
-			`${baseURL}/api/v1/friendship/${username}/follow`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
+		await axios.post(`${baseURL}/api/v1/friendship/${username}/follow`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
 
-		return response.data.message;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -250,7 +248,7 @@ export const followPublicUser = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -258,18 +256,15 @@ export const followPublicUser = async (
 export const unfollowUser = async (
 	username: string,
 	accessToken: string
-): Promise<{ message: string } | null> => {
+): Promise<boolean> => {
 	try {
-		const response = await axios.delete(
-			`${baseURL}/api/v1/friendship/${username}/follow`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
+		await axios.delete(`${baseURL}/api/v1/friendship/${username}/follow`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
 
-		return response.data.message;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -279,7 +274,7 @@ export const unfollowUser = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -287,9 +282,9 @@ export const unfollowUser = async (
 export const deleteFollower = async (
 	followerusername: string,
 	accessToken: string
-): Promise<{ message: string } | null> => {
+): Promise<boolean> => {
 	try {
-		const response = await axios.delete(
+		await axios.delete(
 			`${baseURL}/api/v1/friendship/${followerusername}/follower`,
 			{
 				headers: {
@@ -298,7 +293,7 @@ export const deleteFollower = async (
 			}
 		);
 
-		return response.data.message;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -308,7 +303,7 @@ export const deleteFollower = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -398,6 +393,7 @@ export const getFollowingCommon = async (
 		} else {
 			alert('Error occurred');
 		}
+
 		return null;
 	}
 };
@@ -425,6 +421,7 @@ export const getFollowingDiff = async (
 		} else {
 			alert('Error occurred');
 		}
+
 		return null;
 	}
 };
