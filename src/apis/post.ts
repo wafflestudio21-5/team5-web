@@ -5,24 +5,14 @@ import { APIErrorResponseType } from '../types';
 
 type TryPostType = {
 	content: string;
-	hideComments: boolean;
-	hideLikes: boolean;
 	files: FileList;
 	accessToken: string;
 };
 
-export const tryPost = async ({
-	content,
-	hideComments,
-	hideLikes,
-	files,
-	accessToken,
-}: TryPostType) => {
+export const tryPost = async ({ content, files, accessToken }: TryPostType) => {
 	const api = axios.create({ baseURL: baseURL });
 	const formData = new FormData();
 	formData.append('content', content);
-	formData.append('hideComments', '' + hideComments);
-	formData.append('hideLikes', '' + hideLikes);
 	formData.append('files', files?.[0] as Blob);
 	try {
 		const response = await axios.post(`${baseURL}/api/v1/posts`, formData, {
@@ -52,6 +42,7 @@ export const tryPost = async ({
 				return retryResponse;
 			} catch (refreshError) {
 				console.error('토큰 재발급 실패 : ', refreshError);
+				return null;
 			}
 		} else if (err.response && err.response.data) {
 			alert(err.response.data.error);

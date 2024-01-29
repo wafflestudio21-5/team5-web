@@ -114,8 +114,6 @@ export default function AddText() {
 		if (files) {
 			const response = await tryPost({
 				content,
-				hideComments,
-				hideLikes,
 				files,
 				accessToken,
 			});
