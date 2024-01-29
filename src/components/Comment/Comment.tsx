@@ -13,6 +13,7 @@ import { CommentType } from '../../types';
 type CommentProps = {
 	comment: CommentType;
 	handlePostReply: (comment: CommentType) => void;
+	handleDeleteComment: (comment: CommentType) => void;
 };
 
 const CommentContainer = styled.div`
@@ -38,6 +39,11 @@ const CommentContainer = styled.div`
 		display: flex;
 		flex-direction: column;
 		flex: 1 1 0;
+	}
+	& > .username-content-box > .reaction-bar {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
 	}
 	& > .username-content-box > .username {
 		font-weight: 600;
@@ -67,10 +73,14 @@ const TextBox = styled.div`
 	}
 `;
 
-export default function Comment({ comment, handlePostReply }: CommentProps) {
+export default function Comment({
+	comment,
+	handlePostReply,
+	handleDeleteComment,
+}: CommentProps) {
 	const [liked, setLiked] = useState(comment.liked);
 
-	const { accessToken } = useUserContext();
+	const { accessToken, userId } = useUserContext();
 
 	return (
 		<CommentContainer>
@@ -87,12 +97,24 @@ export default function Comment({ comment, handlePostReply }: CommentProps) {
 			<div className="username-content-box">
 				<span className="username">{comment.user.username}</span>
 				<span>{comment.text}</span>
-				<TextBox
-					className="secondary-text"
-					onClick={() => handlePostReply(comment)}
-				>
-					답글 달기
-				</TextBox>
+				<div className="reaction-bar">
+					<TextBox
+						className="secondary-text"
+						onClick={() => handlePostReply(comment)}
+					>
+						답글 달기
+					</TextBox>
+					{comment.user.userId === userId && (
+						<TextBox
+							className="secondary-text"
+							onClick={() => {
+								handleDeleteComment(comment);
+							}}
+						>
+							삭제
+						</TextBox>
+					)}
+				</div>
 			</div>
 			<div className="like-box">
 				<Icon

@@ -19,14 +19,20 @@ const CommentListWrapper = styled.ul`
 export default function CommentList({
 	comments,
 	handlePostReply,
+	handleDeleteComment,
 }: {
 	comments: CommentType[];
 	handlePostReply: (comment: CommentType) => void;
+	handleDeleteComment: (comment: CommentType) => void;
 }) {
 	return (
 		<CommentListWrapper>
 			{comments.map((comment) => (
-				<Comment comment={comment} handlePostReply={handlePostReply} />
+				<Comment
+					comment={comment}
+					handlePostReply={handlePostReply}
+					handleDeleteComment={handleDeleteComment}
+				/>
 			))}
 		</CommentListWrapper>
 	);

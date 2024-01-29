@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getPostComment } from '../../apis/post';
+import { deleteComment, getPostComment } from '../../apis/post';
 import { useUserContext } from '../../contexts/UserContext';
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
@@ -139,6 +139,16 @@ export default function CommentModal({
 		setReplyComment(null);
 	};
 
+	const handleDeleteComment = async (comment: CommentType) => {
+		const result = await deleteComment(comment.id, accessToken);
+		if (result?.status === 'success' && comments) {
+			setComments({
+				...comments,
+				content: comments.content.filter((c) => c.id !== comment.id),
+			});
+		}
+	};
+
 	return (
 		post && (
 			<Modal onBackgroundClick={close} isClosing={isClosing}>
@@ -148,6 +158,7 @@ export default function CommentModal({
 						<CommentList
 							comments={comments.content}
 							handlePostReply={handlePostReply}
+							handleDeleteComment={handleDeleteComment}
 						/>
 					)}
 					{isEnd && <>loading...</>}
