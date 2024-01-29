@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { postComment, postReply } from '../../apis/post';
+import CancelIcon from '../../assets/Images/Post/cancel.svg';
 import DefaultProfile from '../../assets/Images/Profile/default-profile.svg';
 import { useUserContext } from '../../contexts/UserContext';
 import { getColor } from '../../styles/Theme';
@@ -29,6 +30,14 @@ const CommentInputContainer = styled.div`
 		background-color: transparent;
 		border: none;
 		color: ${getColor('darkGrey')};
+		height: 1rem;
+		width: 1rem;
+		padding: 0;
+	}
+	& > .reply-info > button > img {
+		height: 1rem;
+		width: 1rem;
+		margin: 0;
 	}
 `;
 
@@ -139,7 +148,9 @@ export default function CommentInput({
 			{commentType === 'reply' && comment !== null && (
 				<div className="reply-info">
 					<span>{comment.user.username}에게 남긴 답글</span>
-					<button onClick={handleCancelReply}>X</button>
+					<button onClick={handleCancelReply}>
+						<img src={CancelIcon} alt="cancel" />
+					</button>
 				</div>
 			)}
 			<CommentInputFeildWrapper>
