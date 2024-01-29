@@ -21,7 +21,7 @@ const ModalContent = styled.div`
 	flex-direction: column;
 	gap: 0.5rem;
 	width: 430px;
-	padding: 0.5rem;
+	padding-bottom: 0.5rem;
 	background-color: ${getColor('grey')};
 	border-radius: 0.5rem 0.5rem 0 0;
 `;
