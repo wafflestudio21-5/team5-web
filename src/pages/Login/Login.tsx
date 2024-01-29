@@ -157,7 +157,7 @@ export default function Login() {
 			<Div className="line">
 				<Span> 또는 </Span>
 			</Div>
-			<a href={`${baseURL}/api/facebook_login`}>
+			<a href={`${baseURL}/api/v1/auth/facebook_login`}>
 				<Div className="facebookBox">
 					{' '}
 					{/* </a>onClick={handleFacebookClick}> */}
