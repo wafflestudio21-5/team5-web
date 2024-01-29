@@ -6,6 +6,7 @@ import commentIcon from '../../assets/Images/Post/comment.svg';
 import likeIcon from '../../assets/Images/Post/like.svg';
 import likedIcon from '../../assets/Images/Post/liked.svg';
 import saveIcon from '../../assets/Images/Post/save.svg';
+import savedIcon from '../../assets/Images/Post/saved.svg';
 import shareIcon from '../../assets/Images/Post/share.svg';
 import { useUserContext } from '../../contexts/UserContext';
 import Icon from '../../shared/Icon';
@@ -122,7 +123,11 @@ export default function ReactSection({ postData, showComment }: Props) {
 						}}
 					>
 						<div className="icon-box">
-							<Icon src={saveIcon} />
+							{saved ? (
+								<Icon src={savedIcon} alt="저장 취소" />
+							) : (
+								<Icon src={saveIcon} alt="저장" />
+							)}
 						</div>
 					</div>
 				</IconBar>
