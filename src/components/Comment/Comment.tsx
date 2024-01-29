@@ -1,9 +1,11 @@
-import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import { handleCommentLike } from '../../apis/post';
 import likeIcon from '../../assets/Images/Post/like.svg';
 import likedIcon from '../../assets/Images/Post/liked.svg';
+import DefaultProfileIcon from '../../assets/Images/Profile/default-profile.svg';
+import { useUserContext } from '../../contexts/UserContext';
 import Icon from '../../shared/Icon';
 import { getColor } from '../../styles/Theme';
 import { CommentType } from '../../types';
@@ -55,11 +57,21 @@ const CommentContainer = styled.div`
 `;
 
 export default function Comment({ comment }: CommentProps) {
-	const [liked, setLiked] = useState(true);
+	const [liked, setLiked] = useState(comment.liked);
+
+	const { accessToken } = useUserContext();
+
 	return (
 		<CommentContainer>
 			<div className="profile">
-				<img src={comment.user.profileImageUrl} alt="프로필 이미지" />
+				<img
+					src={
+						comment.user.profileImageUrl !== ''
+							? comment.user.profileImageUrl
+							: DefaultProfileIcon
+					}
+					alt="프로필 이미지"
+				/>
 			</div>
 			<div className="username-content-box">
 				<span className="username">{comment.user.username}</span>
@@ -68,13 +80,13 @@ export default function Comment({ comment }: CommentProps) {
 			<div className="like-box">
 				<Icon
 					src={liked ? likedIcon : likeIcon}
-					onClick={() => {
-						if (liked) {
-							axios.post(`/api/v1/comments/${comment.id}/likes`);
-						} else {
-							axios.delete(`/api/v1/comments/${comment.id}/likes`);
-						}
-						setLiked(!liked);
+					onClick={async () => {
+						const result = await handleCommentLike(
+							comment.id,
+							liked,
+							accessToken
+						);
+						if (result?.status === 'success') setLiked(!liked);
 					}}
 				/>
 				<span className="like-num">{comment.likeCount}</span>
