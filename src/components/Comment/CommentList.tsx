@@ -13,11 +13,17 @@ const CommentListWrapper = styled.ul`
 	flex-direction: column;
 `;
 
-export default function CommentList({ comments }: { comments: CommentType[] }) {
+export default function CommentList({
+	comments,
+	handlePostReply,
+}: {
+	comments: CommentType[];
+	handlePostReply: (comment: CommentType) => void;
+}) {
 	return (
 		<CommentListWrapper>
 			{comments.map((comment) => (
-				<Comment comment={comment} />
+				<Comment comment={comment} handlePostReply={handlePostReply} />
 			))}
 		</CommentListWrapper>
 	);
