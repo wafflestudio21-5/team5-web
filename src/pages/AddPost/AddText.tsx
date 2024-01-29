@@ -91,8 +91,7 @@ export default function AddText() {
 	const navigate = useNavigate();
 	const { accessToken, username, currentUser, setCurrentUser } =
 		useUserContext();
-	const { files, setContent, content, hideComments, hideLikes } =
-		usePostContext();
+	const { files, setContent, content } = usePostContext();
 	const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 	if (files && files.length > 0) {
 		Promise.all(
