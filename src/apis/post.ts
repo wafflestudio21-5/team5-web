@@ -486,3 +486,29 @@ export const deleteComment = async (
 		return null;
 	}
 };
+
+// 답글 삭제
+export const deleteReply = async (
+	replyId: number,
+	accessToken: string
+): Promise<SuccessFailResponse | null> => {
+	try {
+		await axios.delete(`${baseURL}/api/v1/replies/${replyId}`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		return { status: 'success' };
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
