@@ -30,6 +30,17 @@ type PostResponseType = {
 	liked: boolean;
 	saved: boolean;
 	hideLike: boolean;
+	category:
+		| 'GAME'
+		| 'TRAVEL'
+		| 'FOOD'
+		| 'SPORT'
+		| 'ANIMAL'
+		| 'LIFE'
+		| 'FASHION'
+		| 'HUMOR'
+		| 'ART'
+		| 'NEWS';
 };
 
 // 피드 response 형
@@ -44,106 +55,94 @@ type FeedResponseType = {
 	};
 };
 
-// 홈 피드 게시물 가져오기
-export const getHomeFeed = async (
-	page: number,
-	accessToken: string
-): Promise<FeedType | null> => {
-	try {
-		const response = await axios.get<FeedResponseType>(
-			`${baseURL}/api/v1/feed/timeline?page=${page}`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
-		const result = response.data;
-
-		const posts: PostType[] = result.posts.map((post) => {
-			const user: MiniProfileType = {
-				userId: post.author.id,
-				profileImageUrl: post.author.profileImageUrl,
-				username: post.author.username,
-				name: '',
-			};
-			return {
-				id: post.id,
-				content: post.content,
-				media: post.media,
-				createdAt: post.createdAt,
-				likeCount: post.likeCount,
-				commentCount: post.commentCount,
-				user: user,
-				liked: post.liked,
-				saved: post.saved,
-				hideLike: post.hideLike,
-			};
-		});
-
-		const feed: FeedType = {
-			posts: posts,
-			pageInfo: result.pageInfo,
-		};
-
-		return feed;
-	} catch (error) {
-		const err = error as AxiosError<APIErrorResponseType>;
-
-		if (err.response && err.response.data) {
-			alert(err.response.data.message);
-		} else {
-			alert('Error occurred');
-		}
-
-		return null;
-	}
-};
-
 // 피드 게시물 가져오기
-export const getPostFeed = async (
+export const getFeedData = async (
 	page: number,
-	postId: number,
-	accessToken: string
+	accessToken: string,
+	postId?: number
 ): Promise<FeedType | null> => {
 	try {
-		const response = await axios.get<FeedResponseType>(
-			`${baseURL}/api/v1/feed/${postId}?page=${page}`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
-		const result = response.data;
+		if (postId === undefined) {
+			const response = await axios.get<FeedResponseType>(
+				`${baseURL}/api/v1/feed/timeline?page=${page}`,
+				{
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+					},
+				}
+			);
 
-		const posts: PostType[] = result.posts.map((post) => {
-			const user: MiniProfileType = {
-				userId: post.author.id,
-				profileImageUrl: post.author.profileImageUrl,
-				username: post.author.username,
-				name: '',
+			const result = response.data;
+
+			const posts: PostType[] = result.posts.map((post) => {
+				const user: MiniProfileType = {
+					userId: post.author.id,
+					profileImageUrl: post.author.profileImageUrl,
+					username: post.author.username,
+					name: '',
+				};
+				return {
+					id: post.id,
+					content: post.content,
+					media: post.media,
+					createdAt: post.createdAt,
+					likeCount: post.likeCount,
+					commentCount: post.commentCount,
+					user: user,
+					liked: post.liked,
+					saved: post.saved,
+					hideLike: post.hideLike,
+					category: post.category,
+				};
+			});
+
+			const feed: FeedType = {
+				posts: posts,
+				pageInfo: result.pageInfo,
 			};
-			return {
-				id: post.id,
-				content: post.content,
-				media: post.media,
-				createdAt: post.createdAt,
-				likeCount: post.likeCount,
-				commentCount: post.commentCount,
-				user: user,
-				liked: post.liked,
-				saved: post.saved,
-				hideLike: post.hideLike,
+
+			return feed;
+		} else {
+			const response = await axios.get<FeedResponseType>(
+				`${baseURL}/api/v1/feed/${postId}?page=${page}`,
+				{
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+					},
+				}
+			);
+
+			const result = response.data;
+
+			const posts: PostType[] = result.posts.map((post) => {
+				const user: MiniProfileType = {
+					userId: post.author.id,
+					profileImageUrl: post.author.profileImageUrl,
+					username: post.author.username,
+					name: '',
+				};
+				return {
+					id: post.id,
+					content: post.content,
+					media: post.media,
+					createdAt: post.createdAt,
+					likeCount: post.likeCount,
+					commentCount: post.commentCount,
+					user: user,
+					liked: post.liked,
+					saved: post.saved,
+					hideLike: post.hideLike,
+					category: post.category,
+				};
+			});
+
+			const feed: FeedType = {
+				posts: posts,
+				pageInfo: result.pageInfo,
 			};
-		});
 
-		const feed: FeedType = {
-			posts: posts,
-			pageInfo: result.pageInfo,
-		};
-
-		return feed;
+			return feed;
+		}
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 

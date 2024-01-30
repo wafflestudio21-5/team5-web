@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getHomeFeed } from '../apis/post';
+import { getFeedData } from '../apis/post';
 import Feed from '../components/Feed';
 import Header from '../components/Post/Header';
 import { useUserContext } from '../contexts/UserContext';
@@ -87,7 +87,7 @@ export default function Home() {
 		const fetchHomeFeedData = async () => {
 			if (status === 'pending' && feedData.pageInfo.hasNext) {
 				try {
-					const homeFeed = await getHomeFeed(
+					const homeFeed = await getFeedData(
 						feedData.pageInfo.page + 1,
 						accessToken
 					);

@@ -64,6 +64,17 @@ export type PostType = {
 	commentCount: number;
 	saved: boolean;
 	hideLike: boolean;
+	category:
+		| 'GAME'
+		| 'TRAVEL'
+		| 'FOOD'
+		| 'SPORT'
+		| 'ANIMAL'
+		| 'LIFE'
+		| 'FASHION'
+		| 'HUMOR'
+		| 'ART'
+		| 'NEWS';
 };
 
 export type FeedType = {

@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getPostFeed } from '../../apis/post';
+import { getFeedData } from '../../apis/post';
 import Feed from '../../components/Feed';
 import Header from '../../components/Post/Header';
 import { useUserContext } from '../../contexts/UserContext';
@@ -89,10 +89,10 @@ export default function FeedPage() {
 		const fetchHomeFeedData = async () => {
 			if (id && status === 'pending' && feedData.pageInfo.hasNext) {
 				try {
-					const feed = await getPostFeed(
+					const feed = await getFeedData(
 						feedData.pageInfo.page + 1,
-						Number(id),
-						accessToken
+						accessToken,
+						Number(id)
 					);
 					if (!feed) {
 						setStatus('fail');
