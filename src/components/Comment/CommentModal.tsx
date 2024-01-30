@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -27,16 +27,6 @@ const ModalContent = styled.div`
 	max-height: 70%;
 `;
 
-type CommentFetchStatus = 'pending' | 'complete' | 'fail';
-
-type OptionType = {
-	onScrollEnd?: () => void;
-};
-
-type ReturnType = {
-	isEnd: boolean;
-};
-
 export default function CommentModal({
 	post,
 	close,
@@ -48,7 +38,7 @@ export default function CommentModal({
 }) {
 	const [comments, setComments] = useState<CommentPageType>();
 
-	const [status, setStatus] = useState<CommentFetchStatus>('pending');
+	const [reload, setReload] = useState(true);
 	const [commentType, setCommentType] = useState<'comment' | 'reply'>(
 		'comment'
 	);
@@ -65,70 +55,31 @@ export default function CommentModal({
 
 	const navigate = useNavigate();
 
-	const lockScroll = useCallback(() => {
-		document.body.style.overflow = 'hidden';
-	}, []);
-
-	const unlockScroll = useCallback(() => {
-		document.body.style.overflow = '';
-	}, []);
-
-	const useInfiniteScroll = ({ onScrollEnd }: OptionType): ReturnType => {
-		const [isEnd, setIsEnd] = useState(false);
-
-		const handleScroll = async () => {
-			const scrollHeight = document.documentElement.scrollHeight;
-			const scrollTop = document.documentElement.scrollTop;
-			const clientHeight = document.documentElement.clientHeight;
-
-			if (scrollTop + clientHeight >= scrollHeight) {
-				setIsEnd(true);
-				lockScroll();
-				if (onScrollEnd) await onScrollEnd();
-				await unlockScroll();
-				await setIsEnd(false);
-			}
-		};
-
-		useEffect(() => {
-			window.addEventListener('scroll', handleScroll);
-			return () => window.removeEventListener('scroll', handleScroll);
-		}, []);
-
-		return { isEnd };
-	};
-
 	useEffect(() => {
 		const fetchCommentData = async () => {
-			if (post && status === 'pending') {
+			if (post && reload) {
 				try {
 					const commentsFetch = await getPostComment(post.id, 1, accessToken);
 					if (!commentsFetch) {
-						setStatus('fail');
+						setReload(false);
 						return;
 					}
 
 					setComments({
 						...commentsFetch,
 					});
-					setStatus('complete');
+					setReload(false);
 				} catch {
 					navigate('/');
-					setStatus('fail');
+					setReload(false);
 				}
 			} else {
-				setStatus('complete');
+				return;
 			}
 		};
 
 		fetchCommentData();
-	}, []);
-
-	const { isEnd } = useInfiniteScroll({
-		onScrollEnd: () => {
-			setStatus('pending');
-		},
-	});
+	}, [reload]);
 
 	const handlePostReply = (comment: CommentType) => {
 		setCommentType('reply');
@@ -162,13 +113,13 @@ export default function CommentModal({
 							handleDeleteComment={handleDeleteComment}
 						/>
 					)}
-					{isEnd && <>loading...</>}
 					<CommentInput
 						post={post}
 						user={profile}
 						commentType={commentType}
 						comment={replyComment}
 						handleCancelReply={handleCancelReply}
+						setReload={setReload}
 					/>
 					{/*위 user props에는 로그인한 사용자의 정보가 전달되어야함*/}
 				</ModalContent>

@@ -122,6 +122,7 @@ type CommentInputProps = {
 	commentType: 'comment' | 'reply'; // 입력하는 댓글이 게시물의 댓글인지 댓글의 대댓글인지
 	comment: CommentType | null; // 만약 댓글의 대댓글의 경우 해당 댓글을 입력받음
 	handleCancelReply: () => void;
+	setReload: (reload: boolean) => void;
 };
 
 export default function CommentInput({
@@ -130,6 +131,7 @@ export default function CommentInput({
 	commentType,
 	comment,
 	handleCancelReply,
+	setReload,
 }: CommentInputProps) {
 	const [content, setContent] = useState('');
 
@@ -188,14 +190,20 @@ export default function CommentInput({
 												content,
 												accessToken
 											);
-											if (result?.status) setContent('');
+											if (result?.status) {
+												setContent('');
+												setReload(true);
+											}
 										} else if (commentType === 'comment' && post.id) {
 											const result = await postComment(
 												post.id,
 												content,
 												accessToken
 											);
-											if (result?.status) setContent('');
+											if (result?.status) {
+												setContent('');
+												setReload(true);
+											}
 										}
 									}
 								}}
