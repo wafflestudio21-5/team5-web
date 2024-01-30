@@ -83,8 +83,11 @@ export const trySignUp = async ({
 
 export const resetAccessToken = async () => {
 	try {
-		const response = await axios.get(`${baseURL}/api/v1/auth/refresh_token`);
-		console.log('액세스 토큰 : ' + response.data.accessToken);
+		const response = await axios.get(
+			`https://waffle5gram.shop/api/v1/auth/refresh_token`
+		);
+		console.log('새 액세스 토큰 : ' + response.data.accessToken);
+		console.log(response.data);
 		return response.data.accessToken;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;

@@ -99,7 +99,13 @@ export default function Login() {
 	const [isActive, setIsActive] = useState(false);
 
 	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
-
+	useEffect(() => {
+		const storedUsername = localStorage.getItem('username');
+		const StoredPassword = localStorage.getItem('password');
+		if (storedUsername) setUsernameInput(storedUsername);
+		if (StoredPassword) setPasswordInput(StoredPassword);
+		handleClick();
+	}, []);
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
 		else setIsActive(false);
@@ -110,7 +116,7 @@ export default function Login() {
 			username: usernameInput,
 			password: passwordInput,
 		});
-
+		console.log(accessToken);
 		if (accessToken !== null) {
 			setIsLoggedIn(true);
 			setAccessToken(accessToken);
@@ -122,10 +128,6 @@ export default function Login() {
 			setCurrentUser(currentUserInfo);
 		}
 	};
-	/* const handleFacebookClick = () => {
-		const response = tryFacebookLogin();
-		console.log(response);
-	}; */
 	return (
 		<div>
 			<Img
@@ -139,6 +141,7 @@ export default function Login() {
 				name="username"
 				value={usernameInput}
 				placeholder="사용자 이름, 이메일 주소 또는 휴대폰 번호"
+				autoComplete="off"
 				onChange={(e) => setUsernameInput(e.target.value)}
 			/>
 			<Input
@@ -146,6 +149,7 @@ export default function Login() {
 				name="password"
 				value={passwordInput}
 				placeholder="비밀번호"
+				autoComplete="off"
 				onChange={(e) => setPasswordInput(e.target.value)}
 			/>
 			<StyledLink to="passwordRecovery/">

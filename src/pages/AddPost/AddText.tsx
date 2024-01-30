@@ -8,6 +8,7 @@ import { usePostContext } from '../../contexts/PostContext';
 import { useUserContext } from '../../contexts/UserContext';
 import { fetchUserInformation } from '../../apis/account';
 import { tryPost } from '../../apis/post';
+import { resetAccessToken } from '../../apis/login';
 
 const Background = styled.div`
 	background-color: white;
@@ -89,7 +90,7 @@ const Textarea = styled.textarea`
 
 export default function AddText() {
 	const navigate = useNavigate();
-	const { accessToken, username, currentUser, setCurrentUser } =
+	const { setAccessToken, accessToken, username, currentUser, setCurrentUser } =
 		useUserContext();
 	const { files, setContent, content } = usePostContext();
 	const [previewUrls, setPreviewUrls] = useState<string[]>([]);
@@ -110,6 +111,9 @@ export default function AddText() {
 	}
 	const handleClick = async () => {
 		const addr = `/${username}`;
+		const newAccessToken = await resetAccessToken();
+		setAccessToken(newAccessToken);
+		console.log(accessToken);
 		if (files) {
 			const response = await tryPost({
 				content,
