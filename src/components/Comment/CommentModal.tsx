@@ -116,6 +116,7 @@ export default function CommentModal({
 						user={profile}
 						commentType={commentType}
 						comment={replyComment}
+						setCommentType={setCommentType}
 						handleCancelReply={handleCancelReply}
 						setReload={setReload}
 					/>

@@ -120,6 +120,7 @@ type CommentInputProps = {
 	post: PostType;
 	user: MiniProfileType; // 댓글을 쓰는 사용자 정보
 	commentType: 'comment' | 'reply'; // 입력하는 댓글이 게시물의 댓글인지 댓글의 대댓글인지
+	setCommentType: (type: 'comment' | 'reply') => void;
 	comment: CommentType | null; // 만약 댓글의 대댓글의 경우 해당 댓글을 입력받음
 	handleCancelReply: () => void;
 	setReload: (reload: boolean) => void;
@@ -129,6 +130,7 @@ export default function CommentInput({
 	post,
 	user,
 	commentType,
+	setCommentType,
 	comment,
 	handleCancelReply,
 	setReload,
@@ -192,6 +194,7 @@ export default function CommentInput({
 											);
 											if (result?.status) {
 												setContent('');
+												setCommentType('comment');
 												setReload(true);
 											}
 										} else if (commentType === 'comment' && post.id) {
