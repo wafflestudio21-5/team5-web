@@ -15,8 +15,9 @@ const CommentListWrapper = styled.ul`
 	padding-right: 0.5rem;
 	box-sizing: border-box;
 	overflow-y: scroll;
-	-ms-overflow-style: none;
-	::-webkit-scrollbar {
+	-ms-overflow-style: none; /* 인터넷 익스플로러 */
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
 		display: none;
 	}
 `;
