@@ -187,7 +187,10 @@ export default function Comment({
 						if (result?.status === 'success') setLiked(!liked);
 					}}
 				/>
-				<span className="like-num">{comment.likeCount}</span>
+				<span className="like-num">
+					{comment.likeCount +
+						(liked === comment.liked ? 0 : comment.liked ? -1 : 1)}
+				</span>
 			</LikeBox>
 			{showReply &&
 				replies?.content.map((reply) => {

@@ -132,7 +132,12 @@ export default function ReactSection({ postData, showComment }: Props) {
 					</div>
 				</IconBar>
 				<TextBox>
-					<span className="like-num">좋아요 {postData.likeCount}개</span>
+					<span className="like-num">
+						좋아요{' '}
+						{postData.likeCount +
+							(liked === postData.liked ? 0 : postData.liked ? -1 : 1)}
+						개
+					</span>
 				</TextBox>
 				<TextBox className="margin">
 					<span className="username">{postData.user.username}</span>{' '}
