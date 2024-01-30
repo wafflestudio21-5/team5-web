@@ -94,10 +94,7 @@ export default function CommentModal({
 	const handleDeleteComment = async (comment: CommentType) => {
 		const result = await deleteComment(comment.id, accessToken);
 		if (result?.status === 'success' && comments) {
-			setComments({
-				...comments,
-				content: comments.content.filter((c) => c.id !== comment.id),
-			});
+			setReload(true);
 		}
 	};
 
@@ -111,6 +108,7 @@ export default function CommentModal({
 							comments={comments.content}
 							handlePostReply={handlePostReply}
 							handleDeleteComment={handleDeleteComment}
+							setReload={setReload}
 						/>
 					)}
 					<CommentInput
