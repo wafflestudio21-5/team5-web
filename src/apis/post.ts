@@ -183,6 +183,92 @@ export const getPostComment = async (
 	}
 };
 
+type ReplyResponseType = {
+	id: number;
+	content: string;
+	createdAt: string;
+	postId: number;
+	replyCount: number;
+	likeCount: number;
+	liked: boolean;
+	userId: number;
+	userProfileImageUrl: string;
+	username: string;
+};
+
+type RepliesResponseType = {
+	content: ReplyResponseType[];
+	pageable: CommentPageType['pageable'];
+	sort: CommentPageType['sort'];
+	empty: false;
+	first: true;
+	last: true;
+	number: number;
+	numberOfElements: number;
+	totalElements: number;
+	totalPages: number;
+};
+
+// 답글 가져오기
+export const getReply = async (
+	commentId: number,
+	page: number,
+	accessToken: string
+): Promise<CommentPageType | null> => {
+	try {
+		const response = await axios.get<RepliesResponseType>(
+			`${baseURL}/api/v1/comments/${commentId}/replies?page=${page}`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		const result = response.data;
+		const replies: CommentType[] = result.content.map((comment) => {
+			const user: MiniProfileType = {
+				userId: comment.userId,
+				username: comment.username,
+				profileImageUrl: comment.userProfileImageUrl ?? '',
+				name: '',
+			};
+			return {
+				id: comment.id,
+				text: comment.content,
+				createdAt: comment.createdAt,
+				user: user,
+				postId: comment.postId,
+				replyCount: comment.replyCount,
+				likeCount: comment.likeCount,
+				liked: comment.liked,
+			};
+		});
+
+		return {
+			content: replies,
+			pageable: result.pageable,
+			sort: result.sort,
+			empty: result.empty,
+			first: result.first,
+			last: result.last,
+			number: result.number,
+			numberOfElements: result.numberOfElements,
+			totalElements: result.totalElements,
+			totalPages: result.totalPages,
+		};
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
 type SuccessFailResponse = {
 	status: 'success' | 'failed';
 };
