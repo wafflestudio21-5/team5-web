@@ -13,7 +13,11 @@ export const tryPost = async ({ content, files, accessToken }: TryPostType) => {
 	const api = axios.create({ baseURL: baseURL });
 	const formData = new FormData();
 	formData.append('content', content);
-	formData.append('files', files?.[0] as Blob);
+	for (let i = 0; i < files.length; i++) {
+		const file = files[i];
+		const blob = new Blob([file], { type: file.type });
+		formData.append('files', blob);
+	}
 	try {
 		const response = await axios.post(`${baseURL}/api/v1/posts`, formData, {
 			headers: {
@@ -25,6 +29,7 @@ export const tryPost = async ({ content, files, accessToken }: TryPostType) => {
 		return response;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
+		console.log(err.response);
 		if (err.response && err.response.status == 401) {
 			try {
 				const newAccessToken = await resetAccessToken();
