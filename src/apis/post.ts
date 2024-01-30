@@ -11,12 +11,14 @@ import {
 	PostType,
 } from '../types.ts';
 
+// author(user) response 형
 type AuthorResponseType = {
 	id: number;
 	profileImageUrl: string;
 	username: string;
 };
 
+// 게시물 response 형
 type PostResponseType = {
 	id: number;
 	author: AuthorResponseType;
@@ -30,7 +32,8 @@ type PostResponseType = {
 	hideLike: boolean;
 };
 
-type HomeFeedResponseType = {
+// 피드 response 형
+type FeedResponseType = {
 	posts: PostResponseType[];
 	pageInfo: {
 		page: number;
@@ -47,8 +50,65 @@ export const getHomeFeed = async (
 	accessToken: string
 ): Promise<FeedType | null> => {
 	try {
-		const response = await axios.get<HomeFeedResponseType>(
+		const response = await axios.get<FeedResponseType>(
 			`${baseURL}/api/v1/feed/timeline?page=${page}`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		const result = response.data;
+
+		const posts: PostType[] = result.posts.map((post) => {
+			const user: MiniProfileType = {
+				userId: post.author.id,
+				profileImageUrl: post.author.profileImageUrl,
+				username: post.author.username,
+				name: '',
+			};
+			return {
+				id: post.id,
+				content: post.content,
+				media: post.media,
+				createdAt: post.createdAt,
+				likeCount: post.likeCount,
+				commentCount: post.commentCount,
+				user: user,
+				liked: post.liked,
+				saved: post.saved,
+				hideLike: post.hideLike,
+			};
+		});
+
+		const feed: FeedType = {
+			posts: posts,
+			pageInfo: result.pageInfo,
+		};
+
+		return feed;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+// 피드 게시물 가져오기
+export const getPostFeed = async (
+	page: number,
+	postId: number,
+	accessToken: string
+): Promise<FeedType | null> => {
+	try {
+		const response = await axios.get<FeedResponseType>(
+			`${baseURL}/api/v1/feed/${postId}?page=${page}`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
