@@ -461,6 +461,45 @@ export const handleCommentLike = async (
 	}
 };
 
+// 댓글 좋아요 버튼 처리
+export const handleReplyLike = async (
+	replyId: number,
+	isLiked: boolean,
+	accessToken: string
+): Promise<SuccessFailResponse | null> => {
+	try {
+		if (isLiked) {
+			await axios.delete(`${baseURL}/api/v1/replies/${replyId}/likes`, {
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			});
+		} else {
+			await axios.post(
+				`${baseURL}/api/v1/replies/${replyId}/likes`,
+				{},
+				{
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+					},
+				}
+			);
+		}
+
+		return { status: 'success' };
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
 // 댓글 삭제
 export const deleteComment = async (
 	commentId: number,
