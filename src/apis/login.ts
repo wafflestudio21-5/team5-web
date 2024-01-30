@@ -85,7 +85,7 @@ export const resetAccessToken = async () => {
 	try {
 		const response = await axios.get(
 			`https://waffle5gram.shop/api/v1/auth/refresh_token`,
-			{ withCredentials: true }
+			{ withCredentials: false }
 		);
 		console.log('새 액세스 토큰 : ' + response.data.accessToken);
 		console.log(response.data);
