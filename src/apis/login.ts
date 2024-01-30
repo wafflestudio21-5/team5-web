@@ -84,7 +84,7 @@ export const trySignUp = async ({
 export const resetAccessToken = async () => {
 	try {
 		const response = await axios.get(`${baseURL}/api/v1/auth/refresh_token`, {
-			withCredentials: false,
+			withCredentials: true,
 			headers: { Accept: 'application/json' },
 		});
 		console.log('새 액세스 토큰 : ' + response.data.accessToken);
