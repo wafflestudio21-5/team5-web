@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { PostType } from '../../types';
+import { PostType, PreviewType } from '../../types';
 
 const Wrapper = styled.div`
 	display: grid;
@@ -25,23 +25,38 @@ const Wrapper = styled.div`
 `;
 
 type PostListProps = {
-	posts: PostType[];
+	posts?: PostType[];
+	previews?: PreviewType[];
 };
 
-export default function PostList({ posts }: PostListProps) {
+export default function PostList({ posts, previews }: PostListProps) {
 	const navigate = useNavigate();
+
+	if (posts === null && previews === null) return <></>;
+
 	return (
 		<Wrapper>
-			{posts.map((post) => (
-				<div
-					className="image-wrapper"
-					onClick={() => {
-						navigate(`/feed/${post.id}`);
-					}}
-				>
-					<img src={post.media[0].url} alt="게시물 이미지" />
-				</div>
-			))}
+			{posts
+				? posts.map((post) => (
+						<div
+							className="image-wrapper"
+							onClick={() => {
+								navigate(`/feed/${post.id}`);
+							}}
+						>
+							<img src={post.media[0].url} alt="게시물 이미지" />
+						</div>
+					))
+				: previews?.map((preview) => (
+						<div
+							className="image-wrapper"
+							onClick={() => {
+								navigate(`/feed/${preview.id}`);
+							}}
+						>
+							<img src={preview.thumbnailUrl} alt="게시물 이미지" />
+						</div>
+					))}
 		</Wrapper>
 	);
 }
