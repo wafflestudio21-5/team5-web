@@ -144,6 +144,7 @@ export default function Comment({
 		const reuslt = await deleteReply(reply.id, accessToken);
 		if (reuslt?.status === 'success' && replies) {
 			setReplyReload(true);
+			setReload(true);
 		}
 	};
 
