@@ -83,7 +83,6 @@ const LikeBox = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-content: center;
-	opacity: 0.5;
 	& > img {
 		margin: 0;
 		width: 1.5rem;
@@ -91,6 +90,9 @@ const LikeBox = styled.div`
 	& > .like-num {
 		text-align: center;
 		font-size: 0.7rem;
+	}
+	& .blur {
+		opacity: 0.5;
 	}
 `;
 
@@ -205,8 +207,9 @@ export default function Comment({
 						);
 						if (result?.status === 'success') setReload(true);
 					}}
+					className={comment.liked ? '' : 'blur'}
 				/>
-				<span className="like-num">{comment.likeCount}</span>
+				<span className="like-num blur">{comment.likeCount}</span>
 			</LikeBox>
 			{showReply &&
 				replies?.content.map((reply) => {
@@ -268,8 +271,9 @@ export default function Comment({
 										);
 										if (result?.status === 'success') setReplyReload(true);
 									}}
+									className={comment.liked ? '' : 'blur'}
 								/>
-								<span className="like-num">{reply.likeCount}</span>
+								<span className="like-num blur">{reply.likeCount}</span>
 							</LikeBox>
 						</>
 					);
