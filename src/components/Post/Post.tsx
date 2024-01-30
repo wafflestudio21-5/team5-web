@@ -29,7 +29,7 @@ export default function Post({
 }: Props) {
 	return (
 		postData && (
-			<Container>
+			<Container id={'post' + postData.id}>
 				<PostHeader
 					user={postData.user}
 					showMenu={() => {
