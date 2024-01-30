@@ -74,8 +74,7 @@ export default function PostImage({ media }: { media: MediaType[] }) {
 						</MoveButton>
 					)}
 					<IndexBar>
-						{media.map((m, index) => {
-							console.log(m.order, index);
+						{media.map((m) => {
 							return (
 								<div
 									className={`dot ${m.order === order + 1 ? 'select' : ''}`}
