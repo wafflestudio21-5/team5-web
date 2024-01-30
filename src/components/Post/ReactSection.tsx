@@ -84,7 +84,6 @@ export default function ReactSection({ postData, showComment }: Props) {
 	const { accessToken } = useUserContext();
 
 	const createdDate = new Date(postData.createdAt);
-	console.log(createdDate);
 
 	return (
 		postData && (

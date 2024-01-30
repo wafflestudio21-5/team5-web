@@ -119,10 +119,10 @@ export default function Comment({
 						...repliesFetch,
 					});
 				} catch {
-					console.log('');
+					return;
 				}
 			} else {
-				console.log('');
+				return;
 			}
 		};
 
