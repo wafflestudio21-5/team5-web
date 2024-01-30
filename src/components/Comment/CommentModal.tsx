@@ -24,6 +24,7 @@ const ModalContent = styled.div`
 	padding-bottom: 0.5rem;
 	background-color: ${getColor('grey')};
 	border-radius: 0.5rem 0.5rem 0 0;
+	max-height: 70%;
 `;
 
 type CommentFetchStatus = 'pending' | 'complete' | 'fail';

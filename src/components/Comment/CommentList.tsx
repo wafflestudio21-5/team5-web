@@ -14,6 +14,7 @@ const CommentListWrapper = styled.ul`
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
 	box-sizing: border-box;
+	overflow-y: scroll;
 `;
 
 export default function CommentList({
