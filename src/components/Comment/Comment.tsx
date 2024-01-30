@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { getReply, handleCommentLike } from '../../apis/post';
+import { deleteReply, getReply, handleCommentLike } from '../../apis/post';
 import likeIcon from '../../assets/Images/Post/like.svg';
 import likedIcon from '../../assets/Images/Post/liked.svg';
 import DefaultProfileIcon from '../../assets/Images/Profile/default-profile.svg';
@@ -129,6 +129,16 @@ export default function Comment({
 		fetchCommentData();
 	}, [accessToken, comment, showReply]);
 
+	const handleDeleteReply = async (reply: CommentType) => {
+		const reuslt = await deleteReply(reply.id, accessToken);
+		if (reuslt?.status === 'success' && replies) {
+			setReplies({
+				...replies,
+				content: [...replies.content.filter((r) => reply.id === r.id)],
+			});
+		}
+	};
+
 	return (
 		<CommentContainer>
 			<Profile>
@@ -232,7 +242,7 @@ export default function Comment({
 											<TextBox
 												className="secondary-text"
 												onClick={() => {
-													handleDeleteComment(comment);
+													handleDeleteReply(reply);
 												}}
 											>
 												삭제
