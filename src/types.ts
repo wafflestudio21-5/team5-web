@@ -72,3 +72,17 @@ export type CommentType = {
 	content: string;
 	createdAt: string;
 };
+
+const Category = {
+	GAME: 'GAME',
+	TREVEL: 'TRAVEL',
+	FOOD: 'FOOD',
+	SPORT: 'SPORT',
+	ANIMAL: 'ANIMAL',
+	LIFE: 'LIFE',
+	FASHION: 'FASHION',
+	HUMOR: 'HUMOR',
+	ART: 'ART',
+	NEWS: 'NEWS',
+} as const;
+export type CategoryType = (typeof Category)[keyof typeof Category];

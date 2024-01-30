@@ -123,8 +123,7 @@ export default function Agree() {
 		checkbox2: false,
 		checkbox3: false,
 	});
-	const { username, password, name, email, birthday, isSaved } =
-		useAuthContext();
+	const { username, password, name, email, birthday } = useAuthContext();
 	const { setAccessToken, setCurrentUser } = useUserContext();
 	const handleClick = async () => {
 		const signupResponse = await trySignUp({
@@ -135,11 +134,11 @@ export default function Agree() {
 			birthday,
 		});
 		if (signupResponse) {
-			if (isSaved) {
+			/* if (isSaved) {
 				localStorage.setItem('username', username);
 				localStorage.setItem('password', password);
 				localStorage.setItem('isSaved', '' + isSaved);
-			}
+			} */
 			const accessToken = await tryLogin({
 				username: username,
 				password: password,

@@ -1,18 +1,26 @@
 import axios, { AxiosError } from 'axios';
 import { baseURL } from '../constants';
 import { resetAccessToken } from './login';
-import { APIErrorResponseType } from '../types';
+import { APIErrorResponseType, CategoryType } from '../types';
 
 type TryPostType = {
 	content: string;
 	files: FileList;
+	category: CategoryType;
 	accessToken: string;
 };
 
-export const tryPost = async ({ content, files, accessToken }: TryPostType) => {
+export const tryPost = async ({
+	content,
+	files,
+	category,
+	accessToken,
+}: TryPostType) => {
 	const api = axios.create({ baseURL: baseURL });
 	const formData = new FormData();
 	formData.append('content', content);
+	formData.append('category', category.toString());
+	formData.append('files', 'hi');
 	for (let i = 0; i < files.length; i++) {
 		const file = files[i];
 		const blob = new Blob([file], { type: file.type });

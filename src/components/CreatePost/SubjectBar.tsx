@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { usePostContext } from '../../contexts/PostContext';
+import { CategoryType } from '../../types';
 
 type DivType = {
 	isClicked: boolean;
@@ -35,21 +37,38 @@ const SubjectBox = styled.div`
 export default function Select() {
 	const [clickNum, setClickNum] = useState(0);
 	const subjects = [
-		'일상',
-		'유머',
-		'음식',
-		'여행',
 		'게임',
+		'여행',
+		'음식',
 		'스포츠',
 		'동물',
+		'일상',
 		'패션',
+		'유머',
 		'예술',
 		'뉴스',
 	];
+	const subjectsEng: CategoryType[] = [
+		'GAME',
+		'TRAVEL',
+		'FOOD',
+		'SPORT',
+		'ANIMAL',
+		'LIFE',
+		'FASHION',
+		'HUMOR',
+		'ART',
+		'NEWS',
+	];
+	const { setCategory, category } = usePostContext();
 	const handleClick = (num: number) => {
 		if (clickNum === 0) setClickNum(num);
 		else if (clickNum === num) setClickNum(0);
 		else setClickNum(num);
+
+		if (clickNum === 0) setCategory(null);
+		else setCategory(subjectsEng[num - 1]);
+		console.log(category);
 	};
 	return (
 		<SubjectBox>

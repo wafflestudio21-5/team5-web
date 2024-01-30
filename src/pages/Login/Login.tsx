@@ -99,13 +99,13 @@ export default function Login() {
 	const [isActive, setIsActive] = useState(false);
 
 	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
-	useEffect(() => {
+	/* useEffect(() => {
 		const storedUsername = localStorage.getItem('username');
 		const StoredPassword = localStorage.getItem('password');
 		if (storedUsername) setUsernameInput(storedUsername);
 		if (StoredPassword) setPasswordInput(StoredPassword);
 		handleClick();
-	}, []);
+	}, []); */
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
 		else setIsActive(false);

@@ -1,16 +1,17 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
+import { CategoryType } from '../types';
 
 export type PostContextData = {
 	content: string;
 	hideComments: boolean;
 	hideLikes: boolean;
 	files: FileList | null;
-	subject: string;
+	category: CategoryType | null;
 	setHideComments: (b: boolean) => void;
 	setHideLikes: (b: boolean) => void;
 	setFiles: (f: FileList | null) => void;
 	setContent: (s: string) => void;
-	setSubject: (s: string) => void;
+	setCategory: (s: CategoryType | null) => void;
 };
 
 export const PostContext = createContext<PostContextData | null>(null);
@@ -18,11 +19,12 @@ export const PostContext = createContext<PostContextData | null>(null);
 type ProviderProps = {
 	children: ReactNode;
 };
+
 export function PostProvider({ children }: ProviderProps) {
 	const [content, setContent] = useState('');
-	const [subject, setSubject] = useState('');
 	const [hideComments, setHideComments] = useState(false);
 	const [hideLikes, setHideLikes] = useState(false);
+	const [category, setCategory] = useState<CategoryType | null>(null);
 	const [files, setFiles] = useState<FileList | null>(null);
 
 	return (
@@ -32,12 +34,12 @@ export function PostProvider({ children }: ProviderProps) {
 				hideComments,
 				hideLikes,
 				files,
-				subject,
+				category,
 				setHideComments,
 				setHideLikes,
 				setFiles,
 				setContent,
-				setSubject,
+				setCategory,
 			}}
 		>
 			{children}

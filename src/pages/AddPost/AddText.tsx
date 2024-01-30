@@ -92,7 +92,7 @@ export default function AddText() {
 	const navigate = useNavigate();
 	const { setAccessToken, accessToken, username, currentUser, setCurrentUser } =
 		useUserContext();
-	const { files, setContent, content } = usePostContext();
+	const { files, setContent, content, category } = usePostContext();
 	const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 	if (files && files.length > 0) {
 		Promise.all(
@@ -110,19 +110,22 @@ export default function AddText() {
 		});
 	}
 	const handleClick = async () => {
-		const addr = `/${username}`;
-		const newAccessToken = await resetAccessToken();
-		setAccessToken(newAccessToken);
-		console.log(accessToken);
-		if (files) {
-			const response = await tryPost({
-				content,
-				files,
-				accessToken,
-			});
-			if (response) {
-				await fetchUserInformation(accessToken, currentUser, setCurrentUser);
-				navigate(addr);
+		if (category) {
+			const addr = `/${username}`;
+			const newAccessToken = await resetAccessToken();
+			setAccessToken(newAccessToken);
+			console.log(accessToken);
+			if (files !== null && category !== null) {
+				const response = await tryPost({
+					content,
+					files,
+					category,
+					accessToken,
+				});
+				if (response) {
+					await fetchUserInformation(accessToken, currentUser, setCurrentUser);
+					navigate(addr);
+				}
 			}
 		}
 	};
