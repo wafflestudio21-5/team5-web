@@ -121,3 +121,8 @@ export type MediaType = {
 	postId: number;
 	url: string;
 };
+
+export type PreviewType = {
+	id: number;
+	thumbnailUrl: string;
+};
