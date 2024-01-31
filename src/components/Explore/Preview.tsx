@@ -1,9 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import PostList from '../Post/PostList';
+
 import posts from '../../test/data/postlist.json';
 import { PostListProps } from '../../types';
-import { useNavigate } from 'react-router-dom';
 import KorToEng from '../CreatePost/KorToEng';
+import PostList from '../Post/PostList';
 
 const Header = styled.div`
 	width: 100%;

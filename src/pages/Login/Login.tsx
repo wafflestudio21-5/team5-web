@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import { tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
-import { useUserContext } from '../../contexts/UserContext';
 import { baseURL } from '../../constants.ts';
+import { useUserContext } from '../../contexts/UserContext';
 
 const Img = styled.img`
 	&.instagram {
