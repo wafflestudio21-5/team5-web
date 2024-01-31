@@ -5,7 +5,9 @@
 import { ReactNode } from 'react';
 
 export type APIErrorResponseType = {
-	error: string;
+	status: number;
+	code: string;
+	message: string;
 };
 
 // context
@@ -53,22 +55,85 @@ export type MiniProfileType = {
 // Post
 export type PostType = {
 	id: number;
-	user: UserType;
+	user: MiniProfileType;
 	content: string;
-	imageUrl: string;
+	media: MediaType[];
 	createdAt: string;
-	likesCount: number;
-	commentsCount: number;
+	likeCount: number;
+	liked: boolean;
+	commentCount: number;
+	saved: boolean;
+	hideLike: boolean;
+	category:
+		| 'GAME'
+		| 'TRAVEL'
+		| 'FOOD'
+		| 'SPORT'
+		| 'ANIMAL'
+		| 'LIFE'
+		| 'FASHION'
+		| 'HUMOR'
+		| 'ART'
+		| 'NEWS';
 };
 
 export type FeedType = {
 	posts: PostType[];
-	page: number;
+	pageInfo: {
+		page: number;
+		size: number;
+		offset: number;
+		hasNext: boolean;
+		elements: number;
+	};
 };
 
 export type CommentType = {
 	id: number;
-	user: UserType;
-	content: string;
+	user: MiniProfileType;
+	text: string;
 	createdAt: string;
+	postId: number;
+	replyCount: number;
+	likeCount: number;
+	liked: boolean;
+};
+
+export type CommentPageType = {
+	content: CommentType[];
+	empty: false;
+	first: true;
+	last: true;
+	number: number;
+	numberOfElements: number;
+	pageable: {
+		offset: number;
+		pageNumber: number;
+		pageSize: number;
+		paged: boolean;
+		sort: SortType;
+		size: number;
+	};
+	sort: SortType;
+	totalElements: number;
+	totalPages: number;
+};
+
+export type SortType = {
+	empty: boolean;
+	sorted: boolean;
+	unsorted: boolean;
+};
+
+export type MediaType = {
+	id: number;
+	mediaType: string;
+	order: number;
+	postId: number;
+	url: string;
+};
+
+export type PreviewType = {
+	id: number;
+	thumbnailUrl: string;
 };

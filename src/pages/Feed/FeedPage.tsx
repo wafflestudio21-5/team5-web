@@ -1,14 +1,24 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useCallback, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { getFeedData } from '../apis/post';
-import Feed from '../components/Feed';
-import Header from '../components/Post/Header';
-import { useUserContext } from '../contexts/UserContext';
-import { FeedType } from '../types';
+import { getFeedData } from '../../apis/post';
+import Feed from '../../components/Feed';
+import Header from '../../components/Post/Header';
+import { useUserContext } from '../../contexts/UserContext';
+import { FeedType } from '../../types';
 
-const HomeLayout = styled.main`
+type FeedFetchStatus = 'pending' | 'complete' | 'fail';
+
+type OptionType = {
+	onScrollEnd?: () => void;
+};
+
+type ReturnType = {
+	isEnd: boolean;
+};
+
+const Layout = styled.main`
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -23,17 +33,9 @@ const HomeLayout = styled.main`
 	}
 `;
 
-type FeedFetchStatus = 'pending' | 'complete' | 'fail';
+export default function FeedPage() {
+	const { id } = useParams();
 
-type OptionType = {
-	onScrollEnd?: () => void;
-};
-
-type ReturnType = {
-	isEnd: boolean;
-};
-
-export default function Home() {
 	const [feedData, setFeedData] = useState<FeedType>({
 		posts: [],
 		pageInfo: {
@@ -85,20 +87,21 @@ export default function Home() {
 
 	useEffect(() => {
 		const fetchHomeFeedData = async () => {
-			if (status === 'pending' && feedData.pageInfo.hasNext) {
+			if (id && status === 'pending' && feedData.pageInfo.hasNext) {
 				try {
-					const homeFeed = await getFeedData(
+					const feed = await getFeedData(
 						feedData.pageInfo.page + 1,
-						accessToken
+						accessToken,
+						Number(id)
 					);
-					if (!homeFeed) {
+					if (!feed) {
 						setStatus('fail');
 						return;
 					}
 
 					setFeedData({
-						posts: [...feedData.posts, ...homeFeed.posts],
-						pageInfo: homeFeed.pageInfo,
+						posts: [...feedData.posts, ...feed.posts],
+						pageInfo: feed.pageInfo,
 					});
 					setStatus('complete');
 				} catch {
@@ -115,6 +118,7 @@ export default function Home() {
 		feedData.pageInfo.hasNext,
 		feedData.pageInfo.page,
 		feedData.posts,
+		id,
 		navigate,
 		status,
 	]);
@@ -124,15 +128,16 @@ export default function Home() {
 			setStatus('pending');
 		},
 	});
+
 	return (
 		<>
 			<Header />
-			<HomeLayout>
+			<Layout>
 				<div className="story-post">
 					<Feed posts={feedData.posts} />
 				</div>
 				{isEnd && <div>loading</div>}
-			</HomeLayout>
+			</Layout>
 		</>
 	);
 }
