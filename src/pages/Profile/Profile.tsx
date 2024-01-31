@@ -314,7 +314,7 @@ export default function Profile() {
 		};
 
 		fetchUserData();
-	}, [id, accessToken, navigate, username, isMyAccountPrivate]);
+	}, []);
 
 	// 계정 공개 여부에 따라 팔로워, 팔로잉 버튼 클릭 여부 결정
 	const handleFollowersClick = () => {
@@ -422,7 +422,7 @@ export default function Profile() {
 					</div>
 				</UserInfoContainer>
 				<UserProfileContainer>
-					<h3>{user.username}</h3>
+					<h3>{user.name}</h3>
 					<p>{user.bio}</p>
 					{user.userLinks.map((UserLink) => (
 						<a href={UserLink.link}>{UserLink.link}</a>
@@ -469,7 +469,6 @@ export default function Profile() {
 							setTimeout(() => setMenuModal('closed'), 300);
 						}}
 						isClosing={menuModal === 'closing'}
-						isPrivate={isPrivate}
 					/>
 				)}
 				{followerModal !== 'closed' && (

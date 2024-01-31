@@ -7,16 +7,16 @@ import { ThemeProvider } from 'styled-components';
 
 import NavBar from './components/NavBar.tsx';
 import { useUserContext } from './contexts/UserContext.tsx';
-import AddText from './pages/addPost/AddText.tsx';
-import UploadPhoto from './pages/addPost/UploadPhoto.tsx';
+import AddText from './pages/AddPost/AddText.tsx';
+import UploadPhoto from './pages/AddPost/UploadPhoto.tsx';
 import Explore from './pages/Explore/Explore.tsx';
 import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
 import Certification from './pages/Login/passwordRecovery/Certification.tsx';
 import NewPassword from './pages/Login/passwordRecovery/NewPassword.tsx';
-import PasswordRecovery from './pages/Login/passwordRecovery/PasswordRecovery.tsx';
+// import PasswordRecovery from './pages/Login/passwordRecovery/PasswordRecovery.tsx';
 import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
-// import Agree from './pages/Login/signUp/Agree.tsx';
+import Agree from './pages/Login/signUp/Agree.tsx';
 import AskBirthday from './pages/Login/signUp/AskBirthday.tsx';
 import AskEmail from './pages/Login/signUp/AskEmail.tsx';
 import AskPhone from './pages/Login/signUp/AskPhone.tsx';
@@ -25,11 +25,15 @@ import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx';
 import MakePassword from './pages/Login/signUp/MakePassword.tsx';
 import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
 import SignUp from './pages/Login/signUp/SignUp.tsx';
+import Bio from './pages/Profile/Edit/Bio.tsx';
 import Edit from './pages/Profile/Edit/Edit.tsx';
+import Gender from './pages/Profile/Edit/Gender.tsx';
+import Link from './pages/Profile/Edit/Link/Link.tsx';
+import Name from './pages/Profile/Edit/Name.tsx';
+import Username from './pages/Profile/Edit/Username.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Saved from './pages/Profile/Saved.tsx';
-import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
 
@@ -41,10 +45,6 @@ const router = createBrowserRouter([
 			{
 				path: '',
 				element: <Home />,
-			},
-			{
-				path: 'search/',
-				element: <Search />,
 			},
 			{
 				path: 'explore/',
@@ -80,22 +80,27 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'account/edit/username/',
+				element: <Username />,
 			},
 			{
 				path: 'account/edit/name/',
+				element: <Name />,
 			},
 			{
 				path: 'account/edit/bio/',
+				element: <Bio />,
 			},
 			{
 				path: 'account/edit/link/',
+				element: <Link />,
 			},
 			{
 				path: 'account/edit/gender/',
+				element: <Gender />,
 			},
 			{
 				path: '*',
-				element: <Navigate to="" />, // 이상한 url이 home이 아닌 profile로 가는 원인 모를 현상이 있음. useparams 도입 후 고칠 것
+				element: <Navigate to="" />,
 			},
 		],
 	},
@@ -108,7 +113,7 @@ const loginRouter = createBrowserRouter([
 	},
 	{
 		path: 'passwordRecovery/',
-		element: <PasswordRecovery />,
+		// element: <PasswordRecovery />,
 	},
 	{
 		path: 'passwordRecovery/certification/',
@@ -152,7 +157,7 @@ const loginRouter = createBrowserRouter([
 	},
 	{
 		path: 'signUp/agreeToTerm/',
-		// element: <Agree />,
+		element: <Agree />,
 	},
 	{
 		path: 'signUp/photo/',

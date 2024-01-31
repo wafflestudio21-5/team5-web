@@ -4,6 +4,7 @@ import { createContext, ReactNode, useContext, useState } from 'react';
 type tryPostProps = {
 	navigate: (to: string) => void;
 	addr: string;
+	accessToken: string;
 };
 
 export type PostContextData = {
@@ -31,7 +32,7 @@ export function PostProvider({ children }: ProviderProps) {
 	const [hideComments, setHideComments] = useState(false);
 	const [hideLikes, setHideLikes] = useState(false);
 	const [files, setFiles] = useState<FileList | null>(null);
-	const tryPost = async ({ navigate, addr }: tryPostProps) => {
+	const tryPost = async ({ navigate, addr, accessToken }: tryPostProps) => {
 		const formData = new FormData();
 		formData.append('content', content);
 		formData.append('hideComments', '' + hideComments);
@@ -41,9 +42,8 @@ export function PostProvider({ children }: ProviderProps) {
 			'https://assets.community.lomography.com/86/93d57e0bd8e88f6890c1687803700ab45f3007/576x576x2.jpg?auth=fb4474f73f10307f800cfe75a5a7052702f6d316'
 		);
 		try {
-			const accessToken = 1;
 			const response = await axios.post(
-				'https://waffle5gram.shop/api/v1/post',
+				'https://waffle5gram.shop/api/v1/posts',
 				formData,
 				{
 					headers: {
