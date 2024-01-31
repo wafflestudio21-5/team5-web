@@ -9,7 +9,9 @@ import NavBar from './components/NavBar.tsx';
 import { useUserContext } from './contexts/UserContext.tsx';
 import AddText from './pages/AddPost/AddText.tsx';
 import UploadPhoto from './pages/AddPost/UploadPhoto.tsx';
+import DetailExplore from './pages/Explore/DetailExplore.tsx';
 import Explore from './pages/Explore/Explore.tsx';
+import ExploreFeed from './pages/Explore/ExploreFeed.tsx';
 import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
 import Certification from './pages/Login/passwordRecovery/Certification.tsx';
@@ -53,6 +55,14 @@ const router = createBrowserRouter([
 			{
 				path: 'explore/',
 				element: <Explore />,
+			},
+			{
+				path: 'explore/:category/',
+				element: <DetailExplore />,
+			},
+			{
+				path: 'explore/:category/:id',
+				element: <ExploreFeed />,
 			},
 			{
 				path: 'addPost/',
