@@ -49,7 +49,6 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 		}
 	});
 
-
 	return (
 		<>
 			<Container>
@@ -61,7 +60,6 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 							openCommentModal={openCommentModal}
 						/>
 					</div>
-
 				))}
 			</Container>
 			{menuModal !== 'closed' && (
