@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
+import DefaultProfileIcon from '../../assets/Images/Profile/default-profile.svg';
 import { getColor } from '../../styles/Theme';
-import { UserType } from '../../types';
+import { MiniProfileType } from '../../types';
 
 const Container = styled.div`
 	display: flex;
@@ -34,7 +35,7 @@ const NameBox = styled.div`
 `;
 
 type UserInfoProps = {
-	user: UserType;
+	user: MiniProfileType;
 };
 
 export default function UserInfo({ user }: UserInfoProps) {
@@ -42,7 +43,14 @@ export default function UserInfo({ user }: UserInfoProps) {
 		<StyledLink>
 			<Container>
 				<ImageBox>
-					<ProfileImage src={user.profileImageUrl} alt="profile image" />
+					<ProfileImage
+						src={
+							user.profileImageUrl !== ''
+								? user.profileImageUrl
+								: DefaultProfileIcon
+						}
+						alt="profile image"
+					/>
 				</ImageBox>
 				<NameBox>
 					<span>

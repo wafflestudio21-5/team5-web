@@ -36,7 +36,7 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -72,7 +72,7 @@ export const trySignUp = async ({
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -94,7 +94,7 @@ export const resetAccessToken = async () => {
 		console.log(error);
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
-			alert(err.response.data);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -109,7 +109,7 @@ export const tryFacebookLogin = async () => {
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}

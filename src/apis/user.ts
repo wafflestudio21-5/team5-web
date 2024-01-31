@@ -22,7 +22,7 @@ export const getUserInformation = async (
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -58,11 +58,11 @@ export const getUserFollowStatus = async (
 		if (err.response) {
 			if (
 				err.response.status === 404 &&
-				err.response.data.error === 'User not follow.'
+				err.response.data.message === 'User not follow.'
 			) {
 				return false;
 			} else {
-				alert(err.response.data.error);
+				alert(err.response.data.message);
 			}
 		} else {
 			alert('Error occurred');
@@ -94,11 +94,11 @@ export const getUserFollowMeStatus = async (
 		if (err.response) {
 			if (
 				err.response.status === 404 &&
-				err.response.data.error === 'Not follower.'
+				err.response.data.message === 'Not follower.'
 			) {
 				return false;
 			} else {
-				alert(err.response.data.error);
+				alert(err.response.data.message);
 			}
 		} else {
 			alert('Error occurred');
@@ -138,11 +138,11 @@ export const getFollowRequestStatus = async (
 		if (err.response) {
 			if (
 				err.response.status === 404 &&
-				err.response.data.error === 'Request not Found.'
+				err.response.data.message === 'Request not Found.'
 			) {
 				return false;
 			} else {
-				alert(err.response.data.error);
+				alert(err.response.data.message);
 			}
 		} else {
 			alert('Error occurred');
@@ -174,11 +174,11 @@ export const getFollowRequestToMeStatus = async (
 		if (err.response) {
 			if (
 				err.response.status === 404 &&
-				err.response.data.error === 'Request not Found.'
+				err.response.data.message === 'Request not Found.'
 			) {
 				return false;
 			} else {
-				alert(err.response.data.error);
+				alert(err.response.data.message);
 			}
 		} else {
 			alert('Error occurred');
@@ -208,7 +208,7 @@ export const requestFollowToPrivateUser = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -236,7 +236,7 @@ export const cancelRequestFollowToPrivateUser = async (
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -271,7 +271,7 @@ export const followPublicUser = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -300,7 +300,7 @@ export const unfollowUser = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -329,7 +329,7 @@ export const deleteFollower = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -363,7 +363,7 @@ export const getFollowerCommon = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -392,7 +392,7 @@ export const getFollowerDiff = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -420,7 +420,7 @@ export const getFollowingCommon = async (
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -447,7 +447,7 @@ export const getFollowingDiff = async (
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}

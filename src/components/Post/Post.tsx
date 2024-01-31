@@ -29,14 +29,14 @@ export default function Post({
 }: Props) {
 	return (
 		postData && (
-			<Container>
+			<Container id={'post' + postData.id}>
 				<PostHeader
 					user={postData.user}
 					showMenu={() => {
 						openMenuModal(postData.id);
 					}}
 				/>
-				<PostImage imageUrl={postData.imageUrl} />
+				<PostImage media={postData.media} />
 				<ReactSection
 					postData={postData}
 					showComment={() => {
