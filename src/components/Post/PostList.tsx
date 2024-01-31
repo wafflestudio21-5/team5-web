@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { PreviewType } from '../../types';
+import { PostListProps } from '../../types';
 
 const Wrapper = styled.div`
 	display: grid;
@@ -23,12 +23,6 @@ const Wrapper = styled.div`
 		width: 100%;
 	}
 `;
-
-type PostListProps = {
-	previews: PreviewType[];
-	callbackUrl: string;
-	useHashtag: boolean;
-};
 
 export default function PostList({
 	previews,

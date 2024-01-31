@@ -8,6 +8,7 @@ type Props = {
 const Icon = styled.img`
 	width: 1.5rem;
 	float: left;
+	margin-left: 0.5rem;
 `;
 const ElementBox = styled.div`
 	width: 100%;

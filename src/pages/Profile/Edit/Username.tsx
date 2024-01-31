@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { editUsername, fetchUserInformation } from '../../../apis/account.ts';
+import { editUsername } from '../../../apis/account.ts';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
 import { getColor } from '../../../styles/Theme.tsx';
 

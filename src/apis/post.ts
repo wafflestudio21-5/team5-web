@@ -1,8 +1,9 @@
 import axios, { AxiosError } from 'axios';
-
-import { baseURL } from '../constants.ts';
+import { baseURL } from '../constants';
+import { resetAccessToken } from './login';
 import {
 	APIErrorResponseType,
+	CategoryType,
 	CommentPageType,
 	CommentType,
 	FeedType,
@@ -11,6 +12,12 @@ import {
 	PostType,
 } from '../types.ts';
 
+type TryPostType = {
+	content: string;
+	files: FileList;
+	category: CategoryType;
+	accessToken: string;
+};
 // author(user) response 형
 type AuthorResponseType = {
 	id: number;
@@ -30,19 +37,8 @@ type PostResponseType = {
 	liked: boolean;
 	saved: boolean;
 	hideLike: boolean;
-	category:
-		| 'GAME'
-		| 'TRAVEL'
-		| 'FOOD'
-		| 'SPORT'
-		| 'ANIMAL'
-		| 'LIFE'
-		| 'FASHION'
-		| 'HUMOR'
-		| 'ART'
-		| 'NEWS';
+	category: CategoryType;
 };
-
 // 피드 response 형
 type FeedResponseType = {
 	posts: PostResponseType[];
@@ -53,6 +49,62 @@ type FeedResponseType = {
 		hasNext: boolean;
 		elements: number;
 	};
+};
+
+export const tryPost = async ({
+	content,
+	files,
+	category,
+	accessToken,
+}: TryPostType) => {
+	const api = axios.create({ baseURL: baseURL });
+	const formData = new FormData();
+	formData.append('content', content);
+	formData.append('category', category.toString());
+	for (let i = 0; i < files.length; i++) {
+		const file = files[i];
+		const blob = new Blob([file], { type: file.type });
+		formData.append('files', blob);
+	}
+	try {
+		const response = await axios.post(`${baseURL}/api/v1/posts`, formData, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+				'Content-Type': 'multipart/form-data',
+			},
+		});
+		console.log(response);
+		return response;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		console.log(err.response);
+		if (err.response && err.response.status == 401) {
+			try {
+				const newAccessToken = await resetAccessToken();
+				const retryResponse = await api.post(
+					`${baseURL}/api/v1/posts`,
+					formData,
+					{
+						headers: {
+							Authorization: `Bearer ${newAccessToken}`,
+							'Content-Type': 'multipart/form-data',
+						},
+					}
+				);
+				console.log(retryResponse);
+				return retryResponse;
+			} catch (refreshError) {
+				console.error('토큰 재발급 실패 : ', refreshError);
+				return null;
+			}
+		} else if (err.response && err.response.data) {
+			alert(err.response.data);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
 };
 
 // 피드 게시물 가져오기

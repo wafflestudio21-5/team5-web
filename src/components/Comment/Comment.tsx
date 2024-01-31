@@ -6,7 +6,7 @@ import {
 	getReply,
 	handleCommentLike,
 	handleReplyLike,
-} from '../../apis/post';
+} from '../../apis/post.ts';
 import likeIcon from '../../assets/Images/Post/like.svg';
 import likedIcon from '../../assets/Images/Post/liked.svg';
 import DefaultProfileIcon from '../../assets/Images/Profile/default-profile.svg';
