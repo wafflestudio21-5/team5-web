@@ -7,7 +7,6 @@ import reels from '../assets/Images/NavBar/reels.png';
 import search from '../assets/Images/NavBar/search.png';
 import searchBold from '../assets/Images/NavBar/searchBold.png';
 import addPost from '../assets/Images/Profile/add-post.png';
-import defaultProfile from '../assets/Images/Profile/default-profile.svg';
 import { useUserContext } from '../contexts/UserContext.tsx';
 import Icon from '../shared/Icon.tsx';
 import { getColor } from '../styles/Theme.tsx';
@@ -38,7 +37,7 @@ const NavBarLayout = styled.nav`
 export default function NavBar() {
 	const navigate = useNavigate();
 	const currentURL = useLocation().pathname;
-	const { username } = useUserContext();
+	const { username, profileImageUrl } = useUserContext();
 
 	const isHidden = currentURL.includes('account');
 
@@ -67,7 +66,8 @@ export default function NavBar() {
 					onClick={() => navigate('/explore')}
 				></Icon>
 				<Icon
-					src={defaultProfile}
+					// src={profileImageUrl}
+					src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/680px-Default_pfp.svg.png?20220226140232"
 					alt="Profile"
 					onClick={() => navigate(`/${username}`)}
 				></Icon>

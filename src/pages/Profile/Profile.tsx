@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { addProfileImage, fetchUserInformation } from '../../apis/account.ts';
 import {
 	getUserInformation,
 	getUserFollowStatus,
@@ -14,11 +15,12 @@ import {
 	cancelRequestFollowToPrivateUser,
 	acceptFollowRequest,
 	rejectFollowRequest,
+	getFeedPreview,
 } from '../../apis/user.ts';
 import addPost from '../../assets/Images/Profile/add-post.png';
 import back from '../../assets/Images/Profile/back.png';
-import defaultProfile from '../../assets/Images/Profile/default-profile.svg';
 import menu from '../../assets/Images/Profile/menu.png';
+import PostList from '../../components/Post/PostList.tsx';
 import AddPostModal from '../../components/Profile/AddPostModal.tsx';
 import FollowerModal from '../../components/Profile/FollowerModal.tsx';
 import LinkModal from '../../components/Profile/LinkModal.tsx';
@@ -27,7 +29,7 @@ import ToggleBar from '../../components/Profile/ToggleBar.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 import { getColor } from '../../styles/Theme.tsx';
-import { UserType } from '../../types.ts';
+import { PreviewType, UserType } from '../../types.ts';
 
 const ProfileLayout = styled.main`
 	width: 100%;
@@ -320,7 +322,13 @@ export default function Profile() {
 
 	// id로 유저 정보 가져오기
 	const { id } = useParams();
-	const { username, accessToken, isMyAccountPrivate } = useUserContext();
+	const {
+		accessToken,
+		currentUser,
+		setCurrentUser,
+		username,
+		isMyAccountPrivate,
+	} = useUserContext();
 
 	// 프로필 페이지의 유저 정보
 	const [user, setUser] = useState<UserType | null>();
@@ -335,8 +343,31 @@ export default function Profile() {
 		boolean | null
 	>(null); // 내가 비공개일 때 나에게 팔로우 요청을 보냈는지 확인
 
+	// 유저 프로필 이미지 설정
+	const profileImageRef = useRef<HTMLInputElement>(null);
+
+	const onProfileImageClick = () => {
+		if (profileImageRef.current) {
+			profileImageRef.current.click();
+		}
+	};
+
+	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files.length > 0) {
+			const file = e.target.files[0];
+			const formData = new FormData();
+			formData.append('file', file);
+
+			await addProfileImage(accessToken, formData);
+			await fetchUserData();
+			await fetchUserInformation(accessToken, currentUser, setCurrentUser);
+		}
+	};
+
+	// 게시물 미리보기
+	const [previews, setPreviews] = useState<PreviewType[]>([]);
+
 	const fetchUserData = async () => {
-		console.log('유저 데이터 패치');
 		try {
 			if (!id) {
 				navigate('/');
@@ -350,6 +381,12 @@ export default function Profile() {
 				return;
 			}
 			setUser(userInfo);
+
+			// 게시물 미리보기 가져오기
+			const previews = await getFeedPreview(userInfo.username, accessToken);
+			if (previews) {
+				setPreviews(previews);
+			}
 
 			// 내 계정인지 판단
 			if (userInfo.username === username) {
@@ -419,6 +456,7 @@ export default function Profile() {
 			setIsFollowRequestToPrivate(null);
 			setIsMyFollower(null);
 			setIsFollowRequestToMe(null);
+			setPreviews([]);
 
 			await fetchUserData();
 			setIsLoading(false);
@@ -602,7 +640,20 @@ export default function Profile() {
 
 				{/* 프로필 사진, 게시물, 팔로워, 팔로잉 */}
 				<UserInfoContainer>
-					<img src={defaultProfile} alt="프로필 사진" />
+					<>
+						<img
+							src={user.profileImageUrl}
+							alt="프로필 사진"
+							onClick={onProfileImageClick}
+						/>
+						<input
+							type="file"
+							style={{ display: 'none' }}
+							ref={profileImageRef}
+							accept="image/*"
+							onChange={handleFileChange}
+						/>
+					</>
 					<div>
 						<h2>{user.postNumber}</h2>
 						<p>게시물</p>
@@ -705,7 +756,11 @@ export default function Profile() {
 						activeTab={activeTab}
 						setActiveTab={setActiveTab}
 					>
-						<div>포스트</div>
+						<PostList
+							previews={previews}
+							callbackUrl={`/${user.username}/feed`}
+							useHashtag={true}
+						></PostList>
 						<div>태그됨</div>
 					</ToggleBar>
 				</PostContainer>

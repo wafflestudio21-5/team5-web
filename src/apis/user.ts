@@ -1,7 +1,13 @@
 import axios, { AxiosError } from 'axios';
 
 import { baseURL } from '../constants.ts';
-import { APIErrorResponseType, MiniProfileType, UserType } from '../types.ts';
+import {
+	APIErrorResponseType,
+	MiniProfileType,
+	PostType,
+	PreviewType,
+	UserType,
+} from '../types.ts';
 
 // 유저 정보 가져오기
 export const getUserInformation = async (
@@ -474,6 +480,62 @@ export const getFollowingDiff = async (
 	try {
 		const response = await axios.get<FollowListResponseType>(
 			`${baseURL}/api/v1/friendship/${username}/following/diff`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		return response.data;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+// 피드 미리보기 가져오기
+export const getFeedPreview = async (
+	username: string,
+	accessToken: string
+): Promise<PreviewType[]> => {
+	try {
+		const response = await axios.get<PreviewType[]>(
+			`${baseURL}/api/v1/account/${username}/feed/preview`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		return response.data;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return [];
+	}
+};
+
+// 유저 피드 가져오기
+export const getUserFeed = async (
+	username: string,
+	accessToken: string
+): Promise<PostType[] | null> => {
+	try {
+		const response = await axios.get<PostType[]>(
+			`${baseURL}/api/v1/account/${username}/feed/newer`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,

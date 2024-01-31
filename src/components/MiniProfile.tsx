@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import DefaultProfileImage from '../assets/Images/Profile/default-profile.svg';
 import { getColor } from '../styles/Theme.tsx';
 import { MiniProfileType } from '../types.ts';
 
@@ -119,13 +118,14 @@ export default function MiniProfile({
 		else if (buttonLabel === '팔로우') return 'blue';
 		else if (buttonLabel === '팔로잉') return 'grey';
 		else if (buttonLabel === '삭제') return 'delete';
+		else if (buttonLabel === 'X') return 'grey';
 	};
 
 	return (
 		<MiniProfileLayout onClick={() => navigate(`/${user.username}`)}>
 			<ImageContainer>
 				{/*<img src={user.profileImageUrl} alt="프로필 사진" />*/}
-				<img src={DefaultProfileImage} alt="프로필 사진" />
+				<img src={user.profileImageUrl} alt="프로필 사진" />
 			</ImageContainer>
 			<UserInfoContainer>
 				<p className="username">{user.username}</p>

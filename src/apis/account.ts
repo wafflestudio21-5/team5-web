@@ -90,21 +90,19 @@ export const updateAccountToOpen = async (
 	}
 };
 
-// 프로필 이미지 추가
+// 프로필 사진 추가
 export const addProfileImage = async (
 	accessToken: string,
-	profileImageUrl: string
+	profileImage: FormData
 ): Promise<boolean> => {
 	try {
 		await axios.post(
 			`${baseURL}/api/v1/account/profileEdit/image`,
-			{
-				profileImageUrl: profileImageUrl,
-			},
+			profileImage,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
-					'Content-Type': 'application/json',
+					'Content-Type': 'multipart/form-data',
 				},
 			}
 		);
