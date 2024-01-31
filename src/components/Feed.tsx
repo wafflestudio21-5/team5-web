@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getColor } from '../styles/Theme.tsx';
@@ -35,15 +36,24 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 		setCommentModal('open');
 	};
 
+	const focus = useRef<HTMLDivElement | null>(null);
+	const hash = useLocation().hash;
+
+	useEffect(() => {
+		focus.current?.scrollIntoView({ behavior: 'instant' });
+	});
+
 	return (
 		<>
 			<Container>
 				{posts.map((post) => (
-					<Post
-						postData={post}
-						openMenuModal={openMenuModal}
-						openCommentModal={openCommentModal}
-					/>
+					<div ref={hash === `#post${post.id}` ? focus : null}>
+						<Post
+							postData={post}
+							openMenuModal={openMenuModal}
+							openCommentModal={openCommentModal}
+						/>
+					</div>
 				))}
 			</Container>
 			{menuModal !== 'closed' && (
