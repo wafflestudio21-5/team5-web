@@ -8,7 +8,6 @@ import { usePostContext } from '../../contexts/PostContext';
 import { useUserContext } from '../../contexts/UserContext';
 import { fetchUserInformation } from '../../apis/account';
 import { tryPost } from '../../apis/post';
-import { resetAccessToken } from '../../apis/login';
 
 const Background = styled.div`
 	background-color: white;
@@ -57,9 +56,9 @@ const ShareButton = styled.button`
 	position: fixed;
 	bottom: 1rem;
 	background-color: blue;
-	width: 400px;
+	width: 90%;
 	height: 3rem;
-	margin-left: 15px;
+	margin-left: 5%;
 	border-radius: 0.5rem;
 	border: none;
 	color: white;
@@ -90,7 +89,7 @@ const Textarea = styled.textarea`
 
 export default function AddText() {
 	const navigate = useNavigate();
-	const { setAccessToken, accessToken, username, currentUser, setCurrentUser } =
+	const { accessToken, username, currentUser, setCurrentUser } =
 		useUserContext();
 	const { files, setContent, content, category } = usePostContext();
 	const [previewUrls, setPreviewUrls] = useState<string[]>([]);
@@ -112,9 +111,6 @@ export default function AddText() {
 	const handleClick = async () => {
 		if (category) {
 			const addr = `/${username}`;
-			const newAccessToken = await resetAccessToken();
-			setAccessToken(newAccessToken);
-			console.log(accessToken);
 			if (files !== null && category !== null) {
 				const response = await tryPost({
 					content,

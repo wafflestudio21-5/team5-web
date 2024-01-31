@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { usePostContext } from '../../contexts/PostContext';
-import { CategoryType } from '../../types';
+import KorToEng from './KorToEng';
 
 type DivType = {
 	isClicked: boolean;
@@ -49,27 +49,15 @@ export default function Select() {
 		'예술',
 		'뉴스',
 	];
-	const subjectsEng: CategoryType[] = [
-		'GAME',
-		'TRAVEL',
-		'FOOD',
-		'SPORT',
-		'ANIMAL',
-		'LIFE',
-		'FASHION',
-		'HUMOR',
-		'ART',
-		'NEWS',
-	];
+	useEffect(() => {
+		if (clickNum === 0) setCategory(null);
+		else setCategory(KorToEng(subjects[clickNum - 1]));
+	}, [clickNum]);
 	const { setCategory, category } = usePostContext();
 	const handleClick = (num: number) => {
 		if (clickNum === 0) setClickNum(num);
 		else if (clickNum === num) setClickNum(0);
 		else setClickNum(num);
-
-		if (clickNum === 0) setCategory(null);
-		else setCategory(subjectsEng[num - 1]);
-		console.log(category);
 	};
 	return (
 		<SubjectBox>

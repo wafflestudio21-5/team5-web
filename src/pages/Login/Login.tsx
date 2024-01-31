@@ -7,6 +7,7 @@ import { resetAccessToken, tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
 import { useUserContext } from '../../contexts/UserContext';
 import { baseURL } from '../../constants.ts';
+import { useCookies } from 'react-cookie';
 
 const Img = styled.img`
 	&.instagram {
@@ -97,16 +98,11 @@ export default function Login() {
 	const [usernameInput, setUsernameInput] = useState('');
 	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
+	const [cookies, setCookie, removeCookie] = useCookies(['refresh_token']);
+	const [refreshToken, setRefreshToken] = useState(cookies.refresh_token || '');
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
 	const resultParam = queryParams.get('result');
-	console.log('resultParam : ' + resultParam);
-	console.log('location : ' + location);
-	useEffect(() => {
-		if (resultParam === 'success') {
-			facebookLoggedin();
-		}
-	}, [resultParam]);
 	const facebookLoggedin = async () => {
 		const newAccessToken = await resetAccessToken();
 		setAccessToken(newAccessToken);
@@ -118,6 +114,7 @@ export default function Login() {
 		else setIsActive(false);
 	}, [usernameInput, passwordInput]);
 	const handleClick = async () => {
+		console.log(refreshToken);
 		const accessToken = await tryLogin({
 			username: usernameInput,
 			password: passwordInput,
@@ -132,6 +129,7 @@ export default function Login() {
 				accessToken
 			);
 			setCurrentUser(currentUserInfo);
+			console.log(document.cookie);
 		}
 	};
 	return (

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import PostList from '../Post/PostList';
-import posts from '../../test/data/posts.json';
-import { useEffect, useState } from 'react';
-import { PostType } from '../../types';
+import posts from '../../test/data/postlist.json';
+import { PostListProps } from '../../types';
+import { useNavigate } from 'react-router-dom';
+import KorToEng from '../CreatePost/KorToEng';
 
 const Header = styled.div`
 	width: 100%;
@@ -30,7 +31,7 @@ const Text = styled.div`
 const More = styled.div`
 	background-color: gainsboro;
 	border: none;
-	width: 97%;
+	width: 96%;
 	padding: 0.5rem 0.5rem;
 `;
 const RightArrow = styled.img`
@@ -44,25 +45,16 @@ type PreviewType = {
 };
 
 export default function Preview({ category }: PreviewType) {
-	const [newPosts, setNewPosts] = useState<PostType[]>([]);
-	useEffect(() => {
-		const temp = posts.map((post) => ({
-			...post,
-			user: {
-				...post.user,
-				birthday: new Date(post.user.birthday),
-			},
-		}));
-		setNewPosts(temp);
-	});
+	const navigate = useNavigate();
+	const newPosts: PostListProps = posts;
 	return (
 		<>
 			<Header>
 				<Subject>{category}</Subject>
 				<Text>관련 게시물</Text>
 			</Header>
-			<PostList posts={newPosts} />
-			<More>
+			<PostList {...newPosts} />
+			<More onClick={() => navigate(`/explore/${KorToEng(category)}`)}>
 				더보기
 				<RightArrow
 					src="https://cdn-icons-png.flaticon.com/512/271/271228.png"

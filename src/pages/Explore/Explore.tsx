@@ -1,8 +1,10 @@
 // import PostList from '../../components/Post/PostList';
 // import feed from '../../test/data/feed.json';
 import styled from 'styled-components';
-import SubjectBar from '../../components/CreatePost/SubjectBar';
+import SubjectBar from '../../components/Explore/SubjectBar';
 import Preview from '../../components/Explore/Preview';
+import { CategoryType } from '../../types';
+import { useState } from 'react';
 
 const Logo = styled.img`
 	width: 8rem;
@@ -23,13 +25,14 @@ export default function Explore() {
 		'예술',
 		'뉴스',
 	];
+	const [category, setCategory] = useState<CategoryType | null>(null);
 	return (
 		<>
 			<Logo
 				src="https://1000logos.net/wp-content/uploads/2017/02/Logo-Instagram.png"
 				alt="로고"
 			/>
-			<SubjectBar />
+			<SubjectBar setCategory={setCategory} category={category} />
 			{subjects.map((subject) => (
 				<Preview category={subject} />
 			))}

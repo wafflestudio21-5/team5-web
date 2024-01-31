@@ -61,7 +61,6 @@ export const tryPost = async ({
 	const formData = new FormData();
 	formData.append('content', content);
 	formData.append('category', category.toString());
-	formData.append('files', 'hi');
 	for (let i = 0; i < files.length; i++) {
 		const file = files[i];
 		const blob = new Blob([file], { type: file.type });

@@ -51,6 +51,10 @@ const router = createBrowserRouter([
 				element: <Explore />,
 			},
 			{
+				path: 'explore/',
+				element: <Explore />,
+			},
+			{
 				path: 'addPost/',
 				element: <UploadPhoto />,
 			},
