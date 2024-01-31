@@ -21,6 +21,7 @@ const Subject = styled.div<DivType>`
 `;
 const ScrollContainer = styled.div`
 	overflow-x: auto;
+	width: 100%;
 	height: 3rem;
 	white-space: nowrap;
 	&::-webkit-scrollbar {
