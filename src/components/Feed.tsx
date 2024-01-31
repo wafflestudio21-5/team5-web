@@ -39,8 +39,14 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 	const focus = useRef<HTMLDivElement | null>(null);
 	const hash = useLocation().hash;
 
+	const [isFocuesd, setIsFocused] = useState(false);
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => {
-		focus.current?.scrollIntoView({ behavior: 'instant' });
+		if (focus.current && !isFocuesd) {
+			focus.current?.scrollIntoView({ behavior: 'instant' });
+			setIsFocused(true);
+		}
 	});
 
 	return (
