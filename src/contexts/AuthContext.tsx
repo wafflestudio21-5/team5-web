@@ -13,8 +13,6 @@ export type AuthContextData = {
 	setBirthday: (d: Date) => void;
 	isSaved: boolean;
 	setIsSaved: (b: boolean) => void;
-	isLoggedin: boolean;
-	setIsLoggedin: (b: boolean) => void;
 };
 
 export const AuthContext = createContext<AuthContextData | null>(null);
@@ -29,7 +27,6 @@ export function AuthProvider({ children }: ProviderProps) {
 	const [email, setEmail] = useState('');
 	const [birthday, setBirthday] = useState(new Date());
 	const [isSaved, setIsSaved] = useState(false);
-	const [isLoggedin, setIsLoggedin] = useState(false);
 
 	return (
 		<AuthContext.Provider
@@ -46,8 +43,6 @@ export function AuthProvider({ children }: ProviderProps) {
 				setBirthday,
 				isSaved,
 				setIsSaved,
-				isLoggedin,
-				setIsLoggedin,
 			}}
 		>
 			{children}

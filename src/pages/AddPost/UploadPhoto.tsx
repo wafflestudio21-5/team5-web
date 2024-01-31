@@ -31,6 +31,7 @@ const Next = styled.button`
 	color: blue;
 	border: none;
 	background-color: transparent;
+	margin-left: -2rem;
 `;
 const Img = styled.img`
 	width: 3%;

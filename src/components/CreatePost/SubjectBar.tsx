@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { usePostContext } from '../../contexts/PostContext';
+import KorToEng from './KorToEng';
 
 type DivType = {
 	isClicked: boolean;
@@ -19,6 +21,7 @@ const Subject = styled.div<DivType>`
 `;
 const ScrollContainer = styled.div`
 	overflow-x: auto;
+	width: 100%;
 	height: 3rem;
 	white-space: nowrap;
 	&::-webkit-scrollbar {
@@ -35,17 +38,22 @@ const SubjectBox = styled.div`
 export default function Select() {
 	const [clickNum, setClickNum] = useState(0);
 	const subjects = [
-		'일상',
-		'유머',
-		'음식',
-		'여행',
 		'게임',
+		'여행',
+		'음식',
 		'스포츠',
 		'동물',
+		'일상',
 		'패션',
+		'유머',
 		'예술',
 		'뉴스',
 	];
+	useEffect(() => {
+		if (clickNum === 0) setCategory(null);
+		else setCategory(KorToEng(subjects[clickNum - 1]));
+	}, [clickNum]);
+	const { setCategory } = usePostContext();
 	const handleClick = (num: number) => {
 		if (clickNum === 0) setClickNum(num);
 		else if (clickNum === num) setClickNum(0);

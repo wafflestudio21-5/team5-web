@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useAuthContext } from '../../../contexts/AuthContext';
+import { useEffect } from 'react';
+import { useUserContext } from '../../../contexts/UserContext';
 
 const Img = styled.img`
 	width: 10rem;
@@ -47,10 +48,14 @@ const Button = styled.button`
 
 export default function AddPhoto() {
 	const navigate = useNavigate();
-	const { setIsLoggedin } = useAuthContext();
+	const { isLoggedIn, setIsLoggedIn } = useUserContext();
+	useEffect(() => {
+		if (isLoggedIn) {
+			navigate('/');
+		}
+	}, [isLoggedIn]);
 	const handleClick = () => {
-		setIsLoggedin(true);
-		navigate('/');
+		setIsLoggedIn(true);
 	};
 	return (
 		<>

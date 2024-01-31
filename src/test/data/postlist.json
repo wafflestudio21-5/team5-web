@@ -1,0 +1,30 @@
+{
+	"previews": [
+		{
+			"id": 1,
+			"thumbnailUrl": "https://blog.kakaocdn.net/dn/LCpoM/btq61mbhIZ1/tVcgONhGMJ70Vp7RjqKPj0/img.jpg"
+		},
+		{
+			"id": 2,
+			"thumbnailUrl": "https://blog.kakaocdn.net/dn/LCpoM/btq61mbhIZ1/tVcgONhGMJ70Vp7RjqKPj0/img.jpg"
+		},
+		{
+			"id": 3,
+			"thumbnailUrl": "https://blog.kakaocdn.net/dn/LCpoM/btq61mbhIZ1/tVcgONhGMJ70Vp7RjqKPj0/img.jpg"
+		},
+		{
+			"id": 4,
+			"thumbnailUrl": "https://blog.kakaocdn.net/dn/LCpoM/btq61mbhIZ1/tVcgONhGMJ70Vp7RjqKPj0/img.jpg"
+		},
+		{
+			"id": 5,
+			"thumbnailUrl": "https://blog.kakaocdn.net/dn/LCpoM/btq61mbhIZ1/tVcgONhGMJ70Vp7RjqKPj0/img.jpg"
+		},
+		{
+			"id": 6,
+			"thumbnailUrl": "https://blog.kakaocdn.net/dn/LCpoM/btq61mbhIZ1/tVcgONhGMJ70Vp7RjqKPj0/img.jpg"
+		}
+	],
+	"callbackUrl": "/explore/sport",
+	"useHashtag": false
+}

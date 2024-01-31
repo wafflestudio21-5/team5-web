@@ -21,7 +21,7 @@ export const fetchUserInformation = async (
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -50,7 +50,7 @@ export const updateAccountToPrivate = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -81,7 +81,7 @@ export const updateAccountToOpen = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -114,7 +114,7 @@ export const addProfileImage = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -140,7 +140,7 @@ export const deleteProfileImage = async (accessToken: string) => {
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -171,7 +171,7 @@ export const editName = async (accessToken: string, name: string) => {
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -202,7 +202,7 @@ export const editUsername = async (accessToken: string, username: string) => {
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -233,7 +233,7 @@ export const editBio = async (accessToken: string, bio: string) => {
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -269,7 +269,7 @@ export const editGender = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -306,7 +306,7 @@ export const addLink = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}
@@ -332,7 +332,7 @@ export const deleteLink = async (accessToken: string, linkId: string) => {
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.error);
+			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
 		}

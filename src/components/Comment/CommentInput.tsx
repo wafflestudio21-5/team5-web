@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { postComment, postReply } from '../../apis/post';
+import { postComment, postReply } from '../../apis/post.ts';
 import CancelIcon from '../../assets/Images/Post/cancel.svg';
 import DefaultProfile from '../../assets/Images/Profile/default-profile.svg';
 import { useUserContext } from '../../contexts/UserContext';

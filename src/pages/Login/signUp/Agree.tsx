@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { tryLogin, trySignUp } from '../../../apis/login';
-import { useUserContext } from '../../../contexts/UserContext';
-import { useAuthContext } from '../../../contexts/AuthContext';
 import { getUserInformation } from '../../../apis/user';
+import { useAuthContext } from '../../../contexts/AuthContext';
+import { useUserContext } from '../../../contexts/UserContext';
 
 const Img = styled.img`
 	width: 2rem;
@@ -92,7 +92,7 @@ const Button = styled.button`
 	}
 	&.selectAll {
 		display: inline;
-		width: 23%;
+		width: 40%;
 		margin-left: 14rem;
 		text-align: right;
 		border: transparent;
@@ -123,8 +123,7 @@ export default function Agree() {
 		checkbox2: false,
 		checkbox3: false,
 	});
-	const { username, password, name, email, birthday, setIsLoggedin } =
-		useAuthContext();
+	const { username, password, name, email, birthday } = useAuthContext();
 	const { setAccessToken, setCurrentUser } = useUserContext();
 	const handleClick = async () => {
 		const signupResponse = await trySignUp({
@@ -139,13 +138,12 @@ export default function Agree() {
 				username: username,
 				password: password,
 			});
-
+			console.log('로그인 정보 : ', accessToken);
 			if (accessToken !== null) {
-				setIsLoggedin(true);
 				setAccessToken(accessToken);
-
 				const currentUserInfo = await getUserInformation(username, accessToken);
 				setCurrentUser(currentUserInfo);
+				navigate('/signUp/photo');
 			}
 		}
 	};

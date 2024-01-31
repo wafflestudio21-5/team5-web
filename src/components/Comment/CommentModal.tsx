@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { deleteComment, getPostComment } from '../../apis/post';
+import { deleteComment, getPostComment } from '../../apis/post.ts';
 import { useUserContext } from '../../contexts/UserContext';
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
