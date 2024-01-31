@@ -1,13 +1,12 @@
 /* import FacebookLogin from '@greatsumini/react-facebook-login';
  */ import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { resetAccessToken, tryLogin } from '../../apis/login';
+import { tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
 import { useUserContext } from '../../contexts/UserContext';
 import { baseURL } from '../../constants.ts';
-import { useCookies } from 'react-cookie';
 
 const Img = styled.img`
 	&.instagram {
@@ -98,7 +97,7 @@ export default function Login() {
 	const [usernameInput, setUsernameInput] = useState('');
 	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
-	const [cookies, setCookie, removeCookie] = useCookies(['refresh_token']);
+	/* 	const [cookies, setCookie, removeCookie] = useCookies(['refresh_token']);
 	const [refreshToken, setRefreshToken] = useState(cookies.refresh_token || '');
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
@@ -108,13 +107,12 @@ export default function Login() {
 		setAccessToken(newAccessToken);
 		setIsLoggedIn(true);
 	};
-	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
+ */ const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
 		else setIsActive(false);
 	}, [usernameInput, passwordInput]);
 	const handleClick = async () => {
-		console.log(refreshToken);
 		const accessToken = await tryLogin({
 			username: usernameInput,
 			password: passwordInput,
