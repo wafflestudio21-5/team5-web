@@ -53,7 +53,7 @@ export default function Select() {
 		if (clickNum === 0) setCategory(null);
 		else setCategory(KorToEng(subjects[clickNum - 1]));
 	}, [clickNum]);
-	const { setCategory, category } = usePostContext();
+	const { setCategory } = usePostContext();
 	const handleClick = (num: number) => {
 		if (clickNum === 0) setClickNum(num);
 		else if (clickNum === num) setClickNum(0);
