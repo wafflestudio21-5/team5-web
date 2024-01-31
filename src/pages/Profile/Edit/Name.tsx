@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -50,8 +50,16 @@ export default function Name() {
 
 	const navigate = useNavigate();
 
+	// 입력창 자동 focus
+	const inputRef = useRef<HTMLInputElement>(null);
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, []);
+
 	const onSubmit = async () => {
-		await editName(accessToken, editedName);
+		await editName(accessToken, editedName.trim());
 		await fetchUserInformation(accessToken, currentUser, setCurrentUser);
 		navigate('/account/edit');
 	};
@@ -64,6 +72,8 @@ export default function Name() {
 				<input
 					type="text"
 					value={editedName}
+					maxLength={30}
+					ref={inputRef}
 					onChange={(e) => setEditedName(e.target.value)}
 				/>
 				<p>

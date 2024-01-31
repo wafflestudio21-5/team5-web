@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -51,26 +51,46 @@ export default function Username() {
 
 	const navigate = useNavigate();
 
+	// 입력창 자동 focus
+	const inputRef = useRef<HTMLInputElement>(null);
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, []);
+
 	const onSubmit = async () => {
-		const res = await editUsername(accessToken, editedUsername);
-		setAccessToken(res.accessToken);
+		const newAccessToken = await editUsername(accessToken, editedUsername);
 
-		const newCurrentUser = {
-			...currentUser,
-			username: editedUsername,
-		};
+		if (newAccessToken) {
+			setAccessToken(newAccessToken);
 
-		await fetchUserInformation(res.accessToken, newCurrentUser, setCurrentUser);
-		navigate('/account/edit');
+			const newCurrentUser = {
+				...currentUser,
+				username: editedUsername.trim(),
+			};
+
+			await fetchUserInformation(
+				newAccessToken,
+				newCurrentUser,
+				setCurrentUser
+			);
+			navigate('/account/edit');
+		}
 	};
 
 	return (
 		<EditLayout>
-			<EditHeader title="사용자 이름" onClickSave={onSubmit} />
+			<EditHeader
+				title="사용자 이름"
+				onClickSave={editedUsername.trim().length === 0 ? () => {} : onSubmit}
+			/>
 			<EditContainer>
 				<input
 					type="text"
 					value={editedUsername}
+					maxLength={30}
+					ref={inputRef}
 					onChange={(e) => setEditedUsername(e.target.value)}
 				/>
 				<p>14일간 사용자 이름을 다시 {username}(으)로 변경할 수 있습니다.</p>

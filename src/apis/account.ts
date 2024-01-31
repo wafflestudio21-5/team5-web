@@ -31,9 +31,9 @@ export const fetchUserInformation = async (
 // 계정 비공개로 변경
 export const updateAccountToPrivate = async (
 	accessToken: string
-): Promise<string | null> => {
+): Promise<boolean> => {
 	try {
-		const response = await axios.put(
+		await axios.put(
 			`${baseURL}/api/v1/account/toPrivate`,
 			{
 				message: 'Change non-private account to private account.',
@@ -45,7 +45,7 @@ export const updateAccountToPrivate = async (
 			}
 		);
 
-		return response.data.message;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -55,16 +55,16 @@ export const updateAccountToPrivate = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
 // 계정 공개로 변경
 export const updateAccountToOpen = async (
 	accessToken: string
-): Promise<string | null> => {
+): Promise<boolean> => {
 	try {
-		const response = await axios.put(
+		await axios.put(
 			`${baseURL}/api/v1/account/toOpen`,
 			{
 				message: 'Change private account to non-private account.',
@@ -76,7 +76,7 @@ export const updateAccountToOpen = async (
 			}
 		);
 
-		return response.data.message;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -86,7 +86,7 @@ export const updateAccountToOpen = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -94,9 +94,9 @@ export const updateAccountToOpen = async (
 export const addProfileImage = async (
 	accessToken: string,
 	profileImageUrl: string
-) => {
+): Promise<boolean> => {
 	try {
-		const response = await axios.post(
+		await axios.post(
 			`${baseURL}/api/v1/account/profileEdit/image`,
 			{
 				profileImageUrl: profileImageUrl,
@@ -109,7 +109,7 @@ export const addProfileImage = async (
 			}
 		);
 
-		return response.data;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -119,23 +119,22 @@ export const addProfileImage = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
 // 프로필 사진 삭제
-export const deleteProfileImage = async (accessToken: string) => {
+export const deleteProfileImage = async (
+	accessToken: string
+): Promise<boolean> => {
 	try {
-		const response = await axios.delete(
-			`${baseURL}/api/v1/account/profileEdit/image`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
+		await axios.delete(`${baseURL}/api/v1/account/profileEdit/image`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
 
-		return response.data;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -145,14 +144,17 @@ export const deleteProfileImage = async (accessToken: string) => {
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
 // 유저 이름 편집
-export const editName = async (accessToken: string, name: string) => {
+export const editName = async (
+	accessToken: string,
+	name: string
+): Promise<boolean> => {
 	try {
-		const response = await axios.put(
+		await axios.put(
 			`${baseURL}/api/v1/account/profileEdit/name`,
 			{
 				name: name,
@@ -166,7 +168,7 @@ export const editName = async (accessToken: string, name: string) => {
 			}
 		);
 
-		return response.data;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -176,13 +178,16 @@ export const editName = async (accessToken: string, name: string) => {
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
 // 유저 사용자 이름(username) 편집
 // accessToken도 같이 온다
-export const editUsername = async (accessToken: string, username: string) => {
+export const editUsername = async (
+	accessToken: string,
+	username: string
+): Promise<string | null> => {
 	try {
 		const response = await axios.put(
 			`${baseURL}/api/v1/account/profileEdit/username`,
@@ -198,11 +203,11 @@ export const editUsername = async (accessToken: string, username: string) => {
 			}
 		);
 
-		return response.data;
+		return response.data.accessToken;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
-		if (err.response && err.response.data) {
+		if (err.response && err.response.status === 409) {
 			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
@@ -213,9 +218,12 @@ export const editUsername = async (accessToken: string, username: string) => {
 };
 
 // 유저 소개 편집
-export const editBio = async (accessToken: string, bio: string) => {
+export const editBio = async (
+	accessToken: string,
+	bio: string
+): Promise<boolean> => {
 	try {
-		const response = await axios.put(
+		await axios.put(
 			`${baseURL}/api/v1/account/profileEdit/bio`,
 			{
 				bio: bio,
@@ -229,7 +237,7 @@ export const editBio = async (accessToken: string, bio: string) => {
 			}
 		);
 
-		return response.data;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -239,7 +247,7 @@ export const editBio = async (accessToken: string, bio: string) => {
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -248,9 +256,9 @@ export const editGender = async (
 	accessToken: string,
 	gender: string,
 	isCustomGender: boolean
-) => {
+): Promise<boolean> => {
 	try {
-		const response = await axios.put(
+		await axios.put(
 			`${baseURL}/api/v1/account/profileEdit/gender`,
 			{
 				gender: gender,
@@ -265,7 +273,7 @@ export const editGender = async (
 			}
 		);
 
-		return response.data;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -275,7 +283,7 @@ export const editGender = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -284,9 +292,9 @@ export const addLink = async (
 	accessToken: string,
 	linkTitle: string,
 	link: string
-) => {
+): Promise<boolean> => {
 	try {
-		const response = await axios.post(
+		await axios.post(
 			`${baseURL}/api/v1/account/profileEdit/link`,
 			{
 				userLinks: {
@@ -302,7 +310,7 @@ export const addLink = async (
 			}
 		);
 
-		return response.data;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -312,7 +320,7 @@ export const addLink = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
@@ -322,13 +330,16 @@ export const updateLink = async (
 	linkId: number,
 	linkTitle: string,
 	link: string
-) => {
+): Promise<boolean> => {
 	try {
-		const response = await axios.put(
+		await axios.put(
 			`${baseURL}/api/v1/account/profileEdit/link/${linkId}`,
 			{
-				linkTitle: linkTitle,
-				link: link,
+				userLinks: {
+					linkTitle: linkTitle,
+					link: link,
+				},
+				message: 'Add user link in profile.',
 			},
 			{
 				headers: {
@@ -338,7 +349,7 @@ export const updateLink = async (
 			}
 		);
 
-		return response.data;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -348,23 +359,23 @@ export const updateLink = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };
 
 // 유저 링크 삭제
-export const deleteLink = async (accessToken: string, linkId: number) => {
+export const deleteLink = async (
+	accessToken: string,
+	linkId: number
+): Promise<boolean> => {
 	try {
-		const response = await axios.delete(
-			`${baseURL}/api/v1/account/profileEdit/link/${linkId}`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
+		await axios.delete(`${baseURL}/api/v1/account/profileEdit/link/${linkId}`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
 
-		return response.data;
+		return true;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -374,6 +385,6 @@ export const deleteLink = async (accessToken: string, linkId: number) => {
 			alert('Error occurred');
 		}
 
-		return null;
+		return false;
 	}
 };

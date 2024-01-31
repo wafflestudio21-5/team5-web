@@ -9,6 +9,7 @@ const SearchBarLayout = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 90%;
+	margin-bottom: 1rem;
 `;
 
 const SearchBarContainer = styled.div`

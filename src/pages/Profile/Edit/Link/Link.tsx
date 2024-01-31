@@ -47,6 +47,7 @@ export default function Link() {
 				</AddLinkContainer>
 				{userLinks.map((link, index) => (
 					<LinkItem
+						key={link.linkId}
 						linkTitle={link.linkTitle}
 						link={link.link}
 						linkCount={index}

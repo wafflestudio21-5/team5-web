@@ -29,6 +29,7 @@ export default function LinkModal({ close, isClosing }: Props) {
 				<hr />
 				{userLinks.map((link, index) => (
 					<LinkItem
+						key={link.linkId}
 						linkTitle={link.linkTitle}
 						link={link.link}
 						linkCount={index}

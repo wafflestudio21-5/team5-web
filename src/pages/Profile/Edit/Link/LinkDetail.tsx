@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -71,6 +71,14 @@ export default function LinkDetail() {
 	const { linkParam } = useParams();
 	const navigate = useNavigate();
 
+	// 입력창 자동 focus
+	const inputRef = useRef<HTMLInputElement>(null);
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, []);
+
 	const isAdd = linkParam === 'add';
 
 	const linkNumber = parseInt(linkParam!);
@@ -96,8 +104,8 @@ export default function LinkDetail() {
 			: await updateLink(
 					accessToken,
 					userLinks[linkNumber].linkId,
-					editedLinkTitle,
-					editedLink
+					editedLinkTitle.trim(),
+					editedLink.trim()
 				);
 		await fetchUserInformation(accessToken, currentUser, setCurrentUser);
 		navigate('/account/edit/link');
@@ -120,6 +128,7 @@ export default function LinkDetail() {
 				<input
 					type="text"
 					value={editedLink}
+					ref={inputRef}
 					onChange={(e) => setEditedLink(e.target.value)}
 				/>
 				<p>제목</p>

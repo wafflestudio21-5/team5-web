@@ -12,6 +12,8 @@ import {
 	followPublicUser,
 	unfollowUser,
 	cancelRequestFollowToPrivateUser,
+	acceptFollowRequest,
+	rejectFollowRequest,
 } from '../../apis/user.ts';
 import addPost from '../../assets/Images/Profile/add-post.png';
 import back from '../../assets/Images/Profile/back.png';
@@ -37,7 +39,7 @@ const ProfileLayout = styled.main`
 
 const HeaderContainer = styled.div`
 	position: relative;
-	width: 100%;
+	width: 90%;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -45,15 +47,20 @@ const HeaderContainer = styled.div`
 
 	// 좌측 상단의 뒤로가기 아이콘
 	& .back {
-		margin-left: 1rem;
-
 		&:hover {
 			cursor: pointer;
 		}
+
+		margin-right: 2rem;
 	}
 
 	& h2 {
-		margin: 0 1rem;
+		margin: 0 auto 0 0;
+
+		max-width: 50%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	// 우측 상단의 아이콘 컨테이너 정렬
@@ -71,7 +78,7 @@ const IconContainer = styled.div`
 	align-items: center;
 
 	& img {
-		margin-right: 1rem;
+		margin-left: 1rem;
 
 		&:hover {
 			cursor: pointer;
@@ -88,8 +95,19 @@ const FollowRequestContainer = styled.div`
 	align-items: center;
 	margin-bottom: 1.5rem;
 
+	& hr {
+		width: 100%;
+		margin: 0;
+		border: none;
+		border-top: 0.5px solid ${getColor('lightGrey')};
+	}
+
 	& p {
-		margin: 0 1rem;
+		margin: 1rem;
+	}
+
+	& span {
+		font-weight: 700;
 	}
 
 	& div {
@@ -97,17 +115,29 @@ const FollowRequestContainer = styled.div`
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
+
+		width: 100%;
 	}
 
 	& button {
+		width: 35%;
 		padding: 0.5rem 1rem;
+		margin: 0 0.5rem 1rem 0;
 
 		border: none;
 		border-radius: 0.5rem;
 
+		font-size: 1rem;
+		font-weight: 500;
+
 		&:hover {
 			cursor: pointer;
 		}
+	}
+
+	& button.accept {
+		color: ${getColor('white')};
+		background-color: ${getColor('blue')};
 	}
 `;
 
@@ -157,7 +187,7 @@ const UserInfoContainer = styled.div`
 	}
 `;
 
-// 이름, 소개
+// 이름, 소개, 링크
 const UserProfileContainer = styled.div`
 	width: 100%;
 	display: flex;
@@ -179,6 +209,11 @@ const UserProfileContainer = styled.div`
 		margin: 0.2rem 1rem 0 1rem;
 		color: ${getColor('darkBlue')};
 		text-decoration: none;
+
+		max-width: 90%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	& p.links {
@@ -186,6 +221,16 @@ const UserProfileContainer = styled.div`
 
 		&:hover {
 			cursor: pointer;
+		}
+
+		& span {
+			display: inline-block;
+			max-width: 15rem;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+
+			margin-right: 0.5rem;
 		}
 	}
 `;
@@ -291,6 +336,7 @@ export default function Profile() {
 	>(null); // 내가 비공개일 때 나에게 팔로우 요청을 보냈는지 확인
 
 	const fetchUserData = async () => {
+		console.log('유저 데이터 패치');
 		try {
 			if (!id) {
 				navigate('/');
@@ -362,24 +408,53 @@ export default function Profile() {
 		}
 	};
 
-	const initialFetchUserData = async () => {
-		setIsLoading(true);
-		await fetchUserData();
-		setIsLoading(false);
+	useEffect(() => {
+		const initialFetchUserData = async () => {
+			setIsLoading(true);
+
+			setUser(null);
+			setIsMyAccount(null);
+			setIsFollow(null);
+			setIsOpen(null);
+			setIsFollowRequestToPrivate(null);
+			setIsMyFollower(null);
+			setIsFollowRequestToMe(null);
+
+			await fetchUserData();
+			setIsLoading(false);
+		};
+
+		initialFetchUserData();
+	}, [id]);
+
+	// 팔로우 요청 수락 or 거절
+	const onClickFollowRequested = async (accept: boolean) => {
+		if (!user) return;
+
+		setIsFollowRequestToMe(false);
+
+		try {
+			const result = accept
+				? await acceptFollowRequest(user.username, accessToken)
+				: await rejectFollowRequest(user.username, accessToken);
+			if (result) {
+				await fetchUserData();
+			} else {
+				setIsFollowRequestToMe(true);
+			}
+		} catch {
+			setIsFollowRequestToMe(true);
+		}
 	};
 
-	useEffect(() => {
-		initialFetchUserData();
-	}, [id, navigate]);
-
 	// 계정 공개 여부에 따라 팔로워, 팔로잉 버튼 클릭 여부 결정
-	const handleFollowersClick = () => {
-		if (isOpen) {
+	const onClickFollowers = () => {
+		if (isMyAccount || isFollow || isOpen) {
 			navigate(`/${id}/followers`);
 		}
 	};
-	const handleFollowingClick = () => {
-		if (isOpen) {
+	const onClickFollowing = () => {
+		if (isMyAccount || isFollow || isOpen) {
 			navigate(`/${id}/following`);
 		}
 	};
@@ -396,8 +471,8 @@ export default function Profile() {
 		setIsFollow(false);
 
 		try {
-			const unfollowResult = await unfollowUser(user.username, accessToken);
-			if (unfollowResult) {
+			const result = await unfollowUser(user.username, accessToken);
+			if (result) {
 				await fetchUserData();
 			} else {
 				setIsFollow(true);
@@ -414,11 +489,11 @@ export default function Profile() {
 		setIsFollow(true);
 
 		try {
-			const followResult = await followPublicUser(user.username, accessToken);
-			if (followResult) {
-				setIsFollow(false);
-			} else {
+			const result = await followPublicUser(user.username, accessToken);
+			if (result) {
 				await fetchUserData();
+			} else {
+				setIsFollow(false);
 			}
 		} catch {
 			setIsFollow(false);
@@ -432,11 +507,11 @@ export default function Profile() {
 		setIsFollowRequestToPrivate(true);
 
 		try {
-			const followResult = await requestFollowToPrivateUser(
+			const result = await requestFollowToPrivateUser(
 				user.username,
 				accessToken
 			);
-			if (followResult) {
+			if (result) {
 				await fetchUserData();
 			} else {
 				setIsFollowRequestToPrivate(false);
@@ -453,11 +528,11 @@ export default function Profile() {
 		setIsFollowRequestToPrivate(false);
 
 		try {
-			const followResult = await cancelRequestFollowToPrivateUser(
+			const result = await cancelRequestFollowToPrivateUser(
 				user.username,
 				accessToken
 			);
-			if (followResult) {
+			if (result) {
 				await fetchUserData();
 			} else {
 				setIsFollowRequestToPrivate(true);
@@ -473,8 +548,11 @@ export default function Profile() {
 			<ProfileLayout>
 				{/* 헤더 */}
 				<HeaderContainer>
-					{!isMyAccount && <Icon src={back} className="back" />}
-					{isMyAccountPrivate && <p>좌물쇠</p>}
+					{!isMyAccount ? (
+						<Icon src={back} className="back" onClick={() => navigate(-1)} />
+					) : (
+						isMyAccountPrivate && <p>좌물쇠</p>
+					)}
 					<h2>{id}</h2>
 					{isMyAccount ? (
 						<IconContainer>
@@ -503,11 +581,22 @@ export default function Profile() {
 				{/* 팔로우 요청 왔을 때에만 띄우는 수락 거절 창 */}
 				{isFollowRequestToMe && (
 					<FollowRequestContainer>
-						<p>{user.username}님이 팔로우를 요청했습니다</p>
+						<hr />
+						<p>
+							<span>{user.username}</span>님이 팔로우를 요청했습니다
+						</p>
 						<div>
-							<button>확인</button>
-							<button>삭제</button>
+							<button
+								className="accept"
+								onClick={() => onClickFollowRequested(true)}
+							>
+								확인
+							</button>
+							<button onClick={() => onClickFollowRequested(false)}>
+								삭제
+							</button>
 						</div>
+						<hr />
 					</FollowRequestContainer>
 				)}
 
@@ -518,11 +607,11 @@ export default function Profile() {
 						<h2>{user.postNumber}</h2>
 						<p>게시물</p>
 					</div>
-					<div onClick={handleFollowersClick}>
+					<div onClick={onClickFollowers}>
 						<h2>{user.followerNumber}</h2>
 						<p>팔로워</p>
 					</div>
-					<div onClick={handleFollowingClick}>
+					<div onClick={onClickFollowing}>
 						<h2>{user.followingNumber}</h2>
 						<p>팔로잉</p>
 					</div>
@@ -546,7 +635,8 @@ export default function Profile() {
 								setLinkModal('open');
 							}}
 						>
-							{user.userLinks[0].link} 외 {user.userLinks.length - 1}개
+							<span>{user.userLinks[0].link}</span>
+							<span>외 {user.userLinks.length - 1}개</span>
 						</p>
 					)}
 				</UserProfileContainer>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -50,8 +50,16 @@ export default function Bio() {
 
 	const navigate = useNavigate();
 
+	// 입력창 자동 focus
+	const inputRef = useRef<HTMLInputElement>(null);
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, []);
+
 	const onSubmit = async () => {
-		await editBio(accessToken, editedBio);
+		await editBio(accessToken, editedBio.trim());
 		await fetchUserInformation(accessToken, currentUser, setCurrentUser);
 		navigate('/account/edit');
 	};
@@ -63,6 +71,8 @@ export default function Bio() {
 				<input
 					type="text"
 					value={editedBio}
+					maxLength={150}
+					ref={inputRef}
 					onChange={(e) => setEditedBio(e.target.value)}
 				/>
 			</EditContainer>

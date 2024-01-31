@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -15,7 +15,7 @@ const EditLayout = styled.div`
 	justify-content: center;
 	align-items: center;
 
-	box-shadow: 0 0.5rem 1rem -0.5rem ${getColor('lightGrey')};
+	box-shadow: 0 12px 5px -7px ${getColor('lightGrey')};
 `;
 
 const EditContainer = styled.div`
@@ -103,9 +103,21 @@ export default function Gender() {
 
 	const navigate = useNavigate();
 
+	// 입력창 자동 focus
+	const inputRef = useRef<HTMLInputElement>(null);
+	useEffect(() => {
+		if (editedIsCustomGender && inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, [editedIsCustomGender]);
+
 	const onSubmit = async () => {
 		if (editedIsCustomGender) {
-			await editGender(accessToken, editedCustomGender, editedIsCustomGender);
+			await editGender(
+				accessToken,
+				editedCustomGender.trim(),
+				editedIsCustomGender
+			);
 		} else {
 			await editGender(accessToken, editedGender, editedIsCustomGender);
 		}
@@ -155,6 +167,8 @@ export default function Gender() {
 						<input
 							type="text"
 							value={editedCustomGender}
+							maxLength={30}
+							ref={inputRef}
 							onChange={(e) => setEditedCustomGender(e.target.value)}
 						/>
 					</CustomGenderContainer>
