@@ -64,17 +64,7 @@ export type PostType = {
 	commentCount: number;
 	saved: boolean;
 	hideLike: boolean;
-	category:
-		| 'GAME'
-		| 'TRAVEL'
-		| 'FOOD'
-		| 'SPORT'
-		| 'ANIMAL'
-		| 'LIFE'
-		| 'FASHION'
-		| 'HUMOR'
-		| 'ART'
-		| 'NEWS';
+	category: CategoryType;
 };
 
 export type FeedType = {
@@ -136,4 +126,27 @@ export type MediaType = {
 export type PreviewType = {
 	id: number;
 	thumbnailUrl: string;
+};
+
+export type CategoryType =
+	| 'GAME'
+	| 'TRAVEL'
+	| 'FOOD'
+	| 'SPORT'
+	| 'ANIMAL'
+	| 'LIFE'
+	| 'FASHION'
+	| 'HUMOR'
+	| 'ART'
+	| 'NEWS';
+
+export type ExplorePreviewType = {
+	previews: PreviewType[];
+	pageInfo: {
+		page: number;
+		size: number;
+		offset: number;
+		hasNext: boolean;
+		elements: number;
+	};
 };
