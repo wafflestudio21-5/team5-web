@@ -2,21 +2,21 @@
 	{
 		"name": "상추",
 		"username": "sangchu",
-		"id": 1,
+		"userId": 1,
 		"profileImageUrl": "https://wafflestudio.com/static/images/DefaultProfileImage.svg",
 		"isPrivate": false
 	},
 	{
 		"name": "감자",
 		"username": "gamja",
-		"id": 2,
+		"userId": 2,
 		"profileImageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYeYsx-pISnYjDS1YiUL4uGA-I6yAcf1sSuA&usqp=CAU",
 		"isPrivate": false
 	},
 	{
 		"name": "배추",
 		"username": "baechu",
-		"id": 3,
+		"userId": 3,
 		"profileImageUrl": "https://wafflestudio.com/static/images/DefaultProfileImage.svg",
 		"isPrivate": false
 	}

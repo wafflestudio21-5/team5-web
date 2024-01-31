@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import MenuElement from '../../components/CreatePost/MenuElement';
 import Select from '../../components/CreatePost/SubjectBar';
 import { usePostContext } from '../../contexts/PostContext';
+import { useUserContext } from '../../contexts/UserContext';
+import { fetchUserInformation } from '../../apis/account';
+import { tryPost } from '../../apis/post';
 
 const Background = styled.div`
 	background-color: white;
@@ -53,9 +56,9 @@ const ShareButton = styled.button`
 	position: fixed;
 	bottom: 1rem;
 	background-color: blue;
-	width: 400px;
+	width: 90%;
 	height: 3rem;
-	margin-left: 15px;
+	margin-left: 5%;
 	border-radius: 0.5rem;
 	border: none;
 	color: white;
@@ -86,7 +89,9 @@ const Textarea = styled.textarea`
 
 export default function AddText() {
 	const navigate = useNavigate();
-	const { files, setContent, content, tryPost } = usePostContext();
+	const { accessToken, username, currentUser, setCurrentUser } =
+		useUserContext();
+	const { files, setContent, content, category } = usePostContext();
 	const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 	if (files && files.length > 0) {
 		Promise.all(
@@ -104,8 +109,21 @@ export default function AddText() {
 		});
 	}
 	const handleClick = async () => {
-		const addr = '/id';
-		tryPost({ navigate, addr });
+		if (category) {
+			const addr = `/${username}`;
+			if (files !== null && category !== null) {
+				const response = await tryPost({
+					content,
+					files,
+					category,
+					accessToken,
+				});
+				if (response) {
+					await fetchUserInformation(accessToken, currentUser, setCurrentUser);
+					navigate(addr);
+				}
+			}
+		}
 	};
 	const menuname = [
 		'사람 태그',

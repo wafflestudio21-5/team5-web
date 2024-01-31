@@ -1,12 +1,14 @@
-import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import { handleLike, handleSave } from '../../apis/post';
 import commentIcon from '../../assets/Images/Post/comment.svg';
 import likeIcon from '../../assets/Images/Post/like.svg';
 import likedIcon from '../../assets/Images/Post/liked.svg';
 import saveIcon from '../../assets/Images/Post/save.svg';
+import savedIcon from '../../assets/Images/Post/saved.svg';
 import shareIcon from '../../assets/Images/Post/share.svg';
+import { useUserContext } from '../../contexts/UserContext';
 import Icon from '../../shared/Icon';
 import { getColor } from '../../styles/Theme';
 import { PostType } from '../../types';
@@ -71,13 +73,17 @@ const TextBox = styled.div`
 `;
 
 type Props = {
-	postData: PostType | null;
+	postData: PostType;
 	showComment: () => void;
 };
 
 export default function ReactSection({ postData, showComment }: Props) {
-	const [liked, setLiked] = useState(false);
-	const [saved, setSaved] = useState(false);
+	const [liked, setLiked] = useState(postData.liked);
+	const [saved, setSaved] = useState(postData.saved);
+
+	const { accessToken } = useUserContext();
+
+	const createdDate = new Date(postData.createdAt);
 
 	return (
 		postData && (
@@ -86,13 +92,13 @@ export default function ReactSection({ postData, showComment }: Props) {
 					<div className="like-comment-share">
 						<div
 							className="icon-box"
-							onClick={() => {
-								if (liked) {
-									axios.post(`/api/v1/posts/${postData.id}/likes`);
-								} else {
-									axios.delete(`/api/v1/posts/${postData.id}/likes`);
-								}
-								setLiked(!liked);
+							onClick={async () => {
+								const result = await handleLike(
+									postData.id,
+									liked,
+									accessToken
+								);
+								if (result?.status === 'success') setLiked(!liked);
 							}}
 						>
 							{liked ? (
@@ -110,22 +116,27 @@ export default function ReactSection({ postData, showComment }: Props) {
 					</div>
 					<div
 						className="save"
-						onClick={() => {
-							if (saved) {
-								axios.post(`/api/v1/posts/${postData.id}/save`);
-							} else {
-								axios.delete(`/api/v1/posts/${postData.id}/save`);
-							}
-							setSaved(!saved);
+						onClick={async () => {
+							const result = await handleSave(postData.id, saved, accessToken);
+							if (result?.status === 'success') setSaved(!saved);
 						}}
 					>
 						<div className="icon-box">
-							<Icon src={saveIcon} />
+							{saved ? (
+								<Icon src={savedIcon} alt="저장 취소" />
+							) : (
+								<Icon src={saveIcon} alt="저장" />
+							)}
 						</div>
 					</div>
 				</IconBar>
 				<TextBox>
-					<span className="like-num">좋아요 {postData.likesCount}개</span>
+					<span className="like-num">
+						좋아요{' '}
+						{postData.likeCount +
+							(liked === postData.liked ? 0 : postData.liked ? -1 : 1)}
+						개
+					</span>
 				</TextBox>
 				<TextBox className="margin">
 					<span className="username">{postData.user.username}</span>{' '}
@@ -135,7 +146,15 @@ export default function ReactSection({ postData, showComment }: Props) {
 					className="margin secondary-text more-comment"
 					onClick={showComment}
 				>
-					댓글 {postData.commentsCount}개 모두 보기
+					댓글 {postData.commentCount}개 모두 보기
+				</TextBox>
+				<TextBox className="margin secondary-text more-comment">
+					{createdDate.getFullYear() +
+						'년 ' +
+						(createdDate.getMonth() + 1) +
+						'월 ' +
+						createdDate.getDate() +
+						'일'}
 				</TextBox>
 			</Container>
 		)

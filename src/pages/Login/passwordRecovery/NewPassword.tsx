@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useAuthContext } from '../../../contexts/AuthContext';
+import { useUserContext } from '../../../contexts/UserContext';
 
 interface InputProps {
 	isvalid: boolean;
@@ -72,14 +73,15 @@ const Button = styled.button`
 `;
 
 export default function NewPassword() {
-	const { password, setPassword, setIsLoggedin } = useAuthContext();
+	const { password, setPassword } = useAuthContext();
+	const { setIsLoggedIn } = useUserContext();
 	const [isValid, setIsValid] = useState(true);
 	const navigate = useNavigate();
 	const handleClick = () => {
 		if (password.length < 6) setIsValid(false);
 		else {
 			setIsValid(true);
-			setIsLoggedin(true);
+			setIsLoggedIn(true);
 			navigate('/');
 		}
 	};

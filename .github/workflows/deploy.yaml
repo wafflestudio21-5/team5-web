@@ -3,7 +3,7 @@ name: Build and Deploy to AWS S3
 on:
   push:
     branches:
-      - feat/profile
+      - main
 
 jobs:
   build-and-deploy:

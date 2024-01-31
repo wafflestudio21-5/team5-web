@@ -75,7 +75,7 @@ export default function LinkItem({
 				<p className="title">{linkTitle}</p>
 				<p className="link">{link}</p>
 			</LinkItemContainer>
-			{/*<p>화</p>*/}
+			{/*<p>화살표</p>*/}
 		</LinkItemLayout>
 	);
 }

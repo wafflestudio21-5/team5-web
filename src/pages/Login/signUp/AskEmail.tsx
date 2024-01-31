@@ -6,7 +6,7 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface InputProps {
 	isvalid: boolean;
-	type: string; // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
+	type: string;
 	value: string;
 	placeholder: string;
 	onChange: React.ChangeEventHandler<HTMLInputElement>;

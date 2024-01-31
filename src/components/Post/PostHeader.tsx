@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import ellipsis from '../../assets/Images/Post/ellipsis.svg';
 import Icon from '../../shared/Icon';
-import { UserType } from '../../types';
+import { MiniProfileType } from '../../types';
 
 import UserInfo from './UserInfo';
 
@@ -28,7 +28,7 @@ const ExtraButton = styled.button`
 `;
 
 type PostHeaderType = {
-	user: UserType;
+	user: MiniProfileType;
 	showMenu: () => void;
 };
 
