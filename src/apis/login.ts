@@ -54,16 +54,20 @@ export const trySignUp = async ({
 }: SignUpType) => {
 	try {
 		const phoneRegex = /^010\d{8}$/i;
+		console.log(phoneRegex.test(email) ? 'phone' : 'email');
 		const year = birthday.getFullYear();
 		const month = String(birthday.getMonth() + 1).padStart(2, '0');
 		const day = String(birthday.getDate()).padStart(2, '0');
 		const formatted = `${year}-${month}-${day}`;
-		console.log(username, password, email, birthday, name);
+		const contact = phoneRegex.test(email)
+			? `${email.slice(0, 3)}-${email.slice(3, 7)}-${email.slice(7)}`
+			: email;
+		console.log(contact);
 		const response = await axios.post(`${baseURL}/api/v1/auth/signup`, {
 			username: username,
 			name: name,
 			password: password,
-			contact: email,
+			contact: contact,
 			contactType: phoneRegex.test(email) ? 'phone' : 'email',
 			birthday: formatted,
 		});

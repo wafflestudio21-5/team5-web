@@ -134,11 +134,6 @@ export default function Agree() {
 			birthday,
 		});
 		if (signupResponse) {
-			/* if (isSaved) {
-				localStorage.setItem('username', username);
-				localStorage.setItem('password', password);
-				localStorage.setItem('isSaved', '' + isSaved);
-			} */
 			const accessToken = await tryLogin({
 				username: username,
 				password: password,

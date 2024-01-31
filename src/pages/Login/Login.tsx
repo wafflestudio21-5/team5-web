@@ -1,5 +1,4 @@
-/* import FacebookLogin from '@greatsumini/react-facebook-login';
- */ import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -107,11 +106,13 @@ export default function Login() {
 		setAccessToken(newAccessToken);
 		setIsLoggedIn(true);
 	};
- */ const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
+ */
+	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
 		else setIsActive(false);
 	}, [usernameInput, passwordInput]);
+
 	const handleClick = async () => {
 		const accessToken = await tryLogin({
 			username: usernameInput,
@@ -130,6 +131,7 @@ export default function Login() {
 			console.log(document.cookie);
 		}
 	};
+
 	return (
 		<div>
 			<Img
