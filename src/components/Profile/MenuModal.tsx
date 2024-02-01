@@ -12,7 +12,6 @@ import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 import Modal from '../../shared/Modal/Modal.tsx';
 import { getColor } from '../../styles/Theme.tsx';
-
 const MenuModalContainer = styled.div`
 	height: 40%;
 `;

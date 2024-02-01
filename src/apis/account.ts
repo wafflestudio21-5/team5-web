@@ -206,7 +206,7 @@ export const editUsername = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.status === 409) {
-			alert(err.response.data.message);
+			alert('이미 존재하는 사용자 이름입니다.');
 		} else {
 			alert('Error occurred');
 		}
