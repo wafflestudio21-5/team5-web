@@ -79,7 +79,7 @@ export const tryPost = async ({
 		return response;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
-		console.log(err.response);
+
 		if (err.response && err.response.status == 401) {
 			try {
 				const newAccessToken = await resetAccessToken();
