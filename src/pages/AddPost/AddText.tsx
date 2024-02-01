@@ -8,7 +8,7 @@ import { useUserContext } from '../../contexts/UserContext';
 import { fetchUserInformation } from '../../apis/account';
 import { tryPost } from '../../apis/post';
 import { resetAccessToken } from '../../apis/login';
-import PhotoPreview from '../../components/CreatePost/photoPreview';
+import PhotoPreview from '../../components/CreatePost/PhotoPreview';
 
 const Background = styled.div`
 	background-color: white;

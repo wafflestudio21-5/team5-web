@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { tryLogin } from '../../apis/login';
+import { resetAccessToken, tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
 import { baseURL } from '../../constants.ts';
 import { useUserContext } from '../../contexts/UserContext';
@@ -127,6 +127,8 @@ export default function Login() {
 				accessToken
 			);
 			setCurrentUser(currentUserInfo);
+			const newAccessToken = resetAccessToken();
+			console.log(newAccessToken);
 		}
 	};
 

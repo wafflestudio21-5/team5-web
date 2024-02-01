@@ -5,7 +5,6 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import Feed from './components/Feed.tsx';
 import NavBar from './components/NavBar.tsx';
 import { useUserContext } from './contexts/UserContext.tsx';
 import AddText from './pages/AddPost/AddText.tsx';
@@ -185,12 +184,12 @@ const loginRouter = createBrowserRouter([
 ]);
 
 export default function App() {
-	/* 	const { isLoggedIn } = useUserContext();
-	 */
+	const { isLoggedIn } = useUserContext();
+
 	return (
 		<ThemeProvider theme={Theme}>
 			<GlobalStyles />
-			<RouterProvider router={router /* isLoggedIn ? router : loginRouter */} />
+			<RouterProvider router={isLoggedIn ? router : loginRouter} />
 		</ThemeProvider>
 	);
 }
