@@ -42,7 +42,7 @@ type PostResponseType = {
 	category: CategoryType;
 };
 // 피드 response 형
-type FeedResponseType = {
+export type FeedResponseType = {
 	posts: PostResponseType[];
 	pageInfo: {
 		page: number;
