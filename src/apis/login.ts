@@ -85,13 +85,11 @@ export const trySignUp = async ({
 	}
 };
 
-const axiosWithCredentials: AxiosInstance = axios.create({
-	withCredentials: true,
-	baseURL: baseURL,
-});
-
 export const resetAccessToken = async () => {
 	axios.defaults.withCredentials = true;
+	const axiosWithCredentials: AxiosInstance = axios.create({
+		baseURL: baseURL,
+	});
 	try {
 		const response = await axiosWithCredentials.get(
 			`/api/v1/auth/refresh_token`
