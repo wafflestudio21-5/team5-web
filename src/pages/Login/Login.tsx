@@ -118,7 +118,6 @@ export default function Login() {
 			username: usernameInput,
 			password: passwordInput,
 		});
-		console.log(accessToken);
 		if (accessToken !== null) {
 			setIsLoggedIn(true);
 			setAccessToken(accessToken);
@@ -128,7 +127,6 @@ export default function Login() {
 				accessToken
 			);
 			setCurrentUser(currentUserInfo);
-			console.log(document.cookie);
 		}
 	};
 

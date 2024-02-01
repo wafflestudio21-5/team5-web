@@ -1,7 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useUserContext } from '../../../../contexts/UserContext.tsx';
 import BackHeader from '../../../../shared/BackHeader.tsx';
+import { getColor } from '../../../../styles/Theme.tsx';
 
 import LinkItem from './LinkItem.tsx';
 
@@ -11,6 +13,7 @@ const EditLayout = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	border-bottom: 1px solid ${getColor('lightGrey')};
 `;
 
 const EditContainer = styled.div`
@@ -32,16 +35,24 @@ const AddLinkContainer = styled.div`
 export default function Link() {
 	const { userLinks } = useUserContext();
 
+	const navigate = useNavigate();
+
 	return (
 		<EditLayout>
 			<BackHeader title="링크" backURL="/account/edit" />
 			<EditContainer>
-				<AddLinkContainer>
+				<AddLinkContainer onClick={() => navigate('/account/edit/link/add')}>
 					<p>아이콘</p>
 					<p>외부 링크 추가</p>
 				</AddLinkContainer>
-				{userLinks.map((link) => (
-					<LinkItem linkTitle={link.linkTitle} link={link.link} />
+				{userLinks.map((link, index) => (
+					<LinkItem
+						key={link.linkId}
+						linkTitle={link.linkTitle}
+						link={link.link}
+						linkCount={index}
+						isEdit={true}
+					/>
 				))}
 			</EditContainer>
 		</EditLayout>

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import editCancel from '../../../assets/Images/Profile/EditProfile/edit-cancel.png';
@@ -27,13 +27,18 @@ export default function EditHeader({
 	onClickSave: () => void;
 }) {
 	const navigate = useNavigate();
+	const currentURL = useLocation().pathname;
 
 	return (
 		<EditHeaderContainer>
 			<Icon
 				src={editCancel}
 				alt="취소"
-				onClick={() => navigate('/account/edit')}
+				onClick={() =>
+					currentURL.includes('/account/edit/link')
+						? navigate('/account/edit/link')
+						: navigate('/account/edit')
+				}
 			/>
 			<h2>{title}</h2>
 			<Icon src={editSave} alt="저장" onClick={onClickSave} />

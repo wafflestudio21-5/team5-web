@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 import Search from '../assets/Images/search.png';
@@ -9,6 +10,7 @@ const SearchBarLayout = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 90%;
+	margin-bottom: 1rem;
 `;
 
 const SearchBarContainer = styled.div`
@@ -41,14 +43,26 @@ const SearchBarContainer = styled.div`
 	}
 `;
 
-export default function SearchBar() {
+export default function SearchBar({
+	text,
+	onChangeSearch,
+}: {
+	text: string;
+	onChangeSearch: (e: string) => void;
+}) {
 	return (
 		<SearchBarLayout>
 			<SearchBarContainer>
 				<label htmlFor="search">
 					<img src={Search} alt="검색" />
 				</label>
-				<input type="text" id="search" placeholder="검색" />
+				<input
+					type="text"
+					id="search"
+					placeholder="검색"
+					value={text}
+					onChange={(e) => onChangeSearch(e.target.value)}
+				/>
 			</SearchBarContainer>
 		</SearchBarLayout>
 	);

@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
+import Feed from './components/Feed.tsx';
 import NavBar from './components/NavBar.tsx';
 import { useUserContext } from './contexts/UserContext.tsx';
 import AddText from './pages/AddPost/AddText.tsx';
@@ -32,11 +33,13 @@ import Bio from './pages/Profile/Edit/Bio.tsx';
 import Edit from './pages/Profile/Edit/Edit.tsx';
 import Gender from './pages/Profile/Edit/Gender.tsx';
 import Link from './pages/Profile/Edit/Link/Link.tsx';
+import LinkDetail from './pages/Profile/Edit/Link/LinkDetail.tsx';
 import Name from './pages/Profile/Edit/Name.tsx';
 import Username from './pages/Profile/Edit/Username.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Saved from './pages/Profile/Saved.tsx';
+import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
 
@@ -51,7 +54,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'search/',
-				element: <Explore />,
+				element: <Search />,
 			},
 			{
 				path: 'explore/',
@@ -76,6 +79,10 @@ const router = createBrowserRouter([
 			{
 				path: ':id/',
 				element: <Profile />,
+			},
+			{
+				path: ':id/feed/',
+				// element: <Feed />,
 			},
 			{
 				path: ':id/followers/',
@@ -108,6 +115,10 @@ const router = createBrowserRouter([
 			{
 				path: 'account/edit/link/',
 				element: <Link />,
+			},
+			{
+				path: 'account/edit/link/:linkParam/',
+				element: <LinkDetail />,
 			},
 			{
 				path: 'account/edit/gender/',

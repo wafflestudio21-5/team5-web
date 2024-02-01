@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { editUsername } from '../../../apis/account.ts';
+import { editUsername, fetchUserInformation } from '../../../apis/account.ts';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
 import { getColor } from '../../../styles/Theme.tsx';
 
@@ -45,31 +45,52 @@ const EditContainer = styled.div`
 `;
 
 export default function Username() {
-	const { accessToken, currentUser, setCurrentUser, username } =
+	const { accessToken, setAccessToken, currentUser, setCurrentUser, username } =
 		useUserContext();
 	const [editedUsername, setEditedUsername] = useState(username);
 
 	const navigate = useNavigate();
 
-	const onSubmit = async () => {
-		await editUsername(accessToken, editedUsername);
-		setCurrentUser({ ...currentUser, username: editedUsername });
+	// 입력창 자동 focus
+	const inputRef = useRef<HTMLInputElement>(null);
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, []);
 
-		// const newCurrentUser = {
-		// 	...currentUser,
-		// 	username: editedUsername,
-		// };
-		// await fetchUserInformation(accessToken, newCurrentUser, setCurrentUser);
-		navigate('/account/edit');
+	const onSubmit = async () => {
+		const newAccessToken = await editUsername(accessToken, editedUsername);
+
+		if (newAccessToken) {
+			setAccessToken(newAccessToken);
+
+			const newCurrentUser = {
+				...currentUser,
+				username: editedUsername.trim(),
+			};
+
+			await fetchUserInformation(
+				newAccessToken,
+				newCurrentUser,
+				setCurrentUser
+			);
+			navigate('/account/edit');
+		}
 	};
 
 	return (
 		<EditLayout>
-			<EditHeader title="사용자 이름" onClickSave={onSubmit} />
+			<EditHeader
+				title="사용자 이름"
+				onClickSave={editedUsername.trim().length === 0 ? () => {} : onSubmit}
+			/>
 			<EditContainer>
 				<input
 					type="text"
 					value={editedUsername}
+					maxLength={30}
+					ref={inputRef}
 					onChange={(e) => setEditedUsername(e.target.value)}
 				/>
 				<p>14일간 사용자 이름을 다시 {username}(으)로 변경할 수 있습니다.</p>
