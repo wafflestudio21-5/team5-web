@@ -36,7 +36,7 @@ export const KorCategoryMap: { [key in string]: CategoryType } = {
 };
 
 type CategoryResponseType = {
-	postMediasBriefList: PreviewType[];
+	previews: PreviewType[];
 	pageInfo: ExplorePreviewType['pageInfo'];
 };
 
@@ -59,7 +59,7 @@ export const getCategoryExplore = async (
 
 		const result = response.data;
 
-		return { previews: result.postMediasBriefList, pageInfo: result.pageInfo };
+		return { previews: result.previews, pageInfo: result.pageInfo };
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -91,7 +91,7 @@ export const getCompactExplore = async (
 
 		const result = response.data;
 
-		return result.postMediasBriefList;
+		return result.previews;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
