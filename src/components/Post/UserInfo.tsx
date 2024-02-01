@@ -39,16 +39,17 @@ const NameBox = styled.div`
 
 type UserInfoProps = {
 	user: MiniProfileType;
+	blockInteraction: boolean;
 };
 
-export default function UserInfo({ user }: UserInfoProps) {
+export default function UserInfo({ user, blockInteraction }: UserInfoProps) {
 	const navigate = useNavigate();
 	return (
 		<StyledLink>
 			<Container>
 				<ImageBox
 					onClick={() => {
-						navigate(`/${user.username}`);
+						if (!blockInteraction) navigate(`/${user.username}`);
 					}}
 				>
 					<ProfileImage
@@ -62,7 +63,7 @@ export default function UserInfo({ user }: UserInfoProps) {
 				</ImageBox>
 				<NameBox
 					onClick={() => {
-						navigate(`/${user.username}`);
+						if (!blockInteraction) navigate(`/${user.username}`);
 					}}
 				>
 					<span>

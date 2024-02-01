@@ -30,15 +30,22 @@ const ExtraButton = styled.button`
 type PostHeaderType = {
 	user: MiniProfileType;
 	showMenu: () => void;
+	blockInteraction: boolean;
 };
 
-export default function PostHeader({ user, showMenu }: PostHeaderType) {
+export default function PostHeader({
+	user,
+	showMenu,
+	blockInteraction = false,
+}: PostHeaderType) {
 	return (
 		<Wrapper>
-			<UserInfo user={user} />
-			<ExtraButton onClick={showMenu}>
-				<Icon src={ellipsis} alt="ellipsis" />
-			</ExtraButton>
+			<UserInfo user={user} blockInteraction={blockInteraction} />
+			{blockInteraction && (
+				<ExtraButton onClick={showMenu}>
+					<Icon src={ellipsis} alt="ellipsis" />
+				</ExtraButton>
+			)}
 		</Wrapper>
 	);
 }
