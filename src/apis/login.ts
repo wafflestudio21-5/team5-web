@@ -18,17 +18,20 @@ type LoginType = {
 
 export const tryLogin = async ({ username, password }: LoginType) => {
 	try {
-		const response = await fetch('https://api.example.com/login', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			credentials: 'include',
-			body: JSON.stringify({
-				username: username,
-				password: password,
-			}),
-		});
+		const response = await fetch(
+			'https://api.waffle5gram.com/api/v1/auth/login',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				credentials: 'include',
+				body: JSON.stringify({
+					username: username,
+					password: password,
+				}),
+			}
+		);
 
 		if (!response.ok) {
 			console.error('요청이 실패했습니다.');
@@ -37,6 +40,7 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 
 		const data = await response.json();
 		console.log('데이터:', data);
+		return data['accessToken'];
 	} catch (error) {
 		console.error('오류 발생:', error);
 	}
