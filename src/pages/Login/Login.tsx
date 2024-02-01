@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import { tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
-import { useUserContext } from '../../contexts/UserContext';
 import { baseURL } from '../../constants.ts';
+import { useUserContext } from '../../contexts/UserContext';
 
 const Img = styled.img`
 	&.instagram {
@@ -118,7 +118,6 @@ export default function Login() {
 			username: usernameInput,
 			password: passwordInput,
 		});
-		console.log(accessToken);
 		if (accessToken !== null) {
 			setIsLoggedIn(true);
 			setAccessToken(accessToken);
@@ -128,7 +127,6 @@ export default function Login() {
 				accessToken
 			);
 			setCurrentUser(currentUserInfo);
-			console.log(document.cookie);
 		}
 	};
 
