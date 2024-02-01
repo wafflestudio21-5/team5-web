@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
@@ -20,6 +21,7 @@ type CommentProps = {
 	handlePostReply: (comment: CommentType) => void;
 	handleDeleteComment: (comment: CommentType) => void;
 	setReload: (reload: boolean) => void;
+	postAuthorId: number;
 };
 
 const CommentContainer = styled.div`
@@ -51,6 +53,7 @@ const Profile = styled.div`
 	height: 2rem;
 	border-radius: 70%;
 	overflow: hidden;
+	cursor: pointer;
 	display: inline;
 	border: 1px solid ${getColor('grey')};
 	& > img {
@@ -76,6 +79,7 @@ const UsernameContentBox = styled.div`
 	}
 	& > .username {
 		font-weight: 600;
+		cursor: pointer;
 	}
 `;
 
@@ -108,6 +112,7 @@ export default function Comment({
 	handlePostReply,
 	handleDeleteComment,
 	setReload,
+	postAuthorId,
 }: CommentProps) {
 	const [replies, setReplies] = useState<CommentPageType>();
 	const [showReply, setShowReply] = useState(false);
@@ -115,6 +120,8 @@ export default function Comment({
 	const [replyReload, setReplyReload] = useState(true);
 
 	const { accessToken, userId } = useUserContext();
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchCommentData = async () => {
@@ -152,7 +159,11 @@ export default function Comment({
 
 	return (
 		<CommentContainer>
-			<Profile>
+			<Profile
+				onClick={() => {
+					navigate(`/${comment.user.username}`);
+				}}
+			>
 				<img
 					src={
 						comment.user.profileImageUrl !== ''
@@ -163,7 +174,14 @@ export default function Comment({
 				/>
 			</Profile>
 			<UsernameContentBox>
-				<span className="username">{comment.user.username}</span>
+				<span
+					className="username"
+					onClick={() => {
+						navigate(`/${comment.user.username}`);
+					}}
+				>
+					{comment.user.username}
+				</span>
 				<span>{comment.text}</span>
 				<div className="reaction-bar">
 					<TextBox
@@ -172,7 +190,7 @@ export default function Comment({
 					>
 						답글 달기
 					</TextBox>
-					{comment.user.userId === userId && (
+					{(comment.user.userId === userId || postAuthorId === userId) && (
 						<TextBox
 							className="secondary-text"
 							onClick={() => {
@@ -216,7 +234,12 @@ export default function Comment({
 					return (
 						<>
 							<ReplyContent>
-								<Profile className="reply">
+								<Profile
+									className="reply"
+									onClick={() => {
+										navigate(`/${comment.user.username}`);
+									}}
+								>
 									<img
 										src={
 											reply.user.profileImageUrl !== ''
@@ -227,7 +250,14 @@ export default function Comment({
 									/>
 								</Profile>
 								<UsernameContentBox>
-									<span className="username">{reply.user.username}</span>
+									<span
+										className="username"
+										onClick={() => {
+											navigate(`/${comment.user.username}`);
+										}}
+									>
+										{reply.user.username}
+									</span>
 									<span>{reply.text}</span>
 									<div className="reaction-bar">
 										<TextBox
@@ -247,7 +277,8 @@ export default function Comment({
 										>
 											답글 달기
 										</TextBox>
-										{reply.user.userId === userId && (
+										{(reply.user.userId === userId ||
+											postAuthorId === userId) && (
 											<TextBox
 												className="secondary-text"
 												onClick={() => {

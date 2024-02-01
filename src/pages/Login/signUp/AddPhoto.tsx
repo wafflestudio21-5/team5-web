@@ -1,7 +1,7 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useEffect } from 'react';
 import { useUserContext } from '../../../contexts/UserContext';
 
 const Img = styled.img`

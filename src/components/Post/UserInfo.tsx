@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import DefaultProfileIcon from '../../assets/Images/Profile/default-profile.svg';
@@ -21,6 +22,7 @@ const ImageBox = styled.div`
 	overflow: hidden;
 	display: inline;
 	border: 1px solid rgb(214, 214, 214);
+	cursor: pointer;
 `;
 
 const ProfileImage = styled.img`
@@ -32,17 +34,24 @@ const ProfileImage = styled.img`
 const NameBox = styled.div`
 	display: flex;
 	align-items: center;
+	cursor: pointer;
 `;
 
 type UserInfoProps = {
 	user: MiniProfileType;
+	blockInteraction: boolean;
 };
 
-export default function UserInfo({ user }: UserInfoProps) {
+export default function UserInfo({ user, blockInteraction }: UserInfoProps) {
+	const navigate = useNavigate();
 	return (
 		<StyledLink>
 			<Container>
-				<ImageBox>
+				<ImageBox
+					onClick={() => {
+						if (!blockInteraction) navigate(`/${user.username}`);
+					}}
+				>
 					<ProfileImage
 						src={
 							user.profileImageUrl !== ''
@@ -52,7 +61,11 @@ export default function UserInfo({ user }: UserInfoProps) {
 						alt="profile image"
 					/>
 				</ImageBox>
-				<NameBox>
+				<NameBox
+					onClick={() => {
+						if (!blockInteraction) navigate(`/${user.username}`);
+					}}
+				>
 					<span>
 						<b>{user.username}</b>
 					</span>

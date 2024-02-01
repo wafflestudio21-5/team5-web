@@ -143,3 +143,14 @@ export type CategoryType =
 	| 'HUMOR'
 	| 'ART'
 	| 'NEWS';
+
+export type ExplorePreviewType = {
+	previews: PreviewType[];
+	pageInfo: {
+		page: number;
+		size: number;
+		offset: number;
+		hasNext: boolean;
+		elements: number;
+	};
+};
