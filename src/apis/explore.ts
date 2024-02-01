@@ -40,8 +40,13 @@ export const KorCategoryMap: { [key in string]: CategoryType } = {
 	뉴스: 'NEWS',
 };
 
+type ExplorePreviewReponseType = {
+	postId: number;
+	thumbnailUrl: string;
+};
+
 type CategoryResponseType = {
-	previews: PreviewType[];
+	previews: ExplorePreviewReponseType[];
 	pageInfo: ExplorePreviewType['pageInfo'];
 };
 
@@ -64,7 +69,15 @@ export const getCategoryExplore = async (
 
 		const result = response.data;
 
-		return { previews: result.previews, pageInfo: result.pageInfo };
+		const formatedPreviews = result.previews.map((preview) => {
+			const formated: PreviewType = {
+				id: preview.postId,
+				thumbnailUrl: preview.thumbnailUrl,
+			};
+			return formated;
+		});
+
+		return { previews: formatedPreviews, pageInfo: result.pageInfo };
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -96,7 +109,15 @@ export const getCompactExplore = async (
 
 		const result = response.data;
 
-		return result.previews;
+		const formatedPreviews = result.previews.map((preview) => {
+			const formated: PreviewType = {
+				id: preview.postId,
+				thumbnailUrl: preview.thumbnailUrl,
+			};
+			return formated;
+		});
+
+		return formatedPreviews;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
