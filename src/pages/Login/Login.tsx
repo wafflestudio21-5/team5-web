@@ -107,9 +107,14 @@ export default function Login() {
 			username: usernameInput,
 			password: passwordInput,
 		});
+
 		if (accessToken !== null) {
 			setIsLoggedIn(true);
 			setAccessToken(accessToken);
+
+			const refreshToken = document.cookie.split('; ')[0].split('=')[1];
+			console.log(refreshToken);
+			localStorage.setItem('refreshToken', refreshToken);
 
 			const currentUserInfo = await getUserInformation(
 				usernameInput,
