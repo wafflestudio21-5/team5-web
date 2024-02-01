@@ -35,6 +35,7 @@ export default function Post({
 					showMenu={() => {
 						openMenuModal(postData);
 					}}
+					blockInteraction={false}
 				/>
 				<PostImage media={postData.media} />
 				<ReactSection
