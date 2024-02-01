@@ -37,7 +37,7 @@ const NavBarLayout = styled.nav`
 export default function NavBar() {
 	const navigate = useNavigate();
 	const currentURL = useLocation().pathname;
-	const { username, profileImageUrl } = useUserContext();
+	const { username } = useUserContext();
 
 	const isHidden = currentURL.includes('account');
 

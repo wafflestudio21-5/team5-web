@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+/* import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getUserFeed } from '../../apis/user.ts';
@@ -35,3 +35,4 @@ export default function UserFeed(id: number) {
 		</>
 	);
 }
+ */
