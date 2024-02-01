@@ -112,11 +112,12 @@ export const getCompactExplore = async (
 
 export const getExploreFeed = async (
 	postId: number,
+	page: number,
 	accessToken: string
 ): Promise<FeedType | null> => {
 	try {
 		const response = await axios.get<FeedResponseType>(
-			`${baseURL}/api/v1/explore/${postId}`,
+			`${baseURL}/api/v1/explore/${postId}?page=${page}`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
