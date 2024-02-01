@@ -128,14 +128,16 @@ export default function ExploreFeed() {
 		},
 	});
 
-	if (id === undefined || !Number.isInteger(Number(id))) return <></>;
+	if (
+		category === undefined ||
+		id === undefined ||
+		!Number.isInteger(Number(id))
+	)
+		return <></>;
 
 	return (
 		<>
-			<BackHeader
-				backURL="-1"
-				title={category !== undefined ? category : '뒤로'}
-			/>
+			<BackHeader backURL={'/explore/' + category} title={category} />
 			<Layout>
 				<div className="story-post">
 					<Feed posts={feedData.posts} />

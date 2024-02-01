@@ -120,7 +120,7 @@ export default function DetailExplore() {
 
 	return (
 		<>
-			<BackHeader backURL="-1" title="탐색탭" />
+			<BackHeader backURL="/explore" title="탐색탭" />
 			<PostList
 				previews={previewData.previews}
 				callbackUrl={'/explore/' + category}
