@@ -47,10 +47,12 @@ export default function PostMenuModal({
 	post,
 	close,
 	isClosing,
+	handleDeletePost,
 }: {
 	post: PostType | null;
 	close: () => void;
 	isClosing: boolean;
+	handleDeletePost: (postId: number) => void;
 }) {
 	const { userId } = useUserContext();
 
@@ -88,7 +90,15 @@ export default function PostMenuModal({
 					<button>이 게시물이 표시되는 이유</button>
 					<button>숨기기</button>
 					<button>신고</button>
-					{post?.user.userId === userId && <button>삭제</button>}
+					{post?.user.userId === userId && (
+						<button
+							onClick={() => {
+								handleDeletePost(post.id);
+							}}
+						>
+							삭제
+						</button>
+					)}
 				</ButtonGroup>
 			</ModalContent>
 		</Modal>
