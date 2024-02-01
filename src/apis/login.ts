@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { baseURL } from '../constants.ts';
 import { APIErrorResponseType } from '../types';
@@ -87,14 +87,13 @@ export const trySignUp = async ({
 };
 
 export const resetAccessToken = async () => {
-	axios.defaults.withCredentials = true;
-	const axiosWithCredentials: AxiosInstance = axios.create({
-		baseURL: baseURL,
-	});
 	try {
-		const response = await axiosWithCredentials.get(
-			`/api/v1/auth/refresh_token`
-		);
+		const refreshToken = localStorage.getItem('refreshToken');
+		const response = await axios.get(`${baseURL}/api/v1/auth/refresh_token`, {
+			params: {
+				refreshToken: refreshToken,
+			},
+		});
 
 		return response.data.accessToken;
 	} catch (error) {
