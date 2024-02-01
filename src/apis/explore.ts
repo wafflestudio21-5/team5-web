@@ -5,8 +5,13 @@ import {
 	APIErrorResponseType,
 	CategoryType,
 	ExplorePreviewType,
+	FeedType,
+	MiniProfileType,
+	PostType,
 	PreviewType,
 } from '../types';
+
+import { FeedResponseType } from './post';
 
 // 카테고리 대소문자 mapping
 export const CategoryMap: { [key in string]: CategoryType } = {
@@ -40,7 +45,7 @@ type CategoryResponseType = {
 	pageInfo: ExplorePreviewType['pageInfo'];
 };
 
-// 탐색탭 preview 가져오기
+// Detail 탐색탭 preview 가져오기
 export const getCategoryExplore = async (
 	category: CategoryType,
 	page: number,
@@ -48,7 +53,7 @@ export const getCategoryExplore = async (
 ): Promise<ExplorePreviewType | null> => {
 	try {
 		const response = await axios.get<CategoryResponseType>(
-			`${baseURL}/api/v1/explore?page=${page}&category=${category}&sort=RANDOM`,
+			`${baseURL}/api/v1/explore?page=${page}&category=${category}&size=24`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -73,14 +78,14 @@ export const getCategoryExplore = async (
 	}
 };
 
-// 탐색탭 미리보기 가져오기
+// Compact 탐색탭 미리보기 가져오기
 export const getCompactExplore = async (
 	category: CategoryType,
 	accessToken: string
 ): Promise<PreviewType[] | null> => {
 	try {
 		const response = await axios.get<CategoryResponseType>(
-			`${baseURL}/api/v1/explore?size=6&category=${category}&sort=RANDOM`,
+			`${baseURL}/api/v1/explore?size=6&category=${category}&size=6`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -92,6 +97,63 @@ export const getCompactExplore = async (
 		const result = response.data;
 
 		return result.previews;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+export const getExploreFeed = async (
+	postId: number,
+	accessToken: string
+): Promise<FeedType | null> => {
+	try {
+		const response = await axios.get<FeedResponseType>(
+			`${baseURL}/api/v1/explore/${postId}`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		const result = response.data;
+
+		const posts: PostType[] = result.posts.map((post) => {
+			const user: MiniProfileType = {
+				userId: post.author.id,
+				profileImageUrl: post.author.profileImageUrl,
+				username: post.author.username,
+				name: '',
+			};
+			return {
+				id: post.id,
+				content: post.content,
+				media: post.media,
+				createdAt: post.createdAt,
+				likeCount: post.likeCount,
+				commentCount: post.commentCount,
+				user: user,
+				liked: post.liked,
+				saved: post.saved,
+				hideLike: post.hideLike,
+				category: post.category,
+			};
+		});
+
+		const feed: FeedType = {
+			posts: posts,
+			pageInfo: result.pageInfo,
+		};
+
+		return feed;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
