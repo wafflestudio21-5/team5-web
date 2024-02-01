@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import { getExploreFeed } from '../../apis/explore';
 import Feed from '../../components/Feed';
-import Header from '../../components/Post/Header';
 import { useUserContext } from '../../contexts/UserContext';
+import BackHeader from '../../shared/BackHeader';
 import { FeedType } from '../../types';
 
 type FeedFetchStatus = 'pending' | 'complete' | 'fail';
@@ -40,7 +40,7 @@ export default function ExploreFeed() {
 		},
 	});
 
-	const { id } = useParams();
+	const { category, id } = useParams();
 
 	const [status, setStatus] = useState<FeedFetchStatus>(`pending`);
 	const { accessToken } = useUserContext();
@@ -132,7 +132,10 @@ export default function ExploreFeed() {
 
 	return (
 		<>
-			<Header />
+			<BackHeader
+				backURL="-1"
+				title={category !== undefined ? category : '뒤로'}
+			/>
 			<Layout>
 				<div className="story-post">
 					<Feed posts={feedData.posts} />

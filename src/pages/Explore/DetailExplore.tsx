@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { CategoryMap, getCategoryExplore } from '../../apis/explore';
-import Header from '../../components/Post/Header';
 import PostList from '../../components/Post/PostList';
 import { useUserContext } from '../../contexts/UserContext';
+import BackHeader from '../../shared/BackHeader';
 import { ExplorePreviewType } from '../../types';
 
 type FeedFetchStatus = 'pending' | 'complete' | 'fail';
@@ -120,7 +120,7 @@ export default function DetailExplore() {
 
 	return (
 		<>
-			<Header />
+			<BackHeader backURL="-1" title="탐색탭" />
 			<PostList
 				previews={previewData.previews}
 				callbackUrl={'/explore/' + category}
