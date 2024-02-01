@@ -113,7 +113,7 @@ export default function Login() {
 			setAccessToken(accessToken);
 
 			const refreshToken = document.cookie.split('; ')[0].split('=')[1];
-			console.log(refreshToken);
+			console.log('refreshToken : ' + refreshToken);
 			localStorage.setItem('refreshToken', refreshToken);
 
 			const currentUserInfo = await getUserInformation(
