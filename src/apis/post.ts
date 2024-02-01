@@ -690,6 +690,56 @@ export const deletePost = async (
 	}
 };
 
+// 게시물 하나 정보 가져오기
+export const getPost = async (
+	postId: number,
+	accessToken: string
+): Promise<PostType | null> => {
+	try {
+		const response = await axios.get<PostResponseType>(
+			`${baseURL}/api/v1/posts/${postId}`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		const result = response.data;
+
+		const user: MiniProfileType = {
+			userId: result.author.id,
+			profileImageUrl: result.author.profileImageUrl,
+			username: result.author.username,
+			name: '',
+		};
+
+		return {
+			id: result.id,
+			content: result.content,
+			media: result.media,
+			createdAt: result.createdAt,
+			likeCount: result.likeCount,
+			commentCount: result.commentCount,
+			user: user,
+			liked: result.liked,
+			saved: result.saved,
+			hideLike: result.hideLike,
+			category: result.category,
+		};
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+// 게시물 수정
 export const editPost = async (
 	postId: number,
 	content: string,
