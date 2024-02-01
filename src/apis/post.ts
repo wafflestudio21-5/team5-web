@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
+
 import { baseURL } from '../constants';
-import { resetAccessToken } from './login';
 import {
 	APIErrorResponseType,
 	CategoryType,
@@ -11,6 +11,8 @@ import {
 	MiniProfileType,
 	PostType,
 } from '../types.ts';
+
+import { resetAccessToken } from './login';
 
 type TryPostType = {
 	content: string;
@@ -648,6 +650,62 @@ export const deleteReply = async (
 				Authorization: `Bearer ${accessToken}`,
 			},
 		});
+
+		return { status: 'success' };
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+export const deletePost = async (
+	postId: number,
+	accessToken: string
+): Promise<SuccessFailResponse | null> => {
+	try {
+		await axios.delete(`${baseURL}/api/v1/posts/${postId}}`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		return { status: 'success' };
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+export const editPost = async (
+	postId: number,
+	content: string,
+	accessToken: string
+): Promise<SuccessFailResponse | null> => {
+	try {
+		await axios.put(
+			`${baseURL}/api/v1/posts/${postId}}`,
+			{ content: content },
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					'Content-Type': 'appication/json',
+				},
+			}
+		);
 
 		return { status: 'success' };
 	} catch (error) {
