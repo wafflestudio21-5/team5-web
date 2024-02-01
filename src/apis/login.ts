@@ -30,7 +30,7 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 				},
 			}
 		);
-
+		console.log(response.headers);
 		return response.data.accessToken;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
