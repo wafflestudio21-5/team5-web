@@ -66,8 +66,7 @@ export default function NavBar() {
 					onClick={() => navigate('/explore')}
 				></Icon>
 				<Icon
-					// src={profileImageUrl}
-					src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/680px-Default_pfp.svg.png?20220226140232"
+					src={profileImageUrl}
 					alt="Profile"
 					onClick={() => navigate(`/${username}`)}
 				></Icon>

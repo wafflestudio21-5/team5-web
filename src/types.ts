@@ -143,3 +143,5 @@ export type CategoryType =
 	| 'HUMOR'
 	| 'ART'
 	| 'NEWS';
+
+export type modalStateType = 'open' | 'closed' | 'closing';

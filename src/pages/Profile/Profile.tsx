@@ -29,7 +29,7 @@ import ToggleBar from '../../components/Profile/ToggleBar.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 import { getColor } from '../../styles/Theme.tsx';
-import { PreviewType, UserType } from '../../types.ts';
+import { modalStateType, PreviewType, UserType } from '../../types.ts';
 
 const ProfileLayout = styled.main`
 	width: 100%;
@@ -300,9 +300,6 @@ const PostContainer = styled.div`
 	justify-content: space-between;
 	align-items: center;
 `;
-
-// 모달 상태 관리 타입
-type modalStateType = 'open' | 'closed' | 'closing';
 
 export default function Profile() {
 	// 페이지 로딩
