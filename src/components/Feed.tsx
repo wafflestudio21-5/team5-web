@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { deletePost } from '../apis/post.ts';
+import { useUserContext } from '../contexts/UserContext.tsx';
 import { getColor } from '../styles/Theme.tsx';
 import { PostType } from '../types.ts';
 
@@ -36,10 +38,21 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 		setCommentModal('open');
 	};
 
+	const { accessToken } = useUserContext();
+
+	const [deletedPost, setDeletedPost] = useState<number[]>([]);
+
 	const focus = useRef<HTMLDivElement | null>(null);
 	const hash = useLocation().hash;
 
 	const [isFocuesd, setIsFocused] = useState(false);
+
+	const handleDeletePost = async (postId: number) => {
+		const result = await deletePost(postId, accessToken);
+		if (result?.status === 'success') {
+			setDeletedPost([...deletedPost, postId]);
+		}
+	};
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => {
@@ -52,15 +65,17 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 	return (
 		<>
 			<Container>
-				{posts.map((post) => (
-					<div ref={hash === `#post${post.id}` ? focus : null}>
-						<Post
-							postData={post}
-							openMenuModal={openMenuModal}
-							openCommentModal={openCommentModal}
-						/>
-					</div>
-				))}
+				{posts
+					.filter((post) => deletedPost.indexOf(post.id) <= -1)
+					.map((post) => (
+						<div ref={hash === `#post${post.id}` ? focus : null}>
+							<Post
+								postData={post}
+								openMenuModal={openMenuModal}
+								openCommentModal={openCommentModal}
+							/>
+						</div>
+					))}
 			</Container>
 			{menuModal !== 'closed' && (
 				<PostMenuModal
@@ -73,6 +88,7 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 					}}
 					isClosing={menuModal === 'closing'}
 					post={menuPost}
+					handleDeletePost={handleDeletePost}
 				/>
 			)}
 			{commentModal !== 'closed' && (
