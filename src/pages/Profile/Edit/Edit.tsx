@@ -130,12 +130,12 @@ export default function Edit() {
 		}
 
 		switch (gender) {
-			case 'unknown':
-				return '밝히고 싶지 않음';
+			case 'female':
+				return '여성';
 			case 'male':
 				return '남성';
 			default:
-				return '여성';
+				return '밝히고 싶지 않음';
 		}
 	};
 
