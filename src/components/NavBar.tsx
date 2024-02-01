@@ -32,6 +32,13 @@ const NavBarLayout = styled.nav`
 	&.hidden {
 		display: none;
 	}
+
+	& .profileImage {
+		width: 1.7rem;
+		height: 1.7rem;
+		border-radius: 50%;
+		border: 1px solid ${getColor('grey')};
+	}
 `;
 
 export default function NavBar() {
@@ -69,6 +76,7 @@ export default function NavBar() {
 					src={profileImageUrl}
 					alt="Profile"
 					onClick={() => navigate(`/${username}`)}
+					className="profileImage"
 				></Icon>
 			</NavBarLayout>
 		</div>
