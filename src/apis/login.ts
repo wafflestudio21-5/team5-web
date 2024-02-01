@@ -96,7 +96,7 @@ export const resetAccessToken = async () => {
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.message);
+			alert(err.response);
 		} else {
 			alert('Error occurred');
 		}
