@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface InputProps {
-	isvalid: boolean;
+	$isvalid: boolean;
 	type: string;
 	value: string;
 	placeholder: string;
@@ -28,7 +28,7 @@ const Input = styled.input<InputProps>`
 	margin: 1rem auto;
 	padding-left: 0.5rem;
 	border-radius: 1rem;
-	border: 1px solid ${({ isvalid }) => (isvalid ? 'gainsboro' : 'red')};
+	border: 1px solid ${({ $isvalid }) => ($isvalid ? 'gainsboro' : 'red')};
 	background-color: whitesmoke;
 	&:focus {
 		outline: none;
@@ -106,7 +106,7 @@ export default function AskEmail() {
 				프로필에서 다른 사람에게 공개되지 않습니다.
 			</Div>
 			<Input
-				isvalid={isValid}
+				$isvalid={isValid}
 				type="text"
 				value={email}
 				placeholder="이메일 주소"

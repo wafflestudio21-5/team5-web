@@ -12,6 +12,9 @@ const Subject = styled.div`
 	color: black;
 	border-radius: 1.2rem;
 	text-align: center;
+	&:hover {
+		cursor: pointer;
+	}
 `;
 const ScrollContainer = styled.div`
 	overflow-x: auto;

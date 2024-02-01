@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface InputProps {
-	isvalid: boolean;
+	$isvalid: boolean;
 	type: string;
 	value: string;
 	placeholder: string;
@@ -28,7 +28,7 @@ const Input = styled.input<InputProps>`
 	margin: 1rem auto;
 	padding-left: 1rem;
 	border-radius: 1rem;
-	border: 1px solid ${({ isvalid }) => (isvalid ? 'gainsboro' : 'red')};
+	border: 1px solid ${({ $isvalid }) => ($isvalid ? 'gainsboro' : 'red')};
 	background-color: whitesmoke;
 	&:focus {
 		outline: none;
@@ -106,7 +106,7 @@ export default function CertificationSignUp() {
 				계정을 확인하려면 {email} 주소로 전송된 6자리 코드를 입력하세요.
 			</Div>
 			<Input
-				isvalid={isValid}
+				$isvalid={isValid}
 				type="number"
 				value={code}
 				placeholder="인증 코드"

@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -43,27 +43,30 @@ const Input = styled.input`
 	position: relative;
 	margin-top: 1rem;
 	margin-left: 1rem;
+	border: 1px solid blue;
 `;
 
 export default function UploadPhoto() {
 	const navigate = useNavigate();
-	const { files, setFiles } = usePostContext();
+	const { files, setFiles, resetPost } = usePostContext();
 	const { previewUrls, setPreviewUrls } = usePostContext();
-	if (files && files.length > 0) {
-		Promise.all(
-			Array.from(files).map((file) => {
-				return new Promise<string>((resolve) => {
-					const reader = new FileReader();
-					reader.onloadend = () => {
-						resolve(reader.result as string);
-					};
-					reader.readAsDataURL(file);
-				});
-			})
-		).then((newPreviewUrls) => {
-			setPreviewUrls(newPreviewUrls);
-		});
-	}
+	useEffect(() => {
+		if (files && files.length > 0) {
+			Promise.all(
+				Array.from(files).map((file) => {
+					return new Promise<string>((resolve) => {
+						const reader = new FileReader();
+						reader.onloadend = () => {
+							resolve(reader.result as string);
+						};
+						reader.readAsDataURL(file);
+					});
+				})
+			).then((newPreviewUrls) => {
+				setPreviewUrls(newPreviewUrls);
+			});
+		}
+	}, [files]);
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setFiles(e.target.files);
 	};
@@ -74,6 +77,7 @@ export default function UploadPhoto() {
 					<Img
 						src="https://cdn-icons-png.flaticon.com/256/75/75519.png"
 						alt="취소"
+						onClick={resetPost}
 					/>
 				</Link>
 				<Title>새 게시물</Title>

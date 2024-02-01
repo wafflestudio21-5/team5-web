@@ -6,7 +6,7 @@ import { useAuthContext } from '../../../contexts/AuthContext';
 import Modal from '../../../shared/Modal/Modal';
 
 interface InputProps {
-	isvalid: boolean;
+	$isvalid: boolean;
 	type: string;
 	value: string;
 	placeholder: string;
@@ -37,7 +37,7 @@ const Input = styled.input<InputProps>`
 	border-radius: 1rem;
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
-	border: 1px solid ${({ isvalid }) => (isvalid ? 'gainsboro' : 'red')};
+	border: 1px solid ${({ $isvalid }) => ($isvalid ? 'gainsboro' : 'red')};
 	background-color: whitesmoke;
 	&:focus {
 		outline: none;
@@ -149,7 +149,7 @@ export default function AskBirthday() {
 				</Span>
 			</Div>
 			<Input
-				isvalid={isValid}
+				$isvalid={isValid}
 				type="date"
 				value={birthday.toISOString().split('T')[0]}
 				placeholder="생년월일"

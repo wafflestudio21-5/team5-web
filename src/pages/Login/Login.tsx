@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { resetAccessToken, tryLogin } from '../../apis/login';
+import { tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
 import { baseURL } from '../../constants.ts';
 import { useUserContext } from '../../contexts/UserContext';
@@ -96,17 +96,6 @@ export default function Login() {
 	const [usernameInput, setUsernameInput] = useState('');
 	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
-	/* 	const [cookies, setCookie, removeCookie] = useCookies(['refresh_token']);
-	const [refreshToken, setRefreshToken] = useState(cookies.refresh_token || '');
-	const location = useLocation();
-	const queryParams = new URLSearchParams(location.search);
-	const resultParam = queryParams.get('result');
-	const facebookLoggedin = async () => {
-		const newAccessToken = await resetAccessToken();
-		setAccessToken(newAccessToken);
-		setIsLoggedIn(true);
-	};
- */
 	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
@@ -127,9 +116,6 @@ export default function Login() {
 				accessToken
 			);
 			setCurrentUser(currentUserInfo);
-			console.log('쿠키 : ' + document.cookie);
-			const newAccessToken = await resetAccessToken();
-			console.log('새 액세스 토큰 : ' + newAccessToken);
 		}
 	};
 

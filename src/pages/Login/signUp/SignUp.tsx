@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
 type InputType = {
-	isvalid: boolean;
+	$isvalid: boolean;
 	type: string;
 	name: string;
 	value: string;
@@ -29,7 +29,7 @@ const Input = styled.input<InputType>`
 	margin: 1rem auto;
 	padding-left: 0.5rem;
 	border-radius: 1rem;
-	border: 1px solid ${({ isvalid }) => (isvalid ? 'gainsboro' : 'red')};
+	border: 1px solid ${({ $isvalid }) => ($isvalid ? 'gainsboro' : 'red')};
 	background-color: whitesmoke;
 	&:focus {
 		outline: none;
@@ -95,7 +95,7 @@ export default function SignUp() {
 				친구들이 회원님을 찾을 수 있도록 이름을 추가하세요.
 			</Div>
 			<Input
-				isvalid={isValid}
+				$isvalid={isValid}
 				type="text"
 				name="name"
 				value={name}

@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface InputProps {
-	isvalid: boolean;
-	type: string; // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
+	$isvalid: boolean;
+	type: string;
 	value: string;
 	placeholder: string;
 	onChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -29,7 +29,7 @@ const Input = styled.input<InputProps>`
 	margin: 1rem auto;
 	padding-left: 0.5rem;
 	border-radius: 1rem;
-	border: 1px solid ${({ isvalid }) => (isvalid ? 'gainsboro' : 'red')};
+	border: 1px solid ${({ $isvalid }) => ($isvalid ? 'gainsboro' : 'red')};
 	background-color: whitesmoke;
 	&:focus {
 		outline: none;
@@ -100,7 +100,7 @@ export default function MakeUsername() {
 				있습니다.
 			</Div>
 			<Input
-				isvalid={isValid}
+				$isvalid={isValid}
 				type="text"
 				value={username}
 				placeholder="사용자 이름"
