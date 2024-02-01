@@ -75,6 +75,7 @@ export default function MakeUsername() {
 	const { name, username, setUsername } = useAuthContext();
 	const navigate = useNavigate();
 	const [isValid, setIsValid] = useState(false);
+	const usernameRegex = /^[a-zA-Z0-9_.]{1,30}$/i;
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		setUsername(e.target.value);
 	};
@@ -83,7 +84,7 @@ export default function MakeUsername() {
 			setUsername(convert(name) + Math.floor(Math.random() * 1000 + 1));
 	}, []);
 	useEffect(() => {
-		setIsValid(username.length > 0);
+		setIsValid(usernameRegex.test(username));
 	}, [username]);
 	return (
 		<>
@@ -106,7 +107,9 @@ export default function MakeUsername() {
 				onChange={handleChange}
 			/>
 			{!isValid && (
-				<Div className="notice">계속하려면 사용자 이름을 작성하세요.</Div>
+				<Div className="notice">
+					1~30자 사이의 알파벳, 온점, 언더바로 작성해주세요.
+				</Div>
 			)}
 			<Button className="next" onClick={() => navigate('/signUp/email')}>
 				다음

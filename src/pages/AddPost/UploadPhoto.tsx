@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { usePostContext } from '../../contexts/PostContext';
+import PhotoPreview from '../../components/CreatePost/photoPreview';
 
 const Background = styled.div`
 	background-color: white;
@@ -25,27 +26,44 @@ const Title = styled.div`
 `;
 const Next = styled.button`
 	display: inline-block;
-	right: 1rem;
 	width: 10%;
 	text-align: right;
 	color: blue;
 	border: none;
 	background-color: transparent;
-	margin-left: -2rem;
+	margin-left: -0.5rem;
 `;
 const Img = styled.img`
 	width: 3%;
 	margin-top: 0.3rem;
 	float: left;
+	margin-left: 0.8rem;
 `;
 const Input = styled.input`
 	position: relative;
-	margin: 0 auto;
+	margin-top: 1rem;
+	margin-left: 1rem;
 `;
 
 export default function UploadPhoto() {
 	const navigate = useNavigate();
 	const { files, setFiles } = usePostContext();
+	const { previewUrls, setPreviewUrls } = usePostContext();
+	if (files && files.length > 0) {
+		Promise.all(
+			Array.from(files).map((file) => {
+				return new Promise<string>((resolve) => {
+					const reader = new FileReader();
+					reader.onloadend = () => {
+						resolve(reader.result as string);
+					};
+					reader.readAsDataURL(file);
+				});
+			})
+		).then((newPreviewUrls) => {
+			setPreviewUrls(newPreviewUrls);
+		});
+	}
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setFiles(e.target.files);
 	};
@@ -73,6 +91,7 @@ export default function UploadPhoto() {
 				multiple
 				onChange={handleFileChange}
 			/>
+			<PhotoPreview previewUrls={previewUrls} />
 		</Background>
 	);
 }

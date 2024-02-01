@@ -174,12 +174,12 @@ const loginRouter = createBrowserRouter([
 ]);
 
 export default function App() {
-	const { isLoggedIn } = useUserContext();
-
+	/* 	const { isLoggedIn } = useUserContext();
+	 */
 	return (
 		<ThemeProvider theme={Theme}>
 			<GlobalStyles />
-			<RouterProvider router={isLoggedIn ? router : loginRouter} />
+			<RouterProvider router={router /* isLoggedIn ? router : loginRouter */} />
 		</ThemeProvider>
 	);
 }
