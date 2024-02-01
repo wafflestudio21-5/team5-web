@@ -86,6 +86,7 @@ export const trySignUp = async ({
 };
 
 export const resetAccessToken = async () => {
+	axios.defaults.withCredentials = true;
 	try {
 		const response = await axios.get(`${baseURL}/api/v1/auth/refresh_token`, {
 			withCredentials: true,
