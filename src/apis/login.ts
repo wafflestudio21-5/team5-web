@@ -30,13 +30,13 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 				},
 			}
 		);
-		console.log(response.headers);
+
 		return response.data.accessToken;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.message);
+			alert('아이디 또는 비밀번호가 일치하지 않습니다.');
 		} else {
 			alert('Error occurred');
 		}
@@ -90,12 +90,11 @@ export const resetAccessToken = async () => {
 		const response = await axios.get(`${baseURL}/api/v1/auth/refresh_token`, {
 			withCredentials: true,
 		});
-		console.log('새 액세스 토큰 : ' + response.data.accessToken);
-		console.log(response.data);
+
 		return response.data.accessToken;
 	} catch (error) {
-		console.log(error);
 		const err = error as AxiosError<APIErrorResponseType>;
+
 		if (err.response && err.response.data) {
 			alert(err.response.data.message);
 		} else {

@@ -1,7 +1,11 @@
+import { ChangeEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import defaultProfile from '../../../assets/Images/Profile/default-profile.svg';
+import {
+	addProfileImage,
+	fetchUserInformation,
+} from '../../../apis/account.ts';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
 import BackHeader from '../../../shared/BackHeader.tsx';
 import { getColor } from '../../../styles/Theme.tsx';
@@ -87,6 +91,10 @@ const Cell = styled.div`
 		border: none;
 		border-bottom: 1px solid ${getColor('lightGrey')};
 
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+
 		&:focus {
 			outline: none;
 		}
@@ -102,10 +110,41 @@ const Cell = styled.div`
 `;
 
 export default function Edit() {
-	const { name, username, bio, userLinks, gender, isCustomGender } =
-		useUserContext();
+	const {
+		accessToken,
+		currentUser,
+		setCurrentUser,
+		profileImageUrl,
+		name,
+		username,
+		bio,
+		userLinks,
+		gender,
+		isCustomGender,
+	} = useUserContext();
 	const navigate = useNavigate();
 
+	// 프로필 이미지 관련
+	const profileImageRef = useRef<HTMLInputElement>(null);
+
+	const onProfileImageClick = () => {
+		if (profileImageRef.current) {
+			profileImageRef.current.click();
+		}
+	};
+
+	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files.length > 0) {
+			const file = e.target.files[0];
+			const formData = new FormData();
+			formData.append('file', file);
+
+			await addProfileImage(accessToken, formData);
+			await fetchUserInformation(accessToken, currentUser, setCurrentUser);
+		}
+	};
+
+	// 성별 관련
 	const selectedGender = (gender: string, isCustomGender: boolean) => {
 		if (isCustomGender) {
 			return gender;
@@ -124,9 +163,16 @@ export default function Edit() {
 	return (
 		<EditProfileLayout>
 			<BackHeader title="프로필 편집" backURL={`/${username}`} />
-			<ProfileImageContainer>
-				<img src={defaultProfile} alt="프로필 사진" />
+			<ProfileImageContainer onClick={onProfileImageClick}>
+				<img src={profileImageUrl} alt="프로필 사진" />
 				<p>프로필 사진 변경</p>
+				<input
+					type="file"
+					style={{ display: 'none' }}
+					ref={profileImageRef}
+					accept="image/*"
+					onChange={handleFileChange}
+				/>
 			</ProfileImageContainer>
 			<EditProfileContainer>
 				<Cell onClick={() => navigate('/account/edit/name')}>

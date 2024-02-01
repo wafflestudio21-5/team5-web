@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
+	fetchUserInformation,
 	updateAccountToOpen,
 	updateAccountToPrivate,
 } from '../../apis/account.ts';
@@ -49,11 +50,18 @@ export default function MenuModal({
 	close: () => void;
 	isClosing: boolean;
 }) {
-	const { username, accessToken, isMyAccountPrivate } = useUserContext();
+	const {
+		accessToken,
+		currentUser,
+		setCurrentUser,
+		username,
+		isMyAccountPrivate,
+	} = useUserContext();
 
 	const onClickUpdateAccountToOpen = async () => {
 		try {
 			await updateAccountToOpen(accessToken);
+			await fetchUserInformation(accessToken, currentUser, setCurrentUser);
 		} catch {
 			alert('Error occurred.');
 		}
@@ -62,6 +70,7 @@ export default function MenuModal({
 	const onClickUpdateAccountToPrivate = async () => {
 		try {
 			await updateAccountToPrivate(accessToken);
+			await fetchUserInformation(accessToken, currentUser, setCurrentUser);
 		} catch {
 			alert('Error occurred.');
 		}
