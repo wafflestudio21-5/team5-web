@@ -2,9 +2,11 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import saveIcon from '../../assets/Images/Post/save.svg';
+import { useUserContext } from '../../contexts/UserContext';
 import Icon from '../../shared/Icon';
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
+import { PostType } from '../../types';
 
 const ModalContent = styled.div`
 	display: flex;
@@ -42,14 +44,16 @@ const ButtonGroup = styled.div`
 `;
 
 export default function PostMenuModal({
-	postId,
+	post,
 	close,
 	isClosing,
 }: {
-	postId: number | null;
+	post: PostType | null;
 	close: () => void;
 	isClosing: boolean;
 }) {
+	const { userId } = useUserContext();
+
 	return (
 		<Modal onBackgroundClick={close} isClosing={isClosing}>
 			<ModalContent>
@@ -57,7 +61,7 @@ export default function PostMenuModal({
 					<ButtonGroup>
 						<button
 							onClick={async () => {
-								await axios.post(`/api/v1/posts/${postId}/save`);
+								await axios.post(`/api/v1/posts/${post?.id}/save`);
 							}}
 						>
 							<div>
@@ -84,6 +88,7 @@ export default function PostMenuModal({
 					<button>이 게시물이 표시되는 이유</button>
 					<button>숨기기</button>
 					<button>신고</button>
+					{post?.user.userId === userId && <button>삭제</button>}
 				</ButtonGroup>
 			</ModalContent>
 		</Modal>
