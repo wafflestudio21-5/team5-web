@@ -1,16 +1,10 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import {
-	addProfileImage,
-	fetchUserInformation,
-} from '../../../apis/account.ts';
-import MenuModal from '../../../components/Profile/MenuModal.tsx';
 import ProfileImageModal from '../../../components/Profile/ProfileImageModal.tsx';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
 import BackHeader from '../../../shared/BackHeader.tsx';
-import Modal from '../../../shared/Modal/Modal.tsx';
 import { getColor } from '../../../styles/Theme.tsx';
 import { modalStateType } from '../../../types.ts';
 
@@ -115,9 +109,6 @@ const Cell = styled.div`
 
 export default function Edit() {
 	const {
-		accessToken,
-		currentUser,
-		setCurrentUser,
 		profileImageUrl,
 		name,
 		username,

@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import editCancel from '../../../assets/Images/Profile/EditProfile/edit-cancel.png';
-import editSave from '../../../assets/Images/Profile/EditProfile/edit-save.png';
+import editCancel from '../../../assets/Images/Profile/Edit/edit-cancel.png';
+import editSave from '../../../assets/Images/Profile/Edit/edit-save.png';
 import Icon from '../../../shared/Icon.tsx';
 
 const EditHeaderContainer = styled.div`
