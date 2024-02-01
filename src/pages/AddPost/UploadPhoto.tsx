@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { usePostContext } from '../../contexts/PostContext';
-import PhotoPreview from '../../components/CreatePost/PhotoPreview';
+import PhotoPreview from '../../components/AddPost/PhotoPreview';
 
 const Background = styled.div`
 	background-color: white;

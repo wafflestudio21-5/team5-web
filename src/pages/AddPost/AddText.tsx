@@ -1,14 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import MenuElement from '../../components/CreatePost/MenuElement';
-import Select from '../../components/CreatePost/SubjectBar';
+import MenuElement from '../../components/AddPost/MenuElement';
+import Select from '../../components/AddPost/SubjectBar';
 import { usePostContext } from '../../contexts/PostContext';
 import { useUserContext } from '../../contexts/UserContext';
 import { fetchUserInformation } from '../../apis/account';
 import { tryPost } from '../../apis/post';
 import { resetAccessToken } from '../../apis/login';
-import PhotoPreview from '../../components/CreatePost/PhotoPreview';
+import PhotoPreview from '../../components/AddPost/PhotoPreview';
 
 const Background = styled.div`
 	background-color: white;

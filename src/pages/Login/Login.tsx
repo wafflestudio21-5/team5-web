@@ -127,8 +127,9 @@ export default function Login() {
 				accessToken
 			);
 			setCurrentUser(currentUserInfo);
-			const newAccessToken = resetAccessToken();
-			console.log(newAccessToken);
+			console.log('쿠키 : ' + document.cookie);
+			const newAccessToken = await resetAccessToken();
+			console.log('새 액세스 토큰 : ' + newAccessToken);
 		}
 	};
 

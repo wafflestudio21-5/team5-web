@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import KorToEng from '../CreatePost/KorToEng';
+import KorToEng from '../AddPost/KorToEng';
 import { useNavigate } from 'react-router-dom';
 
 const Subject = styled.div`
