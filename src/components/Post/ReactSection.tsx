@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { handleLike, handleSave } from '../../apis/post';
@@ -85,6 +86,8 @@ export default function ReactSection({ postData, showComment }: Props) {
 
 	const createdDate = new Date(postData.createdAt);
 
+	const navigate = useNavigate();
+
 	return (
 		postData && (
 			<Container>
@@ -139,7 +142,14 @@ export default function ReactSection({ postData, showComment }: Props) {
 					</span>
 				</TextBox>
 				<TextBox className="margin">
-					<span className="username">{postData.user.username}</span>{' '}
+					<span
+						className="username"
+						onClick={() => {
+							navigate(`/${postData.user.username}`);
+						}}
+					>
+						{postData.user.username}
+					</span>{' '}
 					{postData.content}
 				</TextBox>
 				<TextBox

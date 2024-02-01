@@ -1,10 +1,13 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import saveIcon from '../../assets/Images/Post/save.svg';
+import { useUserContext } from '../../contexts/UserContext';
 import Icon from '../../shared/Icon';
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
+import { PostType } from '../../types';
 
 const ModalContent = styled.div`
 	display: flex;
@@ -35,21 +38,28 @@ const ButtonGroup = styled.div`
 	gap: 0;
 	font-size: 0;
 	& button {
-		background-color: ${getColor('darkGrey')};
+		background-color: ${getColor('grey')};
+		border: none;
 		min-height: 2rem;
 		font-size: 0.7rem;
 	}
 `;
 
 export default function PostMenuModal({
-	postId,
+	post,
 	close,
 	isClosing,
+	handleDeletePost,
 }: {
-	postId: number | null;
+	post: PostType | null;
 	close: () => void;
 	isClosing: boolean;
+	handleDeletePost: (postId: number) => void;
 }) {
+	const { userId } = useUserContext();
+
+	const navigate = useNavigate();
+
 	return (
 		<Modal onBackgroundClick={close} isClosing={isClosing}>
 			<ModalContent>
@@ -57,7 +67,7 @@ export default function PostMenuModal({
 					<ButtonGroup>
 						<button
 							onClick={async () => {
-								await axios.post(`/api/v1/posts/${postId}/save`);
+								await axios.post(`/api/v1/posts/${post?.id}/save`);
 							}}
 						>
 							<div>
@@ -84,6 +94,24 @@ export default function PostMenuModal({
 					<button>이 게시물이 표시되는 이유</button>
 					<button>숨기기</button>
 					<button>신고</button>
+					{post?.user.userId === userId && (
+						<button
+							onClick={() => {
+								navigate(`/post/edit/${post.id}`);
+							}}
+						>
+							수정
+						</button>
+					)}
+					{post?.user.userId === userId && (
+						<button
+							onClick={() => {
+								handleDeletePost(post.id);
+							}}
+						>
+							삭제
+						</button>
+					)}
 				</ButtonGroup>
 			</ModalContent>
 		</Modal>

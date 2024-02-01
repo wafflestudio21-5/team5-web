@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { resetAccessToken, tryLogin } from '../../apis/login';
+import { tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
 import { baseURL } from '../../constants.ts';
 import { useUserContext } from '../../contexts/UserContext';

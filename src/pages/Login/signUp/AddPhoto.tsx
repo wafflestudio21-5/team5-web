@@ -1,7 +1,7 @@
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useUserContext } from '../../../contexts/UserContext';
 import { addProfileImage } from '../../../apis/account';
 

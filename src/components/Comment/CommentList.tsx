@@ -8,6 +8,7 @@ const CommentListWrapper = styled.ul`
 	padding: 0;
 	margin: 0;
 	width: 100%;
+	height: 100%;
 	gap: 1rem;
 	display: flex;
 	flex-direction: column;
@@ -27,11 +28,13 @@ export default function CommentList({
 	handlePostReply,
 	handleDeleteComment,
 	setReload,
+	postAuthorId,
 }: {
 	comments: CommentType[];
 	handlePostReply: (comment: CommentType) => void;
 	handleDeleteComment: (comment: CommentType) => void;
 	setReload: (reload: boolean) => void;
+	postAuthorId: number;
 }) {
 	return (
 		<CommentListWrapper>
@@ -41,6 +44,7 @@ export default function CommentList({
 					handlePostReply={handlePostReply}
 					handleDeleteComment={handleDeleteComment}
 					setReload={setReload}
+					postAuthorId={postAuthorId}
 				/>
 			))}
 		</CommentListWrapper>

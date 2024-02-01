@@ -33,20 +33,21 @@ export default function PostList({
 
 	return (
 		<Wrapper>
-			{previews?.map((preview) => (
-				<div
-					className="image-wrapper"
-					onClick={() => {
-						if (useHashtag) {
-							navigate(`${callbackUrl}#post${preview.id}`);
-						} else {
-							navigate(`${callbackUrl}/${preview.id}`);
-						}
-					}}
-				>
-					<img src={preview.thumbnailUrl} alt="게시물 이미지" />
-				</div>
-			))}
+			{previews.length > 0 &&
+				previews.map((preview) => (
+					<div
+						className="image-wrapper"
+						onClick={() => {
+							if (useHashtag) {
+								navigate(`${callbackUrl}#post${preview.id}`);
+							} else {
+								navigate(`${callbackUrl}/${preview.id}`);
+							}
+						}}
+					>
+						<img src={preview.thumbnailUrl} alt="게시물 이미지" />
+					</div>
+				))}
 		</Wrapper>
 	);
 }

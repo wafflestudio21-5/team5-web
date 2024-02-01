@@ -1,9 +1,12 @@
-import styled from 'styled-components';
-import PostList from '../Post/PostList';
-import posts from '../../test/data/postlist.json';
-import { PostListProps } from '../../types';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { getCompactExplore } from '../../apis/explore';
+import { useUserContext } from '../../contexts/UserContext';
+import { CategoryType, PreviewType } from '../../types';
 import KorToEng from '../AddPost/KorToEng';
+import PostList from '../Post/PostList';
 
 const Header = styled.div`
 	width: 100%;
@@ -40,21 +43,53 @@ const RightArrow = styled.img`
 	margin-right: 0.2rem;
 	padding-top: 0.2rem;
 `;
-type PreviewType = {
+type PreviewProps = {
 	category: string;
 };
 
-export default function Preview({ category }: PreviewType) {
+export default function Preview({ category }: PreviewProps) {
 	const navigate = useNavigate();
-	const newPosts: PostListProps = posts;
+
+	const [newPosts, setNewPosts] = useState<PreviewType[]>([]);
+
+	const { accessToken } = useUserContext();
+
+	useEffect(() => {
+		const fetchExploreData = async () => {
+			try {
+				const fetchData = await getCompactExplore(
+					KorToEng(category) as CategoryType,
+					accessToken
+				);
+				if (!fetchData) {
+					return;
+				}
+
+				setNewPosts(fetchData);
+			} catch {
+				return;
+			}
+		};
+
+		fetchExploreData();
+	}, []);
+
 	return (
 		<>
 			<Header>
 				<Subject>{category}</Subject>
 				<Text>관련 게시물</Text>
 			</Header>
-			<PostList {...newPosts} />
-			<More onClick={() => navigate(`/explore/${KorToEng(category)}`)}>
+			<PostList
+				previews={newPosts}
+				callbackUrl={'/explore/' + KorToEng(category)?.toLowerCase()}
+				useHashtag={false}
+			/>
+			<More
+				onClick={() =>
+					navigate(`/explore/${KorToEng(category)?.toLowerCase()}`)
+				}
+			>
 				더보기
 				<RightArrow
 					src="https://cdn-icons-png.flaticon.com/512/271/271228.png"

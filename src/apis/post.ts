@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
+
 import { baseURL } from '../constants';
-import { resetAccessToken } from './login';
 import {
 	APIErrorResponseType,
 	CategoryType,
@@ -11,6 +11,8 @@ import {
 	MiniProfileType,
 	PostType,
 } from '../types.ts';
+
+import { resetAccessToken } from './login';
 
 type TryPostType = {
 	content: string;
@@ -40,7 +42,7 @@ type PostResponseType = {
 	category: CategoryType;
 };
 // 피드 response 형
-type FeedResponseType = {
+export type FeedResponseType = {
 	posts: PostResponseType[];
 	pageInfo: {
 		page: number;
@@ -77,7 +79,7 @@ export const tryPost = async ({
 		return response;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
-		console.log(err.response);
+
 		if (err.response && err.response.status == 401) {
 			try {
 				const newAccessToken = await resetAccessToken();
@@ -648,6 +650,112 @@ export const deleteReply = async (
 				Authorization: `Bearer ${accessToken}`,
 			},
 		});
+
+		return { status: 'success' };
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+export const deletePost = async (
+	postId: number,
+	accessToken: string
+): Promise<SuccessFailResponse | null> => {
+	try {
+		await axios.delete(`${baseURL}/api/v1/posts/${postId}}`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		return { status: 'success' };
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+// 게시물 하나 정보 가져오기
+export const getPost = async (
+	postId: number,
+	accessToken: string
+): Promise<PostType | null> => {
+	try {
+		const response = await axios.get<PostResponseType>(
+			`${baseURL}/api/v1/posts/${postId}`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		const result = response.data;
+
+		const user: MiniProfileType = {
+			userId: result.author.id,
+			profileImageUrl: result.author.profileImageUrl,
+			username: result.author.username,
+			name: '',
+		};
+
+		return {
+			id: result.id,
+			content: result.content,
+			media: result.media,
+			createdAt: result.createdAt,
+			likeCount: result.likeCount,
+			commentCount: result.commentCount,
+			user: user,
+			liked: result.liked,
+			saved: result.saved,
+			hideLike: result.hideLike,
+			category: result.category,
+		};
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+// 게시물 수정
+export const editPost = async (
+	postId: number,
+	content: string,
+	accessToken: string
+): Promise<SuccessFailResponse | null> => {
+	try {
+		await axios.put(
+			`${baseURL}/api/v1/posts/${postId}}`,
+			{ content: content },
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					'Content-Type': 'appication/json',
+				},
+			}
+		);
 
 		return { status: 'success' };
 	} catch (error) {

@@ -1,6 +1,7 @@
-import styled from 'styled-components';
-import KorToEng from '../AddPost/KorToEng';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import KorToEng from '../AddPost/KorToEng';
 
 const Subject = styled.div`
 	display: inline-block;
