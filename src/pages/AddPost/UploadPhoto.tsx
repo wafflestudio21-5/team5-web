@@ -40,16 +40,35 @@ const Img = styled.img`
 	margin-left: 0.8rem;
 `;
 const Input = styled.input`
-	position: relative;
+	display: none;
+`;
+const ButtonBackground = styled.div`
+	position: fixed;
+	bottom: 0;
+	border-top: 1px solid gainsboro;
+	width: 430px;
+	background-color: white;
+	height: 5rem;
+`;
+const ShareButton = styled.button`
+	bottom: 1rem;
+	background-color: blue;
+	width: 86%;
+	height: 3rem;
 	margin-top: 1rem;
-	margin-left: 1rem;
-	border: 1px solid blue;
+	margin-left: 7%;
+	border-radius: 0.5rem;
+	border: none;
+	color: white;
+	font-weight: 600;
 `;
 
 export default function UploadPhoto() {
 	const navigate = useNavigate();
-	const { files, setFiles, resetPost } = usePostContext();
-	const { previewUrls, setPreviewUrls } = usePostContext();
+	const { files, setFiles, resetPost, previewUrls, setPreviewUrls } =
+		usePostContext();
+	/* 	const [isValid, setIsValid] = useState(true)
+	 */
 	useEffect(() => {
 		if (files && files.length > 0) {
 			Promise.all(
@@ -67,8 +86,18 @@ export default function UploadPhoto() {
 			});
 		}
 	}, [files]);
+
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setFiles(e.target.files);
+	};
+
+	const handleClick = () => {
+		if (files) {
+			/* 			setIsValid(true)
+			 */ navigate('/addText');
+		}
+		/* 		else setIsValid(false)
+		 */
 	};
 	return (
 		<Background>
@@ -81,13 +110,7 @@ export default function UploadPhoto() {
 					/>
 				</Link>
 				<Title>새 게시물</Title>
-				<Next
-					onClick={() => {
-						files !== null && navigate('/addText');
-					}}
-				>
-					다음
-				</Next>
+				<Next onClick={handleClick}>다음</Next>
 			</Header>
 			<Input
 				type="file"
@@ -96,6 +119,9 @@ export default function UploadPhoto() {
 				onChange={handleFileChange}
 			/>
 			<PhotoPreview previewUrls={previewUrls} />
+			<ButtonBackground>
+				<ShareButton onClick={handleClick}>사진 추가</ShareButton>
+			</ButtonBackground>
 		</Background>
 	);
 }

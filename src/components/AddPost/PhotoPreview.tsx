@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const Container = styled.div`
 	width: 100%;
-	border-bottom: 1px solid gainsboro;
 	margin-top: 1rem;
 	overflow-x: auto;
 	display: inline-flex;
