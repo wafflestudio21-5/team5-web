@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 
 import { baseURL } from '../constants.ts';
 import { APIErrorResponseType } from '../types';
@@ -85,12 +85,17 @@ export const trySignUp = async ({
 	}
 };
 
+const axiosWithCredentials: AxiosInstance = axios.create({
+	withCredentials: true,
+	baseURL: baseURL,
+});
+
 export const resetAccessToken = async () => {
 	axios.defaults.withCredentials = true;
 	try {
-		const response = await axios.get(`${baseURL}/api/v1/auth/refresh_token`, {
-			withCredentials: true,
-		});
+		const response = await axiosWithCredentials.get(
+			`/api/v1/auth/refresh_token`
+		);
 
 		return response.data.accessToken;
 	} catch (error) {
