@@ -116,8 +116,6 @@ export default function Login() {
 				accessToken
 			);
 			setCurrentUser(currentUserInfo);
-			const newAccessToken = await resetAccessToken();
-			console.log(newAccessToken);
 		}
 	};
 

@@ -1,9 +1,14 @@
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { usePostContext } from '../../contexts/PostContext';
 import PhotoPreview from '../../components/AddPost/PhotoPreview';
+
+type ButtonType = {
+	$isadd: boolean;
+	onClick: () => void;
+};
 
 const Background = styled.div`
 	background-color: white;
@@ -39,6 +44,9 @@ const Img = styled.img`
 	float: left;
 	margin-left: 0.8rem;
 `;
+const Plus = styled.img`
+	width: 80%;
+`;
 const Input = styled.input`
 	display: none;
 `;
@@ -62,13 +70,41 @@ const ShareButton = styled.button`
 	color: white;
 	font-weight: 600;
 `;
+const Div = styled.div`
+	width: 90%;
+	margin-left: 1.5rem;
+	margin-top: -0.5rem;
+	font-size: 0.7rem;
+	color: red;
+`;
+const Text = styled.div`
+	width: 100%;
+	text-align: center;
+	margin-top: 1rem;
+	font-weight: 600;
+`;
+const Button = styled.button<ButtonType>`
+	width: 18%;
+	background-color: white;
+	border: none;
+	margin-left: ${({ $isadd }) => ($isadd ? '41%;' : '80%')};
+	margin-top: ${({ $isadd }) => ($isadd ? '40%;' : '125%')};
+`;
 
 export default function UploadPhoto() {
 	const navigate = useNavigate();
 	const { files, setFiles, resetPost, previewUrls, setPreviewUrls } =
 		usePostContext();
-	/* 	const [isValid, setIsValid] = useState(true)
-	 */
+	const [isValid, setIsValid] = useState(true);
+
+	const postPhotoRef = useRef<HTMLInputElement>(null);
+
+	const onPostPhotoClick = () => {
+		if (postPhotoRef.current) {
+			postPhotoRef.current.click();
+		}
+	};
+
 	useEffect(() => {
 		if (files && files.length > 0) {
 			Promise.all(
@@ -93,11 +129,9 @@ export default function UploadPhoto() {
 
 	const handleClick = () => {
 		if (files) {
-			/* 			setIsValid(true)
-			 */ navigate('/addText');
-		}
-		/* 		else setIsValid(false)
-		 */
+			setIsValid(true);
+			navigate('/addText');
+		} else setIsValid(false);
 	};
 	return (
 		<Background>
@@ -114,11 +148,34 @@ export default function UploadPhoto() {
 			</Header>
 			<Input
 				type="file"
+				ref={postPhotoRef}
 				accept="image/*"
 				multiple
 				onChange={handleFileChange}
 			/>
 			<PhotoPreview previewUrls={previewUrls} />
+			{files === null ? (
+				<Button $isadd={files === null} onClick={onPostPhotoClick}>
+					<Plus
+						src={'https://cdn-icons-png.flaticon.com/256/107/107075.png'}
+						alt="사진 추가"
+					/>
+					<Text>사진 추가</Text>
+				</Button>
+			) : (
+				<Button $isadd={files === null} onClick={onPostPhotoClick}>
+					<Plus
+						src={'https://cdn-icons-png.flaticon.com/256/107/107075.png'}
+						alt="사진 추가"
+					/>
+				</Button>
+			)}
+			{!isValid && (
+				<Div>
+					비밀번호가 너무 짧습니다. 6자 이상의 문자 또는 숫자로 비밀번호를
+					만드세요.
+				</Div>
+			)}
 			<ButtonBackground>
 				<ShareButton onClick={handleClick}>사진 추가</ShareButton>
 			</ButtonBackground>
