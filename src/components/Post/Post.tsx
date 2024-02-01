@@ -18,7 +18,7 @@ const Container = styled.article`
 
 type Props = {
 	postData: PostType | null;
-	openMenuModal: (postId: number) => void;
+	openMenuModal: (post: PostType) => void;
 	openCommentModal: (post: PostType) => void;
 };
 
@@ -33,7 +33,7 @@ export default function Post({
 				<PostHeader
 					user={postData.user}
 					showMenu={() => {
-						openMenuModal(postData.id);
+						openMenuModal(postData);
 					}}
 				/>
 				<PostImage media={postData.media} />

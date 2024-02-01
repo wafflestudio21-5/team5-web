@@ -23,11 +23,11 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 	const [menuModal, setMenuModal] = useState<ModalState>('closed');
 	const [commentModal, setCommentModal] = useState<ModalState>('closed');
 
-	const [menuPostId, setMenuPostId] = useState<number | null>(null);
+	const [menuPost, setMenuPost] = useState<PostType | null>(null);
 	const [commentPost, setCommentPost] = useState<PostType | null>(null);
 
-	const openMenuModal = (postId: number) => {
-		setMenuPostId(postId);
+	const openMenuModal = (post: PostType) => {
+		setMenuPost(post);
 		setMenuModal('open');
 	};
 
@@ -68,11 +68,11 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 						setMenuModal('closing');
 						setTimeout(() => {
 							setMenuModal('closed');
-							setMenuPostId(null);
+							setMenuPost(null);
 						}, 300);
 					}}
 					isClosing={menuModal === 'closing'}
-					postId={menuPostId}
+					post={menuPost}
 				/>
 			)}
 			{commentModal !== 'closed' && (
