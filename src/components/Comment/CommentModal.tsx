@@ -109,6 +109,7 @@ export default function CommentModal({
 							handlePostReply={handlePostReply}
 							handleDeleteComment={handleDeleteComment}
 							setReload={setReload}
+							postAuthorId={post.user.userId}
 						/>
 					)}
 					<CommentInput

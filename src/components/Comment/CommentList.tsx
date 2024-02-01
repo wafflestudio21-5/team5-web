@@ -27,11 +27,13 @@ export default function CommentList({
 	handlePostReply,
 	handleDeleteComment,
 	setReload,
+	postAuthorId,
 }: {
 	comments: CommentType[];
 	handlePostReply: (comment: CommentType) => void;
 	handleDeleteComment: (comment: CommentType) => void;
 	setReload: (reload: boolean) => void;
+	postAuthorId: number;
 }) {
 	return (
 		<CommentListWrapper>
@@ -41,6 +43,7 @@ export default function CommentList({
 					handlePostReply={handlePostReply}
 					handleDeleteComment={handleDeleteComment}
 					setReload={setReload}
+					postAuthorId={postAuthorId}
 				/>
 			))}
 		</CommentListWrapper>

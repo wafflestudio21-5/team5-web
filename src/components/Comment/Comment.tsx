@@ -21,6 +21,7 @@ type CommentProps = {
 	handlePostReply: (comment: CommentType) => void;
 	handleDeleteComment: (comment: CommentType) => void;
 	setReload: (reload: boolean) => void;
+	postAuthorId: number;
 };
 
 const CommentContainer = styled.div`
@@ -111,6 +112,7 @@ export default function Comment({
 	handlePostReply,
 	handleDeleteComment,
 	setReload,
+	postAuthorId,
 }: CommentProps) {
 	const [replies, setReplies] = useState<CommentPageType>();
 	const [showReply, setShowReply] = useState(false);
@@ -188,7 +190,7 @@ export default function Comment({
 					>
 						답글 달기
 					</TextBox>
-					{comment.user.userId === userId && (
+					{(comment.user.userId === userId || postAuthorId === userId) && (
 						<TextBox
 							className="secondary-text"
 							onClick={() => {
@@ -275,7 +277,8 @@ export default function Comment({
 										>
 											답글 달기
 										</TextBox>
-										{reply.user.userId === userId && (
+										{(reply.user.userId === userId ||
+											postAuthorId === userId) && (
 											<TextBox
 												className="secondary-text"
 												onClick={() => {
