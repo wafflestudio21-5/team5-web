@@ -41,7 +41,7 @@ export default function PostHeader({
 	return (
 		<Wrapper>
 			<UserInfo user={user} blockInteraction={blockInteraction} />
-			{blockInteraction && (
+			{!blockInteraction && (
 				<ExtraButton onClick={showMenu}>
 					<Icon src={ellipsis} alt="ellipsis" />
 				</ExtraButton>
