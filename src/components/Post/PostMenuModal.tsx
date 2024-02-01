@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import saveIcon from '../../assets/Images/Post/save.svg';
@@ -37,7 +38,8 @@ const ButtonGroup = styled.div`
 	gap: 0;
 	font-size: 0;
 	& button {
-		background-color: ${getColor('darkGrey')};
+		background-color: ${getColor('grey')};
+		border: none;
 		min-height: 2rem;
 		font-size: 0.7rem;
 	}
@@ -55,6 +57,8 @@ export default function PostMenuModal({
 	handleDeletePost: (postId: number) => void;
 }) {
 	const { userId } = useUserContext();
+
+	const navigate = useNavigate();
 
 	return (
 		<Modal onBackgroundClick={close} isClosing={isClosing}>
@@ -90,6 +94,15 @@ export default function PostMenuModal({
 					<button>이 게시물이 표시되는 이유</button>
 					<button>숨기기</button>
 					<button>신고</button>
+					{post?.user.userId === userId && (
+						<button
+							onClick={() => {
+								navigate(`/post/edit/${post.id}`);
+							}}
+						>
+							수정
+						</button>
+					)}
 					{post?.user.userId === userId && (
 						<button
 							onClick={() => {
