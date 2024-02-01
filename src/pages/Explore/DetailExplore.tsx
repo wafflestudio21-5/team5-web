@@ -70,7 +70,7 @@ export default function DetailExplore() {
 	};
 
 	useEffect(() => {
-		const fetchHomeFeedData = async () => {
+		const fetchExploreDetailData = async () => {
 			if (category && status === 'pending' && previewData.pageInfo.hasNext) {
 				const mappedCategory = CategoryMap[category];
 				if (mappedCategory) {
@@ -99,7 +99,7 @@ export default function DetailExplore() {
 			}
 		};
 
-		fetchHomeFeedData();
+		fetchExploreDetailData();
 	}, [
 		accessToken,
 		category,
