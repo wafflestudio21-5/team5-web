@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
@@ -51,6 +52,7 @@ const Profile = styled.div`
 	height: 2rem;
 	border-radius: 70%;
 	overflow: hidden;
+	cursor: pointer;
 	display: inline;
 	border: 1px solid ${getColor('grey')};
 	& > img {
@@ -76,6 +78,7 @@ const UsernameContentBox = styled.div`
 	}
 	& > .username {
 		font-weight: 600;
+		cursor: pointer;
 	}
 `;
 
@@ -116,6 +119,8 @@ export default function Comment({
 
 	const { accessToken, userId } = useUserContext();
 
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		const fetchCommentData = async () => {
 			if (showReply && comment && replyReload) {
@@ -152,7 +157,11 @@ export default function Comment({
 
 	return (
 		<CommentContainer>
-			<Profile>
+			<Profile
+				onClick={() => {
+					navigate(`/${comment.user.username}`);
+				}}
+			>
 				<img
 					src={
 						comment.user.profileImageUrl !== ''
@@ -163,7 +172,14 @@ export default function Comment({
 				/>
 			</Profile>
 			<UsernameContentBox>
-				<span className="username">{comment.user.username}</span>
+				<span
+					className="username"
+					onClick={() => {
+						navigate(`/${comment.user.username}`);
+					}}
+				>
+					{comment.user.username}
+				</span>
 				<span>{comment.text}</span>
 				<div className="reaction-bar">
 					<TextBox
@@ -216,7 +232,12 @@ export default function Comment({
 					return (
 						<>
 							<ReplyContent>
-								<Profile className="reply">
+								<Profile
+									className="reply"
+									onClick={() => {
+										navigate(`/${comment.user.username}`);
+									}}
+								>
 									<img
 										src={
 											reply.user.profileImageUrl !== ''
@@ -227,7 +248,14 @@ export default function Comment({
 									/>
 								</Profile>
 								<UsernameContentBox>
-									<span className="username">{reply.user.username}</span>
+									<span
+										className="username"
+										onClick={() => {
+											navigate(`/${comment.user.username}`);
+										}}
+									>
+										{reply.user.username}
+									</span>
 									<span>{reply.text}</span>
 									<div className="reaction-bar">
 										<TextBox
