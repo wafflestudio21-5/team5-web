@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const Container = styled.div`
 	width: 100%;
-	border-bottom: 1px solid gainsboro;
 	margin-top: 1rem;
 	overflow-x: auto;
 	display: inline-flex;
@@ -22,6 +21,21 @@ type PhotoPreviewType = {
 };
 
 export default function PhotoPreview({ previewUrls }: PhotoPreviewType) {
+	/* 	const [num, setNum] = useState(0);
+	const increment = () => {
+		setNum(num + 1);
+	};
+	const { files, setFiles } = usePostContext();
+
+	const handlePhotoClick = () => {
+		if (files && files.length > 0) {
+			const filesArray = Array.from(files);
+			const newFiles = new FileList(filesArray.reverse())
+
+		}
+		increment();
+	}; */
+
 	return (
 		<Container>
 			{previewUrls.map((url, index) => (

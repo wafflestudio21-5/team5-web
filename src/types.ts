@@ -74,7 +74,7 @@ export type RecentSearchType = {
 // Post
 export type PostType = {
 	id: number;
-	author: MiniProfileType;
+	user: MiniProfileType;
 	content: string;
 	media: MediaType[];
 	createdAt: string;
@@ -164,3 +164,14 @@ export type CategoryType =
 	| 'NEWS';
 
 export type modalStateType = 'open' | 'closed' | 'closing';
+
+export type ExplorePreviewType = {
+	previews: PreviewType[];
+	pageInfo: {
+		page: number;
+		size: number;
+		offset: number;
+		hasNext: boolean;
+		elements: number;
+	};
+};

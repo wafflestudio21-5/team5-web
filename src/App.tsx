@@ -9,7 +9,10 @@ import NavBar from './components/NavBar.tsx';
 import { useUserContext } from './contexts/UserContext.tsx';
 import AddText from './pages/AddPost/AddText.tsx';
 import UploadPhoto from './pages/AddPost/UploadPhoto.tsx';
+import EditPost from './pages/EditPost/EditPost.tsx';
+import DetailExplore from './pages/Explore/DetailExplore.tsx';
 import Explore from './pages/Explore/Explore.tsx';
+import ExploreFeed from './pages/Explore/ExploreFeed.tsx';
 import Notification from './pages/Feed/Notification.tsx';
 import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
@@ -26,6 +29,8 @@ import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx';
 import MakePassword from './pages/Login/signUp/MakePassword.tsx';
 import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
 import SignUp from './pages/Login/signUp/SignUp.tsx';
+import AskBirthdaySocial from './pages/Login/socialLogin/AskBirthdaySocial.tsx';
+import MakeUsernameSocial from './pages/Login/socialLogin/MakeUsernameSocial.tsx';
 import Bio from './pages/Profile/Edit/Bio.tsx';
 import Edit from './pages/Profile/Edit/Edit.tsx';
 import Gender from './pages/Profile/Edit/Gender.tsx';
@@ -61,6 +66,14 @@ const router = createBrowserRouter([
 			{
 				path: 'explore/',
 				element: <Explore />,
+			},
+			{
+				path: 'explore/:category/',
+				element: <DetailExplore />,
+			},
+			{
+				path: 'explore/:category/:id',
+				element: <ExploreFeed />,
 			},
 			{
 				path: 'addPost/',
@@ -118,6 +131,7 @@ const router = createBrowserRouter([
 				path: 'account/edit/gender/',
 				element: <Gender />,
 			},
+			{ path: 'post/edit/:id/', element: <EditPost /> },
 			{
 				path: '*',
 				element: <Navigate to="" />,
@@ -160,7 +174,7 @@ const loginRouter = createBrowserRouter([
 		element: <AskBirthday />,
 	},
 	{
-		path: 'signUp/username/',
+		path: 'signUp/username2/',
 		element: <MakeUsername />,
 	},
 	{
@@ -182,6 +196,14 @@ const loginRouter = createBrowserRouter([
 	{
 		path: 'signUp/photo/',
 		element: <AddPhoto />,
+	},
+	{
+		path: 'signUp/username/',
+		element: <MakeUsernameSocial />,
+	},
+	{
+		path: 'signUp/birthdaySocial/',
+		element: <AskBirthdaySocial />,
 	},
 	{
 		path: '*',

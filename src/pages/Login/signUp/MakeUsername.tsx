@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface InputProps {
-	isvalid: boolean;
-	type: string; // 여기서 실제로 사용하는 타입으로 변경하세요 (예: 'text', 'password' 등)
+	$isvalid: boolean;
+	type: string;
 	value: string;
 	placeholder: string;
 	onChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -29,7 +29,7 @@ const Input = styled.input<InputProps>`
 	margin: 1rem auto;
 	padding-left: 0.5rem;
 	border-radius: 1rem;
-	border: 1px solid ${({ isvalid }) => (isvalid ? 'gainsboro' : 'red')};
+	border: 1px solid ${({ $isvalid }) => ($isvalid ? 'gainsboro' : 'red')};
 	background-color: whitesmoke;
 	&:focus {
 		outline: none;
@@ -75,6 +75,7 @@ export default function MakeUsername() {
 	const { name, username, setUsername } = useAuthContext();
 	const navigate = useNavigate();
 	const [isValid, setIsValid] = useState(false);
+	const usernameRegex = /^[a-zA-Z0-9_.]{1,30}$/i;
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		setUsername(e.target.value);
 	};
@@ -83,7 +84,7 @@ export default function MakeUsername() {
 			setUsername(convert(name) + Math.floor(Math.random() * 1000 + 1));
 	}, []);
 	useEffect(() => {
-		setIsValid(username.length > 0);
+		setIsValid(usernameRegex.test(username));
 	}, [username]);
 	return (
 		<>
@@ -99,14 +100,16 @@ export default function MakeUsername() {
 				있습니다.
 			</Div>
 			<Input
-				isvalid={isValid}
+				$isvalid={isValid}
 				type="text"
 				value={username}
 				placeholder="사용자 이름"
 				onChange={handleChange}
 			/>
 			{!isValid && (
-				<Div className="notice">계속하려면 사용자 이름을 작성하세요.</Div>
+				<Div className="notice">
+					1~30자 사이의 알파벳, 온점, 언더바로 작성해주세요.
+				</Div>
 			)}
 			<Button className="next" onClick={() => navigate('/signUp/email')}>
 				다음

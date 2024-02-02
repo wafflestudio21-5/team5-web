@@ -24,7 +24,7 @@ const ModalContent = styled.div`
 	padding-bottom: 0.5rem;
 	background-color: ${getColor('grey')};
 	border-radius: 0.5rem 0.5rem 0 0;
-	max-height: 70%;
+	height: 70%;
 `;
 
 export default function CommentModal({
@@ -109,6 +109,7 @@ export default function CommentModal({
 							handlePostReply={handlePostReply}
 							handleDeleteComment={handleDeleteComment}
 							setReload={setReload}
+							postAuthorId={post.user.userId}
 						/>
 					)}
 					<CommentInput

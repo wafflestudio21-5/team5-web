@@ -1,8 +1,11 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { convert } from 'hangul-romanization';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useAuthContext } from '../../../contexts/AuthContext';
+import { tryFacebookSignup } from '../../../apis/login';
+import { useUserContext } from '../../../contexts/UserContext';
 
 interface InputProps {
 	$isvalid: boolean;
@@ -36,11 +39,10 @@ const Input = styled.input<InputProps>`
 `;
 const Div = styled.div`
 	&.notice {
-		width: 90%;
+		color: red;
 		font-size: 0.7rem;
 		margin-left: 1.5rem;
 		margin-top: -0.5rem;
-		color: red;
 	}
 	&.text {
 		width: 90%;
@@ -59,16 +61,6 @@ const Button = styled.button`
 		background-color: blue;
 		color: white;
 	}
-	&.option {
-		display: block;
-		margin: 1rem auto;
-		width: 93%;
-		height: 2.5rem;
-		border-radius: 1.2rem;
-		border: 1px solid gainsboro;
-		background-color: white;
-		color: black;
-	}
 	&.already {
 		display: block;
 		width: 90%;
@@ -81,45 +73,67 @@ const Button = styled.button`
 	}
 `;
 
-export default function AskEmail() {
+export default function MakeUsernameSocial() {
+	const { name, username, setUsername } = useAuthContext();
+	const { setAccessToken } = useUserContext();
 	const navigate = useNavigate();
-	const { email, setEmail } = useAuthContext();
-	const [isValid, setIsValid] = useState(true);
-	const handleClick = () => {
-		const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-		if (emailRegex.test(email)) {
+	const [isValid, setIsValid] = useState(false);
+	const usernameRegex = /^[a-zA-Z0-9_.]{1,30}$/i;
+	const location = useLocation();
+	const birthday = location.state['birthday'];
+
+	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+		setUsername(e.target.value);
+	};
+
+	useEffect(() => {
+		if (username === '')
+			setUsername(convert(name) + Math.floor(Math.random() * 1000 + 1));
+	}, []);
+
+	useEffect(() => {
+		setIsValid(usernameRegex.test(username));
+	}, [username]);
+
+	const handleClick = async () => {
+		if (usernameRegex.test(username)) {
 			setIsValid(true);
-			navigate('/signUp/certification');
-		} else setIsValid(false);
+			const newAccessToken = await tryFacebookSignup({ username, birthday });
+			if (newAccessToken) {
+				setAccessToken(newAccessToken);
+				navigate('/signUp/photo');
+			}
+		} else {
+			setIsValid(false);
+		}
 	};
 	return (
 		<>
-			<Link to="/signUp/username2">
+			<Link to="/signUp/birthdayS">
 				<Img
 					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsl8RBI7W6MLf98a-xSu5HLLUasmcPAkIU1A&usqp=CAU"
 					alt="뒤로가기"
 				/>
 			</Link>
-			<H2>이메일 주소 입력</H2>
+			<H2>사용자 이름 만들기</H2>
 			<Div className="text">
-				회원님에게 연락할 수 있는 이메일 주소를 입력하세요. 이 이메일 주소는
-				프로필에서 다른 사람에게 공개되지 않습니다.
+				사용자 이름을 추가하거나 추천 이름을 사용하세요. 언제든지 변경할 수
+				있습니다.
 			</Div>
 			<Input
 				$isvalid={isValid}
 				type="text"
-				value={email}
-				placeholder="이메일 주소"
-				onChange={(e) => setEmail(e.target.value)}
+				value={username}
+				placeholder="사용자 이름"
+				onChange={handleChange}
 			/>
 			{!isValid && (
-				<Div className="notice">유효한 이메일 주소를 입력하세요.</Div>
+				<Div className="notice">
+					1~30자 사이의 알파벳, 온점, 언더바로 작성해주세요.
+				</Div>
 			)}
 			<Button className="next" onClick={handleClick}>
 				다음
-			</Button>
-			<Button className="option" onClick={() => navigate('/signUp/phone')}>
-				휴대폰 번호로 가입
 			</Button>
 			<Button className="already" onClick={() => navigate('/')}>
 				이미 계정이 있으신가요?

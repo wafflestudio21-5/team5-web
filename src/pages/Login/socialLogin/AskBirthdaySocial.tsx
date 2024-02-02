@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useAuthContext } from '../../../contexts/AuthContext';
 import Modal from '../../../shared/Modal/Modal';
 
 interface InputProps {
@@ -119,14 +118,14 @@ const A = styled.a`
 
 type modalState = 'open' | 'closed' | 'closing';
 
-export default function AskBirthday() {
-	const { birthday, setBirthday } = useAuthContext();
+export default function AskBirthdaySocial() {
+	const [birthday, setBirthday] = useState(new Date());
 	const [isValid, setIsValid] = useState(true);
 	const [modal, setModal] = useState<modalState>('closed');
 	const navigate = useNavigate();
 	const handleClick = () => {
 		if (birthday.getFullYear() < 2022) {
-			navigate('/signUp/username2');
+			navigate('/signUp/username', { state: { birthday: `${birthday}` } });
 			setIsValid(true);
 		} else setIsValid(false);
 	};

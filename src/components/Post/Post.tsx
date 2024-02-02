@@ -18,7 +18,7 @@ const Container = styled.article`
 
 type Props = {
 	postData: PostType | null;
-	openMenuModal: (postId: number) => void;
+	openMenuModal: (post: PostType) => void;
 	openCommentModal: (post: PostType) => void;
 };
 
@@ -31,10 +31,11 @@ export default function Post({
 		postData && (
 			<Container id={'post' + postData.id}>
 				<PostHeader
-					user={postData.author}
+					user={postData.user}
 					showMenu={() => {
-						openMenuModal(postData.id);
+						openMenuModal(postData);
 					}}
+					blockInteraction={false}
 				/>
 				<PostImage media={postData.media} />
 				<ReactSection

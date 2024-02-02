@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { deletePost } from '../apis/post.ts';
+import { useUserContext } from '../contexts/UserContext.tsx';
 import { getColor } from '../styles/Theme.tsx';
 import { PostType } from '../types.ts';
 
@@ -23,11 +25,11 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 	const [menuModal, setMenuModal] = useState<ModalState>('closed');
 	const [commentModal, setCommentModal] = useState<ModalState>('closed');
 
-	const [menuPostId, setMenuPostId] = useState<number | null>(null);
+	const [menuPost, setMenuPost] = useState<PostType | null>(null);
 	const [commentPost, setCommentPost] = useState<PostType | null>(null);
 
-	const openMenuModal = (postId: number) => {
-		setMenuPostId(postId);
+	const openMenuModal = (post: PostType) => {
+		setMenuPost(post);
 		setMenuModal('open');
 	};
 
@@ -36,10 +38,21 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 		setCommentModal('open');
 	};
 
+	const { accessToken } = useUserContext();
+
+	const [deletedPost, setDeletedPost] = useState<number[]>([]);
+
 	const focus = useRef<HTMLDivElement | null>(null);
 	const hash = useLocation().hash;
 
 	const [isFocused, setIsFocused] = useState(false);
+
+	const handleDeletePost = async (postId: number) => {
+		const result = await deletePost(postId, accessToken);
+		if (result?.status === 'success') {
+			setDeletedPost([...deletedPost, postId]);
+		}
+	};
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => {
@@ -52,9 +65,9 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 	return (
 		<>
 			<Container>
-				{posts &&
-					posts.length > 0 &&
-					posts.map((post) => (
+				{posts
+					.filter((post) => deletedPost.indexOf(post.id) <= -1)
+					.map((post) => (
 						<div ref={hash === `#post${post.id}` ? focus : null}>
 							<Post
 								postData={post}
@@ -70,11 +83,12 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 						setMenuModal('closing');
 						setTimeout(() => {
 							setMenuModal('closed');
-							setMenuPostId(null);
+							setMenuPost(null);
 						}, 300);
 					}}
 					isClosing={menuModal === 'closing'}
-					postId={menuPostId}
+					post={menuPost}
+					handleDeletePost={handleDeletePost}
 				/>
 			)}
 			{commentModal !== 'closed' && (

@@ -1,11 +1,13 @@
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useEffect } from 'react';
 import { useUserContext } from '../../../contexts/UserContext';
+import { addProfileImage } from '../../../apis/account';
 
 const Img = styled.img`
-	width: 10rem;
+	height: 100%;
+	margin: 0 auto;
 `;
 const H2 = styled.h2`
 	display: block;
@@ -48,7 +50,11 @@ const Button = styled.button`
 
 export default function AddPhoto() {
 	const navigate = useNavigate();
-	const { isLoggedIn, setIsLoggedIn } = useUserContext();
+	const { accessToken, isLoggedIn, setIsLoggedIn } = useUserContext();
+	const [previewImage, setPreviewImage] = useState(
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/680px-Default_pfp.svg.png?20220226140232'
+	);
+
 	useEffect(() => {
 		if (isLoggedIn) {
 			navigate('/');
@@ -57,6 +63,33 @@ export default function AddPhoto() {
 	const handleClick = () => {
 		setIsLoggedIn(true);
 	};
+
+	const profileImageRef = useRef<HTMLInputElement>(null);
+
+	const onProfileImageClick = () => {
+		if (profileImageRef.current) {
+			profileImageRef.current.click();
+		}
+	};
+
+	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files.length > 0) {
+			const file = e.target.files[0];
+			const formData = new FormData();
+			formData.append('file', file);
+
+			await addProfileImage(accessToken, formData);
+
+			if (file) {
+				const reader = new FileReader();
+				reader.onloadend = () => {
+					setPreviewImage(reader.result as string);
+				};
+				reader.readAsDataURL(file);
+			}
+		}
+	};
+
 	return (
 		<>
 			<H2>프로필 사진 추가</H2>
@@ -66,16 +99,26 @@ export default function AddPhoto() {
 			</Div>
 			<Div className="imageBox">
 				<Img
-					src="https://eeuncontents.com/common/img/default_profile.png"
+					src={previewImage}
 					alt="기본 프로필"
+					onClick={onProfileImageClick}
 				/>
 			</Div>
 			<Div className="buttonPos">
-				<Button className="next">사진 추가</Button>
+				<Button className="next" onClick={handleClick}>
+					사진 추가
+				</Button>
 				<Button className="next" id="skip" onClick={handleClick}>
 					건너뛰기
 				</Button>
 			</Div>
+			<input
+				type="file"
+				style={{ display: 'none' }}
+				ref={profileImageRef}
+				accept="image/*"
+				onChange={handleFileChange}
+			/>
 		</>
 	);
 }

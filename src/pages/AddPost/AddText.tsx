@@ -1,12 +1,13 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchUserInformation } from '../../apis/account';
-import { resetAccessToken } from '../../apis/login';
+import { resetAccessToken } from '../../apis/login.ts';
 import { tryPost } from '../../apis/post';
-import MenuElement from '../../components/CreatePost/MenuElement';
-import PhotoPreview from '../../components/CreatePost/PhotoPreview';
-import Select from '../../components/CreatePost/SubjectBar';
+import MenuElement from '../../components/AddPost/MenuElement';
+import PhotoPreview from '../../components/AddPost/PhotoPreview';
+import SubjectBar from '../../components/AddPost/SubjectBar';
 import { usePostContext } from '../../contexts/PostContext';
 import { useUserContext } from '../../contexts/UserContext';
 
@@ -78,8 +79,9 @@ export default function AddText() {
 	const navigate = useNavigate();
 	const { accessToken, username, currentUser, setCurrentUser } =
 		useUserContext();
-	const { files, setContent, content, category } = usePostContext();
+	const { files, setContent, content, category, resetPost } = usePostContext();
 	const { previewUrls } = usePostContext();
+	const [isClicked, setIsClicked] = useState(true);
 	const handleClick = async () => {
 		if (category) {
 			const newAccessToken = await resetAccessToken();
@@ -97,6 +99,9 @@ export default function AddText() {
 					navigate(addr);
 				}
 			}
+			resetPost();
+		} else {
+			setIsClicked(false);
 		}
 	};
 	const menuname = [
@@ -124,9 +129,10 @@ export default function AddText() {
 				value={content}
 				onChange={(e) => setContent(e.target.value)}
 			/>
-			<Select />
-			{menuname.map((menu) => (
+			<SubjectBar isClicked={isClicked} />
+			{menuname.map((menu, index) => (
 				<MenuElement
+					key={index}
 					title={menu}
 					icon="https://mblogthumb-phinf.pstatic.net/MjAxOTAzMTlfMzkg/MDAxNTUzMDAxODEwMzk5.8pXP3XjvzjUzNV86zV796kuswjQOSkKw9L1jLCb9a7og.2HnP8pqAH9bkFMFsWTUV_B69LEoey1624U2_1BGynaYg.PNG.urbanstars/glyph-logo_May2016.png?type=w800"
 				/>
