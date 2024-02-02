@@ -67,6 +67,9 @@ export default function Follow() {
 	const [followerSearch, setFollowerSearch] = useState<string>('');
 	const [followingSearch, setFollowingSearch] = useState<string>('');
 
+	const [followerNum, setFollowerNum] = useState(0);
+	const [followingNum, setFollowingNum] = useState(0);
+
 	// 팔로워, 팔로잉 목록
 	const [followerCommonList, setFollowerCommonList] = useState<
 		MiniProfileWithIsRequestType[]
@@ -95,6 +98,8 @@ export default function Follow() {
 				return;
 			}
 			setUser(userInfo);
+			setFollowerNum(userInfo.followerNumber);
+			setFollowingNum(userInfo.followingNumber);
 
 			// 내 계정인지 판단
 			if (userInfo.username === username) {
@@ -254,6 +259,18 @@ export default function Follow() {
 		);
 	};
 
+	const handleFollow = () => {
+		setFollowingNum(followingNum + 1);
+	};
+
+	const handleUnFollow = () => {
+		setFollowingNum(followingNum - 1);
+	};
+
+	const handleDeleteFollwer = () => {
+		setFollowerNum(followerNum - 1);
+	};
+
 	if (isLoading) return <></>;
 	return (
 		user && (
@@ -261,8 +278,8 @@ export default function Follow() {
 				<BackHeader title={user.username} backURL={`/${username}`} />
 				<FollowContainer>
 					<ToggleBar
-						leftTab={`팔로워 ${user.followerNumber}명`}
-						rightTab={`팔로잉 ${user.followingNumber}명`}
+						leftTab={`팔로워 ${followerNum}명`}
+						rightTab={`팔로잉 ${followingNum}명`}
 						activeTab={activeTab}
 						setActiveTab={handleTabChange}
 					>
@@ -286,6 +303,7 @@ export default function Follow() {
 												key={follower.userId}
 												user={follower}
 												action="삭제"
+												handleDeleteFollower={handleDeleteFollwer}
 											/>
 										))}
 									{followerDiffList
@@ -297,6 +315,7 @@ export default function Follow() {
 												key={follower.userId}
 												user={follower}
 												action="삭제"
+												handleDeleteFollower={handleDeleteFollwer}
 											/>
 										))}
 								</>
@@ -379,6 +398,8 @@ export default function Follow() {
 										key={following.userId}
 										user={following}
 										action="팔로잉"
+										handleFollow={handleFollow}
+										handleUnFollow={handleUnFollow}
 									/>
 								))}
 							{/* 팔로잉 중 내가 팔로잉 하지 않는 사람들, 자신은 제외 */}
@@ -393,6 +414,8 @@ export default function Follow() {
 												key={following.userId}
 												user={following}
 												action={following.isRequest ? '요청됨' : '팔로우'}
+												handleFollow={handleFollow}
+												handleUnFollow={handleUnFollow}
 											/>
 										)
 								)}
