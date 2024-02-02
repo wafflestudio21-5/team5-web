@@ -96,8 +96,7 @@ export default function Login() {
 	const [usernameInput, setUsernameInput] = useState('');
 	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
-	const { setIsLoggedIn, setAccessToken, accessToken, setCurrentUser } =
-		useUserContext();
+	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
 	const location = useLocation();
 	const [result, setResult] = useState<string | null>(null);
 
@@ -125,7 +124,6 @@ export default function Login() {
 	}, []);
 
 	const autoLogin = async () => {
-		console.log(accessToken);
 		const newAccessToken = await resetAccessToken();
 		setAccessToken(newAccessToken);
 		const username = localStorage.getItem('username');
