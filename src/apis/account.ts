@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { baseURL } from '../constants.ts';
 import { APIErrorResponseType, UserType } from '../types.ts';
 
-import { acceptFollowRequest, getUserInformation } from './user.ts';
+import { getUserInformation } from './user.ts';
 
 // 유저 정보 userContext에 fetch
 export const fetchUserInformation = async (

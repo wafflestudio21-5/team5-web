@@ -14,9 +14,10 @@ export default function UserFeed() {
 	const [feedData, setFeedData] = useState<PostType[]>([]);
 
 	const fetchUserFeed = async () => {
-		if (id) {
+		if (id !== undefined) {
 			const data = await getUserFeed(id, accessToken);
-			setFeedData(data);
+			if (data) setFeedData(data);
+			setIsLoading(false);
 		}
 	};
 

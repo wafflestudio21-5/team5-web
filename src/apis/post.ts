@@ -28,7 +28,7 @@ type AuthorResponseType = {
 };
 
 // 게시물 response 형
-type PostResponseType = {
+export type PostResponseType = {
 	id: number;
 	author: AuthorResponseType;
 	content: string;
@@ -109,6 +109,35 @@ export const tryPost = async ({
 	}
 };
 
+// 게시물 response format
+export const formatPostReponse = (
+	responsePostList: PostResponseType[]
+): PostType[] => {
+	const posts: PostType[] = responsePostList.map((post) => {
+		const user: MiniProfileType = {
+			userId: post.author.id,
+			profileImageUrl: post.author.profileImageUrl,
+			username: post.author.username,
+			name: '',
+		};
+		return {
+			id: post.id,
+			content: post.content,
+			media: post.media,
+			createdAt: post.createdAt,
+			likeCount: post.likeCount,
+			commentCount: post.commentCount,
+			user: user,
+			liked: post.liked,
+			saved: post.saved,
+			hideLike: post.hideLike,
+			category: post.category,
+		};
+	});
+
+	return posts;
+};
+
 // 피드 게시물 가져오기
 export const getFeedData = async (
 	page: number,
@@ -128,27 +157,7 @@ export const getFeedData = async (
 
 			const result = response.data;
 
-			const posts: PostType[] = result.posts.map((post) => {
-				const user: MiniProfileType = {
-					userId: post.author.id,
-					profileImageUrl: post.author.profileImageUrl,
-					username: post.author.username,
-					name: '',
-				};
-				return {
-					id: post.id,
-					content: post.content,
-					media: post.media,
-					createdAt: post.createdAt,
-					likeCount: post.likeCount,
-					commentCount: post.commentCount,
-					user: user,
-					liked: post.liked,
-					saved: post.saved,
-					hideLike: post.hideLike,
-					category: post.category,
-				};
-			});
+			const posts: PostType[] = formatPostReponse(result.posts);
 
 			const feed: FeedType = {
 				posts: posts,
@@ -168,27 +177,7 @@ export const getFeedData = async (
 
 			const result = response.data;
 
-			const posts: PostType[] = result.posts.map((post) => {
-				const user: MiniProfileType = {
-					userId: post.author.id,
-					profileImageUrl: post.author.profileImageUrl,
-					username: post.author.username,
-					name: '',
-				};
-				return {
-					id: post.id,
-					content: post.content,
-					media: post.media,
-					createdAt: post.createdAt,
-					likeCount: post.likeCount,
-					commentCount: post.commentCount,
-					user: user,
-					liked: post.liked,
-					saved: post.saved,
-					hideLike: post.hideLike,
-					category: post.category,
-				};
-			});
+			const posts: PostType[] = formatPostReponse(result.posts);
 
 			const feed: FeedType = {
 				posts: posts,
@@ -666,11 +655,11 @@ export const deleteReply = async (
 };
 
 export const deletePost = async (
-	postId: number,
+	postId: number | string,
 	accessToken: string
 ): Promise<SuccessFailResponse | null> => {
 	try {
-		await axios.delete(`${baseURL}/api/v1/posts/${postId}}`, {
+		await axios.delete(`${baseURL}/api/v1/posts/${postId}`, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 			},
@@ -692,7 +681,7 @@ export const deletePost = async (
 
 // 게시물 하나 정보 가져오기
 export const getPost = async (
-	postId: number,
+	postId: number | string,
 	accessToken: string
 ): Promise<PostType | null> => {
 	try {
@@ -747,12 +736,11 @@ export const editPost = async (
 ): Promise<SuccessFailResponse | null> => {
 	try {
 		await axios.put(
-			`${baseURL}/api/v1/posts/${postId}}`,
+			`${baseURL}/api/v1/posts/${postId}`,
 			{ content: content },
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
-					'Content-Type': 'appication/json',
 				},
 			}
 		);

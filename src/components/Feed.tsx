@@ -51,13 +51,17 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 		const result = await deletePost(postId, accessToken);
 		if (result?.status === 'success') {
 			setDeletedPost([...deletedPost, postId]);
+			setMenuModal('closing');
+			setTimeout(() => {
+				setMenuModal('closed');
+				setMenuPost(null);
+			}, 300);
 		}
 	};
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => {
 		if (focus.current && !isFocused) {
-			focus.current?.scrollIntoView({ behavior: 'instant' });
+			focus.current.scrollIntoView();
 			setIsFocused(true);
 		}
 	});

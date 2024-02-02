@@ -49,6 +49,7 @@ const IconBar = styled.div`
 `;
 
 const TextBox = styled.div`
+	white-space: pre-line;
 	line-height: 18px;
 	font-size: 14px;
 	&.margin {
@@ -156,7 +157,8 @@ export default function ReactSection({ postData, showComment }: Props) {
 					className="margin secondary-text more-comment"
 					onClick={showComment}
 				>
-					댓글 {postData.commentCount}개 모두 보기
+					{postData.commentCount > 0 &&
+						`댓글 ${postData.commentCount}개 모두 보기`}
 				</TextBox>
 				<TextBox className="margin secondary-text more-comment">
 					{createdDate.getFullYear() +
