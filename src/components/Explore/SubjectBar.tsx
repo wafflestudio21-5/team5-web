@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { getColor } from '../../styles/Theme';
 import KorToEng from '../AddPost/KorToEng';
 
 const Subject = styled.div`
@@ -15,6 +16,11 @@ const Subject = styled.div`
 	text-align: center;
 	&:hover {
 		cursor: pointer;
+		background-color: ${getColor('pinkRed')};
+		color: ${getColor('white')};
+		transition:
+			background-color 300ms,
+			color 300ms;
 	}
 `;
 const ScrollContainer = styled.div`
@@ -51,7 +57,11 @@ export default function Select() {
 		<SubjectBox>
 			<ScrollContainer>
 				{subjects.map((item) => (
-					<Subject onClick={() => navigate(`/explore/${KorToEng(item)}`)}>
+					<Subject
+						onClick={() =>
+							navigate(`/explore/${KorToEng(item)?.toLowerCase()}`)
+						}
+					>
 						{item}
 					</Subject>
 				))}

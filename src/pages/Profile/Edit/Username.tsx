@@ -4,9 +4,8 @@ import styled from 'styled-components';
 
 import { editUsername, fetchUserInformation } from '../../../apis/account.ts';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
-import { getColor } from '../../../styles/Theme.tsx';
-
 import CancelHeader from '../../../shared/Header/CancelHeader.tsx';
+import { getColor } from '../../../styles/Theme.tsx';
 
 const EditLayout = styled.div`
 	width: 100%;
