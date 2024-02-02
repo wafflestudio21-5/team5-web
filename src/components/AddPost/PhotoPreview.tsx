@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import { usePostContext } from '../../contexts/PostContext';
 
 const Container = styled.div`
 	width: 100%;
@@ -23,23 +21,25 @@ type PhotoPreviewType = {
 };
 
 export default function PhotoPreview({ previewUrls }: PhotoPreviewType) {
-	const [num, setNum] = useState(0);
+	/* 	const [num, setNum] = useState(0);
 	const increment = () => {
 		setNum(num + 1);
 	};
-	const { files } = usePostContext();
+	const { files, setFiles } = usePostContext();
 
 	const handlePhotoClick = () => {
 		if (files && files.length > 0) {
-			const fileArray = Array.from(files);
+			const filesArray = Array.from(files);
+			const newFiles = new FileList(filesArray.reverse())
+
 		}
 		increment();
-	};
+	}; */
 
 	return (
 		<Container>
 			{previewUrls.map((url, index) => (
-				<Photo key={index} src={url} alt="dummy" onClick={handlePhotoClick} />
+				<Photo key={index} src={url} alt="dummy" />
 			))}
 		</Container>
 	);
