@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { addProfileImage, fetchUserInformation } from '../../apis/account.ts';
@@ -361,6 +361,9 @@ export default function Profile() {
 		}
 	};
 
+	// 프로필 공유용 url
+	const currentUrl = useLocation().pathname;
+
 	// 게시물 미리보기
 	const [previews, setPreviews] = useState<PreviewType[]>([]);
 
@@ -697,7 +700,12 @@ export default function Profile() {
 							<button className="grey" onClick={onClickEditProfile}>
 								프로필 편집
 							</button>
-							<button className="grey">프로필 공유</button>
+							<button
+								className="grey"
+								onClick={() => navigator.clipboard.writeText(currentUrl)}
+							>
+								프로필 공유
+							</button>
 						</>
 					) : (
 						<>
@@ -757,7 +765,7 @@ export default function Profile() {
 							previews={previews}
 							callbackUrl={`/${user.username}/feed`}
 							useHashtag={true}
-						></PostList>
+						/>
 						<div>태그됨</div>
 					</ToggleBar>
 				</PostContainer>

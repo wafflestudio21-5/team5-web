@@ -8,18 +8,19 @@ import {
 	getFollowerDiff,
 	getFollowingCommon,
 	getFollowingDiff,
-	deleteFollower,
-	unfollowUser,
 	getUserFollowStatus,
 	getUserFollowMeStatus,
-	followPublicUser,
 } from '../../apis/user.ts';
 import MiniProfile from '../../components/MiniProfile.tsx';
 import ToggleBar from '../../components/Profile/ToggleBar.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import BackHeader from '../../shared/BackHeader.tsx';
 import SearchBar from '../../shared/SearchBar.tsx';
-import { MiniProfileType, UserType } from '../../types.ts';
+import {
+	MiniProfileType,
+	MiniProfileWithIsRequestType,
+	UserType,
+} from '../../types.ts';
 
 const FollowLayout = styled.main`
 	width: 100%;
@@ -68,19 +69,23 @@ export default function Follow() {
 	// 탭 관리
 	const [activeTab, setActiveTab] = useState<'left' | 'right'>('left');
 
+	// 검색 관리
+	const [followerSearch, setFollowerSearch] = useState<string>('');
+	const [followingSearch, setFollowingSearch] = useState<string>('');
+
 	// 팔로워, 팔로잉 목록
 	const [followerCommonList, setFollowerCommonList] = useState<
 		MiniProfileType[]
 	>([]);
-	const [followerDiffList, setFollowerDiffList] = useState<MiniProfileType[]>(
-		[]
-	);
+	const [followerDiffList, setFollowerDiffList] = useState<
+		MiniProfileWithIsRequestType[]
+	>([]);
 	const [followingCommonList, setFollowingCommonList] = useState<
 		MiniProfileType[]
 	>([]);
-	const [followingDiffList, setFollowingDiffList] = useState<MiniProfileType[]>(
-		[]
-	);
+	const [followingDiffList, setFollowingDiffList] = useState<
+		MiniProfileWithIsRequestType[]
+	>([]);
 
 	const fetchUserData = async () => {
 		try {
@@ -156,7 +161,7 @@ export default function Follow() {
 				return;
 			}
 
-			setFollowerDiffList(followers.miniProfiles);
+			setFollowerDiffList(followers);
 		} catch {
 			navigate('/');
 		}
@@ -234,7 +239,7 @@ export default function Follow() {
 		navigate(newPath);
 	};
 
-	if (isLoading) return <div></div>;
+	if (isLoading) return <></>;
 	return (
 		user && (
 			<FollowLayout>
@@ -249,39 +254,34 @@ export default function Follow() {
 						{/* 팔로워 */}
 						<FollowList>
 							{/* 검색 창*/}
-							<SearchBar />
+							<SearchBar
+								text={followerSearch}
+								onChangeSearch={setFollowingSearch}
+							/>
+							{/* 유저 본인 */}
 							{isMyAccount ? (
 								<>
-									{/* 내가 팔로잉 하는 사람들 */}
+									{/* 내 팔로워 */}
 									{followerCommonList.map((follower) => (
 										<MiniProfile
 											key={follower.userId}
 											user={follower}
-											buttonLabel="삭제"
-											onClickButton={() =>
-												deleteFollower(follower.username, accessToken)
-											}
+											text="삭제"
 										/>
 									))}
-									{/* 내가 팔로잉 하지 않는 사람들, 자신은 제외 */}
-									{followerDiffList.map(
-										(follower) =>
-											username !== follower.username && (
-												<MiniProfile
-													key={follower.userId}
-													user={follower}
-													buttonLabel="삭제"
-													onClickButton={() =>
-														deleteFollower(follower.username, accessToken)
-													}
-												/>
-											)
-									)}
+									{followerDiffList.map((follower) => (
+										<MiniProfile
+											key={follower.userId}
+											user={follower}
+											text="삭제"
+										/>
+									))}
 								</>
 							) : (
 								<>
-									{/* 유저 본인 */}
-									{!isMyAccount && isFollow && (
+									{/* 다른 유저 */}
+									{/* 다른 유저의 팔로워 중 나 */}
+									{isFollow && (
 										<MiniProfile
 											key={userId}
 											user={{
@@ -290,32 +290,25 @@ export default function Follow() {
 												name,
 												profileImageUrl,
 											}}
-											buttonLabel="hidden"
-											onClickButton={() => {}}
+											text="hidden"
 										/>
 									)}
-									{/* 내가 팔로잉 하는 사람들 */}
+									{/* 다른 유저의 팔로워 중 내가 팔로잉 하는 사람들 */}
 									{followerCommonList.map((follower) => (
 										<MiniProfile
 											key={follower.userId}
 											user={follower}
-											buttonLabel="팔로잉"
-											onClickButton={() =>
-												deleteFollower(follower.username, accessToken)
-											}
+											text="팔로잉"
 										/>
 									))}
-									{/* 내가 팔로잉 하지 않는 사람들, 자신은 제외 */}
+									{/* 다른 유저의 팔로워 중 내가 팔로잉 하지 않는 사람들, 자신은 제외 */}
 									{followerDiffList.map(
 										(follower) =>
 											username !== follower.username && (
 												<MiniProfile
 													key={follower.userId}
 													user={follower}
-													buttonLabel="팔로우"
-													onClickButton={() =>
-														followPublicUser(follower.username, accessToken)
-													}
+													text={follower.isRequest ? '요청됨' : '팔로우'}
 												/>
 											)
 									)}
@@ -326,9 +319,12 @@ export default function Follow() {
 						{/* 팔로잉 */}
 						<FollowList>
 							{/* 검색 창*/}
-							<SearchBar />
+							<SearchBar
+								text={followingSearch}
+								onChangeSearch={setFollowingSearch}
+							/>
 							{/* 유저 본인 */}
-							{!isMyAccount && isMyFollower && (
+							{!isMyAccount && isFollow && (
 								<MiniProfile
 									key={userId}
 									user={{
@@ -337,32 +333,25 @@ export default function Follow() {
 										name,
 										profileImageUrl,
 									}}
-									buttonLabel="hidden"
-									onClickButton={() => {}}
+									text="hidden"
 								/>
 							)}
-							{/* 내가 팔로잉 하는 사람들 */}
+							{/* 팔로잉 중 내가 팔로잉 하는 사람들 */}
 							{followingCommonList.map((following) => (
 								<MiniProfile
 									key={following.userId}
 									user={following}
-									buttonLabel="팔로잉"
-									onClickButton={() =>
-										unfollowUser(following.username, accessToken)
-									}
+									text="팔로잉"
 								/>
 							))}
-							{/* 내가 팔로잉 하지 않는 사람들, 자신은 제외 */}
+							{/* 팔로잉 중 내가 팔로잉 하지 않는 사람들, 자신은 제외 */}
 							{followingDiffList.map(
 								(following) =>
 									username !== following.username && (
 										<MiniProfile
 											key={following.userId}
 											user={following}
-											buttonLabel="팔로우"
-											onClickButton={() =>
-												followPublicUser(following.username, accessToken)
-											}
+											text={following.isRequest ? '요청됨' : '팔로우'}
 										/>
 									)
 							)}

@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { baseURL } from '../constants.ts';
 import {
 	APIErrorResponseType,
+	FollowListResponseType,
 	MiniProfileType,
 	PostType,
 	PreviewType,
@@ -381,11 +382,6 @@ export const deleteFollower = async (
 // ****************************************************** 목록 가져오기 ******************************************************
 // ****************************************************** 목록 가져오기 ******************************************************
 // ****************************************************** 목록 가져오기 ******************************************************
-
-type FollowListResponseType = {
-	miniProfiles: MiniProfileType[];
-};
-
 // 팔로워 중에서 내가 팔로우 하는 사람 목록 가져오기, 유저 본인의 팔로워도 이거로 가져옴
 export const getFollowerCommon = async (
 	username: string,
@@ -500,42 +496,12 @@ export const getFollowingDiff = async (
 	}
 };
 
-// 피드 미리보기 가져오기
-export const getFeedPreview = async (
-	username: string,
+export const getFollowRequestList = async (
 	accessToken: string
-): Promise<PreviewType[]> => {
+): Promise<MiniProfileType[] | null> => {
 	try {
-		const response = await axios.get<PreviewType[]>(
-			`${baseURL}/api/v1/account/${username}/feed/preview`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
-
-		return response.data;
-	} catch (error) {
-		const err = error as AxiosError<APIErrorResponseType>;
-		if (err.response && err.response.data) {
-			alert(err.response.data.message);
-		} else {
-			alert('Error occurred');
-		}
-
-		return [];
-	}
-};
-
-// 유저 피드 가져오기
-export const getUserFeed = async (
-	username: string,
-	accessToken: string
-): Promise<PostType[] | null> => {
-	try {
-		const response = await axios.get<PostType[]>(
-			`${baseURL}/api/v1/account/${username}/feed/newer`,
+		const response = await axios.get<MiniProfileType[]>(
+			`${baseURL}/api/v1/friendship/requestlist`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -553,5 +519,47 @@ export const getUserFeed = async (
 		}
 
 		return null;
+	}
+};
+
+// 피드 미리보기 가져오기
+export const getFeedPreview = async (
+	username: string,
+	accessToken: string
+): Promise<PreviewType[]> => {
+	try {
+		const response = await axios.get<PreviewType[]>(
+			`${baseURL}/api/v1/account/${username}/feed/preview`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		return response.data;
+	} catch {
+		return [];
+	}
+};
+
+// 유저 피드 가져오기
+export const getUserFeed = async (
+	username: string,
+	accessToken: string
+): Promise<PostType[]> => {
+	try {
+		const response = await axios.get<PostType[]>(
+			`${baseURL}/api/v1/account/${username}/feed`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		return response.data;
+	} catch {
+		return [];
 	}
 };

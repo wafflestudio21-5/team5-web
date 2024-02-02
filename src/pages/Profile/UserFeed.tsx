@@ -6,7 +6,7 @@ import Feed from '../../components/Feed.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import { PostType } from '../../types.ts';
 
-export default function UserFeed(id: number) {
+export default function UserFeed() {
 	const { id } = useParams();
 	const { accessToken } = useUserContext();
 
@@ -15,10 +15,9 @@ export default function UserFeed(id: number) {
 
 	const fetchUserFeed = async () => {
 		if (id) {
+			const data = await getUserFeed(id, accessToken);
+			setFeedData(data);
 		}
-		const data = await getUserFeed(id, accessToken);
-		setFeedData(data);
-		setIsLoading(false);
 	};
 
 	useEffect(() => {
@@ -26,6 +25,7 @@ export default function UserFeed(id: number) {
 		setFeedData([]);
 
 		fetchUserFeed();
+		setIsLoading(false);
 	}, []);
 
 	if (isLoading) return <></>;

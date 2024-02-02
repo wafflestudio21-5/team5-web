@@ -1,13 +1,14 @@
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { fetchUserInformation } from '../../apis/account';
+import { resetAccessToken } from '../../apis/login';
+import { tryPost } from '../../apis/post';
 import MenuElement from '../../components/CreatePost/MenuElement';
+import PhotoPreview from '../../components/CreatePost/PhotoPreview';
 import Select from '../../components/CreatePost/SubjectBar';
 import { usePostContext } from '../../contexts/PostContext';
 import { useUserContext } from '../../contexts/UserContext';
-import { fetchUserInformation } from '../../apis/account';
-import { tryPost } from '../../apis/post';
 
 const Background = styled.div`
 	background-color: white;
@@ -33,16 +34,7 @@ const Title = styled.div`
 	text-align: center;
 	width: 81%;
 	font-weight: 600;
-`;
-const Container = styled.div`
-	width: 100%;
-	border-bottom: 1px solid gainsboro;
-	padding-top: 1rem;
-	overflow-x: auto;
-	display: inline-flex;
-	&::-webkit-scrollbar {
-		display: none;
-	}
+	margin-left: 1rem;
 `;
 const ButtonBackground = styled.div`
 	position: fixed;
@@ -53,12 +45,12 @@ const ButtonBackground = styled.div`
 	height: 5rem;
 `;
 const ShareButton = styled.button`
-	position: fixed;
 	bottom: 1rem;
 	background-color: blue;
-	width: 90%;
+	width: 86%;
 	height: 3rem;
-	margin-left: 5%;
+	margin-top: 1rem;
+	margin-left: 7%;
 	border-radius: 0.5rem;
 	border: none;
 	color: white;
@@ -67,13 +59,8 @@ const ShareButton = styled.button`
 const Prev = styled.img`
 	width: 3%;
 	margin-top: 0.3rem;
+	margin-left: 0.5rem;
 	float: left;
-`;
-const Photo = styled.img`
-	display: block;
-	width: 60%;
-	margin: 2rem auto 1rem auto;
-	padding: 0 0.5rem;
 `;
 const Textarea = styled.textarea`
 	width: 100%;
@@ -92,24 +79,11 @@ export default function AddText() {
 	const { accessToken, username, currentUser, setCurrentUser } =
 		useUserContext();
 	const { files, setContent, content, category } = usePostContext();
-	const [previewUrls, setPreviewUrls] = useState<string[]>([]);
-	if (files && files.length > 0) {
-		Promise.all(
-			Array.from(files).map((file) => {
-				return new Promise<string>((resolve) => {
-					const reader = new FileReader();
-					reader.onloadend = () => {
-						resolve(reader.result as string);
-					};
-					reader.readAsDataURL(file);
-				});
-			})
-		).then((newPreviewUrls) => {
-			setPreviewUrls(newPreviewUrls);
-		});
-	}
+	const { previewUrls } = usePostContext();
 	const handleClick = async () => {
 		if (category) {
+			const newAccessToken = await resetAccessToken();
+			console.log(newAccessToken);
 			const addr = `/${username}`;
 			if (files !== null && category !== null) {
 				const response = await tryPost({
@@ -144,11 +118,7 @@ export default function AddText() {
 				</Link>
 				<Title>새 게시물</Title>
 			</Header>
-			<Container>
-				{previewUrls.map((url, index) => (
-					<Photo key={index} src={url} alt="dummy" />
-				))}
-			</Container>
+			<PhotoPreview previewUrls={previewUrls} />
 			<Textarea
 				placeholder="문구를 작성하거나 설문을 추가하세요..."
 				value={content}

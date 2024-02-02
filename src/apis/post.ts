@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
+
 import { baseURL } from '../constants';
-import { resetAccessToken } from './login';
 import {
 	APIErrorResponseType,
 	CategoryType,
@@ -11,6 +11,8 @@ import {
 	MiniProfileType,
 	PostType,
 } from '../types.ts';
+
+import { resetAccessToken } from './login';
 
 type TryPostType = {
 	content: string;
@@ -140,7 +142,7 @@ export const getFeedData = async (
 					createdAt: post.createdAt,
 					likeCount: post.likeCount,
 					commentCount: post.commentCount,
-					user: user,
+					author: user,
 					liked: post.liked,
 					saved: post.saved,
 					hideLike: post.hideLike,
@@ -180,7 +182,7 @@ export const getFeedData = async (
 					createdAt: post.createdAt,
 					likeCount: post.likeCount,
 					commentCount: post.commentCount,
-					user: user,
+					author: user,
 					liked: post.liked,
 					saved: post.saved,
 					hideLike: post.hideLike,

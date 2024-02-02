@@ -1,7 +1,11 @@
 import axios, { AxiosError } from 'axios';
 
 import { baseURL } from '../constants.ts';
-import { APIErrorResponseType, MiniProfileType } from '../types.ts';
+import {
+	APIErrorResponseType,
+	MiniProfileType,
+	RecentSearchType,
+} from '../types.ts';
 
 // 유저 5명 검색
 export const getSearchPreview = async (
@@ -149,13 +153,6 @@ export const addUserToRecentSearch = async (
 
 		return false;
 	}
-};
-
-type RecentSearchType = {
-	searchId: number;
-	isText: boolean;
-	text: string | null;
-	miniProfile: MiniProfileType | null;
 };
 
 // 최근 검색 기록 가져오기

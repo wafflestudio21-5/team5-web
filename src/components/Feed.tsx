@@ -39,11 +39,11 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 	const focus = useRef<HTMLDivElement | null>(null);
 	const hash = useLocation().hash;
 
-	const [isFocuesd, setIsFocused] = useState(false);
+	const [isFocused, setIsFocused] = useState(false);
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => {
-		if (focus.current && !isFocuesd) {
+		if (focus.current && !isFocused) {
 			focus.current?.scrollIntoView({ behavior: 'instant' });
 			setIsFocused(true);
 		}
@@ -52,15 +52,17 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 	return (
 		<>
 			<Container>
-				{posts.map((post) => (
-					<div ref={hash === `#post${post.id}` ? focus : null}>
-						<Post
-							postData={post}
-							openMenuModal={openMenuModal}
-							openCommentModal={openCommentModal}
-						/>
-					</div>
-				))}
+				{posts &&
+					posts.length > 0 &&
+					posts.map((post) => (
+						<div ref={hash === `#post${post.id}` ? focus : null}>
+							<Post
+								postData={post}
+								openMenuModal={openMenuModal}
+								openCommentModal={openCommentModal}
+							/>
+						</div>
+					))}
 			</Container>
 			{menuModal !== 'closed' && (
 				<PostMenuModal

@@ -1,8 +1,9 @@
 // import PostList from '../../components/Post/PostList';
 // import feed from '../../test/data/feed.json';
 import styled from 'styled-components';
-import SubjectBar from '../../components/Explore/SubjectBar';
+
 import Preview from '../../components/Explore/Preview';
+import SubjectBar from '../../components/Explore/SubjectBar';
 
 const Logo = styled.img`
 	width: 8rem;

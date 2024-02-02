@@ -5,12 +5,12 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import Feed from './components/Feed.tsx';
 import NavBar from './components/NavBar.tsx';
 import { useUserContext } from './contexts/UserContext.tsx';
 import AddText from './pages/AddPost/AddText.tsx';
 import UploadPhoto from './pages/AddPost/UploadPhoto.tsx';
 import Explore from './pages/Explore/Explore.tsx';
+import Notification from './pages/Feed/Notification.tsx';
 import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
 import Certification from './pages/Login/passwordRecovery/Certification.tsx';
@@ -36,6 +36,7 @@ import Username from './pages/Profile/Edit/Username.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Saved from './pages/Profile/Saved.tsx';
+import UserFeed from './pages/Profile/UserFeed.tsx';
 import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
 			{
 				path: '',
 				element: <Home />,
+			},
+			{
+				path: 'notification/',
+				element: <Notification />,
 			},
 			{
 				path: 'search/',
@@ -71,7 +76,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: ':id/feed/',
-				// element: <Feed />,
+				element: <UserFeed />,
 			},
 			{
 				path: ':id/followers/',

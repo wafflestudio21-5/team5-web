@@ -52,10 +52,29 @@ export type MiniProfileType = {
 	profileImageUrl: string;
 };
 
+export type MiniProfileWithIsRequestType = {
+	userId: number;
+	username: string;
+	name: string;
+	profileImageUrl: string;
+	isRequest: boolean;
+};
+
+export type FollowListResponseType = {
+	miniProfiles: MiniProfileType[];
+};
+
+export type RecentSearchType = {
+	searchId: number;
+	isText: boolean;
+	text: string | null;
+	miniProfile: MiniProfileType | null;
+};
+
 // Post
 export type PostType = {
 	id: number;
-	user: MiniProfileType;
+	author: MiniProfileType;
 	content: string;
 	media: MediaType[];
 	createdAt: string;

@@ -139,7 +139,7 @@ export default function ReactSection({ postData, showComment }: Props) {
 					</span>
 				</TextBox>
 				<TextBox className="margin">
-					<span className="username">{postData.user.username}</span>{' '}
+					<span className="username">{postData.author.username}</span>{' '}
 					{postData.content}
 				</TextBox>
 				<TextBox
