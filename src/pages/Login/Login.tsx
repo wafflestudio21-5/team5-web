@@ -107,8 +107,8 @@ export default function Login() {
 	const [queryParams, _] = useState(new URLSearchParams(location.search));
 
 	useEffect(() => {
+		console.log('accessToken : ', accessToken);
 		if (accessToken) {
-			console.log(accessToken);
 			getUser();
 		}
 	}, [accessToken]);
@@ -151,7 +151,7 @@ export default function Login() {
 
 	const autoLogin = async () => {
 		const responseData = await resetAccessToken();
-		await setAccessToken(responseData.accessToken);
+		setAccessToken(responseData.accessToken);
 		localStorage.setItem('username', responseData.username);
 	};
 
