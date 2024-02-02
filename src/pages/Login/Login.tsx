@@ -109,14 +109,18 @@ export default function Login() {
 		const queryParams = new URLSearchParams(location.search);
 		setResult(queryParams.get('result'));
 		if (result === 'success') {
-			whenSuccessFacebookLogin();
+			autoLogin();
 			setIsLoggedIn(true);
 		} else if (result === 'fail') {
 			alert('페이스북 로그인에 실패했습니다.');
+		} else {
+			if (localStorage.getItem('refreshToken')) {
+				autoLogin();
+			}
 		}
 	}, []);
 
-	const whenSuccessFacebookLogin = async () => {
+	const autoLogin = async () => {
 		const newAccessToken = await resetAccessToken();
 		setAccessToken(newAccessToken);
 	};
@@ -140,8 +144,6 @@ export default function Login() {
 				accessToken
 			);
 			setCurrentUser(currentUserInfo);
-			const newAccessToken = await resetAccessToken();
-			console.log('new access token : ' + newAccessToken);
 		}
 	};
 
