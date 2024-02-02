@@ -38,6 +38,7 @@ import Username from './pages/Profile/Edit/Username.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Saved from './pages/Profile/Saved.tsx';
+// import UserFeed from './pages/Profile/UserFeed.tsx';
 import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
@@ -81,10 +82,10 @@ const router = createBrowserRouter([
 				path: ':id/',
 				element: <Profile />,
 			},
-			{
+			/* {
 				path: ':id/feed/',
-				// element: <Feed />,
-			},
+				element: <UserFeed />,
+			}, */
 			{
 				path: ':id/followers/',
 				element: <Follow />,
