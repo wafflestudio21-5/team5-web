@@ -28,6 +28,8 @@ import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx';
 import MakePassword from './pages/Login/signUp/MakePassword.tsx';
 import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
 import SignUp from './pages/Login/signUp/SignUp.tsx';
+import AskBirthdaySocial from './pages/Login/socialLogin/AskBirthdaySocial.tsx';
+import MakeUsernameSocial from './pages/Login/socialLogin/MakeUsernameSocial.tsx';
 import Bio from './pages/Profile/Edit/Bio.tsx';
 import Edit from './pages/Profile/Edit/Edit.tsx';
 import Gender from './pages/Profile/Edit/Gender.tsx';
@@ -38,11 +40,10 @@ import Username from './pages/Profile/Edit/Username.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Saved from './pages/Profile/Saved.tsx';
+import UserFeed from './pages/Profile/UserFeed.tsx';
 import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
-import MakeUsernameSocial from './pages/Login/socialLogin/MakeUsernameSocial.tsx';
-import AskBirthdaySocial from './pages/Login/socialLogin/AskBirthdaySocial.tsx';
 
 const router = createBrowserRouter([
 	{
@@ -83,7 +84,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: ':id/feed/',
-				// element: <Feed />,
+				element: <UserFeed />,
 			},
 			{
 				path: ':id/followers/',
