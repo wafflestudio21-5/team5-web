@@ -12,11 +12,9 @@ export default function TokenRefresher() {
 				return response;
 			},
 			async function (error) {
-				const { setAccessToken } = useUserContext();
 				const originConfig = error.config;
 				if (error.response.status === 401) {
 					const responseData = await resetAccessToken();
-					setAccessToken(responseData.accessToken);
 					localStorage.setItem('accessToken', responseData.accessToken);
 					originConfig.headers['Authorization'] =
 						'Bearer ' + responseData.accessToken;
