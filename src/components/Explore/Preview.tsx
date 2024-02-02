@@ -4,9 +4,20 @@ import styled from 'styled-components';
 
 import { getCompactExplore } from '../../apis/explore';
 import { useUserContext } from '../../contexts/UserContext';
+import { getColor } from '../../styles/Theme';
 import { CategoryType, PreviewType } from '../../types';
 import KorToEng from '../AddPost/KorToEng';
 import PostList from '../Post/PostList';
+
+const Container = styled.div`
+	& .hover-react {
+		background-color: ${getColor('pinkRed')};
+		color: ${getColor('white')};
+		transition:
+			background-color 300ms,
+			color 300ms;
+	}
+`;
 
 const Header = styled.div`
 	width: 100%;
@@ -26,6 +37,7 @@ const Subject = styled.div`
 	border-radius: 0.5rem;
 	padding: 0.3rem 0.7rem;
 	margin-left: 0.5rem;
+	cursor: pointer;
 `;
 const Text = styled.div`
 	display: inline-block;
@@ -36,6 +48,7 @@ const More = styled.div`
 	border: none;
 	width: 96%;
 	padding: 0.5rem 0.5rem;
+	cursor: pointer;
 `;
 const RightArrow = styled.img`
 	width: 1rem;
@@ -51,6 +64,7 @@ export default function Preview({ category }: PreviewProps) {
 	const navigate = useNavigate();
 
 	const [newPosts, setNewPosts] = useState<PreviewType[]>([]);
+	const [hovered, setHovered] = useState(false);
 
 	const { accessToken } = useUserContext();
 
@@ -75,9 +89,9 @@ export default function Preview({ category }: PreviewProps) {
 	}, []);
 
 	return (
-		<>
+		<Container>
 			<Header>
-				<Subject>{category}</Subject>
+				<Subject className={hovered ? 'hover-react' : ''}>{category}</Subject>
 				<Text>관련 게시물</Text>
 			</Header>
 			<PostList
@@ -89,6 +103,9 @@ export default function Preview({ category }: PreviewProps) {
 				onClick={() =>
 					navigate(`/explore/${KorToEng(category)?.toLowerCase()}`)
 				}
+				onMouseEnter={() => setHovered(true)}
+				onMouseLeave={() => setHovered(false)}
+				className={hovered ? 'hover-react' : ''}
 			>
 				더보기
 				<RightArrow
@@ -96,6 +113,6 @@ export default function Preview({ category }: PreviewProps) {
 					alt="select"
 				/>
 			</More>
-		</>
+		</Container>
 	);
 }
