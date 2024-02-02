@@ -116,9 +116,10 @@ export default function Login() {
 		if (result === 'success') {
 			const refreshToken = document.cookie.split('; ')[0].split('=')[1];
 			localStorage.setItem('refreshToken', refreshToken);
-			console.log(refreshToken);
 			autoLogin();
 		} else if (result === 'register') {
+			const refreshToken = document.cookie.split('; ')[0].split('=')[1];
+			localStorage.setItem('refreshToken', refreshToken);
 			navigate('/signUp/birthdaySocial');
 		} else if (result === 'fail') {
 			alert('페이스북 로그인에 실패했습니다.');
@@ -138,13 +139,10 @@ export default function Login() {
 		await setAccessToken(responseData.accessToken);
 		const username = responseData.username;
 		localStorage.setItem('username', responseData.username);
-		console.log(responseData.username);
 		const currentUserInfo = await getUserInformation(
 			username,
 			responseData.accessToken
 		);
-		console.log('isNew? : ', accessToken);
-		console.log('new : ', responseData.accessToken);
 		setCurrentUser(currentUserInfo);
 		setIsLoggedIn(true);
 	};
