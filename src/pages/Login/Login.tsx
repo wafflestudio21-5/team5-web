@@ -96,7 +96,8 @@ export default function Login() {
 	const [usernameInput, setUsernameInput] = useState('');
 	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
-	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
+	const { setIsLoggedIn, setAccessToken, accessToken, setCurrentUser } =
+		useUserContext();
 	const location = useLocation();
 	const [result, setResult] = useState<string | null>(null);
 
@@ -114,8 +115,12 @@ export default function Login() {
 		} else if (result === 'fail') {
 			alert('페이스북 로그인에 실패했습니다.');
 		} else {
-			if (localStorage.getItem('refreshToken')) {
+			if (
+				localStorage.getItem('refreshToken') &&
+				localStorage.getItem('username')
+			) {
 				autoLogin();
+				setIsLoggedIn(true);
 			}
 		}
 	}, []);
@@ -123,6 +128,12 @@ export default function Login() {
 	const autoLogin = async () => {
 		const newAccessToken = await resetAccessToken();
 		setAccessToken(newAccessToken);
+		const username = localStorage.getItem('username');
+		const currentUserInfo = await getUserInformation(
+			username ? username : '',
+			accessToken
+		);
+		setCurrentUser(currentUserInfo);
 	};
 
 	const handleClick = async () => {
@@ -136,8 +147,8 @@ export default function Login() {
 			setAccessToken(accessToken);
 
 			const refreshToken = document.cookie.split('; ')[0].split('=')[1];
-			console.log('refreshToken : ' + refreshToken);
 			localStorage.setItem('refreshToken', refreshToken);
+			localStorage.setItem('username', usernameInput);
 
 			const currentUserInfo = await getUserInformation(
 				usernameInput,
