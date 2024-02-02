@@ -51,7 +51,11 @@ export default function Select() {
 		<SubjectBox>
 			<ScrollContainer>
 				{subjects.map((item) => (
-					<Subject onClick={() => navigate(`/explore/${KorToEng(item)}`)}>
+					<Subject
+						onClick={() =>
+							navigate(`/explore/${KorToEng(item)?.toLowerCase()}`)
+						}
+					>
 						{item}
 					</Subject>
 				))}
