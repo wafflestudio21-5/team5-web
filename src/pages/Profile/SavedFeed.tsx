@@ -1,21 +1,21 @@
-/* import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { getUserFeed } from '../../apis/user.ts';
+import { getSavedFeed } from '../../apis/user.ts';
 import Feed from '../../components/Feed.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import { PostType } from '../../types.ts';
 
-export default function UserFeed() {
+export default function SavedFeed() {
 	const { id } = useParams();
 	const { accessToken } = useUserContext();
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [feedData, setFeedData] = useState<PostType[]>([]);
 
-	const fetchUserFeed = async () => {
+	const fetchSavedFeed = async () => {
 		if (id !== undefined) {
-			const data = await getUserFeed(id, accessToken);
+			const data = await getSavedFeed(accessToken);
 			if (data) setFeedData(data);
 			setIsLoading(false);
 		}
@@ -25,7 +25,7 @@ export default function UserFeed() {
 		setIsLoading(true);
 		setFeedData([]);
 
-		fetchUserFeed();
+		fetchSavedFeed();
 	}, []);
 
 	if (isLoading) return <></>;
@@ -35,4 +35,3 @@ export default function UserFeed() {
 		</>
 	);
 }
- */

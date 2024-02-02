@@ -9,6 +9,8 @@ import {
 	UserType,
 } from '../types.ts';
 
+import { PostResponseType, formatPostReponse } from './post.ts';
+
 // 유저 정보 가져오기
 export const getUserInformation = async (
 	username: string,
@@ -528,14 +530,13 @@ export const getFeedPreview = async (
 	}
 };
 
-// 유저 피드 가져오기
-export const getUserFeed = async (
-	username: string,
+// 저장된 게시물 미리보기 가져오기
+export const getSavedPreview = async (
 	accessToken: string
-): Promise<PostType[] | null> => {
+): Promise<PreviewType[]> => {
 	try {
-		const response = await axios.get<PostType[]>(
-			`${baseURL}/api/v1/account/${username}/feed/newer`,
+		const response = await axios.get<PreviewType[]>(
+			`${baseURL}/api/v1/account/saved-feed/preview`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -544,6 +545,59 @@ export const getUserFeed = async (
 		);
 
 		return response.data;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return [];
+	}
+};
+
+// 유저 피드 가져오기
+export const getUserFeed = async (
+	username: string,
+	accessToken: string
+): Promise<PostType[] | null> => {
+	try {
+		const response = await axios.get<PostResponseType[]>(
+			`${baseURL}/api/v1/account/${username}/feed`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return formatPostReponse(response.data);
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
+};
+
+// 유저가 저장한 게시물 가져오기
+export const getSavedFeed = async (
+	accessToken: string
+): Promise<PostType[] | null> => {
+	try {
+		const response = await axios.get<PostResponseType[]>(
+			`${baseURL}/api/v1/account/saved-feed`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return formatPostReponse(response.data);
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {

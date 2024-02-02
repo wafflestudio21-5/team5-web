@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { CategoryMap, getCategoryExplore } from '../../apis/explore';
+import {
+	CategoryMap,
+	KorCategoryMap,
+	getCategoryExplore,
+} from '../../apis/explore';
 import PostList from '../../components/Post/PostList';
 import { useUserContext } from '../../contexts/UserContext';
 import BackHeader from '../../shared/BackHeader';
@@ -118,9 +122,16 @@ export default function DetailExplore() {
 
 	if (category === undefined) return <></>;
 
+	const korCategory = Object.keys(KorCategoryMap).find(
+		(key) => (KorCategoryMap[key] as string).toLowerCase() === category
+	);
+
 	return (
 		<>
-			<BackHeader backURL="/explore" title="탐색탭" />
+			<BackHeader
+				backURL="/explore"
+				title={korCategory !== undefined ? korCategory : category}
+			/>
 			<PostList
 				previews={previewData.previews}
 				callbackUrl={'/explore/' + category}
