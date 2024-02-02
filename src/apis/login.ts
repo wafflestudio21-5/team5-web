@@ -136,7 +136,7 @@ export const tryFacebookSignup = async ({
 			`${baseURL}/api/v1/auth/facebook_signup`,
 			{
 				username: username,
-				birthday: birthday,
+				birthday: birthday.toString(),
 				refreshToken: refreshToken,
 			}
 		);

@@ -81,6 +81,7 @@ export default function MakeUsernameSocial() {
 	const usernameRegex = /^[a-zA-Z0-9_.]{1,30}$/i;
 	const location = useLocation();
 	const birthday = location.state['birthday'];
+	console.log(birthday);
 
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		setUsername(e.target.value);
