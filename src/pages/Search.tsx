@@ -1,7 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { getRecentSearchList, getSearchPreview } from '../apis/search.ts';
+import {
+	getRecentSearchList,
+	getSearchAll,
+	getSearchPreview,
+} from '../apis/search.ts';
 import MiniProfile from '../components/MiniProfile.tsx';
 import RecentSearch from '../components/RecentSearch.tsx';
 import { useUserContext } from '../contexts/UserContext.tsx';
@@ -16,9 +20,24 @@ const SearchLayout = styled.div`
 	align-items: center;
 `;
 
+type FeedFetchStatus = 'pending' | 'complete' | 'fail';
+
+type OptionType = {
+	onScrollEnd?: () => void;
+};
+
+type ReturnType = {
+	isEnd: boolean;
+};
+
 export default function Search() {
 	const { accessToken } = useUserContext();
 	const [isLoading, setIsLoading] = useState(true);
+	const [status, setStatus] = useState<FeedFetchStatus>('pending');
+
+	const [page, setPage] = useState(0);
+	const [hasNext, setHasNext] = useState(true);
+	const [showAll, setShowAll] = useState(false);
 
 	// 입력 관리
 	const [searchInput, setSearchInput] = useState('');
@@ -28,6 +47,39 @@ export default function Search() {
 	const [recentSearchList, setRecentSearchList] = useState<RecentSearchType[]>(
 		[]
 	);
+
+	const lockScroll = useCallback(() => {
+		document.body.style.overflow = 'hidden';
+	}, []);
+
+	const unlockScroll = useCallback(() => {
+		document.body.style.overflow = '';
+	}, []);
+
+	const useInfiniteScroll = ({ onScrollEnd }: OptionType): ReturnType => {
+		const [isEnd, setIsEnd] = useState(false);
+
+		const handleScroll = async () => {
+			const scrollHeight = document.documentElement.scrollHeight;
+			const scrollTop = document.documentElement.scrollTop;
+			const clientHeight = document.documentElement.clientHeight;
+
+			if (scrollTop + clientHeight >= scrollHeight) {
+				setIsEnd(true);
+				lockScroll();
+				if (onScrollEnd) await onScrollEnd();
+				await unlockScroll();
+				await setIsEnd(false);
+			}
+		};
+
+		useEffect(() => {
+			window.addEventListener('scroll', handleScroll);
+			return () => window.removeEventListener('scroll', handleScroll);
+		}, []);
+
+		return { isEnd };
+	};
 
 	useEffect(() => {
 		const fetchRecentSearchList = async () => {
@@ -42,6 +94,32 @@ export default function Search() {
 		setIsLoading(true);
 		fetchRecentSearchList();
 	}, []);
+
+	useEffect(() => {
+		const fetchSearchAll = async () => {
+			if (showAll && hasNext && status === 'pending') {
+				const result = await getSearchAll(accessToken, searchInput, page);
+				if (result) {
+					setPage(result.pageInfo.page);
+					setHasNext(result.pageInfo.hasNext);
+					setSearchPreview([...searchPreview, ...result.miniProfiles]);
+					setStatus('complete');
+				} else {
+					setStatus('fail');
+				}
+			}
+		};
+
+		fetchSearchAll();
+		console.log(status);
+		console.log(searchPreview);
+	}, [showAll, status]);
+
+	const { isEnd } = useInfiniteScroll({
+		onScrollEnd: () => {
+			setStatus('pending');
+		},
+	});
 
 	// 검색 결과 관리
 	const [searchPreview, setSearchPreview] = useState<MiniProfileType[]>([]);
@@ -63,9 +141,16 @@ export default function Search() {
 		return () => clearTimeout(timer);
 	}, [searchInput]);
 
+	const handleSearchChange = (text: string) => {
+		setShowAll(false);
+		setHasNext(true);
+		setPage(0);
+		setSearchInput(text);
+	};
+
 	return (
 		<SearchLayout>
-			<SearchBar text={searchInput} onChangeSearch={setSearchInput} />
+			<SearchBar text={searchInput} onChangeSearch={handleSearchChange} />
 			{isLoading ? (
 				<p>Loading...</p>
 			) : searchInput === '' ? (
@@ -85,7 +170,18 @@ export default function Search() {
 					<MiniProfile key={user.userId} user={user} action="hideButton" />
 				))
 			)}
-			<p>결과 모두 보기</p>
+			{showAll ? (
+				isEnd && <p>Loading...</p>
+			) : (
+				<span
+					onClick={() => {
+						setShowAll(true);
+						setStatus('pending');
+					}}
+				>
+					결과 모두 보기
+				</span>
+			)}
 		</SearchLayout>
 	);
 }
