@@ -96,8 +96,7 @@ export default function Login() {
 	const [usernameInput, setUsernameInput] = useState('');
 	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
-	const { setIsLoggedIn, setAccessToken, accessToken, setCurrentUser } =
-		useUserContext();
+	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
 	const location = useLocation();
 	const [result, setResult] = useState<string | null>(null);
 
@@ -116,11 +115,10 @@ export default function Login() {
 			alert('페이스북 로그인에 실패했습니다.');
 		} else {
 			if (
-				localStorage.getItem('refreshToken') &&
+				localStorage.getItem('refreshToken') !== undefined &&
 				localStorage.getItem('username')
 			) {
 				autoLogin();
-				setIsLoggedIn(true);
 			}
 		}
 	}, []);
@@ -131,9 +129,10 @@ export default function Login() {
 		const username = localStorage.getItem('username');
 		const currentUserInfo = await getUserInformation(
 			username ? username : '',
-			accessToken
+			newAccessToken
 		);
 		setCurrentUser(currentUserInfo);
+		setIsLoggedIn(true);
 	};
 
 	const handleClick = async () => {

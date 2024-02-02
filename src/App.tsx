@@ -17,7 +17,7 @@ import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
 import Certification from './pages/Login/passwordRecovery/Certification.tsx';
 import NewPassword from './pages/Login/passwordRecovery/NewPassword.tsx';
-// import PasswordRecovery from './pages/Login/passwordRecovery/PasswordRecovery.tsx';
+import PasswordRecovery from './pages/Login/passwordRecovery/PasswordRecovery.tsx';
 import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
 import Agree from './pages/Login/signUp/Agree.tsx';
 import AskBirthday from './pages/Login/signUp/AskBirthday.tsx';
@@ -147,7 +147,7 @@ const loginRouter = createBrowserRouter([
 	},
 	{
 		path: 'passwordRecovery/',
-		// element: <PasswordRecovery />,
+		element: <PasswordRecovery />,
 	},
 	{
 		path: 'passwordRecovery/certification/',

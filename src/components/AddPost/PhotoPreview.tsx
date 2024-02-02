@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import { usePostContext } from '../../contexts/PostContext';
 
 const Container = styled.div`
 	width: 100%;
@@ -10,10 +12,24 @@ const Container = styled.div`
 	}
 `;
 const Photo = styled.img`
+	width: 100%;
+`;
+const ElementBox = styled.div`
 	display: block;
 	width: 60%;
 	margin: 2rem auto 1rem auto;
 	padding: 0 0.3rem;
+`;
+const CheckBox = styled.div`
+	margin-bottom: 0.5rem;
+	padding-bottom: 0.7rem;
+	text-align: center;
+	width: 1.5rem;
+	height: 0.8rem;
+	border: 1px solid black;
+	border-radius: 50%;
+	background-color: white;
+	color: black;
 `;
 
 type PhotoPreviewType = {
@@ -21,25 +37,35 @@ type PhotoPreviewType = {
 };
 
 export default function PhotoPreview({ previewUrls }: PhotoPreviewType) {
-	/* 	const [num, setNum] = useState(0);
+	const [num, setNum] = useState(1);
+	const { fileOrder, setFileOrder, fileNum, setFileNum } = usePostContext();
 	const increment = () => {
-		setNum(num + 1);
+		if (num < previewUrls.length) setNum(num + 1);
 	};
-	const { files, setFiles } = usePostContext();
-
-	const handlePhotoClick = () => {
-		if (files && files.length > 0) {
-			const filesArray = Array.from(files);
-			const newFiles = new FileList(filesArray.reverse())
-
-		}
+	const handleClick = (index: number) => {
+		console.log(fileOrder);
 		increment();
-	}; */
+		if (fileNum[index] >= 0) return;
+		setFileOrder([...fileOrder, index]);
+		const newArray = [...fileNum];
+		newArray[index] = num;
+		setFileNum(newArray);
+	};
 
 	return (
 		<Container>
 			{previewUrls.map((url, index) => (
-				<Photo key={index} src={url} alt="dummy" />
+				<ElementBox>
+					<CheckBox onClick={() => handleClick(index)}>
+						{fileNum[index]}
+					</CheckBox>
+					<Photo
+						key={index}
+						src={url}
+						alt="dummy"
+						onClick={() => handleClick(index)}
+					/>
+				</ElementBox>
 			))}
 		</Container>
 	);
