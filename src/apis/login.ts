@@ -94,7 +94,7 @@ export const resetAccessToken = async () => {
 		const response = await axios.post(`${baseURL}/api/v1/auth/refresh_token`, {
 			refreshToken: refreshToken,
 		});
-
+		console.log(response.data.accessToken);
 		return response.data;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;

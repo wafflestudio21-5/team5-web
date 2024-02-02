@@ -14,7 +14,6 @@ import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 import Modal from '../../shared/Modal/Modal.tsx';
 import { getColor } from '../../styles/Theme.tsx';
-import { UserType } from '../../types.ts';
 const MenuModalContainer = styled.div`
 	height: 40%;
 `;
@@ -54,11 +53,11 @@ export default function MenuModal({
 }) {
 	const {
 		accessToken,
-		setAccessToken,
 		currentUser,
 		setCurrentUser,
 		username,
 		isMyAccountPrivate,
+		logout,
 	} = useUserContext();
 
 	const onClickUpdateAccountToOpen = async () => {
@@ -80,9 +79,7 @@ export default function MenuModal({
 	};
 
 	const onClickLogout = () => {
-		localStorage.removeItem('refreshToken');
-		setAccessToken('null');
-		setCurrentUser({} as UserType);
+		logout();
 		navigate('/');
 	};
 
