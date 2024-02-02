@@ -57,7 +57,7 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => {
 		if (focus.current && !isFocuesd) {
-			focus.current?.scrollIntoView({ behavior: 'instant' });
+			focus.current.scrollIntoView();
 			setIsFocused(true);
 		}
 	});
