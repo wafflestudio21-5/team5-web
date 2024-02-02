@@ -112,7 +112,6 @@ export default function Login() {
 	useEffect(() => {
 		console.log('in: ' + queryParams.get('result'));
 		setResult(queryParams.get('result'));
-		console.log(result);
 		if (result === 'success') {
 			autoLogin();
 			setIsLoggedIn(true);
@@ -126,7 +125,7 @@ export default function Login() {
 				autoLogin();
 			}
 		}
-	}, [, queryParams]);
+	}, [, queryParams, result]);
 
 	const autoLogin = async () => {
 		const responseData = await resetAccessToken();
