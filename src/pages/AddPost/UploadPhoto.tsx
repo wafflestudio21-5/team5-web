@@ -86,7 +86,7 @@ const Text = styled.div`
 `;
 const Button = styled.button<ButtonType>`
 	width: 18%;
-	background-color: white;
+	background-color: ${getColor('white')};
 	border: none;
 	margin-left: ${({ $isadd }) => ($isadd ? '41%;' : '80%')};
 	margin-top: ${({ $isadd }) => ($isadd ? '40%;' : '122%')};
@@ -164,12 +164,7 @@ export default function UploadPhoto() {
 					<Text>사진 추가</Text>
 				</Button>
 			) : (
-				<Button $isadd={files === null} onClick={onPostPhotoClick}>
-					<Plus
-						src={'https://cdn-icons-png.flaticon.com/256/107/107075.png'}
-						alt="사진 추가"
-					/>
-				</Button>
+				<></>
 			)}
 			{!isValid && <Div>사진을 한 장 이상 추가해주세요.</Div>}
 			<ButtonBackground>
