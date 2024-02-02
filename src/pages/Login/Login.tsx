@@ -113,6 +113,8 @@ export default function Login() {
 		console.log('in: ' + queryParams.get('result'));
 		setResult(queryParams.get('result'));
 		if (result === 'success') {
+			const refreshToken = document.cookie.split('; ')[0].split('=')[1];
+			localStorage.setItem('refreshToken', refreshToken);
 			autoLogin();
 			setIsLoggedIn(true);
 		} else if (result === 'fail') {
@@ -132,7 +134,7 @@ export default function Login() {
 		setAccessToken(responseData.accessToken);
 		const username = responseData.username;
 		const currentUserInfo = await getUserInformation(
-			username ? username : '',
+			username,
 			responseData.accessToken
 		);
 		setCurrentUser(currentUserInfo);
