@@ -110,7 +110,7 @@ export default function Login() {
 	}, [usernameInput, passwordInput]);
 
 	useEffect(() => {
-		console.log('in: ' + queryParams);
+		console.log('in: ' + queryParams.get('result'));
 		setResult(queryParams.get('result'));
 		console.log(result);
 		if (result === 'success') {
