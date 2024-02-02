@@ -18,7 +18,7 @@ type LoginType = {
 
 type FacebookSignupType = {
 	username: string;
-	birthday: Date;
+	birthday: string;
 };
 
 export const tryLogin = async ({ username, password }: LoginType) => {
@@ -40,12 +40,14 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 
 		if (!response.ok) {
 			console.error('요청이 실패했습니다.');
-			return;
+			alert('아이디나 패스워드가 다릅니다.');
+			return null;
+		} else {
+			const data = await response.json();
+			return data['accessToken'];
 		}
-
-		const data = await response.json();
-		return data['accessToken'];
 	} catch (error) {
+		alert(error);
 		console.error('오류 발생:', error);
 	}
 };
@@ -95,7 +97,7 @@ export const resetAccessToken = async () => {
 			refreshToken: refreshToken,
 		});
 
-		return response.data.accessToken;
+		return response.data;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -129,7 +131,11 @@ export const tryFacebookSignup = async ({
 	birthday,
 }: FacebookSignupType) => {
 	try {
+		console.log('facebookSignup');
 		const refreshToken = localStorage.getItem('refreshToken');
+		console.log('username : ', username);
+		console.log('birthday : ', birthday);
+		console.log('refreshToken : ', refreshToken);
 		const response = await axios.post(
 			`${baseURL}/api/v1/auth/facebook_signup`,
 			{
@@ -138,6 +144,16 @@ export const tryFacebookSignup = async ({
 				refreshToken: refreshToken,
 			}
 		);
+		console.log(response.data);
 		return response.data.accessToken;
-	} catch (error) {}
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+		console.log('에러 코드 : ', err.response?.status);
+		return null;
+	}
 };
