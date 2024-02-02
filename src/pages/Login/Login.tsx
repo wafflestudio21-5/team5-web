@@ -6,7 +6,6 @@ import { resetAccessToken, tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
 import { baseURL } from '../../constants.ts';
 import { useUserContext } from '../../contexts/UserContext';
-import { access } from 'graceful-fs';
 
 const Img = styled.img`
 	&.instagram {
@@ -121,7 +120,6 @@ export default function Login() {
 				localStorage.getItem('username')
 			) {
 				autoLogin();
-				setIsLoggedIn(true);
 			}
 		}
 	}, []);
@@ -136,7 +134,7 @@ export default function Login() {
 			newAccessToken
 		);
 		setCurrentUser(currentUserInfo);
-		console.log(accessToken);
+		setIsLoggedIn(true);
 	};
 
 	const handleClick = async () => {
