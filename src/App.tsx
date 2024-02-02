@@ -45,8 +45,6 @@ import UserFeed from './pages/Profile/UserFeed.tsx';
 import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
-import MakeUsernameSocial from './pages/Login/socialLogin/MakeUsernameSocial.tsx';
-import AskBirthdaySocial from './pages/Login/socialLogin/AskBirthdaySocial.tsx';
 
 const router = createBrowserRouter([
 	{
