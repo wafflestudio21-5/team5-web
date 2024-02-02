@@ -153,7 +153,7 @@ export const tryFacebookSignup = async ({
 		} else {
 			alert('Error occurred');
 		}
-		console.log(err.response);
+		console.log(err.response?.status);
 		return null;
 	}
 };
