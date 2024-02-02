@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
 import { usePostContext } from '../../contexts/PostContext';
+
 import KorToEng from './KorToEng';
 
 type DivType = {

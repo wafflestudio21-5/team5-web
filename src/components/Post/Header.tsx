@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getColor } from '../../styles/Theme';
@@ -101,6 +102,8 @@ const Button = styled.button`
 `;
 
 export default function Header() {
+	const navigate = useNavigate();
+
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	return (
 		<>
@@ -126,7 +129,7 @@ export default function Header() {
 						alt="DM"
 					/>
 				</Button>
-				<Button className="heart">
+				<Button className="heart" onClick={() => navigate('/notification')}>
 					<Img
 						className="heart"
 						src="https://cdn-icons-png.flaticon.com/512/25/25424.png"

@@ -180,7 +180,10 @@ export default function Gender() {
 					}}
 				>
 					<p>밝히고 싶지 않음</p>
-					<RadioButton type="radio" checked={editedGender === 'unknown'} />
+					<RadioButton
+						type="radio"
+						checked={!editedGender || editedGender === 'unknown'}
+					/>
 				</Cell>
 			</EditContainer>
 		</EditLayout>

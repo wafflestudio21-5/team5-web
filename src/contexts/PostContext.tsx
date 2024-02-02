@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
+
 import { CategoryType } from '../types';
 
 export type PostContextData = {

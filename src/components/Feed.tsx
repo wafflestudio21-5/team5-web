@@ -45,7 +45,7 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 	const focus = useRef<HTMLDivElement | null>(null);
 	const hash = useLocation().hash;
 
-	const [isFocuesd, setIsFocused] = useState(false);
+	const [isFocused, setIsFocused] = useState(false);
 
 	const handleDeletePost = async (postId: number) => {
 		const result = await deletePost(postId, accessToken);
@@ -59,9 +59,8 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 		}
 	};
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => {
-		if (focus.current && !isFocuesd) {
+		if (focus.current && !isFocused) {
 			focus.current.scrollIntoView();
 			setIsFocused(true);
 		}

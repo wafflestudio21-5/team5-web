@@ -2,8 +2,8 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { usePostContext } from '../../contexts/PostContext';
 import PhotoPreview from '../../components/AddPost/PhotoPreview';
+import { usePostContext } from '../../contexts/PostContext';
 
 type ButtonType = {
 	$isadd: boolean;

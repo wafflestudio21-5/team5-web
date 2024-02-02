@@ -206,7 +206,7 @@ export const editUsername = async (
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.status === 409) {
-			alert(err.response.data.message);
+			alert('이미 존재하는 사용자 이름입니다.');
 		} else {
 			alert('Error occurred');
 		}
@@ -381,6 +381,42 @@ export const deleteLink = async (
 			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
+		}
+
+		return false;
+	}
+};
+
+// 비밀번호 변경
+export const changePassword = async (
+	accessToken: string,
+	oldPassword: string,
+	newPassword: string
+): Promise<boolean> => {
+	try {
+		await axios.put(
+			`${baseURL}/api/v1/account/password`,
+			{
+				oldPassword: oldPassword,
+				newPassword: newPassword,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+
+		return true;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (
+			err.response &&
+			(err.response.status === 400 || err.response.status === 403)
+		) {
+			alert(err.response.data.message);
 		}
 
 		return false;

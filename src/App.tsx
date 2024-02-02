@@ -13,11 +13,9 @@ import EditPost from './pages/EditPost/EditPost.tsx';
 import DetailExplore from './pages/Explore/DetailExplore.tsx';
 import Explore from './pages/Explore/Explore.tsx';
 import ExploreFeed from './pages/Explore/ExploreFeed.tsx';
+import Notification from './pages/Feed/Notification.tsx';
 import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
-import Certification from './pages/Login/passwordRecovery/Certification.tsx';
-import NewPassword from './pages/Login/passwordRecovery/NewPassword.tsx';
-import PasswordRecovery from './pages/Login/passwordRecovery/PasswordRecovery.tsx';
 import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
 import Agree from './pages/Login/signUp/Agree.tsx';
 import AskBirthday from './pages/Login/signUp/AskBirthday.tsx';
@@ -30,6 +28,7 @@ import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
 import SignUp from './pages/Login/signUp/SignUp.tsx';
 import AskBirthdaySocial from './pages/Login/socialLogin/AskBirthdaySocial.tsx';
 import MakeUsernameSocial from './pages/Login/socialLogin/MakeUsernameSocial.tsx';
+import ChangePassword from './pages/Profile/ChangePassword.tsx';
 import Bio from './pages/Profile/Edit/Bio.tsx';
 import Edit from './pages/Profile/Edit/Edit.tsx';
 import Gender from './pages/Profile/Edit/Gender.tsx';
@@ -54,6 +53,10 @@ const router = createBrowserRouter([
 			{
 				path: '',
 				element: <Home />,
+			},
+			{
+				path: 'notification/',
+				element: <Notification />,
 			},
 			{
 				path: 'search/',
@@ -131,6 +134,10 @@ const router = createBrowserRouter([
 				path: 'account/edit/gender/',
 				element: <Gender />,
 			},
+			{
+				path: 'account/changePassword/',
+				element: <ChangePassword />,
+			},
 			{ path: 'post/edit/:id/', element: <EditPost /> },
 			{
 				path: '*',
@@ -144,18 +151,6 @@ const loginRouter = createBrowserRouter([
 	{
 		path: '',
 		element: <Login />,
-	},
-	{
-		path: 'passwordRecovery/',
-		element: <PasswordRecovery />,
-	},
-	{
-		path: 'passwordRecovery/certification/',
-		element: <Certification />,
-	},
-	{
-		path: 'passwordRecovery/newPassword/',
-		element: <NewPassword />,
 	},
 	{
 		path: 'signUp/',

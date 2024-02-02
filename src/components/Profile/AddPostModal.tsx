@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import reels from '../../assets/Images/NavBar/reels.png';
@@ -42,6 +43,8 @@ type Props = {
 };
 
 export default function AddPostModal({ close, isClosing }: Props) {
+	const navigate = useNavigate();
+
 	return (
 		<Modal onBackgroundClick={close} isClosing={isClosing}>
 			<AddPostModalContainer>
@@ -53,7 +56,7 @@ export default function AddPostModal({ close, isClosing }: Props) {
 						<p>릴스</p>
 					</Cell>
 					<hr className="content" />
-					<Cell>
+					<Cell onClick={() => navigate('/addPost')}>
 						<Icon src={post} alt="게시물" />
 						<p>게시물</p>
 					</Cell>
