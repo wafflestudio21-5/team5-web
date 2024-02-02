@@ -99,6 +99,7 @@ export default function Login() {
 	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
 	const location = useLocation();
 	const [result, setResult] = useState<string | null>(null);
+	const [queryParams, _] = useState(new URLSearchParams(location.search));
 
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
@@ -106,11 +107,12 @@ export default function Login() {
 	}, [usernameInput, passwordInput]);
 
 	useEffect(() => {
-		const queryParams = new URLSearchParams(location.search);
+		console.log(queryParams);
 		setResult(queryParams.get('result'));
 		if (result === 'success') {
 			autoLogin();
 			setIsLoggedIn(true);
+			console.log('in');
 		} else if (result === 'fail') {
 			alert('페이스북 로그인에 실패했습니다.');
 		} else {
@@ -121,7 +123,7 @@ export default function Login() {
 				autoLogin();
 			}
 		}
-	}, []);
+	}, [, queryParams]);
 
 	const autoLogin = async () => {
 		const newAccessToken = await resetAccessToken();
@@ -154,6 +156,7 @@ export default function Login() {
 				accessToken
 			);
 			setCurrentUser(currentUserInfo);
+			setIsLoggedIn(true);
 		}
 	};
 
@@ -181,9 +184,7 @@ export default function Login() {
 				autoComplete="off"
 				onChange={(e) => setPasswordInput(e.target.value)}
 			/>
-			<StyledLink to="passwordRecovery/">
-				<Div className="passwordRecovery">비밀번호를 잊으셨나요?</Div>
-			</StyledLink>
+			<br />
 			<Button disabled={!isActive} onClick={handleClick}>
 				로그인
 			</Button>

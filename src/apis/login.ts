@@ -40,12 +40,14 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 
 		if (!response.ok) {
 			console.error('요청이 실패했습니다.');
-			return;
+			alert('아이디나 패스워드가 다릅니다.');
+			return null;
+		} else {
+			const data = await response.json();
+			return data['accessToken'];
 		}
-
-		const data = await response.json();
-		return data['accessToken'];
 	} catch (error) {
+		alert(error);
 		console.error('오류 발생:', error);
 	}
 };
