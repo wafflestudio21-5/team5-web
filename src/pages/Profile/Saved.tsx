@@ -1,11 +1,15 @@
 /* import { useEffect } from 'react';
- */ import { useNavigate } from 'react-router-dom';
+ */ import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 /* import { resetAccessToken } from '../../apis/login.ts';
- */ import back from '../../assets/Images/Profile/back.png';
+ */ import { getSavedPreview } from '../../apis/user.ts';
+import back from '../../assets/Images/Profile/back.png';
+import PostList from '../../components/Post/PostList.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
+import { PreviewType } from '../../types.ts';
 
 const SavedLayout = styled.div`
 	width: 100%;
@@ -38,7 +42,18 @@ const PostContainer = styled.div`
 
 export default function Saved() {
 	const navigate = useNavigate();
-	const { username } = useUserContext();
+	const { username, accessToken } = useUserContext();
+
+	const [previews, setPreviews] = useState<PreviewType[]>([]);
+
+	useEffect(() => {
+		const fetchPreviews = async () => {
+			const result = await getSavedPreview(accessToken);
+			if (result) setPreviews(result);
+		};
+
+		fetchPreviews();
+	});
 
 	return (
 		<SavedLayout>
@@ -46,7 +61,13 @@ export default function Saved() {
 				<Icon src={back} alt="취소" onClick={() => navigate(`/${username}`)} />
 				<h2>저장됨</h2>
 			</HeaderContainer>
-			<PostContainer>{/*추가 예정*/}</PostContainer>
+			<PostContainer>
+				<PostList
+					previews={previews}
+					callbackUrl={'/' + username + '/saved/feed'}
+					useHashtag={true}
+				/>
+			</PostContainer>
 		</SavedLayout>
 	);
 }
