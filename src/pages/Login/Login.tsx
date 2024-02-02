@@ -115,7 +115,7 @@ export default function Login() {
 			alert('페이스북 로그인에 실패했습니다.');
 		} else {
 			if (
-				localStorage.getItem('refreshToken') &&
+				localStorage.getItem('refreshToken') !== undefined &&
 				localStorage.getItem('username')
 			) {
 				autoLogin();

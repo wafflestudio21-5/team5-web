@@ -73,7 +73,7 @@ const ShareButton = styled.button`
 const Div = styled.div`
 	width: 90%;
 	margin-left: 1.5rem;
-	margin-top: -0.5rem;
+	margin-top: 0.5rem;
 	font-size: 0.7rem;
 	color: red;
 `;
@@ -170,12 +170,7 @@ export default function UploadPhoto() {
 					/>
 				</Button>
 			)}
-			{!isValid && (
-				<Div>
-					비밀번호가 너무 짧습니다. 6자 이상의 문자 또는 숫자로 비밀번호를
-					만드세요.
-				</Div>
-			)}
+			{!isValid && <Div>사진을 한 장 이상 추가해주세요.</Div>}
 			<ButtonBackground>
 				<ShareButton onClick={handleClick}>사진 추가</ShareButton>
 			</ButtonBackground>

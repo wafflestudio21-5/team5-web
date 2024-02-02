@@ -91,6 +91,7 @@ export default function MakePassword() {
 	const navigate = useNavigate();
 	const [isSixOrMore, setIsSixOrMore] = useState(true);
 	const [isVisible, setIsVisible] = useState(false);
+	const pwdReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
 	const eyeAddr = isVisible
 		? 'https://freeiconshop.com/wp-content/uploads/edd/eye-outline.png'
 		: 'https://cdn.iconscout.com/icon/free/png-256/free-eye-slash-3604201-3003511.png';
@@ -99,10 +100,11 @@ export default function MakePassword() {
 		setPassword(e.target.value);
 	};
 	const handleClick = () => {
-		if (password.length < 6) setIsSixOrMore(false);
-		else {
+		if (pwdReg.test(password)) {
 			setIsSixOrMore(true);
 			navigate('/signUp/save');
+		} else {
+			setIsSixOrMore(false);
 		}
 	};
 	return (
@@ -133,8 +135,8 @@ export default function MakePassword() {
 			</Div>
 			{!isSixOrMore && (
 				<Div className="notice">
-					비밀번호가 너무 짧습니다. 6자 이상의 문자 또는 숫자로 비밀번호를
-					만드세요.
+					비밀번호는 영어, 숫자, 특수문자를 포함한 8~15 길이의 문자열로
+					입력해주세요.
 				</Div>
 			)}
 			<Button className="next" onClick={handleClick}>

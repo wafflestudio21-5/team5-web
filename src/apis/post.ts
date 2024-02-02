@@ -18,6 +18,7 @@ type TryPostType = {
 	content: string;
 	files: FileList;
 	category: CategoryType;
+	fileOrder: number[];
 	accessToken: string;
 };
 // author(user) response 형
@@ -57,17 +58,19 @@ export const tryPost = async ({
 	content,
 	files,
 	category,
+	fileOrder,
 	accessToken,
 }: TryPostType) => {
 	const api = axios.create({ baseURL: baseURL });
 	const formData = new FormData();
 	formData.append('content', content);
 	formData.append('category', category.toString());
-	for (let i = 0; i < files.length; i++) {
-		const file = files[i];
+	fileOrder.map((num) => {
+		const file = files[num];
 		const blob = new Blob([file], { type: file.type });
 		formData.append('files', blob);
-	}
+	});
+
 	try {
 		const response = await axios.post(`${baseURL}/api/v1/posts`, formData, {
 			headers: {
