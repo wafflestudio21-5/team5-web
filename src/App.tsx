@@ -29,6 +29,7 @@ import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
 import { useUserContext } from './contexts/UserContext.tsx';
+import TokenRefresher from './apis/TokenRefresher.tsx';
 
 const router = createBrowserRouter([
 	{
@@ -153,11 +154,9 @@ export default function App() {
 	const { isLoggedIn } = useUserContext();
 	return (
 		<ThemeProvider theme={Theme}>
+			<TokenRefresher />
 			<GlobalStyles />
-			{/*<RouterProvider router={router}>*/}
-			{/* const { isLoggedin } = useUserContext() */}
 			<RouterProvider router={isLoggedIn ? router : loginRouter} />
-			{/* </RouterProvider> */}
 		</ThemeProvider>
 	);
 }
