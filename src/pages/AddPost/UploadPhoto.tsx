@@ -88,7 +88,7 @@ const Button = styled.button<ButtonType>`
 	background-color: white;
 	border: none;
 	margin-left: ${({ $isadd }) => ($isadd ? '41%;' : '80%')};
-	margin-top: ${({ $isadd }) => ($isadd ? '40%;' : '125%')};
+	margin-top: ${({ $isadd }) => ($isadd ? '40%;' : '122%')};
 `;
 
 export default function UploadPhoto() {
