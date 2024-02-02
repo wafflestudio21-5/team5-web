@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { resetAccessToken } from './login';
-import { useUserContext } from '../contexts/UserContext';
 
 export default function TokenRefresher() {
 	console.log('in');
