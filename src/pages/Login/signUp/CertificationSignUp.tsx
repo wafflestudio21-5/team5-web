@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useAuthContext } from '../../../contexts/AuthContext';
+import { getColor } from '../../../styles/Theme';
 
 interface InputProps {
 	$isvalid: boolean;
@@ -28,8 +29,10 @@ const Input = styled.input<InputProps>`
 	margin: 1rem auto;
 	padding-left: 1rem;
 	border-radius: 1rem;
-	border: 1px solid ${({ $isvalid }) => ($isvalid ? 'gainsboro' : 'red')};
-	background-color: whitesmoke;
+	border: 1px solid
+		${({ $isvalid }) =>
+			$isvalid ? getColor('extraLightGrey') : getColor('red')};
+	background-color: ${getColor('whiteSmoke')};
 	&:focus {
 		outline: none;
 	}
@@ -43,7 +46,7 @@ const Div = styled.div`
 	&.notice {
 		width: 90%;
 		margin: -0.5rem 0 0 1.5rem;
-		color: red;
+		color: ${getColor('red')};
 		font-size: 0.7rem;
 	}
 `;
@@ -55,8 +58,8 @@ const Button = styled.button`
 		height: 2.5rem;
 		border-radius: 1.2rem;
 		border: none;
-		background-color: blue;
-		color: white;
+		background-color: ${getColor('blue')};
+		color: ${getColor('white')};
 	}
 	&.option {
 		display: block;
@@ -64,9 +67,9 @@ const Button = styled.button`
 		width: 93%;
 		height: 2.5rem;
 		border-radius: 1.2rem;
-		border: 1px solid gainsboro;
-		background-color: white;
-		color: black;
+		border: 1px solid ${getColor('extraLightGrey')};
+		background-color: ${getColor('white')};
+		color: ${getColor('black')};
 	}
 	&.already {
 		display: block;
@@ -75,8 +78,8 @@ const Button = styled.button`
 		left: 5%;
 		bottom: 1rem;
 		border: none;
-		background-color: white;
-		color: blue;
+		background-color: ${getColor('white')};
+		color: ${getColor('blue')};
 	}
 `;
 

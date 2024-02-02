@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { usePostContext } from '../../contexts/PostContext';
+import { getColor } from '../../styles/Theme';
 
 type CheckBoxType = {
 	$isselected: boolean;
@@ -31,9 +32,12 @@ const CheckBox = styled.div<CheckBoxType>`
 	text-align: center;
 	width: 1.5rem;
 	height: 0.8rem;
-	border: 1px solid ${({ $isselected }) => ($isselected ? 'skyblue' : 'gray')};
+	border: 1px solid
+		${({ $isselected }) =>
+			$isselected ? getColor('skyblue') : getColor('grey')};
 	border-radius: 50%;
-	background-color: ${({ $isselected }) => ($isselected ? 'skyblue' : 'white')};
+	background-color: ${({ $isselected }) =>
+		$isselected ? getColor('skyblue') : getColor('white')};
 	color: white;
 	font-weight: 600;
 `;

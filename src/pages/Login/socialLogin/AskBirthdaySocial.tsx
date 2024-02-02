@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Modal from '../../../shared/Modal/Modal';
+import { getColor } from '../../../styles/Theme';
 
 interface InputProps {
 	$isvalid: boolean;
@@ -36,8 +37,10 @@ const Input = styled.input<InputProps>`
 	border-radius: 1rem;
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
-	border: 1px solid ${({ $isvalid }) => ($isvalid ? 'gainsboro' : 'red')};
-	background-color: whitesmoke;
+	border: 1px solid
+		${({ $isvalid }) =>
+			$isvalid ? getColor('extraLightGrey') : getColor('red')};
+	background-color: ${getColor('whiteSmoke')};
 	&:focus {
 		outline: none;
 	}
@@ -53,7 +56,7 @@ const Div = styled.div`
 		margin-top: -0.5rem;
 		margin-left: 1.5rem;
 		font-size: 0.7rem;
-		color: red;
+		color: ${getColor('red')};
 	}
 	&.background {
 		position: absolute;
@@ -69,12 +72,12 @@ const Div = styled.div`
 		height: 80%;
 		bottom: 0;
 		border-radius: 2rem 2rem 0 0;
-		background-color: white;
+		background-color: ${getColor('white')};
 	}
 	&.grayBar {
 		position: relative;
 		margin: 0.5rem auto;
-		background-color: gainsboro;
+		background-color: ${getColor('extraLightGrey')};
 		width: 3rem;
 		height: 0.3rem;
 		border-radius: 0.2rem;
@@ -88,8 +91,8 @@ const Button = styled.button`
 		height: 2.5rem;
 		border-radius: 1.2rem;
 		border: none;
-		background-color: blue;
-		color: white;
+		background-color: ${getColor('blue')};
+		color: ${getColor('white')};
 	}
 	&.already {
 		display: block;
@@ -98,8 +101,8 @@ const Button = styled.button`
 		left: 5%;
 		bottom: 1rem;
 		border: none;
-		background-color: white;
-		color: blue;
+		background-color: ${getColor('white')};
+		color: ${getColor('blue')};
 	}
 	&.X {
 		border: none;

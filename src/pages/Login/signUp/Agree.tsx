@@ -6,6 +6,7 @@ import { tryLogin, trySignUp } from '../../../apis/login';
 import { getUserInformation } from '../../../apis/user';
 import { useAuthContext } from '../../../contexts/AuthContext';
 import { useUserContext } from '../../../contexts/UserContext';
+import { getColor } from '../../../styles/Theme';
 
 const Img = styled.img`
 	width: 2rem;
@@ -28,7 +29,7 @@ const Div = styled.div`
 	&.line {
 		width: 93%;
 		text-align: center;
-		border-bottom: 1px solid #aaa;
+		border-bottom: 1px solid ${getColor('darkGrey')};
 		line-height: 0.1rem;
 		margin: 0 auto 0 auto;
 	}
@@ -39,7 +40,7 @@ const Div = styled.div`
 		width: 90%;
 		height: 2.8rem;
 		padding: 0.5rem;
-		background-color: whitesmoke;
+		background-color: ${getColor('whiteSmoke')};
 		border-radius: 1rem 1rem 0 0;
 		font-size: 0.9rem;
 	}

@@ -6,6 +6,7 @@ import { resetAccessToken, tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
 import { baseURL } from '../../constants.ts';
 import { useUserContext } from '../../contexts/UserContext';
+import { getColor } from '../../styles/Theme.tsx';
 
 const Img = styled.img`
 	&.instagram {
@@ -27,8 +28,8 @@ const Input = styled.input`
 	font-size: 12px;
 	padding-left: 7px;
 	border-radius: 5px;
-	border: 1px solid gainsboro;
-	background-color: whitesmoke;
+	border: 1px solid ${getColor('extraLightGrey')};
+	background-color: ${getColor('whiteSmoke')};
 	&:focus {
 		outline: none;
 	}
@@ -42,15 +43,15 @@ const Div = styled.div`
 	&.line {
 		width: 90%;
 		text-align: center;
-		border-bottom: 1px solid #aaa;
+		border-bottom: 1px solid ${getColor('darkGrey')};
 		line-height: 0.1em;
 		margin: 40px auto 20px auto;
 	}
 	&.footer {
 		position: fixed;
-		border: 1px solid gainsboro;
-		background-color: white;
-		color: gainsboro;
+		border: 1px solid ${getColor('extraLightGrey')};
+		background-color: ${getColor('white')};
+		color: ${getColor('extraLightGrey')};
 		font-size: small;
 		bottom: 0px;
 		left: 0px;
@@ -61,7 +62,7 @@ const Div = styled.div`
 	}
 `;
 const BlueDiv = styled.div`
-	color: blue;
+	color: ${getColor('blue')};
 `;
 const Button = styled.button`
 	display: block;
@@ -70,11 +71,11 @@ const Button = styled.button`
 	height: 2.5rem;
 	border-radius: 1.2rem;
 	border: none;
-	background-color: blue;
-	color: white;
+	background-color: ${getColor('blue')};
+	color: ${getColor('white')};
 `;
 const Span = styled.span`
-	background: #fff;
+	background: ${getColor('white')};
 	padding: 0 10px;
 	font-size: small;
 	text-decoration: none;

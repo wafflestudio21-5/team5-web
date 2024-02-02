@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useAuthContext } from '../../../contexts/AuthContext';
+import { getColor } from '../../../styles/Theme';
 
 type InputType = {
 	$isvalid: boolean;
@@ -29,15 +30,17 @@ const Input = styled.input<InputType>`
 	margin: 1rem auto;
 	padding-left: 0.5rem;
 	border-radius: 1rem;
-	border: 1px solid ${({ $isvalid }) => ($isvalid ? 'gainsboro' : 'red')};
-	background-color: whitesmoke;
+	border: 1px solid
+		${({ $isvalid }) =>
+			$isvalid ? getColor('extraLightGrey') : getColor('red')};
+	background-color: ${getColor('whiteSmoke')};
 	&:focus {
 		outline: none;
 	}
 `;
 const Div = styled.div`
 	&.notice {
-		color: red;
+		color: ${getColor('red')};
 		font-size: 0.7rem;
 		margin-left: 1.5rem;
 		margin-top: -0.5rem;
@@ -56,8 +59,8 @@ const Button = styled.button`
 		height: 2.5rem;
 		border-radius: 1.2rem;
 		border: none;
-		background-color: blue;
-		color: white;
+		background-color: ${getColor('blue')};
+		color: ${getColor('white')};
 	}
 	&.already {
 		display: block;
@@ -66,8 +69,8 @@ const Button = styled.button`
 		left: 5%;
 		bottom: 1rem;
 		border: none;
-		background-color: white;
-		color: blue;
+		background-color: ${getColor('white')};
+		color: ${getColor('blue')};
 	}
 `;
 

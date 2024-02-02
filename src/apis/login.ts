@@ -46,7 +46,7 @@ export const tryLogin = async ({ username, password }: LoginType) => {
 			return data['accessToken'];
 		}
 	} catch (error) {
-		alert(error);
+		alert('아이디나 패스워드가 다릅니다.');
 	}
 };
 

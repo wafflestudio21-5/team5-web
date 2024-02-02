@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { getColor } from '../../styles/Theme';
 
 const HeaderBox = styled.div`
 	position: fixed;
 	width: 430px;
 	height: 1.5rem;
 	background-color: white;
-	border-bottom: 1px solid gainsboro;
+	border-bottom: 1px solid ${getColor('extraLightGrey')};
 	padding-bottom: 0.5rem;
 `;
 const Title = styled.div`

@@ -9,9 +9,10 @@ import PhotoPreviewInorder from '../../components/AddPost/PhotoPreviewInorder';
 import SubjectBar from '../../components/AddPost/SubjectBar';
 import { usePostContext } from '../../contexts/PostContext';
 import { useUserContext } from '../../contexts/UserContext';
+import { getColor } from '../../styles/Theme.tsx';
 
 const Background = styled.div`
-	background-color: white;
+	background-color: ${getColor('white')};
 	position: fixed;
 	width: 430px;
 	height: 87%;
@@ -25,8 +26,8 @@ const Header = styled.div`
 	position: fixed;
 	width: 430px;
 	height: 1.5rem;
-	background-color: white;
-	border-bottom: 1px solid gainsboro;
+	background-color: ${getColor('white')};
+	border-bottom: 1px solid ${getColor('extraLightGrey')};
 	padding-bottom: 0.5rem;
 `;
 const Title = styled.div`
@@ -39,21 +40,21 @@ const Title = styled.div`
 const ButtonBackground = styled.div`
 	position: fixed;
 	bottom: 0;
-	border-top: 1px solid gainsboro;
+	border-top: 1px solid ${getColor('extraLightGrey')};
 	width: 430px;
-	background-color: white;
+	background-color: ${getColor('white')};
 	height: 5rem;
 `;
 const ShareButton = styled.button`
 	bottom: 1rem;
-	background-color: blue;
+	background-color: ${getColor('blue')};
 	width: 86%;
 	height: 3rem;
 	margin-top: 1rem;
 	margin-left: 7%;
 	border-radius: 0.5rem;
 	border: none;
-	color: white;
+	color: ${getColor('white')};
 	font-weight: 600;
 `;
 const Prev = styled.img`
@@ -68,7 +69,7 @@ const Textarea = styled.textarea`
 	border: none;
 	margin-top: 1rem;
 	margin-bottom: 0;
-	border-bottom: 1px solid gainsboro;
+	border-bottom: 1px solid ${getColor('extraLightGrey')};
 	resize: none;
 	outline: none;
 	font-family: 'Noto Sans KR', sans-serif;

@@ -25,13 +25,13 @@ const Header = styled.div`
 	margin-top: 0.5rem;
 	padding-bottom: 0.5rem;
 	padding-top: 1.5rem;
-	border-bottom: 1px solid gainsboro;
-	border-top: 1px solid gainsboro;
+	border-bottom: 1px solid ${getColor('extraLightGrey')};
+	border-top: 1px solid ${getColor('extraLightGrey')};
 `;
 const Subject = styled.div`
 	display: inline-block;
-	background-color: #e9e9e9;
-	color: #615f5f;
+	background-color: ${getColor('extraLightGrey')};
+	color: ${getColor('darkGrey')};
 	text-align: center;
 	border: none;
 	border-radius: 0.5rem;
@@ -44,7 +44,7 @@ const Text = styled.div`
 	margin-left: 0.5rem;
 `;
 const More = styled.div`
-	background-color: gainsboro;
+	background-color: ${getColor('extraLightGrey')};
 	border: none;
 	width: 96%;
 	padding: 0.5rem 0.5rem;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { getColor } from '../../styles/Theme';
 
 type Props = {
 	title: string;
@@ -12,7 +13,7 @@ const Icon = styled.img`
 `;
 const ElementBox = styled.div`
 	width: 100%;
-	border-bottom: 1px solid gainsboro;
+	border-bottom: 1px solid ${getColor('extraLightGrey')};
 	padding-bottom: 1rem;
 	padding-top: 1rem;
 	overflow-x: auto;

@@ -11,12 +11,12 @@ const Container = styled.div`
 	}
 `;
 const Photo = styled.img`
-	height: 100%;
+	width: 100%;
 `;
 const ElementBox = styled.div`
 	display: block;
-	height: 6.5rem;
-	margin: 2rem auto 0rem auto;
+	width: 60%;
+	margin: 2rem auto 1rem auto;
 	padding: 0 0.3rem;
 `;
 

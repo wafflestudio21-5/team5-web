@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useAuthContext } from '../../../contexts/AuthContext';
+import { getColor } from '../../../styles/Theme';
 
 interface InputProps {
 	$issixormore: boolean;
@@ -29,8 +30,9 @@ const Input = styled.input<InputProps>`
 	padding-left: 0.5rem;
 	border-radius: 1rem;
 	border: 1px solid
-		${({ $issixormore }) => ($issixormore ? 'gainsboro' : 'red')};
-	background-color: whitesmoke;
+		${({ $issixormore }) =>
+			$issixormore ? getColor('extraLightGrey') : getColor('red')};
+	background-color: ${getColor('whitesmoke')};
 	&:focus {
 		outline: none;
 	}
@@ -41,7 +43,7 @@ const Div = styled.div`
 		margin-left: 1.5rem;
 		margin-top: -0.5rem;
 		font-size: 0.7rem;
-		color: red;
+		color: ${getColor('red')};
 	}
 	&.text {
 		width: 90%;
@@ -53,7 +55,7 @@ const Div = styled.div`
 		height: 3rem;
 		position: relative;
 		margin: 1rem auto;
-		background-color: white;
+		background-color: ${getColor('white')};
 	}
 `;
 const Button = styled.button`
@@ -64,8 +66,8 @@ const Button = styled.button`
 		height: 2.5rem;
 		border-radius: 1.2rem;
 		border: none;
-		background-color: blue;
-		color: white;
+		background-color: ${getColor('blue')};
+		color: ${getColor('white')};
 	}
 	&.already {
 		display: block;
@@ -74,8 +76,8 @@ const Button = styled.button`
 		left: 5%;
 		bottom: 1rem;
 		border: none;
-		background-color: white;
-		color: blue;
+		background-color: ${getColor('white')};
+		color: ${getColor('blue')};
 	}
 	&.password {
 		border: none;

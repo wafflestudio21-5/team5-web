@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useAuthContext } from '../../../contexts/AuthContext';
+import { getColor } from '../../../styles/Theme';
 
 const Img = styled.img`
 	width: 2rem;
@@ -32,8 +33,8 @@ const Button = styled.button`
 		height: 2.5rem;
 		border-radius: 1.2rem;
 		border: none;
-		background-color: blue;
-		color: white;
+		background-color: ${getColor('blue')};
+		color: ${getColor('white')};
 	}
 	&.later {
 		display: block;
@@ -41,9 +42,9 @@ const Button = styled.button`
 		width: 93%;
 		height: 2.5rem;
 		border-radius: 1.2rem;
-		background-color: white;
-		border: 1px solid gainsboro;
-		color: black;
+		background-color: ${getColor('white')};
+		border: 1px solid ${getColor('extraLightGrey')};
+		color: ${getColor('black')};
 	}
 	&.already {
 		display: block;
@@ -52,8 +53,8 @@ const Button = styled.button`
 		left: 5%;
 		bottom: 1rem;
 		border: none;
-		background-color: white;
-		color: blue;
+		background-color: ${getColor('white')};
+		color: ${getColor('blue')};
 	}
 `;
 

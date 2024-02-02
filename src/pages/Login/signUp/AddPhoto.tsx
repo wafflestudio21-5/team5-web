@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { useUserContext } from '../../../contexts/UserContext';
 import { addProfileImage } from '../../../apis/account';
+import { getColor } from '../../../styles/Theme';
 
 const Img = styled.img`
 	height: 100%;
@@ -27,7 +28,7 @@ const Div = styled.div`
 		overflow: hidden;
 		width: 10rem;
 		height: 10rem;
-		border: 0.3rem solid whitesmoke;
+		border: 0.3rem solid ${getColor('whiteSmoke')};
 		margin: 2rem auto;
 		border-radius: 50%;
 	}
@@ -39,12 +40,12 @@ const Button = styled.button`
 	height: 2.5rem;
 	border-radius: 1.2rem;
 	border: none;
-	background-color: blue;
-	color: white;
+	background-color: ${getColor('blue')};
+	color: ${getColor('white')};
 	&#skip {
-		background-color: white;
-		border: 1px solid gainsboro;
-		color: black;
+		background-color: ${getColor('white')};
+		border: 1px solid ${getColor('extraLightGrey')};
+		color: ${getColor('black')};
 	}
 `;
 
