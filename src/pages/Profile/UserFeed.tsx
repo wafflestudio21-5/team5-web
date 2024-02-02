@@ -1,4 +1,4 @@
-/* import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getUserFeed } from '../../apis/user.ts';
@@ -6,7 +6,7 @@ import Feed from '../../components/Feed.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import { PostType } from '../../types.ts';
 
-export default function UserFeed(id: number) {
+export default function UserFeed() {
 	const { id } = useParams();
 	const { accessToken } = useUserContext();
 
@@ -14,11 +14,11 @@ export default function UserFeed(id: number) {
 	const [feedData, setFeedData] = useState<PostType[]>([]);
 
 	const fetchUserFeed = async () => {
-		if (id) {
+		if (id !== undefined) {
+			const data = await getUserFeed(id, accessToken);
+			if (data) setFeedData(data);
+			setIsLoading(false);
 		}
-		const data = await getUserFeed(id, accessToken);
-		setFeedData(data);
-		setIsLoading(false);
 	};
 
 	useEffect(() => {
@@ -35,4 +35,3 @@ export default function UserFeed(id: number) {
 		</>
 	);
 }
- */
