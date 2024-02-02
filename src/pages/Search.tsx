@@ -98,7 +98,7 @@ export default function Search() {
 	useEffect(() => {
 		const fetchSearchAll = async () => {
 			if (showAll && hasNext && status === 'pending') {
-				const result = await getSearchAll(accessToken, searchInput, page);
+				const result = await getSearchAll(accessToken, searchInput, page + 1);
 				if (result) {
 					setPage(result.pageInfo.page);
 					setHasNext(result.pageInfo.hasNext);
