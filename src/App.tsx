@@ -6,14 +6,9 @@ import {
 import { ThemeProvider } from 'styled-components';
 
 import NavBar from './components/NavBar.tsx';
-import { useUserContext } from './contexts/UserContext.tsx';
 import AddText from './pages/AddPost/AddText.tsx';
 import UploadPhoto from './pages/AddPost/UploadPhoto.tsx';
-import EditPost from './pages/EditPost/EditPost.tsx';
-import DetailExplore from './pages/Explore/DetailExplore.tsx';
 import Explore from './pages/Explore/Explore.tsx';
-import ExploreFeed from './pages/Explore/ExploreFeed.tsx';
-import Notification from './pages/Feed/Notification.tsx';
 import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
 import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
@@ -26,25 +21,14 @@ import CertificationSignUp from './pages/Login/signUp/CertificationSignUp.tsx';
 import MakePassword from './pages/Login/signUp/MakePassword.tsx';
 import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
 import SignUp from './pages/Login/signUp/SignUp.tsx';
-import AskBirthdaySocial from './pages/Login/socialLogin/AskBirthdaySocial.tsx';
-import MakeUsernameSocial from './pages/Login/socialLogin/MakeUsernameSocial.tsx';
-import ChangePassword from './pages/Profile/ChangePassword.tsx';
-import Bio from './pages/Profile/Edit/Bio.tsx';
 import Edit from './pages/Profile/Edit/Edit.tsx';
-import Gender from './pages/Profile/Edit/Gender.tsx';
-import Link from './pages/Profile/Edit/Link/Link.tsx';
-import LinkDetail from './pages/Profile/Edit/Link/LinkDetail.tsx';
-import Name from './pages/Profile/Edit/Name.tsx';
-import Username from './pages/Profile/Edit/Username.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Saved from './pages/Profile/Saved.tsx';
-import SavedFeed from './pages/Profile/SavedFeed.tsx';
-import UserFeed from './pages/Profile/UserFeed.tsx';
 import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
-import TokenRefresher from './apis/TokenRefresher.tsx';
+import { useUserContext } from './contexts/UserContext.tsx';
 
 const router = createBrowserRouter([
 	{
@@ -56,24 +40,12 @@ const router = createBrowserRouter([
 				element: <Home />,
 			},
 			{
-				path: 'notification/',
-				element: <Notification />,
-			},
-			{
 				path: 'search/',
 				element: <Search />,
 			},
 			{
 				path: 'explore/',
 				element: <Explore />,
-			},
-			{
-				path: 'explore/:category/',
-				element: <DetailExplore />,
-			},
-			{
-				path: 'explore/:category/:id',
-				element: <ExploreFeed />,
 			},
 			{
 				path: 'addPost/',
@@ -88,10 +60,6 @@ const router = createBrowserRouter([
 				element: <Profile />,
 			},
 			{
-				path: ':id/feed/',
-				element: <UserFeed />,
-			},
-			{
 				path: ':id/followers/',
 				element: <Follow />,
 			},
@@ -104,45 +72,27 @@ const router = createBrowserRouter([
 				element: <Saved />,
 			},
 			{
-				path: ':id/saved/feed',
-				element: <SavedFeed />,
-			},
-			{
 				path: 'account/edit/',
 				element: <Edit />,
 			},
 			{
 				path: 'account/edit/username/',
-				element: <Username />,
 			},
 			{
 				path: 'account/edit/name/',
-				element: <Name />,
 			},
 			{
 				path: 'account/edit/bio/',
-				element: <Bio />,
 			},
 			{
 				path: 'account/edit/link/',
-				element: <Link />,
-			},
-			{
-				path: 'account/edit/link/:linkParam/',
-				element: <LinkDetail />,
 			},
 			{
 				path: 'account/edit/gender/',
-				element: <Gender />,
 			},
-			{
-				path: 'account/changePassword/',
-				element: <ChangePassword />,
-			},
-			{ path: 'post/edit/:id/', element: <EditPost /> },
 			{
 				path: '*',
-				element: <Navigate to="" />,
+				element: <Navigate to="" />, // 이상한 url이 home이 아닌 profile로 가는 원인 모를 현상이 있음. useparams 도입 후 고칠 것
 			},
 		],
 	},
@@ -170,7 +120,7 @@ const loginRouter = createBrowserRouter([
 		element: <AskBirthday />,
 	},
 	{
-		path: 'signUp/username2/',
+		path: 'signUp/username/',
 		element: <MakeUsername />,
 	},
 	{
@@ -194,14 +144,6 @@ const loginRouter = createBrowserRouter([
 		element: <AddPhoto />,
 	},
 	{
-		path: 'signUp/username/',
-		element: <MakeUsernameSocial />,
-	},
-	{
-		path: 'signUp/birthdaySocial/',
-		element: <AskBirthdaySocial />,
-	},
-	{
 		path: '*',
 		element: <Navigate to="/" />,
 	},
@@ -209,12 +151,13 @@ const loginRouter = createBrowserRouter([
 
 export default function App() {
 	const { isLoggedIn } = useUserContext();
-
 	return (
 		<ThemeProvider theme={Theme}>
-			<TokenRefresher />
 			<GlobalStyles />
+			{/*<RouterProvider router={router}>*/}
+			{/* const { isLoggedin } = useUserContext() */}
 			<RouterProvider router={isLoggedIn ? router : loginRouter} />
+			{/* </RouterProvider> */}
 		</ThemeProvider>
 	);
 }
