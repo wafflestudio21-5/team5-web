@@ -18,7 +18,7 @@ type LoginType = {
 
 type FacebookSignupType = {
 	username: string;
-	birthday: Date;
+	formatted: string;
 };
 
 export const tryLogin = async ({ username, password }: LoginType) => {
@@ -128,14 +128,10 @@ export const tryFacebookLogin = async () => {
 
 export const tryFacebookSignup = async ({
 	username,
-	birthday,
+	formatted,
 }: FacebookSignupType) => {
 	try {
 		console.log('facebookSignup');
-		const year = birthday.getFullYear();
-		const month = String(birthday.getMonth() + 1).padStart(2, '0');
-		const day = String(birthday.getDate()).padStart(2, '0');
-		const formatted = `${year}-${month}-${day}`;
 		const refreshToken = localStorage.getItem('refreshToken');
 		console.log('username : ', username);
 		console.log('birthday : ', formatted);

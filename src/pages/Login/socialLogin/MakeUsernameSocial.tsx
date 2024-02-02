@@ -100,7 +100,11 @@ export default function MakeUsernameSocial() {
 		if (usernameRegex.test(username)) {
 			console.log('in');
 			setIsValid(true);
-			const newAccessToken = await tryFacebookSignup({ username, birthday });
+			const year = birthday.getFullYear();
+			const month = String(birthday.getMonth() + 1).padStart(2, '0');
+			const day = String(birthday.getDate()).padStart(2, '0');
+			const formatted = `${year}-${month}-${day}`;
+			const newAccessToken = await tryFacebookSignup({ username, formatted });
 			await setAccessToken(newAccessToken);
 			if (newAccessToken) {
 				setAccessToken(newAccessToken);
