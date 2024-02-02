@@ -98,12 +98,11 @@ export default function MakeUsernameSocial() {
 
 	useEffect(() => {
 		if (accessToken) {
-			console.log(accessToken);
-			temp();
+			getUser();
 		}
 	}, [accessToken]);
 
-	const temp = async () => {
+	const getUser = async () => {
 		const currentUserInfo = await getUserInformation(username, accessToken);
 		await setCurrentUser(currentUserInfo);
 		navigate('/signUp/photo');

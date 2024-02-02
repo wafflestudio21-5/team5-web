@@ -99,6 +99,20 @@ export default function Login() {
 	const [queryParams, _] = useState(new URLSearchParams(location.search));
 
 	useEffect(() => {
+		if (accessToken) {
+			getUser();
+		}
+	}, [accessToken]);
+
+	const getUser = async () => {
+		const username = localStorage.getItem('username');
+		if (username === null) return;
+		const currentUserInfo = await getUserInformation(username, accessToken);
+		await setCurrentUser(currentUserInfo);
+		setIsLoggedIn(true);
+	};
+
+	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
 		else setIsActive(false);
 	}, [usernameInput, passwordInput]);
@@ -127,16 +141,8 @@ export default function Login() {
 
 	const autoLogin = async () => {
 		const responseData = await resetAccessToken();
-		console.log(accessToken);
-		await setAccessToken(responseData.accessToken);
-		const username = responseData.username;
+		setAccessToken(responseData.accessToken);
 		localStorage.setItem('username', responseData.username);
-		const currentUserInfo = await getUserInformation(
-			username,
-			responseData.accessToken
-		);
-		setCurrentUser(currentUserInfo);
-		setIsLoggedIn(true);
 	};
 
 	const handleClick = async () => {
