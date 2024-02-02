@@ -96,23 +96,27 @@ export default function MakeUsernameSocial() {
 		setIsValid(usernameRegex.test(username));
 	}, [username]);
 
+	useEffect(() => {
+		if (accessToken) {
+			console.log(accessToken);
+			temp();
+		}
+	}, [accessToken]);
+
+	const temp = async () => {
+		const currentUserInfo = await getUserInformation(username, accessToken);
+		await setCurrentUser(currentUserInfo);
+		navigate('/signUp/photo');
+	};
+
 	const handleClick = async () => {
 		if (usernameRegex.test(username)) {
 			setIsValid(true);
 			const newAccessToken = await tryFacebookSignup({ username, birthday });
-			await setAccessToken(newAccessToken);
+			setAccessToken(newAccessToken);
 			const newRefreshToken = document.cookie.split('; ')[0].split('=')[1];
 			localStorage.setItem('refreshToken', newRefreshToken);
 			localStorage.setItem('username', username);
-			console.log(newAccessToken);
-			console.log(accessToken);
-			console.log(newRefreshToken);
-			console.log(username);
-			if (newAccessToken) {
-				const currentUserInfo = await getUserInformation(username, accessToken);
-				await setCurrentUser(currentUserInfo);
-				navigate('/signUp/photo');
-			}
 		} else {
 			setIsValid(false);
 		}
