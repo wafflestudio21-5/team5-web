@@ -99,7 +99,7 @@ export default function MakeUsernameSocial() {
 	useEffect(() => {
 		if (accessToken) {
 			console.log(accessToken);
-			temp();
+			getUser();
 		}
 	}, [accessToken]);
 
