@@ -552,6 +552,33 @@ export const getFeedPreview = async (
 	}
 };
 
+// 저장된 게시물 미리보기 가져오기
+export const getSavedPreview = async (
+	accessToken: string
+): Promise<PreviewType[]> => {
+	try {
+		const response = await axios.get<PreviewType[]>(
+			`${baseURL}/api/v1/account/saved-feed/preview`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		return response.data;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return [];
+	}
+};
+
 // 유저 피드 가져오기
 export const getUserFeed = async (
 	username: string,

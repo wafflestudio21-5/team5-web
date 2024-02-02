@@ -9,12 +9,16 @@ export type PostContextData = {
 	files: FileList | null;
 	previewUrls: string[];
 	category: CategoryType | null;
+	fileOrder: number[];
+	fileNum: number[];
 	setHideComments: (b: boolean) => void;
 	setHideLikes: (b: boolean) => void;
 	setFiles: (f: FileList | null) => void;
 	setPreviewUrls: (s: string[]) => void;
 	setContent: (s: string) => void;
 	setCategory: (s: CategoryType | null) => void;
+	setFileOrder: (n: number[]) => void;
+	setFileNum: (n: number[]) => void;
 	resetPost: () => void;
 };
 
@@ -31,6 +35,8 @@ export function PostProvider({ children }: ProviderProps) {
 	const [category, setCategory] = useState<CategoryType | null>(null);
 	const [files, setFiles] = useState<FileList | null>(null);
 	const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+	const [fileOrder, setFileOrder] = useState<number[]>([]);
+	const [fileNum, setFileNum] = useState<number[]>([]);
 	const resetPost = () => {
 		setContent('');
 		setHideComments(false);
@@ -38,6 +44,8 @@ export function PostProvider({ children }: ProviderProps) {
 		setCategory(null);
 		setFiles(null);
 		setPreviewUrls([]);
+		setFileNum([]);
+		setFileOrder([]);
 	};
 
 	return (
@@ -49,12 +57,16 @@ export function PostProvider({ children }: ProviderProps) {
 				files,
 				previewUrls,
 				category,
+				fileOrder,
+				fileNum,
 				setHideComments,
 				setHideLikes,
 				setFiles,
 				setPreviewUrls,
 				setContent,
 				setCategory,
+				setFileNum,
+				setFileOrder,
 				resetPost,
 			}}
 		>

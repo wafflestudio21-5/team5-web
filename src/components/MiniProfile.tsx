@@ -142,7 +142,7 @@ export default function MiniProfile({
 		navigate(`/${user.username}`);
 
 		if (action === 'hideButton') {
-			await addUserToRecentSearch(accessToken, user.userId, user.username);
+			await addUserToRecentSearch(accessToken, user.username);
 		}
 	};
 
@@ -179,7 +179,6 @@ export default function MiniProfile({
 		} else if (buttonLabel === '삭제') {
 			setIsHidden(true);
 			await deleteFollower(user.username, accessToken);
-		} else if (buttonLabel === 'hideButton') {
 		}
 
 		await fetchUserInformation(accessToken, currentUser, setCurrentUser);

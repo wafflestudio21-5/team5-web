@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { fetchUserInformation } from '../../apis/account';
 import { resetAccessToken } from '../../apis/login.ts';
 import { tryPost } from '../../apis/post';
-import MenuElement from '../../components/AddPost/MenuElement';
-import PhotoPreview from '../../components/AddPost/PhotoPreview';
+import MenuElement from '../../components/AddPost/MenuElement.tsx';
+import PhotoPreviewInorder from '../../components/AddPost/PhotoPreviewInorder';
 import SubjectBar from '../../components/AddPost/SubjectBar';
 import { usePostContext } from '../../contexts/PostContext';
 import { useUserContext } from '../../contexts/UserContext';
@@ -79,7 +79,8 @@ export default function AddText() {
 	const navigate = useNavigate();
 	const { accessToken, username, currentUser, setCurrentUser } =
 		useUserContext();
-	const { files, setContent, content, category, resetPost } = usePostContext();
+	const { files, setContent, content, category, resetPost, fileOrder } =
+		usePostContext();
 	const { previewUrls } = usePostContext();
 	const [isClicked, setIsClicked] = useState(true);
 	const handleClick = async () => {
@@ -92,6 +93,7 @@ export default function AddText() {
 					content,
 					files,
 					category,
+					fileOrder,
 					accessToken,
 				});
 				if (response) {
@@ -123,7 +125,7 @@ export default function AddText() {
 				</Link>
 				<Title>새 게시물</Title>
 			</Header>
-			<PhotoPreview previewUrls={previewUrls} />
+			<PhotoPreviewInorder previewUrls={previewUrls} />
 			<Textarea
 				placeholder="문구를 작성하거나 설문을 추가하세요..."
 				value={content}

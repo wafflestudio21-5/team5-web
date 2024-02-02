@@ -16,8 +16,6 @@ import ExploreFeed from './pages/Explore/ExploreFeed.tsx';
 import Notification from './pages/Feed/Notification.tsx';
 import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
-import Certification from './pages/Login/passwordRecovery/Certification.tsx';
-import NewPassword from './pages/Login/passwordRecovery/NewPassword.tsx';
 import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
 import Agree from './pages/Login/signUp/Agree.tsx';
 import AskBirthday from './pages/Login/signUp/AskBirthday.tsx';
@@ -41,6 +39,7 @@ import Username from './pages/Profile/Edit/Username.tsx';
 import Follow from './pages/Profile/Follow.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import Saved from './pages/Profile/Saved.tsx';
+import SavedFeed from './pages/Profile/SavedFeed.tsx';
 import UserFeed from './pages/Profile/UserFeed.tsx';
 import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
@@ -104,6 +103,10 @@ const router = createBrowserRouter([
 				element: <Saved />,
 			},
 			{
+				path: ':id/saved/feed',
+				element: <SavedFeed />,
+			},
+			{
 				path: 'account/edit/',
 				element: <Edit />,
 			},
@@ -148,14 +151,6 @@ const loginRouter = createBrowserRouter([
 	{
 		path: '',
 		element: <Login />,
-	},
-	{
-		path: 'passwordRecovery/certification/',
-		element: <Certification />,
-	},
-	{
-		path: 'passwordRecovery/newPassword/',
-		element: <NewPassword />,
 	},
 	{
 		path: 'signUp/',

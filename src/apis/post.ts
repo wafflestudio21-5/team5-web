@@ -18,6 +18,7 @@ type TryPostType = {
 	content: string;
 	files: FileList;
 	category: CategoryType;
+	fileOrder: number[];
 	accessToken: string;
 };
 // author(user) response 형
@@ -57,17 +58,19 @@ export const tryPost = async ({
 	content,
 	files,
 	category,
+	fileOrder,
 	accessToken,
 }: TryPostType) => {
 	const api = axios.create({ baseURL: baseURL });
 	const formData = new FormData();
 	formData.append('content', content);
 	formData.append('category', category.toString());
-	for (let i = 0; i < files.length; i++) {
-		const file = files[i];
+	fileOrder.map((num) => {
+		const file = files[num];
 		const blob = new Blob([file], { type: file.type });
 		formData.append('files', blob);
-	}
+	});
+
 	try {
 		const response = await axios.post(`${baseURL}/api/v1/posts`, formData, {
 			headers: {
@@ -75,7 +78,6 @@ export const tryPost = async ({
 				'Content-Type': 'multipart/form-data',
 			},
 		});
-		console.log(response);
 		return response;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
@@ -93,7 +95,6 @@ export const tryPost = async ({
 						},
 					}
 				);
-				console.log(retryResponse);
 				return retryResponse;
 			} catch (refreshError) {
 				console.error('토큰 재발급 실패 : ', refreshError);
