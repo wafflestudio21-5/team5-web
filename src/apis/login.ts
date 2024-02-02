@@ -97,7 +97,7 @@ export const resetAccessToken = async () => {
 			refreshToken: refreshToken,
 		});
 
-		return response.data.accessToken;
+		return response.data;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 

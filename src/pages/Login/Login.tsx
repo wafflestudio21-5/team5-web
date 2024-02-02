@@ -116,7 +116,6 @@ export default function Login() {
 		if (result === 'success') {
 			autoLogin();
 			setIsLoggedIn(true);
-			console.log('in');
 		} else if (result === 'fail') {
 			alert('페이스북 로그인에 실패했습니다.');
 		} else {
@@ -130,12 +129,12 @@ export default function Login() {
 	}, [, queryParams]);
 
 	const autoLogin = async () => {
-		const newAccessToken = await resetAccessToken();
-		setAccessToken(newAccessToken);
-		const username = localStorage.getItem('username');
+		const responseData = await resetAccessToken();
+		setAccessToken(responseData.accessToken);
+		const username = responseData.username;
 		const currentUserInfo = await getUserInformation(
 			username ? username : '',
-			newAccessToken
+			responseData.accessToken
 		);
 		setCurrentUser(currentUserInfo);
 		setIsLoggedIn(true);
