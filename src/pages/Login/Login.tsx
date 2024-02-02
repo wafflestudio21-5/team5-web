@@ -119,7 +119,7 @@ export default function Login() {
 			autoLogin();
 			setIsLoggedIn(true);
 		} else if (result === 'register') {
-			navigate('/signUp/birthdayS');
+			navigate('/signUp/birthdaySocial');
 		} else if (result === 'fail') {
 			alert('페이스북 로그인에 실패했습니다.');
 		} else {
