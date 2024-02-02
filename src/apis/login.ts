@@ -95,10 +95,8 @@ export const resetAccessToken = async () => {
 	try {
 		const refreshToken = localStorage.getItem('refreshToken');
 		console.log('refreshToken : ' + refreshToken);
-		const response = await axios.get(`${baseURL}/api/v1/auth/refresh_token`, {
-			params: {
-				refreshToken: refreshToken,
-			},
+		const response = await axios.post(`${baseURL}/api/v1/auth/refresh_token`, {
+			refreshToken: refreshToken,
 		});
 
 		return response.data.accessToken;
