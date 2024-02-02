@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { resetAccessToken, tryLogin } from '../../apis/login';
+import { tryLogin } from '../../apis/login';
 import { getUserInformation } from '../../apis/user.ts';
 import { baseURL } from '../../constants.ts';
 import { useUserContext } from '../../contexts/UserContext';
@@ -95,18 +95,17 @@ const StyledLink = styled(Link)`
 export default function Login() {
 	const [usernameInput, setUsernameInput] = useState('');
 	const [passwordInput, setPasswordInput] = useState('');
-	const [isActive, setIsActive] = useState(false);
-	const { setIsLoggedIn, setAccessToken, accessToken, setCurrentUser } =
-		useUserContext();
-	const location = useLocation();
-	const [result, setResult] = useState<string | null>(null);
-
+	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
+	/* 	const location = useLocation();
+	 */ const [isActive, setIsActive] = useState(false);
+	/* 	const [result, setResult] = useState<string | null>(null);
+	 */
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
 		else setIsActive(false);
 	}, [usernameInput, passwordInput]);
 
-	useEffect(() => {
+	/* 	useEffect(() => {
 		const queryParams = new URLSearchParams(location.search);
 		setResult(queryParams.get('result'));
 		if (result === 'success') {
@@ -115,22 +114,13 @@ export default function Login() {
 		} else if (result === 'fail') {
 			alert('페이스북 로그인에 실패했습니다.');
 		} else {
-			if (
-				localStorage.getItem('refreshToken') &&
-				localStorage.getItem('username')
-			) {
-				autoLogin();
-				setIsLoggedIn(true);
-			}
+			
 		}
-	}, []);
+	}, []); */
 
-	const autoLogin = async () => {
-		console.log(accessToken);
+	/* 	const autoLogin = async () => {
 		const newAccessToken = await resetAccessToken();
 		setAccessToken(newAccessToken);
-		console.log('accessToken : ' + accessToken);
-		console.log('newAccessToken : ' + newAccessToken);
 		const username = localStorage.getItem('username');
 		const currentUserInfo = await getUserInformation(
 			username ? username : '',
@@ -138,7 +128,7 @@ export default function Login() {
 		);
 		setCurrentUser(currentUserInfo);
 	};
-
+ */
 	const handleClick = async () => {
 		const accessToken = await tryLogin({
 			username: usernameInput,
