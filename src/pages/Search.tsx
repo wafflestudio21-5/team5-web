@@ -87,12 +87,12 @@ export default function Search() {
 			if (result) {
 				setRecentSearchList(result);
 			}
-
-			setIsLoading(false);
 		};
 
+		setRecentSearchList([]);
 		setIsLoading(true);
 		fetchRecentSearchList();
+		setIsLoading(false);
 	}, []);
 
 	useEffect(() => {
@@ -111,8 +111,6 @@ export default function Search() {
 		};
 
 		fetchSearchAll();
-		console.log(status);
-		console.log(searchPreview);
 	}, [showAll, status]);
 
 	const { isEnd } = useInfiniteScroll({
@@ -134,7 +132,7 @@ export default function Search() {
 				const previewResults = await getSearchPreview(accessToken, searchInput);
 				setSearchPreview(previewResults);
 			}
-		}, 300); // 500ms delay
+		}, 300);
 
 		setDebounceTimer(timer as unknown as number);
 
@@ -152,7 +150,7 @@ export default function Search() {
 		<SearchLayout>
 			<SearchBar text={searchInput} onChangeSearch={handleSearchChange} />
 			{isLoading ? (
-				<p>Loading...</p>
+				<></>
 			) : searchInput === '' ? (
 				recentSearchList &&
 				recentSearchList.length > 0 &&
@@ -171,7 +169,7 @@ export default function Search() {
 				))
 			)}
 			{showAll ? (
-				isEnd && <p>Loading...</p>
+				isEnd && <></>
 			) : (
 				<span
 					onClick={() => {

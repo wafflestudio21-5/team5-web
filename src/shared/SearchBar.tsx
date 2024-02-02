@@ -59,6 +59,7 @@ export default function SearchBar({
 					type="text"
 					id="search"
 					placeholder="검색"
+					autoComplete="off"
 					value={text}
 					onChange={(e) => onChangeSearch(e.target.value)}
 				/>

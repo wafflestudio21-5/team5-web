@@ -13,48 +13,38 @@ import {
 import DeleteIcon from '../../assets/Images/Post/delete.svg';
 import EditIcon from '../../assets/Images/Post/edit.svg';
 import { useUserContext } from '../../contexts/UserContext';
+import Icon from '../../shared/Icon.tsx';
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
 import { PostType } from '../../types';
 
-const ModalContent = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-	width: 430px;
-	padding: 1rem;
-	background-color: ${getColor('grey')};
-	border-radius: 0.5rem 0.5rem 0 0;
+const PostMenuModalContainer = styled.div`
+	height: 40%;
 `;
 
-const ButtonGroup = styled.div`
-	width: 100%;
+const CellContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	border: 1px solid grey;
-	border-radius: 0.5rem;
-	overflow: hidden;
-	justify-content: center;
-	gap: 0;
-	font-size: 0;
-	& > button {
-		background-color: ${getColor('grey')};
-		border: none;
-		min-height: 2rem;
-		font-size: 0.7rem;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		gap: 0.7rem;
+	align-items: flex-start;
+
+	width: 100%;
+	margin-top: 1rem;
+`;
+
+const Cell = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	width: 100%;
+
+	&:hover {
+		cursor: pointer;
 	}
-	& > .critical {
+
+	& .red {
+		font-weight: 600;
 		color: ${getColor('red')};
-	}
-	& > button > img {
-		height: 1rem;
-		width: 1rem;
-		margin: 0;
 	}
 `;
 
@@ -72,20 +62,20 @@ export default function PostMenuModal({
 	const { userId, accessToken } = useUserContext();
 
 	const navigate = useNavigate();
-	const [isFollwing, setIsFollwing] = useState(true);
+	const [isFollowing, setIsFollowing] = useState(true);
 
 	useEffect(() => {
-		const fetchFollwing = async () => {
+		const fetchFollowing = async () => {
 			if (userId !== post?.user.userId && post) {
 				const result = await getUserFollowStatus(
 					post?.user.username,
 					accessToken
 				);
-				setIsFollwing(result);
+				setIsFollowing(result);
 			}
 		};
 
-		fetchFollwing();
+		fetchFollowing();
 	}, []);
 
 	const handleFollow = async () => {
@@ -103,12 +93,12 @@ export default function PostMenuModal({
 					accessToken
 				);
 				if (result) {
-					setIsFollwing(true);
+					setIsFollowing(true);
 				}
 			} else {
 				const result = await followPublicUser(userInfo.username, accessToken);
 				if (result) {
-					setIsFollwing(true);
+					setIsFollowing(true);
 				}
 			}
 		}
@@ -131,7 +121,7 @@ export default function PostMenuModal({
 				if (isFollowing) {
 					const result = await unfollowUser(userInfo.username, accessToken);
 					if (result) {
-						setIsFollwing(false);
+						setIsFollowing(false);
 					}
 				} else {
 					const result = await cancelRequestFollowToPrivateUser(
@@ -139,13 +129,13 @@ export default function PostMenuModal({
 						accessToken
 					);
 					if (result) {
-						setIsFollwing(false);
+						setIsFollowing(false);
 					}
 				}
 			} else {
 				const result = await unfollowUser(userInfo.username, accessToken);
 				if (result) {
-					setIsFollwing(false);
+					setIsFollowing(false);
 				}
 			}
 		}
@@ -153,50 +143,50 @@ export default function PostMenuModal({
 
 	return (
 		<Modal onBackgroundClick={close} isClosing={isClosing}>
-			<ModalContent>
-				{post?.user.userId === userId ? (
-					<></>
-				) : (
-					<ButtonGroup>
-						{isFollwing ? (
-							<button onClick={handleUnfollow}>팔로우 취소</button>
+			<PostMenuModalContainer>
+				<CellContainer>
+					{post?.user.userId !== userId &&
+						(isFollowing ? (
+							<Cell onClick={handleUnfollow}>
+								<Icon src={EditIcon} />
+								<p>팔로우 취소</p>
+							</Cell>
 						) : (
-							<button onClick={handleFollow}>팔로우</button>
-						)}
-					</ButtonGroup>
-				)}
-
-				<ButtonGroup>
-					<button
+							<Cell onClick={handleFollow}>
+								<Icon src={EditIcon} />
+								<p>팔로우</p>
+							</Cell>
+						))}
+					<Cell
 						onClick={() => {
 							navigate(`/${post?.user.username}`);
 						}}
 					>
-						이 계정 정보
-					</button>
+						<Icon src={EditIcon} />
+						<p>이 계정 정보</p>
+					</Cell>
 					{post?.user.userId === userId && (
-						<button
-							onClick={() => {
-								navigate(`/post/edit/${post.id}`);
-							}}
-						>
-							<img src={EditIcon} />
-							수정
-						</button>
+						<>
+							<Cell
+								onClick={() => {
+									navigate(`/post/edit/${post.id}`);
+								}}
+							>
+								<Icon src={EditIcon} />
+								<p>수정</p>
+							</Cell>
+							<Cell
+								onClick={() => {
+									handleDeletePost(post.id);
+								}}
+							>
+								<Icon src={DeleteIcon} />
+								<p className="red">삭제</p>
+							</Cell>
+						</>
 					)}
-					{post?.user.userId === userId && (
-						<button
-							onClick={() => {
-								handleDeletePost(post.id);
-							}}
-							className="critical"
-						>
-							<img src={DeleteIcon} />
-							삭제
-						</button>
-					)}
-				</ButtonGroup>
-			</ModalContent>
+				</CellContainer>
+			</PostMenuModalContainer>
 		</Modal>
 	);
 }

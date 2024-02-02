@@ -34,14 +34,6 @@ const Input = styled.input`
 	}
 `;
 const Div = styled.div`
-	&.passwordRecovery {
-		display: block;
-		width: 90%;
-		margin: 15px auto;
-		text-align: right;
-		font-size: x-small;
-		color: blue;
-	}
 	&.facebookBox {
 		display: block;
 		width: 190px;
@@ -181,9 +173,6 @@ export default function Login() {
 				autoComplete="off"
 				onChange={(e) => setPasswordInput(e.target.value)}
 			/>
-			<StyledLink to="passwordRecovery/">
-				<Div className="passwordRecovery">비밀번호를 잊으셨나요?</Div>
-			</StyledLink>
 			<Button disabled={!isActive} onClick={handleClick}>
 				로그인
 			</Button>
