@@ -116,8 +116,8 @@ export default function Login() {
 		if (result === 'success') {
 			const refreshToken = document.cookie.split('; ')[0].split('=')[1];
 			localStorage.setItem('refreshToken', refreshToken);
+			console.log(refreshToken);
 			autoLogin();
-			setIsLoggedIn(true);
 		} else if (result === 'register') {
 			navigate('/signUp/birthdaySocial');
 		} else if (result === 'fail') {
@@ -135,7 +135,7 @@ export default function Login() {
 	const autoLogin = async () => {
 		const responseData = await resetAccessToken();
 		console.log(accessToken);
-		setAccessToken(responseData.accessToken);
+		await setAccessToken(responseData.accessToken);
 		const username = responseData.username;
 		localStorage.setItem('username', responseData.username);
 		console.log(responseData.username);
