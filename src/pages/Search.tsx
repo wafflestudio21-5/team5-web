@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { getRecentSearchList, getSearchPreview } from '../apis/search.ts';
 import MiniProfile from '../components/MiniProfile.tsx';
+import RecentSearch from '../components/RecentSearch.tsx';
 import { useUserContext } from '../contexts/UserContext.tsx';
 import SearchBar from '../shared/SearchBar.tsx';
 import { MiniProfileType, RecentSearchType } from '../types.ts';
@@ -55,7 +56,7 @@ export default function Search() {
 				const previewResults = await getSearchPreview(accessToken, searchInput);
 				setSearchPreview(previewResults);
 			}
-		}, 300); // 300ms delay
+		}, 300); // 500ms delay
 
 		setDebounceTimer(timer as unknown as number);
 
@@ -70,22 +71,18 @@ export default function Search() {
 			) : searchInput === '' ? (
 				recentSearchList &&
 				recentSearchList.length > 0 &&
-				recentSearchList.map((data) =>
-					data.isText ? (
-						<p key={data.searchId}>{data.text}</p>
-					) : (
-						<MiniProfile
-							key={data.searchId}
-							user={data.miniProfile!}
-							text="X"
-						/>
-					)
-				)
+				recentSearchList.map((data) => (
+					<RecentSearch
+						searchId={data.searchId}
+						text={data.text}
+						user={data.miniProfile}
+					/>
+				))
 			) : (
 				searchPreview &&
 				searchPreview.length > 0 &&
 				searchPreview.map((user) => (
-					<MiniProfile key={user.userId} user={user} text="X" />
+					<MiniProfile key={user.userId} user={user} action="hideButton" />
 				))
 			)}
 			<p>결과 모두 보기</p>

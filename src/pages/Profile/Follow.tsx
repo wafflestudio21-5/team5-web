@@ -266,14 +266,14 @@ export default function Follow() {
 										<MiniProfile
 											key={follower.userId}
 											user={follower}
-											text="삭제"
+											action="삭제"
 										/>
 									))}
 									{followerDiffList.map((follower) => (
 										<MiniProfile
 											key={follower.userId}
 											user={follower}
-											text="삭제"
+											action="삭제"
 										/>
 									))}
 								</>
@@ -290,7 +290,7 @@ export default function Follow() {
 												name,
 												profileImageUrl,
 											}}
-											text="hidden"
+											action="hidden"
 										/>
 									)}
 									{/* 다른 유저의 팔로워 중 내가 팔로잉 하는 사람들 */}
@@ -298,7 +298,7 @@ export default function Follow() {
 										<MiniProfile
 											key={follower.userId}
 											user={follower}
-											text="팔로잉"
+											action="팔로잉"
 										/>
 									))}
 									{/* 다른 유저의 팔로워 중 내가 팔로잉 하지 않는 사람들, 자신은 제외 */}
@@ -308,7 +308,7 @@ export default function Follow() {
 												<MiniProfile
 													key={follower.userId}
 													user={follower}
-													text={follower.isRequest ? '요청됨' : '팔로우'}
+													action={follower.isRequest ? '요청됨' : '팔로우'}
 												/>
 											)
 									)}
@@ -333,7 +333,7 @@ export default function Follow() {
 										name,
 										profileImageUrl,
 									}}
-									text="hidden"
+									action="hidden"
 								/>
 							)}
 							{/* 팔로잉 중 내가 팔로잉 하는 사람들 */}
@@ -341,7 +341,7 @@ export default function Follow() {
 								<MiniProfile
 									key={following.userId}
 									user={following}
-									text="팔로잉"
+									action="팔로잉"
 								/>
 							))}
 							{/* 팔로잉 중 내가 팔로잉 하지 않는 사람들, 자신은 제외 */}
@@ -351,7 +351,7 @@ export default function Follow() {
 										<MiniProfile
 											key={following.userId}
 											user={following}
-											text={following.isRequest ? '요청됨' : '팔로우'}
+											action={following.isRequest ? '요청됨' : '팔로우'}
 										/>
 									)
 							)}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchUserInformation } from '../apis/account.ts';
+import { addUserToRecentSearch } from '../apis/search.ts';
 import {
 	acceptFollowRequest,
 	cancelRequestFollowToPrivateUser,
@@ -28,7 +29,7 @@ const MiniProfileLayout = styled.div`
 
 	margin-bottom: 1rem;
 
-	& .isHidden {
+	& .hidden {
 		display: none;
 	}
 `;
@@ -125,10 +126,10 @@ const ButtonContainer = styled.div`
 
 export default function MiniProfile({
 	user,
-	text,
+	action,
 }: {
 	user: MiniProfileType;
-	text: string;
+	action: string;
 }) {
 	const { accessToken, currentUser, setCurrentUser } = useUserContext();
 	const navigate = useNavigate();
@@ -136,6 +137,14 @@ export default function MiniProfile({
 	const [isHidden, setIsHidden] = useState<boolean>(false);
 	const [buttonLabel, setButtonLabel] = useState<string>('');
 	const [buttonClass, setButtonClass] = useState<string>('');
+
+	const onClickCell = async () => {
+		navigate(`/${user.username}`);
+
+		if (action === 'hideButton') {
+			await addUserToRecentSearch(accessToken, user.userId, user.username);
+		}
+	};
 
 	const onClickButton = async (e: { stopPropagation: () => void }) => {
 		e.stopPropagation();
@@ -170,8 +179,7 @@ export default function MiniProfile({
 		} else if (buttonLabel === '삭제') {
 			setIsHidden(true);
 			await deleteFollower(user.username, accessToken);
-		} else if (buttonLabel === 'X') {
-			// 검색 기록 삭제
+		} else if (buttonLabel === 'hideButton') {
 		}
 
 		await fetchUserInformation(accessToken, currentUser, setCurrentUser);
@@ -192,28 +200,25 @@ export default function MiniProfile({
 	};
 
 	useEffect(() => {
-		if (text == '팔로우') {
+		if (action == '팔로우') {
 			setButtonLabel('팔로우');
 			setButtonClass('blue');
-		} else if (text == '팔로잉') {
+		} else if (action == '팔로잉') {
 			setButtonLabel('팔로잉');
 			setButtonClass('grey');
-		} else if (text == '삭제') {
+		} else if (action == '삭제') {
 			setButtonLabel('삭제');
 			setButtonClass('delete');
-		} else if (text == 'X') {
-			setButtonLabel('X');
+		} else if (action == '요청됨') {
+			setButtonLabel('요청됨');
 			setButtonClass('grey');
-		} else if (text == 'hidden') {
-			setButtonLabel('');
-			setButtonClass('hidden');
 		}
 	}, []);
 
 	return (
 		<MiniProfileLayout
-			onClick={() => navigate(`/${user.username}`)}
-			className={isHidden ? 'isHidden' : ''}
+			onClick={onClickCell}
+			className={isHidden ? 'hidden' : ''}
 		>
 			<ImageContainer>
 				<img src={user.profileImageUrl} alt="프로필 사진" />
@@ -222,7 +227,7 @@ export default function MiniProfile({
 				<p className="username">{user.username}</p>
 				<p className="name">{user.name}</p>
 			</UserInfoContainer>
-			{text === '알림' ? (
+			{action !== 'hideButton' && action === '알림' ? (
 				<ButtonContainer>
 					<button onClick={onClickAcceptRequest} className="blue margin">
 						확인

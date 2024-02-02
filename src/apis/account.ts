@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { baseURL } from '../constants.ts';
 import { APIErrorResponseType, UserType } from '../types.ts';
 
-import { getUserInformation } from './user.ts';
+import { acceptFollowRequest, getUserInformation } from './user.ts';
 
 // 유저 정보 userContext에 fetch
 export const fetchUserInformation = async (
@@ -381,6 +381,42 @@ export const deleteLink = async (
 			alert(err.response.data.message);
 		} else {
 			alert('Error occurred');
+		}
+
+		return false;
+	}
+};
+
+// 비밀번호 변경
+export const changePassword = async (
+	accessToken: string,
+	oldPassword: string,
+	newPassword: string
+): Promise<boolean> => {
+	try {
+		await axios.put(
+			`${baseURL}/api/v1/account/password`,
+			{
+				oldPassword: oldPassword,
+				newPassword: newPassword,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+
+		return true;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (
+			err.response &&
+			(err.response.status === 400 || err.response.status === 403)
+		) {
+			alert(err.response.data.message);
 		}
 
 		return false;

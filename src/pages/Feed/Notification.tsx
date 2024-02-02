@@ -54,7 +54,7 @@ export default function Notification() {
 				{followRequestList &&
 					followRequestList.length > 0 &&
 					followRequestList.map((user) => (
-						<MiniProfile key={user.userId} user={user} text="알림" />
+						<MiniProfile key={user.userId} user={user} action="알림" />
 					))}
 			</NotificationContainer>
 		</NotificationLayout>

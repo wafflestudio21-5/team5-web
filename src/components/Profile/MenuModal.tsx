@@ -14,6 +14,7 @@ import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 import Modal from '../../shared/Modal/Modal.tsx';
 import { getColor } from '../../styles/Theme.tsx';
+import { UserType } from '../../types.ts';
 const MenuModalContainer = styled.div`
 	height: 40%;
 `;
@@ -53,6 +54,7 @@ export default function MenuModal({
 }) {
 	const {
 		accessToken,
+		setAccessToken,
 		currentUser,
 		setCurrentUser,
 		username,
@@ -77,6 +79,13 @@ export default function MenuModal({
 		}
 	};
 
+	const onClickLogout = () => {
+		localStorage.removeItem('refreshToken');
+		setAccessToken('null');
+		setCurrentUser({} as UserType);
+		navigate('/');
+	};
+
 	const navigate = useNavigate();
 
 	return (
@@ -98,11 +107,11 @@ export default function MenuModal({
 							<p>계정 비공개 전환</p>
 						</Cell>
 					)}
-					<Cell>
+					<Cell onClick={() => navigate('/account/changePassword')}>
 						<Icon src={Key} alt="비밀번호 변경" />
 						<p>비밀번호 변경</p>
 					</Cell>
-					<Cell>
+					<Cell onClick={onClickLogout}>
 						<Icon src={Logout} alt="로그아웃" />
 						<p className="logout">로그아웃</p>
 					</Cell>

@@ -122,8 +122,7 @@ export const addTextToRecentSearch = async (
 export const addUserToRecentSearch = async (
 	accessToken: string,
 	userId: number,
-	username: string,
-	name: string
+	username: string
 ): Promise<boolean> => {
 	try {
 		await axios.post(
@@ -131,12 +130,10 @@ export const addUserToRecentSearch = async (
 			{
 				userId: userId,
 				username: username,
-				name: name,
 			},
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
-					'Content-Type': 'application/json',
 				},
 			}
 		);
@@ -180,5 +177,56 @@ export const getRecentSearchList = async (
 		}
 
 		return [];
+	}
+};
+
+// 최근 검색 기록 1개 삭제
+export const deleteRecentSearch = async (
+	accessToken: string,
+	searchId: number
+): Promise<boolean> => {
+	try {
+		await axios.delete(`${baseURL}/api/v1/search/recent/${searchId}`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		return true;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return false;
+	}
+};
+
+// 최근 검색 기록 전체 삭제
+export const deleteAllRecentSearch = async (
+	accessToken: string
+): Promise<boolean> => {
+	try {
+		await axios.delete(`${baseURL}/api/v1/search/recent/all`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		return true;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return false;
 	}
 };
