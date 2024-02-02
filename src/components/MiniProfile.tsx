@@ -29,7 +29,7 @@ const MiniProfileLayout = styled.div`
 
 	margin-bottom: 1rem;
 
-	& .hidden {
+	&.hidden {
 		display: none;
 	}
 `;

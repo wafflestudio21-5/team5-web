@@ -153,13 +153,14 @@ export default function ReactSection({ postData, showComment }: Props) {
 					</span>{' '}
 					{postData.content}
 				</TextBox>
-				<TextBox
-					className="margin secondary-text more-comment"
-					onClick={showComment}
-				>
-					{postData.commentCount > 0 &&
-						`댓글 ${postData.commentCount}개 모두 보기`}
-				</TextBox>
+				{postData.commentCount > 0 && (
+					<TextBox
+						className="margin secondary-text more-comment"
+						onClick={showComment}
+					>
+						댓글 {postData.commentCount}개 모두 보기
+					</TextBox>
+				)}
 				<TextBox className="margin secondary-text more-comment">
 					{createdDate.getFullYear() +
 						'년 ' +
