@@ -111,7 +111,6 @@ export default function Login() {
 	}, [usernameInput, passwordInput]);
 
 	useEffect(() => {
-		console.log('in: ' + queryParams.get('result'));
 		setResult(queryParams.get('result'));
 		if (result === 'success') {
 			const refreshToken = document.cookie.split('; ')[0].split('=')[1];
@@ -136,7 +135,7 @@ export default function Login() {
 		const responseData = await resetAccessToken();
 		setAccessToken(responseData.accessToken);
 		const username = responseData.username;
-		localStorage.getItem(responseData.username);
+		localStorage.setItem('username', responseData.username);
 		console.log(responseData.username);
 		const currentUserInfo = await getUserInformation(
 			username,
