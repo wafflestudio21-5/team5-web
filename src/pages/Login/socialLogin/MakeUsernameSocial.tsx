@@ -98,8 +98,10 @@ export default function MakeUsernameSocial() {
 
 	const handleClick = async () => {
 		if (usernameRegex.test(username)) {
+			console.log('in');
 			setIsValid(true);
 			const newAccessToken = await tryFacebookSignup({ username, birthday });
+			await setAccessToken(newAccessToken);
 			if (newAccessToken) {
 				setAccessToken(newAccessToken);
 				navigate('/signUp/photo');

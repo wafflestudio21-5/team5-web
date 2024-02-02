@@ -144,6 +144,16 @@ export const tryFacebookSignup = async ({
 				refreshToken: refreshToken,
 			}
 		);
+		console.log('페이스북 회원가입 성공!');
 		return response.data.accessToken;
-	} catch (error) {}
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
+	}
 };
