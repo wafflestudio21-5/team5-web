@@ -131,6 +131,7 @@ export const tryFacebookSignup = async ({
 	birthday,
 }: FacebookSignupType) => {
 	try {
+		console.log('facebookSignup');
 		const year = birthday.getFullYear();
 		const month = String(birthday.getMonth() + 1).padStart(2, '0');
 		const day = String(birthday.getDate()).padStart(2, '0');
@@ -156,7 +157,7 @@ export const tryFacebookSignup = async ({
 		} else {
 			alert('Error occurred');
 		}
-		console.log(err.response?.status);
+		console.log('에러 코드 : ', err.response?.status);
 		return null;
 	}
 };
