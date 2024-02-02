@@ -5,7 +5,8 @@ import { useUserContext } from '../contexts/UserContext';
 
 export default function TokenRefresher() {
 	console.log('in');
-	const { setAccessToken } = useUserContext();
+	const { setAccessToken, accessToken } = useUserContext();
+
 	useEffect(() => {
 		const interceptor = axios.interceptors.response.use(
 			function (response) {
@@ -15,6 +16,7 @@ export default function TokenRefresher() {
 				if (error.response.status === 401) {
 					const responseData = await resetAccessToken();
 					setAccessToken(responseData.accessToken);
+					console.log(accessToken);
 					return axios(error.config);
 				}
 			}
