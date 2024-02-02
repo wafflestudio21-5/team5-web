@@ -103,7 +103,7 @@ export default function MakeUsernameSocial() {
 		}
 	}, [accessToken]);
 
-	const temp = async () => {
+	const getUser = async () => {
 		const currentUserInfo = await getUserInformation(username, accessToken);
 		await setCurrentUser(currentUserInfo);
 		navigate('/signUp/photo');

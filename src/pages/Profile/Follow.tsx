@@ -207,7 +207,6 @@ export default function Follow() {
 	}, [id]);
 
 	useEffect(() => {
-		console.log('123');
 		const fetchDataLists = async () => {
 			if (!user) return;
 
