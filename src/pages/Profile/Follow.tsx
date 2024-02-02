@@ -228,8 +228,14 @@ export default function Follow() {
 		if (followingSearch === '') return true;
 
 		return (
-			username.toLowerCase().includes(followingSearch.toLowerCase()) ||
-			name.toLowerCase().includes(followingSearch.toLowerCase())
+			username
+				.toLowerCase()
+				.replace(/\s+/g, '')
+				.includes(followingSearch.toLowerCase().replace(/\s+/g, '')) ||
+			name
+				.toLowerCase()
+				.replace(/\s+/g, '')
+				.includes(followingSearch.toLowerCase().replace(/\s+/g, ''))
 		);
 	};
 
@@ -237,8 +243,14 @@ export default function Follow() {
 		if (followerSearch === '') return true;
 
 		return (
-			username.toLowerCase().includes(followerSearch.toLowerCase()) ||
-			name.toLowerCase().includes(followerSearch.toLowerCase())
+			username
+				.toLowerCase()
+				.replace(/\s+/g, '')
+				.includes(followerSearch.toLowerCase().replace(/\s+/g, '')) ||
+			name
+				.toLowerCase()
+				.replace(/\s+/g, '')
+				.includes(followerSearch.toLowerCase().replace(/\s+/g, ''))
 		);
 	};
 
