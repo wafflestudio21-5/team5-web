@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
 import {
 	CategoryMap,
@@ -10,6 +11,14 @@ import PostList from '../../components/Post/PostList';
 import { useUserContext } from '../../contexts/UserContext';
 import BackHeader from '../../shared/Header/BackHeader.tsx';
 import { ExplorePreviewType } from '../../types';
+
+const Layout = styled.main`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+`;
 
 type FeedFetchStatus = 'pending' | 'complete' | 'fail';
 
@@ -127,7 +136,7 @@ export default function DetailExplore() {
 	);
 
 	return (
-		<>
+		<Layout>
 			<BackHeader
 				backURL="/explore"
 				title={korCategory !== undefined ? korCategory : category}
@@ -138,6 +147,6 @@ export default function DetailExplore() {
 				useHashtag={false}
 			/>
 			{isEnd && <div>loading</div>}
-		</>
+		</Layout>
 	);
 }

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import AddLinkIcon from '../../../../assets/Images/Profile/Edit/AddLink.png';
+import AddLinkIcon from '../../../../assets/Images/Profile/Edit/add.png';
 import { useUserContext } from '../../../../contexts/UserContext.tsx';
 import BackHeader from '../../../../shared/Header/BackHeader.tsx';
 import { getColor } from '../../../../styles/Theme.tsx';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchUserInformation } from '../../apis/account';
@@ -9,33 +9,18 @@ import PhotoPreviewInorder from '../../components/AddPost/PhotoPreviewInorder';
 import SubjectBar from '../../components/AddPost/SubjectBar';
 import { usePostContext } from '../../contexts/PostContext';
 import { useUserContext } from '../../contexts/UserContext';
+import BackHeader from '../../shared/Header/BackHeader.tsx';
 import { getColor } from '../../styles/Theme.tsx';
 
 const Background = styled.div`
 	background-color: ${getColor('white')};
 	position: fixed;
-	width: 430px;
 	height: 87%;
 	overflow-y: scroll;
 	z-index: 100;
 	&::-webkit-scrollbar {
 		display: none;
 	}
-`;
-const Header = styled.div`
-	position: fixed;
-	width: 430px;
-	height: 1.5rem;
-	background-color: ${getColor('white')};
-	border-bottom: 1px solid ${getColor('extraLightGrey')};
-	padding-bottom: 0.5rem;
-`;
-const Title = styled.div`
-	display: inline-block;
-	text-align: center;
-	width: 81%;
-	font-weight: 600;
-	margin-left: 1rem;
 `;
 const ButtonBackground = styled.div`
 	position: fixed;
@@ -56,12 +41,6 @@ const ShareButton = styled.button`
 	border: none;
 	color: ${getColor('white')};
 	font-weight: 600;
-`;
-const Prev = styled.img`
-	width: 3%;
-	margin-top: 0.3rem;
-	margin-left: 0.5rem;
-	float: left;
 `;
 const Textarea = styled.textarea`
 	width: 100%;
@@ -116,7 +95,7 @@ export default function AddText() {
 			setIsClicked(false);
 		}
 	};
-	const menuname = [
+	const menuName = [
 		'사람 태그',
 		'음악 추가',
 		'알림 추가',
@@ -126,15 +105,7 @@ export default function AddText() {
 	];
 	return (
 		<Background>
-			<Header>
-				<Link to="/addPost">
-					<Prev
-						src="https://cdn-icons-png.flaticon.com/512/271/271220.png"
-						alt="취소"
-					/>
-				</Link>
-				<Title>새 게시물</Title>
-			</Header>
+			<BackHeader title="새 게시물" backURL={-1} />
 			<PhotoPreviewInorder previewUrls={previewUrls} />
 			<Textarea
 				placeholder="문구를 작성하거나 설문을 추가하세요..."
@@ -143,7 +114,7 @@ export default function AddText() {
 			/>
 			{noContent && <Div>문구를 작성해주세요.</Div>}
 			<SubjectBar isClicked={isClicked} />
-			{menuname.map((menu, index) => (
+			{menuName.map((menu, index) => (
 				<MenuElement
 					key={index}
 					title={menu}

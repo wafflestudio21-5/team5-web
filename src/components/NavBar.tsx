@@ -1,9 +1,9 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import exploreIcon from '../assets/Images/NavBar/explore.svg';
 import homeBlack from '../assets/Images/NavBar/homeBlack.png';
 import homeWhite from '../assets/Images/NavBar/homeWhite.png';
-import reels from '../assets/Images/NavBar/reels.png';
 import search from '../assets/Images/NavBar/search.png';
 import searchBold from '../assets/Images/NavBar/searchBold.png';
 import addPost from '../assets/Images/Profile/add-post.png';
@@ -68,7 +68,7 @@ export default function NavBar() {
 					onClick={() => navigate('/addPost')}
 				></Icon>
 				<Icon
-					src={reels}
+					src={exploreIcon}
 					alt="Explore"
 					onClick={() => navigate('/explore')}
 				></Icon>

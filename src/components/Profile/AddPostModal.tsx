@@ -6,6 +6,7 @@ import post from '../../assets/Images/Profile/AddPost/post.png';
 import story from '../../assets/Images/Profile/AddPost/story.png';
 import Icon from '../../shared/Icon.tsx';
 import Modal from '../../shared/Modal/Modal.tsx';
+import { getColor } from '../../styles/Theme.tsx';
 
 const AddPostModalContainer = styled.div`
 	height: 40%;
@@ -32,6 +33,10 @@ const Cell = styled.div`
 
 	width: 100%;
 
+	&.unavailable {
+		color: ${getColor('lightGrey')};
+	}
+
 	&:hover {
 		cursor: pointer;
 	}
@@ -51,7 +56,7 @@ export default function AddPostModal({ close, isClosing }: Props) {
 				<h2>만들기</h2>
 				<hr />
 				<CellContainer>
-					<Cell>
+					<Cell className="unavailable">
 						<Icon src={reels} alt="릴스" />
 						<p>릴스</p>
 					</Cell>
@@ -61,7 +66,7 @@ export default function AddPostModal({ close, isClosing }: Props) {
 						<p>게시물</p>
 					</Cell>
 					<hr className="content" />
-					<Cell>
+					<Cell className="unavailable">
 						<Icon src={story} alt="스토리" />
 						<p>스토리</p>
 					</Cell>

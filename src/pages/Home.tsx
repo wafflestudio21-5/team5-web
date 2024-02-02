@@ -121,12 +121,12 @@ export default function Home() {
 	});
 	return (
 		<>
-			<InstagramHeader />
+			<InstagramHeader isMainPage={true} />
 			<HomeLayout>
 				<div>
 					<Feed posts={feedData.posts} />
 				</div>
-				{isEnd && <div>loading</div>}
+				{isEnd && <></>}
 			</HomeLayout>
 		</>
 	);

@@ -6,10 +6,10 @@ import {
 	updateAccountToOpen,
 	updateAccountToPrivate,
 } from '../../apis/account.ts';
-import Bookmark from '../../assets/Images/Profile/Menu/Bookmark.png';
-import Key from '../../assets/Images/Profile/Menu/Key.png';
-import Lock from '../../assets/Images/Profile/Menu/Lock.png';
-import Logout from '../../assets/Images/Profile/Menu/Logout.png';
+import Bookmark from '../../assets/Images/Profile/Menu/bookmark.svg';
+import Key from '../../assets/Images/Profile/Menu/key.png';
+import Lock from '../../assets/Images/Profile/Menu/lock.svg';
+import Logout from '../../assets/Images/Profile/Menu/logout.svg';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 import Modal from '../../shared/Modal/Modal.tsx';
@@ -95,7 +95,7 @@ export default function MenuModal({
 					</Cell>
 					{isMyAccountPrivate ? (
 						<Cell onClick={onClickUpdateAccountToOpen}>
-							<Icon src={Logout} alt="계정 공개 여부 설정" />
+							<Icon src={Lock} alt="계정 공개 여부 설정" />
 							<p>계정 공개 전환</p>
 						</Cell>
 					) : (

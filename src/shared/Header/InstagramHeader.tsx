@@ -30,9 +30,17 @@ const InstagramHeaderContainer = styled.div`
 	& img.icon {
 		margin-right: 1rem;
 	}
+
+	& img.hidden {
+		display: none;
+	}
 `;
 
-export default function InstagramHeader() {
+export default function InstagramHeader({
+	isMainPage,
+}: {
+	isMainPage: boolean;
+}) {
 	const navigate = useNavigate();
 
 	return (
@@ -46,7 +54,7 @@ export default function InstagramHeader() {
 			<Icon
 				src={LikeIcon}
 				alt="알림"
-				className="icon"
+				className={isMainPage ? 'icon' : 'hidden'}
 				onClick={() => navigate('/notification')}
 			/>
 		</InstagramHeaderContainer>
