@@ -4,7 +4,7 @@ import { baseURL } from '../constants.ts';
 import {
 	APIErrorResponseType,
 	FollowListResponseType,
-	MiniProfileType,
+	MiniProfileWithIsRequestType,
 	PostType,
 	PreviewType,
 	UserType,
@@ -388,7 +388,7 @@ export const deleteFollower = async (
 export const getFollowerCommon = async (
 	username: string,
 	accessToken: string
-): Promise<FollowListResponseType | null> => {
+): Promise<MiniProfileWithIsRequestType[]> => {
 	try {
 		const response = await axios.get<FollowListResponseType>(
 			`${baseURL}/api/v1/friendship/${username}/follower/common`,
@@ -399,7 +399,7 @@ export const getFollowerCommon = async (
 			}
 		);
 
-		return response.data;
+		return response.data.miniProfiles;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -409,7 +409,7 @@ export const getFollowerCommon = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return [];
 	}
 };
 
@@ -417,7 +417,7 @@ export const getFollowerCommon = async (
 export const getFollowerDiff = async (
 	username: string,
 	accessToken: string
-): Promise<FollowListResponseType | null> => {
+): Promise<MiniProfileWithIsRequestType[]> => {
 	try {
 		const response = await axios.get<FollowListResponseType>(
 			`${baseURL}/api/v1/friendship/${username}/follower/diff`,
@@ -428,7 +428,7 @@ export const getFollowerDiff = async (
 			}
 		);
 
-		return response.data;
+		return response.data.miniProfiles;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
@@ -438,7 +438,7 @@ export const getFollowerDiff = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return [];
 	}
 };
 
@@ -446,7 +446,7 @@ export const getFollowerDiff = async (
 export const getFollowingCommon = async (
 	username: string,
 	accessToken: string
-): Promise<FollowListResponseType | null> => {
+): Promise<MiniProfileWithIsRequestType[]> => {
 	try {
 		const response = await axios.get<FollowListResponseType>(
 			`${baseURL}/api/v1/friendship/${username}/following/common`,
@@ -457,7 +457,7 @@ export const getFollowingCommon = async (
 			}
 		);
 
-		return response.data;
+		return response.data.miniProfiles;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
@@ -466,7 +466,7 @@ export const getFollowingCommon = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return [];
 	}
 };
 
@@ -474,7 +474,7 @@ export const getFollowingCommon = async (
 export const getFollowingDiff = async (
 	username: string,
 	accessToken: string
-): Promise<FollowListResponseType | null> => {
+): Promise<MiniProfileWithIsRequestType[]> => {
 	try {
 		const response = await axios.get<FollowListResponseType>(
 			`${baseURL}/api/v1/friendship/${username}/following/diff`,
@@ -485,7 +485,7 @@ export const getFollowingDiff = async (
 			}
 		);
 
-		return response.data;
+		return response.data.miniProfiles;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
@@ -494,16 +494,43 @@ export const getFollowingDiff = async (
 			alert('Error occurred');
 		}
 
-		return null;
+		return [];
 	}
 };
 
 export const getFollowRequestList = async (
+	accessToken: string
+): Promise<MiniProfileWithIsRequestType[]> => {
+	try {
+		const response = await axios.get<FollowListResponseType>(
+			`${baseURL}/api/v1/friendship/requestlist`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+
+		return response.data.miniProfiles;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return [];
+	}
+};
+
+// 피드 미리보기 가져오기
+export const getFeedPreview = async (
 	username: string,
 	accessToken: string
-): Promise<MiniProfileType[] | null> => {
+): Promise<PreviewType[]> => {
 	try {
-		const response = await axios.get<MiniProfileType[]>(
+		const response = await axios.get<PreviewType[]>(
 			`${baseURL}/api/v1/account/${username}/feed/preview`,
 			{
 				headers: {
@@ -522,6 +549,33 @@ export const getFollowRequestList = async (
 		}
 
 		return [];
+	}
+};
+
+// 유저 피드 가져오기
+export const getUserFeed = async (
+	username: string,
+	accessToken: string
+): Promise<PostType[] | null> => {
+	try {
+		const response = await axios.get<PostResponseType[]>(
+			`${baseURL}/api/v1/account/${username}/feed`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
+		return formatPostReponse(response.data);
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return null;
 	}
 };
 
@@ -548,47 +602,5 @@ export const getSavedFeed = async (
 		}
 
 		return null;
-	}
-};
-
-// 피드 미리보기 가져오기
-export const getFeedPreview = async (
-	username: string,
-	accessToken: string
-): Promise<PreviewType[]> => {
-	try {
-		const response = await axios.get<PreviewType[]>(
-			`${baseURL}/api/v1/account/${username}/feed/preview`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
-
-		return response.data;
-	} catch {
-		return [];
-	}
-};
-
-// 유저 피드 가져오기
-export const getUserFeed = async (
-	username: string,
-	accessToken: string
-): Promise<PostType[]> => {
-	try {
-		const response = await axios.get<PostType[]>(
-			`${baseURL}/api/v1/account/${username}/feed`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
-		);
-
-		return response.data;
-	} catch {
-		return [];
 	}
 };

@@ -121,14 +121,12 @@ export const addTextToRecentSearch = async (
 // 최근 검색 기록에 user 추가
 export const addUserToRecentSearch = async (
 	accessToken: string,
-	userId: number,
 	username: string
 ): Promise<boolean> => {
 	try {
 		await axios.post(
 			`${baseURL}/api/v1/search/recent/user`,
 			{
-				userId: userId,
 				username: username,
 			},
 			{

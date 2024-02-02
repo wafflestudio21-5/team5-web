@@ -9,18 +9,13 @@ import {
 	getFollowingCommon,
 	getFollowingDiff,
 	getUserFollowStatus,
-	getUserFollowMeStatus,
 } from '../../apis/user.ts';
 import MiniProfile from '../../components/MiniProfile.tsx';
 import ToggleBar from '../../components/Profile/ToggleBar.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import BackHeader from '../../shared/BackHeader.tsx';
 import SearchBar from '../../shared/SearchBar.tsx';
-import {
-	MiniProfileType,
-	MiniProfileWithIsRequestType,
-	UserType,
-} from '../../types.ts';
+import { MiniProfileWithIsRequestType, UserType } from '../../types.ts';
 
 const FollowLayout = styled.main`
 	width: 100%;
@@ -64,7 +59,6 @@ export default function Follow() {
 	const [user, setUser] = useState<UserType | null>(null);
 	const [isMyAccount, setIsMyAccount] = useState<boolean | null>(null);
 	const [isFollow, setIsFollow] = useState<boolean | null>(null);
-	const [isMyFollower, setIsMyFollower] = useState<boolean | null>(null);
 
 	// 탭 관리
 	const [activeTab, setActiveTab] = useState<'left' | 'right'>('left');
@@ -75,13 +69,13 @@ export default function Follow() {
 
 	// 팔로워, 팔로잉 목록
 	const [followerCommonList, setFollowerCommonList] = useState<
-		MiniProfileType[]
+		MiniProfileWithIsRequestType[]
 	>([]);
 	const [followerDiffList, setFollowerDiffList] = useState<
 		MiniProfileWithIsRequestType[]
 	>([]);
 	const [followingCommonList, setFollowingCommonList] = useState<
-		MiniProfileType[]
+		MiniProfileWithIsRequestType[]
 	>([]);
 	const [followingDiffList, setFollowingDiffList] = useState<
 		MiniProfileWithIsRequestType[]
@@ -114,15 +108,6 @@ export default function Follow() {
 				if (followStatus) {
 					setIsFollow(true);
 				}
-
-				// 나를 팔로잉 하는지 판단
-				const followerStatus = await getUserFollowMeStatus(
-					userInfo.username,
-					accessToken
-				);
-				if (followerStatus) {
-					setIsMyFollower(true);
-				}
 			}
 		} catch {
 			alert('유저 정보를 가져오는 데 실패했습니다.');
@@ -142,7 +127,7 @@ export default function Follow() {
 				return;
 			}
 
-			setFollowerCommonList(followers.miniProfiles);
+			setFollowerCommonList(followers);
 		} catch {
 			navigate('/');
 		}
@@ -180,7 +165,7 @@ export default function Follow() {
 				return;
 			}
 
-			setFollowingCommonList(followings.miniProfiles);
+			setFollowingCommonList(followings);
 		} catch {
 			navigate('/');
 		}
@@ -199,7 +184,7 @@ export default function Follow() {
 				return;
 			}
 
-			setFollowingDiffList(followings.miniProfiles);
+			setFollowingDiffList(followings);
 		} catch {
 			navigate('/');
 		}
@@ -256,7 +241,7 @@ export default function Follow() {
 							{/* 검색 창*/}
 							<SearchBar
 								text={followerSearch}
-								onChangeSearch={setFollowingSearch}
+								onChangeSearch={setFollowerSearch}
 							/>
 							{/* 유저 본인 */}
 							{isMyAccount ? (

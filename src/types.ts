@@ -61,7 +61,7 @@ export type MiniProfileWithIsRequestType = {
 };
 
 export type FollowListResponseType = {
-	miniProfiles: MiniProfileType[];
+	miniProfiles: MiniProfileWithIsRequestType[];
 };
 
 export type RecentSearchType = {
@@ -146,11 +146,13 @@ export type PreviewType = {
 	id: number;
 	thumbnailUrl: string;
 };
+
 export type PostListProps = {
 	previews: PreviewType[];
 	callbackUrl: string;
 	useHashtag: boolean;
 };
+
 export type CategoryType =
 	| 'GAME'
 	| 'TRAVEL'
