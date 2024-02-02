@@ -127,9 +127,15 @@ const ButtonContainer = styled.div`
 export default function MiniProfile({
 	user,
 	action,
+	handleFollow,
+	handleUnFollow,
+	handleDeleteFollower,
 }: {
 	user: MiniProfileType;
 	action: string;
+	handleFollow?: () => void;
+	handleUnFollow?: () => void;
+	handleDeleteFollower?: () => void;
 }) {
 	const { accessToken, currentUser, setCurrentUser } = useUserContext();
 	const navigate = useNavigate();
@@ -164,21 +170,25 @@ export default function MiniProfile({
 				setButtonLabel('팔로잉');
 				setButtonClass('grey');
 				await followPublicUser(user.username, accessToken);
+				if (handleFollow !== undefined) handleFollow();
 			}
 			// 팔로잉 중이면 언팔
 		} else if (buttonLabel === '팔로잉') {
 			setButtonLabel('팔로우');
 			setButtonClass('blue');
 			await unfollowUser(user.username, accessToken);
+			if (handleUnFollow !== undefined) handleUnFollow();
 			// 팔로우 요청을 보냈으면 취소
 		} else if (buttonLabel === '요청됨') {
 			setButtonLabel('팔로우');
 			setButtonClass('blue');
 			await cancelRequestFollowToPrivateUser(user.username, accessToken);
+			if (handleUnFollow !== undefined) handleUnFollow();
 			// 팔로워 목록에서 삭제
 		} else if (buttonLabel === '삭제') {
 			setIsHidden(true);
 			await deleteFollower(user.username, accessToken);
+			if (handleDeleteFollower !== undefined) handleDeleteFollower();
 		}
 
 		await fetchUserInformation(accessToken, currentUser, setCurrentUser);
