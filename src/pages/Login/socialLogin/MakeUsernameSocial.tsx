@@ -104,6 +104,9 @@ export default function MakeUsernameSocial() {
 			const newRefreshToken = document.cookie.split('; ')[0].split('=')[1];
 			localStorage.setItem('refreshToken', newRefreshToken);
 			localStorage.setItem('username', username);
+			console.log(accessToken);
+			console.log(newRefreshToken);
+			console.log(username);
 			if (newAccessToken) {
 				const currentUserInfo = await getUserInformation(username, accessToken);
 				await setCurrentUser(currentUserInfo);
