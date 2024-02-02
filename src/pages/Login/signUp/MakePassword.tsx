@@ -117,8 +117,8 @@ export default function MakePassword() {
 			</Link>
 			<H2>비밀번호 만들기</H2>
 			<Div className="text">
-				다른 사람이 추측할 수 없는 6자 이상의 문자 또는 숫자로 비밀번호를
-				만드세요.
+				다른 사람이 추측할 수 없는 영어, 숫자, 특수문자를 포함한 8~15 길이의
+				문자열로 비밀번호를 만드세요.
 			</Div>
 			<Div className="inputBox">
 				<Input

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { useAuthContext } from '../../../contexts/AuthContext';
 import { tryFacebookSignup } from '../../../apis/login';
 import { useUserContext } from '../../../contexts/UserContext';
+import { getUserInformation } from '../../../apis/user';
 
 interface InputProps {
 	$isvalid: boolean;
@@ -75,7 +76,7 @@ const Button = styled.button`
 
 export default function MakeUsernameSocial() {
 	const { name, username, setUsername } = useAuthContext();
-	const { setAccessToken } = useUserContext();
+	const { setAccessToken, accessToken, setCurrentUser } = useUserContext();
 	const navigate = useNavigate();
 	const [isValid, setIsValid] = useState(false);
 	const usernameRegex = /^[a-zA-Z0-9_.]{1,30}$/i;
@@ -95,14 +96,27 @@ export default function MakeUsernameSocial() {
 		setIsValid(usernameRegex.test(username));
 	}, [username]);
 
+	useEffect(() => {
+		if (accessToken) {
+			console.log(accessToken);
+			temp();
+		}
+	}, [accessToken]);
+
+	const temp = async () => {
+		const currentUserInfo = await getUserInformation(username, accessToken);
+		await setCurrentUser(currentUserInfo);
+		navigate('/signUp/photo');
+	};
+
 	const handleClick = async () => {
 		if (usernameRegex.test(username)) {
 			setIsValid(true);
 			const newAccessToken = await tryFacebookSignup({ username, birthday });
-			if (newAccessToken) {
-				setAccessToken(newAccessToken);
-				navigate('/signUp/photo');
-			}
+			setAccessToken(newAccessToken);
+			const newRefreshToken = document.cookie.split('; ')[0].split('=')[1];
+			localStorage.setItem('refreshToken', newRefreshToken);
+			localStorage.setItem('username', username);
 		} else {
 			setIsValid(false);
 		}
