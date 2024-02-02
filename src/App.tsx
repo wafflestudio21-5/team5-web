@@ -41,6 +41,8 @@ import Saved from './pages/Profile/Saved.tsx';
 import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
+import MakeUsernameSocial from './pages/Login/socialLogin/MakeUsernameSocial.tsx';
+import AskBirthdaySocial from './pages/Login/socialLogin/AskBirthdaySocial.tsx';
 
 const router = createBrowserRouter([
 	{
@@ -166,7 +168,7 @@ const loginRouter = createBrowserRouter([
 		element: <AskBirthday />,
 	},
 	{
-		path: 'signUp/username/',
+		path: 'signUp/username2/',
 		element: <MakeUsername />,
 	},
 	{
@@ -188,6 +190,14 @@ const loginRouter = createBrowserRouter([
 	{
 		path: 'signUp/photo/',
 		element: <AddPhoto />,
+	},
+	{
+		path: 'signUp/username/',
+		element: <MakeUsernameSocial />,
+	},
+	{
+		path: 'signUp/birthdaySocial/',
+		element: <AskBirthdaySocial />,
 	},
 	{
 		path: '*',

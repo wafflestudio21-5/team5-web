@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { resetAccessToken, tryLogin } from '../../apis/login';
@@ -97,10 +97,29 @@ export default function Login() {
 	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
 	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
+	const location = useLocation();
+	const [result, setResult] = useState<string | null>(null);
+
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
 		else setIsActive(false);
 	}, [usernameInput, passwordInput]);
+
+	useEffect(() => {
+		const queryParams = new URLSearchParams(location.search);
+		setResult(queryParams.get('result'));
+		if (result === 'success') {
+			whenSuccessFacebookLogin();
+			setIsLoggedIn(true);
+		} else if (result === 'fail') {
+			alert('페이스북 로그인에 실패했습니다.');
+		}
+	}, []);
+
+	const whenSuccessFacebookLogin = async () => {
+		const newAccessToken = await resetAccessToken();
+		setAccessToken(newAccessToken);
+	};
 
 	const handleClick = async () => {
 		const accessToken = await tryLogin({
