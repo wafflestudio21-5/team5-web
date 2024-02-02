@@ -137,6 +137,7 @@ export default function Login() {
 		setAccessToken(responseData.accessToken);
 		const username = responseData.username;
 		localStorage.getItem(responseData.username);
+		console.log(responseData.username);
 		const currentUserInfo = await getUserInformation(
 			username,
 			responseData.accessToken
