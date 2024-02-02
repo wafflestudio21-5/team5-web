@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { getFeedData } from '../../apis/post';
 import Feed from '../../components/Feed';
-import Header from '../../components/Post/Header';
 import { useUserContext } from '../../contexts/UserContext';
 import { FeedType } from '../../types';
 
@@ -131,7 +130,6 @@ export default function FeedPage() {
 
 	return (
 		<>
-			<Header />
 			<Layout>
 				<div className="story-post">
 					<Feed posts={feedData.posts} />

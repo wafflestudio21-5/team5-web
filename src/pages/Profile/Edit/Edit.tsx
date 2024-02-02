@@ -1,14 +1,12 @@
-import { ChangeEvent, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import {
-	addProfileImage,
-	fetchUserInformation,
-} from '../../../apis/account.ts';
+import ProfileImageModal from '../../../components/Profile/ProfileImageModal.tsx';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
-import BackHeader from '../../../shared/BackHeader.tsx';
+import BackHeader from '../../../shared/Header/BackHeader.tsx';
 import { getColor } from '../../../styles/Theme.tsx';
+import { modalStateType } from '../../../types.ts';
 
 const EditProfileLayout = styled.main`
 	width: 100%;
@@ -111,9 +109,6 @@ const Cell = styled.div`
 
 export default function Edit() {
 	const {
-		accessToken,
-		currentUser,
-		setCurrentUser,
 		profileImageUrl,
 		name,
 		username,
@@ -125,24 +120,8 @@ export default function Edit() {
 	const navigate = useNavigate();
 
 	// 프로필 이미지 관련
-	const profileImageRef = useRef<HTMLInputElement>(null);
-
-	const onProfileImageClick = () => {
-		if (profileImageRef.current) {
-			profileImageRef.current.click();
-		}
-	};
-
-	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-		if (e.target.files && e.target.files.length > 0) {
-			const file = e.target.files[0];
-			const formData = new FormData();
-			formData.append('file', file);
-
-			await addProfileImage(accessToken, formData);
-			await fetchUserInformation(accessToken, currentUser, setCurrentUser);
-		}
-	};
+	const [profileImageModal, setProfileImageModal] =
+		useState<modalStateType>('closed');
 
 	// 성별 관련
 	const selectedGender = (gender: string, isCustomGender: boolean) => {
@@ -151,28 +130,21 @@ export default function Edit() {
 		}
 
 		switch (gender) {
-			case 'unknown':
-				return '밝히고 싶지 않음';
+			case 'female':
+				return '여성';
 			case 'male':
 				return '남성';
 			default:
-				return '여성';
+				return '밝히고 싶지 않음';
 		}
 	};
 
 	return (
 		<EditProfileLayout>
 			<BackHeader title="프로필 편집" backURL={`/${username}`} />
-			<ProfileImageContainer onClick={onProfileImageClick}>
+			<ProfileImageContainer onClick={() => setProfileImageModal('open')}>
 				<img src={profileImageUrl} alt="프로필 사진" />
 				<p>프로필 사진 변경</p>
-				<input
-					type="file"
-					style={{ display: 'none' }}
-					ref={profileImageRef}
-					accept="image/*"
-					onChange={handleFileChange}
-				/>
 			</ProfileImageContainer>
 			<EditProfileContainer>
 				<Cell onClick={() => navigate('/account/edit/name')}>
@@ -196,6 +168,17 @@ export default function Edit() {
 					<p className="content">{selectedGender(gender, isCustomGender)}</p>
 				</Cell>
 			</EditProfileContainer>
+
+			{/*	프로필 이미지 모달 */}
+			{profileImageModal !== 'closed' && (
+				<ProfileImageModal
+					close={() => {
+						setProfileImageModal('closing');
+						setTimeout(() => setProfileImageModal('closed'), 300);
+					}}
+					isClosing={profileImageModal === 'closing'}
+				/>
+			)}
 		</EditProfileLayout>
 	);
 }

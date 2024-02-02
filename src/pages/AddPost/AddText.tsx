@@ -1,14 +1,15 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import MenuElement from '../../components/AddPost/MenuElement';
-import { usePostContext } from '../../contexts/PostContext';
-import { useUserContext } from '../../contexts/UserContext';
 import { fetchUserInformation } from '../../apis/account';
+import { resetAccessToken } from '../../apis/login.ts';
 import { tryPost } from '../../apis/post';
+import MenuElement from '../../components/AddPost/MenuElement.tsx';
 import PhotoPreviewInorder from '../../components/AddPost/PhotoPreviewInorder';
 import SubjectBar from '../../components/AddPost/SubjectBar';
-import { useState } from 'react';
+import { usePostContext } from '../../contexts/PostContext';
+import { useUserContext } from '../../contexts/UserContext';
 
 const Background = styled.div`
 	background-color: white;

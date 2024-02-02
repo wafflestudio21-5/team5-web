@@ -1,61 +1,106 @@
+import { ChangeEvent, useRef } from 'react';
 import styled from 'styled-components';
 
-const ProfileImageModalBackground = styled.div`
-	//	화면 중앙에 모달 위치시키기
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 999;
-`;
+import {
+	addProfileImage,
+	deleteProfileImage,
+	fetchUserInformation,
+} from '../../apis/account.ts';
+import story from '../../assets/Images/Profile/AddPost/story.png';
+import { useUserContext } from '../../contexts/UserContext.tsx';
+import Icon from '../../shared/Icon.tsx';
+import Modal from '../../shared/Modal/Modal.tsx';
+import { getColor } from '../../styles/Theme.tsx';
 
 const ProfileImageModalContainer = styled.div`
+	height: 20%;
+`;
+
+const CellContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	align-items: flex-start;
+
+	width: 100%;
+	margin-top: 1rem;
+`;
+
+const Cell = styled.div`
+	display: flex;
+	flex-direction: row;
 	align-items: center;
 
-	width: 350px;
-	height: 12%;
+	width: 100%;
 
-	background-color: white;
-	border-radius: 1rem;
+	&:hover {
+		cursor: pointer;
+	}
 
-	& p {
-		display: flex;
-		align-items: center;
-
-		font-size: 1.2rem;
-		width: calc(100% - 1rem); // 1rem은 padding-left
-		height: 50%;
-
-		margin: 0;
-		padding-left: 1rem;
-
-		&:hover {
-			cursor: pointer;
-		}
+	& .delete {
+		color: ${getColor('red')};
 	}
 `;
 
+type Props = {
+	close: () => void;
+	isClosing: boolean;
+	// setProfileImageModalState: (state: modalStateType) => void;
+};
+
 export default function ProfileImageModal({
-	onCloseProfileImageModal,
-}: {
-	onCloseProfileImageModal: () => void;
-}) {
+	close,
+	isClosing,
+	// setProfileImageModalState,
+}: Props) {
+	const { accessToken, currentUser, setCurrentUser } = useUserContext();
+	const profileImageRef = useRef<HTMLInputElement>(null);
+
+	const onClickAddProfileImage = () => {
+		if (profileImageRef.current) {
+			profileImageRef.current.click();
+		}
+	};
+
+	const onClickDeleteProfileImage = async () => {
+		close();
+		await deleteProfileImage(accessToken);
+		await fetchUserInformation(accessToken, currentUser, setCurrentUser);
+	};
+
+	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files.length > 0) {
+			const file = e.target.files[0];
+			const formData = new FormData();
+			formData.append('file', file);
+
+			close();
+			await addProfileImage(accessToken, formData);
+			await fetchUserInformation(accessToken, currentUser, setCurrentUser);
+		}
+	};
+
 	return (
-		<ProfileImageModalBackground onClick={onCloseProfileImageModal}>
-			<ProfileImageModalContainer onClick={(e) => e.stopPropagation()}>
-				<p>프로필 사진 추가</p>
-				<p>스토리에 추가</p>
+		<Modal onBackgroundClick={close} isClosing={isClosing}>
+			<ProfileImageModalContainer>
+				<hr />
+				<CellContainer>
+					<Cell onClick={onClickAddProfileImage}>
+						<Icon src={story} alt="프로필 사진 추가" />
+						<p>새로운 프로필 사진</p>
+						<input
+							type="file"
+							style={{ display: 'none' }}
+							ref={profileImageRef}
+							accept="image/*"
+							onChange={handleFileChange}
+						/>
+					</Cell>
+					<Cell onClick={onClickDeleteProfileImage}>
+						<Icon src={story} alt="현재 사진 삭제" />
+						<p className="delete">현재 사진 삭제</p>
+					</Cell>
+				</CellContainer>
 			</ProfileImageModalContainer>
-		</ProfileImageModalBackground>
+		</Modal>
 	);
 }

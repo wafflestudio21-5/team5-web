@@ -34,14 +34,6 @@ const Input = styled.input`
 	}
 `;
 const Div = styled.div`
-	&.passwordRecovery {
-		display: block;
-		width: 90%;
-		margin: 15px auto;
-		text-align: right;
-		font-size: x-small;
-		color: blue;
-	}
 	&.facebookBox {
 		display: block;
 		width: 190px;

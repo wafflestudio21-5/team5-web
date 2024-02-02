@@ -1,7 +1,11 @@
 import axios, { AxiosError } from 'axios';
 
 import { baseURL } from '../constants.ts';
-import { APIErrorResponseType, MiniProfileType } from '../types.ts';
+import {
+	APIErrorResponseType,
+	MiniProfileType,
+	RecentSearchType,
+} from '../types.ts';
 
 // 유저 5명 검색
 export const getSearchPreview = async (
@@ -117,22 +121,17 @@ export const addTextToRecentSearch = async (
 // 최근 검색 기록에 user 추가
 export const addUserToRecentSearch = async (
 	accessToken: string,
-	userId: number,
-	username: string,
-	name: string
+	username: string
 ): Promise<boolean> => {
 	try {
 		await axios.post(
 			`${baseURL}/api/v1/search/recent/user`,
 			{
-				userId: userId,
 				username: username,
-				name: name,
 			},
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
-					'Content-Type': 'application/json',
 				},
 			}
 		);
@@ -149,13 +148,6 @@ export const addUserToRecentSearch = async (
 
 		return false;
 	}
-};
-
-type RecentSearchType = {
-	searchId: number;
-	isText: boolean;
-	text: string | null;
-	miniProfile: MiniProfileType | null;
 };
 
 // 최근 검색 기록 가져오기
@@ -183,5 +175,56 @@ export const getRecentSearchList = async (
 		}
 
 		return [];
+	}
+};
+
+// 최근 검색 기록 1개 삭제
+export const deleteRecentSearch = async (
+	accessToken: string,
+	searchId: number
+): Promise<boolean> => {
+	try {
+		await axios.delete(`${baseURL}/api/v1/search/recent/${searchId}`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		return true;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return false;
+	}
+};
+
+// 최근 검색 기록 전체 삭제
+export const deleteAllRecentSearch = async (
+	accessToken: string
+): Promise<boolean> => {
+	try {
+		await axios.delete(`${baseURL}/api/v1/search/recent/all`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		return true;
+	} catch (error) {
+		const err = error as AxiosError<APIErrorResponseType>;
+
+		if (err.response && err.response.data) {
+			alert(err.response.data.message);
+		} else {
+			alert('Error occurred');
+		}
+
+		return false;
 	}
 };

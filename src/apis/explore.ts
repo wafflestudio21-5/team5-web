@@ -98,7 +98,7 @@ export const getCompactExplore = async (
 ): Promise<PreviewType[] | null> => {
 	try {
 		const response = await axios.get<CategoryResponseType>(
-			`${baseURL}/api/v1/explore?size=6&category=${category}&page=0`,
+			`${baseURL}/api/v1/explore?size=6&category=${category}&page=1`,
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,

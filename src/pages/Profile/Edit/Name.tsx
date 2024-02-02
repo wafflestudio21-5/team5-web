@@ -6,7 +6,7 @@ import { editName, fetchUserInformation } from '../../../apis/account.ts';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
 import { getColor } from '../../../styles/Theme.tsx';
 
-import EditHeader from './EditHeader.tsx';
+import CancelHeader from '../../../shared/Header/CancelHeader.tsx';
 
 const EditLayout = styled.div`
 	width: 100%;
@@ -66,7 +66,7 @@ export default function Name() {
 
 	return (
 		<EditLayout>
-			<EditHeader title="이름" onClickSave={onSubmit} />
+			<CancelHeader title="이름" onClickSave={onSubmit} />
 			<EditContainer>
 				<p>이름</p>
 				<input

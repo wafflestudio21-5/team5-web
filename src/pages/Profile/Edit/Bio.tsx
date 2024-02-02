@@ -6,7 +6,7 @@ import { editBio, fetchUserInformation } from '../../../apis/account.ts';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
 import { getColor } from '../../../styles/Theme.tsx';
 
-import EditHeader from './EditHeader.tsx';
+import CancelHeader from '../../../shared/Header/CancelHeader.tsx';
 
 const EditLayout = styled.div`
 	width: 100%;
@@ -66,7 +66,7 @@ export default function Bio() {
 
 	return (
 		<EditLayout>
-			<EditHeader title="소개" onClickSave={onSubmit} />
+			<CancelHeader title="소개" onClickSave={onSubmit} />
 			<EditContainer>
 				<input
 					type="text"

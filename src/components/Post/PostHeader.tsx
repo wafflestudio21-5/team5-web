@@ -8,11 +8,12 @@ import UserInfo from './UserInfo';
 
 const Wrapper = styled.div`
 	display: flex;
-	width: 100%;
+	width: 95%;
 	flex-direction: row;
 	justify-content: space-between;
 	padding-bottom: 0.75rem;
-	padding-left: 0.25rem;
+
+	box-sizing: border-box;
 `;
 
 const ExtraButton = styled.button`

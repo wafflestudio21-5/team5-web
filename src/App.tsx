@@ -13,6 +13,7 @@ import EditPost from './pages/EditPost/EditPost.tsx';
 import DetailExplore from './pages/Explore/DetailExplore.tsx';
 import Explore from './pages/Explore/Explore.tsx';
 import ExploreFeed from './pages/Explore/ExploreFeed.tsx';
+import Notification from './pages/Feed/Notification.tsx';
 import Home from './pages/Home.tsx';
 import Login from './pages/Login/Login.tsx';
 import AddPhoto from './pages/Login/signUp/AddPhoto.tsx';
@@ -27,6 +28,7 @@ import MakeUsername from './pages/Login/signUp/MakeUsername.tsx';
 import SignUp from './pages/Login/signUp/SignUp.tsx';
 import AskBirthdaySocial from './pages/Login/socialLogin/AskBirthdaySocial.tsx';
 import MakeUsernameSocial from './pages/Login/socialLogin/MakeUsernameSocial.tsx';
+import ChangePassword from './pages/Profile/ChangePassword.tsx';
 import Bio from './pages/Profile/Edit/Bio.tsx';
 import Edit from './pages/Profile/Edit/Edit.tsx';
 import Gender from './pages/Profile/Edit/Gender.tsx';
@@ -52,6 +54,10 @@ const router = createBrowserRouter([
 			{
 				path: '',
 				element: <Home />,
+			},
+			{
+				path: 'notification/',
+				element: <Notification />,
 			},
 			{
 				path: 'search/',
@@ -128,6 +134,10 @@ const router = createBrowserRouter([
 			{
 				path: 'account/edit/gender/',
 				element: <Gender />,
+			},
+			{
+				path: 'account/changePassword/',
+				element: <ChangePassword />,
 			},
 			{ path: 'post/edit/:id/', element: <EditPost /> },
 			{

@@ -32,12 +32,19 @@ const NavBarLayout = styled.nav`
 	&.hidden {
 		display: none;
 	}
+
+	& .profileImage {
+		width: 1.7rem;
+		height: 1.7rem;
+		border-radius: 50%;
+		border: 1px solid ${getColor('grey')};
+	}
 `;
 
 export default function NavBar() {
 	const navigate = useNavigate();
 	const currentURL = useLocation().pathname;
-	const { username } = useUserContext();
+	const { username, profileImageUrl } = useUserContext();
 
 	const isHidden = currentURL.includes('account');
 
@@ -66,10 +73,10 @@ export default function NavBar() {
 					onClick={() => navigate('/explore')}
 				></Icon>
 				<Icon
-					// src={profileImageUrl}
-					src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/680px-Default_pfp.svg.png?20220226140232"
+					src={profileImageUrl}
 					alt="Profile"
 					onClick={() => navigate(`/${username}`)}
+					className="profileImage"
 				></Icon>
 			</NavBarLayout>
 		</div>

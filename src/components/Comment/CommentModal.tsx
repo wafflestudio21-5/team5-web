@@ -20,11 +20,8 @@ const ModalContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
-	width: 430px;
-	padding-bottom: 0.5rem;
 	background-color: ${getColor('grey')};
-	border-radius: 0.5rem 0.5rem 0 0;
-	height: 70%;
+	height: 75%;
 `;
 
 export default function CommentModal({
@@ -103,6 +100,7 @@ export default function CommentModal({
 			<Modal onBackgroundClick={close} isClosing={isClosing}>
 				<ModalContent>
 					<h3>댓글</h3>
+					<hr />
 					{comments && (
 						<CommentList
 							comments={comments.content}

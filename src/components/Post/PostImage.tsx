@@ -77,7 +77,7 @@ export default function PostImage({ media }: { media: MediaType[] }) {
 						{media.map((m) => {
 							return (
 								<div
-									className={`dot ${m.order === order + 1 ? 'select' : ''}`}
+									className={`dot ${m.order === order ? 'select' : ''}`}
 									key={m.order}
 								></div>
 							);

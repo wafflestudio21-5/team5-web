@@ -26,6 +26,7 @@ export default function UserFeed() {
 		setFeedData([]);
 
 		fetchUserFeed();
+		setIsLoading(false);
 	}, []);
 
 	if (isLoading) return <></>;

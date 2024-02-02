@@ -1,5 +1,4 @@
-/* import { ChangeEvent } from 'react';
- */ import styled from 'styled-components';
+import styled from 'styled-components';
 
 import Search from '../assets/Images/search.png';
 import { getColor } from '../styles/Theme.tsx';
@@ -60,6 +59,7 @@ export default function SearchBar({
 					type="text"
 					id="search"
 					placeholder="검색"
+					autoComplete="off"
 					value={text}
 					onChange={(e) => onChangeSearch(e.target.value)}
 				/>

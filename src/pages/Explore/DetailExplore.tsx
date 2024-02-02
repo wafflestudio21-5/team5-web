@@ -8,7 +8,7 @@ import {
 } from '../../apis/explore';
 import PostList from '../../components/Post/PostList';
 import { useUserContext } from '../../contexts/UserContext';
-import BackHeader from '../../shared/BackHeader';
+import BackHeader from '../../shared/Header/BackHeader.tsx';
 import { ExplorePreviewType } from '../../types';
 
 type FeedFetchStatus = 'pending' | 'complete' | 'fail';

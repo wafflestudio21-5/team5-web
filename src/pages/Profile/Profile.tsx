@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { addProfileImage, fetchUserInformation } from '../../apis/account.ts';
@@ -29,7 +29,7 @@ import ToggleBar from '../../components/Profile/ToggleBar.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 import { getColor } from '../../styles/Theme.tsx';
-import { PreviewType, UserType } from '../../types.ts';
+import { modalStateType, PreviewType, UserType } from '../../types.ts';
 
 const ProfileLayout = styled.main`
 	width: 100%;
@@ -299,10 +299,38 @@ const PostContainer = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-`;
 
-// 모달 상태 관리 타입
-type modalStateType = 'open' | 'closed' | 'closing';
+	& div.noData {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		margin-top: 4rem;
+
+		& h2 {
+			margin: 0.5rem;
+			text-align: center;
+		}
+
+		& p {
+			width: 70%;
+			margin: 0.5rem;
+			font-size: 1rem;
+			color: ${getColor('grey')};
+			text-align: center;
+		}
+
+		& p.addPost {
+			color: ${getColor('blue')};
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+`;
 
 export default function Profile() {
 	// 페이지 로딩
@@ -363,6 +391,9 @@ export default function Profile() {
 			await fetchUserInformation(accessToken, currentUser, setCurrentUser);
 		}
 	};
+
+	// 프로필 공유용 url
+	const currentUrl = useLocation().pathname;
 
 	// 게시물 미리보기
 	const [previews, setPreviews] = useState<PreviewType[]>([]);
@@ -700,7 +731,12 @@ export default function Profile() {
 							<button className="grey" onClick={onClickEditProfile}>
 								프로필 편집
 							</button>
-							<button className="grey">프로필 공유</button>
+							<button
+								className="grey"
+								onClick={() => navigator.clipboard.writeText(currentUrl)}
+							>
+								프로필 공유
+							</button>
 						</>
 					) : (
 						<>
@@ -750,19 +786,58 @@ export default function Profile() {
 
 				{/* 포스트, 태그된 포스트 토글 바*/}
 				<PostContainer>
-					<ToggleBar
-						leftTab={<Icon src={menu} />}
-						rightTab={<Icon src={addPost} />}
-						activeTab={activeTab}
-						setActiveTab={setActiveTab}
-					>
-						<PostList
-							previews={previews}
-							callbackUrl={`/${user.username}/feed`}
-							useHashtag={true}
-						></PostList>
-						<div>태그됨</div>
-					</ToggleBar>
+					{!isMyAccount && !isFollow && user.isPrivate ? (
+						<div className="noData">
+							<h2>비공개 계정입니다</h2>
+							<p>사진과 동영상을 보려면 계정을 팔로우하세요.</p>
+						</div>
+					) : (
+						<ToggleBar
+							leftTab={<Icon src={menu} />}
+							rightTab={<Icon src={addPost} />}
+							activeTab={activeTab}
+							setActiveTab={setActiveTab}
+						>
+							{previews.length > 0 ? (
+								<PostList
+									previews={previews}
+									callbackUrl={`/${user.username}/feed`}
+									useHashtag={true}
+								/>
+							) : (
+								<div className="noData">
+									{isMyAccount ? (
+										<>
+											<h2>친구들과의 소중한 순간을 남겨보세요</h2>
+											<p
+												onClick={() => navigate('/addPost')}
+												className="addPost"
+											>
+												첫 게시물을 만들어보세요
+											</p>
+										</>
+									) : (
+										<h2>게시물 없음</h2>
+									)}
+								</div>
+							)}
+
+							{/* 태그된 게시물은 미구현 */}
+							<div className="noData">
+								{isMyAccount ? (
+									<>
+										<h2>회원님이 나온 사진 및 동영상</h2>
+										<p>
+											사람들이 회원님을 사진 및 동영상에 태그하면 태그된 사진 및
+											동영상이 여기에 표시됩니다.{' '}
+										</p>
+									</>
+								) : (
+									<h2>게시물 없음</h2>
+								)}
+							</div>
+						</ToggleBar>
+					)}
 				</PostContainer>
 
 				{/*	Modals */}

@@ -10,7 +10,6 @@ import {
 } from '../../apis/post.ts';
 import likeIcon from '../../assets/Images/Post/like.svg';
 import likedIcon from '../../assets/Images/Post/liked.svg';
-import DefaultProfileIcon from '../../assets/Images/Profile/default-profile.svg';
 import { useUserContext } from '../../contexts/UserContext';
 import Icon from '../../shared/Icon';
 import { getColor } from '../../styles/Theme';
@@ -164,14 +163,7 @@ export default function Comment({
 					navigate(`/${comment.user.username}`);
 				}}
 			>
-				<img
-					src={
-						comment.user.profileImageUrl !== ''
-							? comment.user.profileImageUrl
-							: DefaultProfileIcon
-					}
-					alt="프로필 이미지"
-				/>
+				<img src={comment.user.profileImageUrl} alt="프로필 이미지" />
 			</Profile>
 			<UsernameContentBox>
 				<span
@@ -240,14 +232,7 @@ export default function Comment({
 										navigate(`/${comment.user.username}`);
 									}}
 								>
-									<img
-										src={
-											reply.user.profileImageUrl !== ''
-												? reply.user.profileImageUrl
-												: DefaultProfileIcon
-										}
-										alt="프로필 이미지"
-									/>
+									<img src={reply.user.profileImageUrl} alt="프로필 이미지" />
 								</Profile>
 								<UsernameContentBox>
 									<span

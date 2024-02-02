@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import { postComment, postReply } from '../../apis/post.ts';
 import CancelIcon from '../../assets/Images/Post/cancel.svg';
-import DefaultProfile from '../../assets/Images/Profile/default-profile.svg';
 import { useUserContext } from '../../contexts/UserContext';
 import { getColor } from '../../styles/Theme';
 import { CommentType, MiniProfileType, PostType } from '../../types';
@@ -159,13 +158,7 @@ export default function CommentInput({
 			)}
 			<CommentInputFeildWrapper>
 				<div className="profile-image-wrapper">
-					<img
-						src={
-							user.profileImageUrl !== ''
-								? user.profileImageUrl
-								: DefaultProfile
-						}
-					/>
+					<img src={user.profileImageUrl} alt="프로필 사진" />
 				</div>
 				<div className="input-btn-wrapper">
 					<div className="input-wrapper">

@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import { getFeedData } from '../apis/post';
 import Feed from '../components/Feed';
-import Header from '../components/Post/Header';
 import { useUserContext } from '../contexts/UserContext';
+import InstagramHeader from '../shared/Header/InstagramHeader.tsx';
 import { FeedType } from '../types';
 
 const HomeLayout = styled.main`
@@ -16,11 +16,6 @@ const HomeLayout = styled.main`
 	margin-top: 1rem;
 	justify-content: center;
 	padding: 0;
-	& .story-post {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-	}
 `;
 
 type FeedFetchStatus = 'pending' | 'complete' | 'fail';
@@ -126,9 +121,9 @@ export default function Home() {
 	});
 	return (
 		<>
-			<Header />
+			<InstagramHeader />
 			<HomeLayout>
-				<div className="story-post">
+				<div>
 					<Feed posts={feedData.posts} />
 				</div>
 				{isEnd && <div>loading</div>}

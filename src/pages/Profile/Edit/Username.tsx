@@ -4,9 +4,8 @@ import styled from 'styled-components';
 
 import { editUsername, fetchUserInformation } from '../../../apis/account.ts';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
+import CancelHeader from '../../../shared/Header/CancelHeader.tsx';
 import { getColor } from '../../../styles/Theme.tsx';
-
-import EditHeader from './EditHeader.tsx';
 
 const EditLayout = styled.div`
 	width: 100%;
@@ -48,8 +47,11 @@ export default function Username() {
 	const { accessToken, setAccessToken, currentUser, setCurrentUser, username } =
 		useUserContext();
 	const [editedUsername, setEditedUsername] = useState(username);
+	const [isValid, setIsValid] = useState(false);
 
 	const navigate = useNavigate();
+
+	const usernameRegex = /^[a-zA-Z0-9_.]{1,30}$/i;
 
 	// 입력창 자동 focus
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -59,7 +61,19 @@ export default function Username() {
 		}
 	}, []);
 
+	useEffect(() => {
+		if (usernameRegex.test(editedUsername)) {
+			setIsValid(true);
+		} else {
+			setIsValid(false);
+		}
+	}, [editedUsername]);
+
 	const onSubmit = async () => {
+		if (!isValid) {
+			return;
+		}
+
 		const newAccessToken = await editUsername(accessToken, editedUsername);
 
 		if (newAccessToken) {
@@ -81,10 +95,7 @@ export default function Username() {
 
 	return (
 		<EditLayout>
-			<EditHeader
-				title="사용자 이름"
-				onClickSave={editedUsername.trim().length === 0 ? () => {} : onSubmit}
-			/>
+			<CancelHeader title="사용자 이름" onClickSave={onSubmit} />
 			<EditContainer>
 				<input
 					type="text"
