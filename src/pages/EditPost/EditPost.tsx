@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -17,12 +17,13 @@ const Container = styled.div`
 
 const TextAreaWrapper = styled.div`
 	width: 100%;
-	flex: 1 1 0;
+	flex-grow: 1;
 	& > textarea {
 		width: 100%;
-		height: 100%;
+		height: auto;
 		resize: none;
 		border: none;
+		box-sizing: border-box;
 	}
 `;
 
@@ -56,6 +57,7 @@ const HeaderContainer = styled.div`
 export default function EditPost() {
 	const [post, setPost] = useState<PostType | null>(null);
 	const [content, setContent] = useState('');
+	const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
 	const { accessToken } = useUserContext();
 
@@ -65,7 +67,7 @@ export default function EditPost() {
 
 	useEffect(() => {
 		const fetchPost = async () => {
-			if (id !== undefined && Number.isInteger(Number(id))) {
+			if (id !== undefined && Number.isInteger(Number(id)) && post === null) {
 				try {
 					const fetchPost = await getPost(Number(id), accessToken);
 					if (!fetchPost) {
@@ -82,6 +84,13 @@ export default function EditPost() {
 
 		fetchPost();
 	}, []);
+
+	useEffect(() => {
+		if (inputRef !== null && inputRef.current) {
+			inputRef.current.style.height = 'auto';
+			inputRef.current.style.height = inputRef.current.scrollHeight + 'px';
+		}
+	});
 
 	return (
 		post && (
@@ -121,6 +130,7 @@ export default function EditPost() {
 							e.currentTarget.style.height =
 								e.currentTarget.scrollHeight + 'px';
 						}}
+						ref={inputRef}
 						autoFocus
 					></textarea>
 				</TextAreaWrapper>
