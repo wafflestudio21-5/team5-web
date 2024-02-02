@@ -136,6 +136,7 @@ export default function Login() {
 		const responseData = await resetAccessToken();
 		setAccessToken(responseData.accessToken);
 		const username = responseData.username;
+		localStorage.getItem(responseData.username);
 		const currentUserInfo = await getUserInformation(
 			username,
 			responseData.accessToken
