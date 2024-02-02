@@ -10,6 +10,8 @@ import {
 	requestFollowToPrivateUser,
 	unfollowUser,
 } from '../../apis/user';
+import DeleteIcon from '../../assets/Images/Post/delete.svg';
+import EditIcon from '../../assets/Images/Post/edit.svg';
 import { useUserContext } from '../../contexts/UserContext';
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
@@ -35,14 +37,24 @@ const ButtonGroup = styled.div`
 	justify-content: center;
 	gap: 0;
 	font-size: 0;
-	& button {
+	& > button {
 		background-color: ${getColor('grey')};
 		border: none;
 		min-height: 2rem;
 		font-size: 0.7rem;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 0.7rem;
 	}
-	& .critical {
+	& > .critical {
 		color: ${getColor('red')};
+	}
+	& > button > img {
+		height: 1rem;
+		width: 1rem;
+		margin: 0;
 	}
 `;
 
@@ -168,6 +180,7 @@ export default function PostMenuModal({
 								navigate(`/post/edit/${post.id}`);
 							}}
 						>
+							<img src={EditIcon} />
 							수정
 						</button>
 					)}
@@ -178,6 +191,7 @@ export default function PostMenuModal({
 							}}
 							className="critical"
 						>
+							<img src={DeleteIcon} />
 							삭제
 						</button>
 					)}
