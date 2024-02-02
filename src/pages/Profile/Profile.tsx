@@ -786,36 +786,58 @@ export default function Profile() {
 
 				{/* 포스트, 태그된 포스트 토글 바*/}
 				<PostContainer>
-					<ToggleBar
-						leftTab={<Icon src={menu} />}
-						rightTab={<Icon src={addPost} />}
-						activeTab={activeTab}
-						setActiveTab={setActiveTab}
-					>
-						{previews.length > 0 ? (
-							<PostList
-								previews={previews}
-								callbackUrl={`/${user.username}/feed`}
-								useHashtag={true}
-							/>
-						) : (
-							<div className="noData">
-								<h2>친구들과의 소중한 순간을 남겨보세요</h2>
-								<p onClick={() => navigate('/addPost')} className="addPost">
-									첫 게시물을 만들어보세요
-								</p>
-							</div>
-						)}
-
-						{/* 태그된 게시물은 미구현 */}
+					{!isMyAccount && !isFollow && user.isPrivate ? (
 						<div className="noData">
-							<h2>회원님이 나온 사진 및 동영상</h2>
-							<p>
-								사람들이 회원님을 사진 및 동영상에 태그하면 태그된 사진 및
-								동영상이 여기에 표시됩니다.
-							</p>
+							<h2>비공개 계정입니다</h2>
+							<p>사진과 동영상을 보려면 계정을 팔로우하세요.</p>
 						</div>
-					</ToggleBar>
+					) : (
+						<ToggleBar
+							leftTab={<Icon src={menu} />}
+							rightTab={<Icon src={addPost} />}
+							activeTab={activeTab}
+							setActiveTab={setActiveTab}
+						>
+							{previews.length > 0 ? (
+								<PostList
+									previews={previews}
+									callbackUrl={`/${user.username}/feed`}
+									useHashtag={true}
+								/>
+							) : (
+								<div className="noData">
+									{isMyAccount ? (
+										<>
+											<h2>친구들과의 소중한 순간을 남겨보세요</h2>
+											<p
+												onClick={() => navigate('/addPost')}
+												className="addPost"
+											>
+												첫 게시물을 만들어보세요
+											</p>
+										</>
+									) : (
+										<h2>게시물 없음</h2>
+									)}
+								</div>
+							)}
+
+							{/* 태그된 게시물은 미구현 */}
+							<div className="noData">
+								{isMyAccount ? (
+									<>
+										<h2>회원님이 나온 사진 및 동영상</h2>
+										<p>
+											사람들이 회원님을 사진 및 동영상에 태그하면 태그된 사진 및
+											동영상이 여기에 표시됩니다.{' '}
+										</p>
+									</>
+								) : (
+									<h2>게시물 없음</h2>
+								)}
+							</div>
+						</ToggleBar>
+					)}
 				</PostContainer>
 
 				{/*	Modals */}
