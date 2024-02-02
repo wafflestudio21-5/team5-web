@@ -73,6 +73,12 @@ const Textarea = styled.textarea`
 	outline: none;
 	font-family: 'Noto Sans KR', sans-serif;
 `;
+const Div = styled.div`
+	width: 90%;
+	margin: 0.3rem 0.5rem 0.5rem;
+	font-size: 0.7rem;
+	color: red;
+`;
 
 export default function AddText() {
 	const navigate = useNavigate();
@@ -82,10 +88,16 @@ export default function AddText() {
 		usePostContext();
 	const { previewUrls } = usePostContext();
 	const [isClicked, setIsClicked] = useState(true);
+	const [noContent, setNoContent] = useState(false);
+
 	const handleClick = async () => {
-		if (category) {
+		if (category === null) setIsClicked(false);
+		if (content.length === 0) setNoContent(true);
+		if (category && content.length > 0) {
 			const addr = `/${username}`;
-			if (files !== null && category !== null) {
+			if (files !== null) {
+				setIsClicked(true);
+				setNoContent(false);
 				const response = await tryPost({
 					content,
 					files,
@@ -128,6 +140,7 @@ export default function AddText() {
 				value={content}
 				onChange={(e) => setContent(e.target.value)}
 			/>
+			{noContent && <Div>문구를 작성해주세요.</Div>}
 			<SubjectBar isClicked={isClicked} />
 			{menuname.map((menu, index) => (
 				<MenuElement

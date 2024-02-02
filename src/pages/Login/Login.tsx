@@ -107,7 +107,6 @@ export default function Login() {
 	const [queryParams, _] = useState(new URLSearchParams(location.search));
 
 	useEffect(() => {
-		console.log('accessToken : ', accessToken);
 		if (accessToken) {
 			getUser();
 		}

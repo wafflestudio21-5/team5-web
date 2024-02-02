@@ -98,7 +98,6 @@ export default function MakeUsernameSocial() {
 
 	useEffect(() => {
 		if (accessToken) {
-			console.log(accessToken);
 			getUser();
 		}
 	}, [accessToken]);

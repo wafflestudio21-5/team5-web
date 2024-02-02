@@ -71,11 +71,11 @@ const ShareButton = styled.button`
 	font-weight: 600;
 `;
 const Div = styled.div`
-	width: 90%;
-	margin-left: 1.5rem;
+	width: 100%;
 	margin-top: 0.5rem;
 	font-size: 0.7rem;
 	color: red;
+	text-align: center;
 `;
 const Text = styled.div`
 	width: 100%;
