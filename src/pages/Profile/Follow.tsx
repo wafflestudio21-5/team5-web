@@ -224,6 +224,24 @@ export default function Follow() {
 		navigate(newPath);
 	};
 
+	const handleFollowingSearch = (username: string, name: string) => {
+		if (followingSearch === '') return true;
+
+		return (
+			username.toLowerCase().includes(followingSearch.toLowerCase()) ||
+			name.toLowerCase().includes(followingSearch.toLowerCase())
+		);
+	};
+
+	const handleFollowerSearch = (username: string, name: string) => {
+		if (followerSearch === '') return true;
+
+		return (
+			username.toLowerCase().includes(followerSearch.toLowerCase()) ||
+			name.toLowerCase().includes(followerSearch.toLowerCase())
+		);
+	};
+
 	if (isLoading) return <></>;
 	return (
 		user && (
@@ -247,26 +265,34 @@ export default function Follow() {
 							{isMyAccount ? (
 								<>
 									{/* 내 팔로워 */}
-									{followerCommonList.map((follower) => (
-										<MiniProfile
-											key={follower.userId}
-											user={follower}
-											action="삭제"
-										/>
-									))}
-									{followerDiffList.map((follower) => (
-										<MiniProfile
-											key={follower.userId}
-											user={follower}
-											action="삭제"
-										/>
-									))}
+									{followerCommonList
+										.filter((list) => {
+											return handleFollowerSearch(list.username, list.name);
+										})
+										.map((follower) => (
+											<MiniProfile
+												key={follower.userId}
+												user={follower}
+												action="삭제"
+											/>
+										))}
+									{followerDiffList
+										.filter((list) => {
+											return handleFollowerSearch(list.username, list.name);
+										})
+										.map((follower) => (
+											<MiniProfile
+												key={follower.userId}
+												user={follower}
+												action="삭제"
+											/>
+										))}
 								</>
 							) : (
 								<>
 									{/* 다른 유저 */}
 									{/* 다른 유저의 팔로워 중 나 */}
-									{isFollow && (
+									{isFollow && handleFollowerSearch(username, name) && (
 										<MiniProfile
 											key={userId}
 											user={{
@@ -279,24 +305,32 @@ export default function Follow() {
 										/>
 									)}
 									{/* 다른 유저의 팔로워 중 내가 팔로잉 하는 사람들 */}
-									{followerCommonList.map((follower) => (
-										<MiniProfile
-											key={follower.userId}
-											user={follower}
-											action="팔로잉"
-										/>
-									))}
+									{followerCommonList
+										.filter((list) => {
+											return handleFollowerSearch(list.username, list.name);
+										})
+										.map((follower) => (
+											<MiniProfile
+												key={follower.userId}
+												user={follower}
+												action="팔로잉"
+											/>
+										))}
 									{/* 다른 유저의 팔로워 중 내가 팔로잉 하지 않는 사람들, 자신은 제외 */}
-									{followerDiffList.map(
-										(follower) =>
-											username !== follower.username && (
-												<MiniProfile
-													key={follower.userId}
-													user={follower}
-													action={follower.isRequest ? '요청됨' : '팔로우'}
-												/>
-											)
-									)}
+									{followerDiffList
+										.filter((list) => {
+											return handleFollowerSearch(list.username, list.name);
+										})
+										.map(
+											(follower) =>
+												username !== follower.username && (
+													<MiniProfile
+														key={follower.userId}
+														user={follower}
+														action={follower.isRequest ? '요청됨' : '팔로우'}
+													/>
+												)
+										)}
 								</>
 							)}
 						</FollowList>
@@ -309,37 +343,47 @@ export default function Follow() {
 								onChangeSearch={setFollowingSearch}
 							/>
 							{/* 유저 본인 */}
-							{!isMyAccount && isFollow && (
-								<MiniProfile
-									key={userId}
-									user={{
-										userId,
-										username,
-										name,
-										profileImageUrl,
-									}}
-									action="hidden"
-								/>
-							)}
+							{!isMyAccount &&
+								isFollow &&
+								handleFollowingSearch(username, name) && (
+									<MiniProfile
+										key={userId}
+										user={{
+											userId,
+											username,
+											name,
+											profileImageUrl,
+										}}
+										action="hidden"
+									/>
+								)}
 							{/* 팔로잉 중 내가 팔로잉 하는 사람들 */}
-							{followingCommonList.map((following) => (
-								<MiniProfile
-									key={following.userId}
-									user={following}
-									action="팔로잉"
-								/>
-							))}
+							{followingCommonList
+								.filter((list) => {
+									return handleFollowingSearch(list.username, list.name);
+								})
+								.map((following) => (
+									<MiniProfile
+										key={following.userId}
+										user={following}
+										action="팔로잉"
+									/>
+								))}
 							{/* 팔로잉 중 내가 팔로잉 하지 않는 사람들, 자신은 제외 */}
-							{followingDiffList.map(
-								(following) =>
-									username !== following.username && (
-										<MiniProfile
-											key={following.userId}
-											user={following}
-											action={following.isRequest ? '요청됨' : '팔로우'}
-										/>
-									)
-							)}
+							{followingDiffList
+								.filter((list) => {
+									return handleFollowingSearch(list.username, list.name);
+								})
+								.map(
+									(following) =>
+										username !== following.username && (
+											<MiniProfile
+												key={following.userId}
+												user={following}
+												action={following.isRequest ? '요청됨' : '팔로우'}
+											/>
+										)
+								)}
 						</FollowList>
 					</ToggleBar>
 				</FollowContainer>
