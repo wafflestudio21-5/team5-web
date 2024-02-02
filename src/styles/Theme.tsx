@@ -11,6 +11,7 @@ const Theme: DefaultTheme = {
 		blue: '#0095f6',
 		darkBlue: '#00376b',
 		red: '#ED4956',
+		pinkRed: '#DB5465',
 	},
 };
 
