@@ -655,11 +655,11 @@ export const deleteReply = async (
 };
 
 export const deletePost = async (
-	postId: number,
+	postId: number | string,
 	accessToken: string
 ): Promise<SuccessFailResponse | null> => {
 	try {
-		await axios.delete(`${baseURL}/api/v1/posts/${postId}}`, {
+		await axios.delete(`${baseURL}/api/v1/posts/${postId}`, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 			},
@@ -681,7 +681,7 @@ export const deletePost = async (
 
 // 게시물 하나 정보 가져오기
 export const getPost = async (
-	postId: number,
+	postId: number | string,
 	accessToken: string
 ): Promise<PostType | null> => {
 	try {
@@ -736,12 +736,11 @@ export const editPost = async (
 ): Promise<SuccessFailResponse | null> => {
 	try {
 		await axios.put(
-			`${baseURL}/api/v1/posts/${postId}}`,
+			`${baseURL}/api/v1/posts/${postId}`,
 			{ content: content },
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
-					'Content-Type': 'appication/json',
 				},
 			}
 		);

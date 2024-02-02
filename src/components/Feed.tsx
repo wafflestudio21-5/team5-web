@@ -51,6 +51,11 @@ export default function Feed({ posts }: { posts: PostType[] }) {
 		const result = await deletePost(postId, accessToken);
 		if (result?.status === 'success') {
 			setDeletedPost([...deletedPost, postId]);
+			setMenuModal('closing');
+			setTimeout(() => {
+				setMenuModal('closed');
+				setMenuPost(null);
+			}, 300);
 		}
 	};
 

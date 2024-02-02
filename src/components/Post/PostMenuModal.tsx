@@ -1,10 +1,18 @@
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import saveIcon from '../../assets/Images/Post/save.svg';
+import {
+	cancelRequestFollowToPrivateUser,
+	followPublicUser,
+	getUserFollowStatus,
+	getUserInformation,
+	requestFollowToPrivateUser,
+	unfollowUser,
+} from '../../apis/user';
+import DeleteIcon from '../../assets/Images/Post/delete.svg';
+import EditIcon from '../../assets/Images/Post/edit.svg';
 import { useUserContext } from '../../contexts/UserContext';
-import Icon from '../../shared/Icon';
 import Modal from '../../shared/Modal/Modal';
 import { getColor } from '../../styles/Theme';
 import { PostType } from '../../types';
@@ -19,14 +27,6 @@ const ModalContent = styled.div`
 	border-radius: 0.5rem 0.5rem 0 0;
 `;
 
-const SaveQRContainer = styled.div`
-	display: flex;
-	flex-direction: row;
-	gap: 1px;
-	width: 100%;
-	flex-grow: 1;
-`;
-
 const ButtonGroup = styled.div`
 	width: 100%;
 	display: flex;
@@ -37,11 +37,24 @@ const ButtonGroup = styled.div`
 	justify-content: center;
 	gap: 0;
 	font-size: 0;
-	& button {
+	& > button {
 		background-color: ${getColor('grey')};
 		border: none;
 		min-height: 2rem;
 		font-size: 0.7rem;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 0.7rem;
+	}
+	& > .critical {
+		color: ${getColor('red')};
+	}
+	& > button > img {
+		height: 1rem;
+		width: 1rem;
+		margin: 0;
 	}
 `;
 
@@ -56,50 +69,118 @@ export default function PostMenuModal({
 	isClosing: boolean;
 	handleDeletePost: (postId: number) => void;
 }) {
-	const { userId } = useUserContext();
+	const { userId, accessToken } = useUserContext();
 
 	const navigate = useNavigate();
+	const [isFollwing, setIsFollwing] = useState(true);
+
+	useEffect(() => {
+		const fetchFollwing = async () => {
+			if (userId !== post?.user.userId && post) {
+				const result = await getUserFollowStatus(
+					post?.user.username,
+					accessToken
+				);
+				setIsFollwing(result);
+			}
+		};
+
+		fetchFollwing();
+	}, []);
+
+	const handleFollow = async () => {
+		if (post) {
+			const userInfo = await getUserInformation(
+				post.user.username,
+				accessToken
+			);
+			if (!userInfo) {
+				return;
+			}
+			if (userInfo.isPrivate) {
+				const result = await requestFollowToPrivateUser(
+					userInfo.username,
+					accessToken
+				);
+				if (result) {
+					setIsFollwing(true);
+				}
+			} else {
+				const result = await followPublicUser(userInfo.username, accessToken);
+				if (result) {
+					setIsFollwing(true);
+				}
+			}
+		}
+	};
+
+	const handleUnfollow = async () => {
+		if (post) {
+			const userInfo = await getUserInformation(
+				post.user.username,
+				accessToken
+			);
+			if (!userInfo) {
+				return;
+			}
+			if (userInfo.isPrivate) {
+				const isFollowing = await getUserFollowStatus(
+					post?.user.username,
+					accessToken
+				);
+				if (isFollowing) {
+					const result = await unfollowUser(userInfo.username, accessToken);
+					if (result) {
+						setIsFollwing(false);
+					}
+				} else {
+					const result = await cancelRequestFollowToPrivateUser(
+						userInfo.username,
+						accessToken
+					);
+					if (result) {
+						setIsFollwing(false);
+					}
+				}
+			} else {
+				const result = await unfollowUser(userInfo.username, accessToken);
+				if (result) {
+					setIsFollwing(false);
+				}
+			}
+		}
+	};
 
 	return (
 		<Modal onBackgroundClick={close} isClosing={isClosing}>
 			<ModalContent>
-				<SaveQRContainer>
+				{post?.user.userId === userId ? (
+					<></>
+				) : (
 					<ButtonGroup>
-						<button
-							onClick={async () => {
-								await axios.post(`/api/v1/posts/${post?.id}/save`);
-							}}
-						>
-							<div>
-								<Icon src={saveIcon} />
-							</div>
-							저장
-						</button>
+						{isFollwing ? (
+							<button onClick={handleUnfollow}>팔로우 취소</button>
+						) : (
+							<button onClick={handleFollow}>팔로우</button>
+						)}
 					</ButtonGroup>
-					<ButtonGroup>
-						<button>
-							<div>
-								<Icon src={saveIcon} />
-							</div>
-							QR
-						</button>
-					</ButtonGroup>
-				</SaveQRContainer>
+				)}
+
 				<ButtonGroup>
-					<button>즐겨찾기에 추가</button>
-					<button>팔로우 취소</button>
-				</ButtonGroup>
-				<ButtonGroup>
-					<button>이 계정 정보</button>
-					<button>이 게시물이 표시되는 이유</button>
-					<button>숨기기</button>
-					<button>신고</button>
+					<button
+						onClick={() => {
+							navigate(`/${post?.user.username}`);
+						}}
+					>
+						이 계정 정보
+					</button>
 					{post?.user.userId === userId && (
 						<button
 							onClick={() => {
 								navigate(`/post/edit/${post.id}`);
 							}}
 						>
+							<img src={EditIcon} />
 							수정
 						</button>
 					)}
@@ -108,7 +189,9 @@ export default function PostMenuModal({
 							onClick={() => {
 								handleDeletePost(post.id);
 							}}
+							className="critical"
 						>
+							<img src={DeleteIcon} />
 							삭제
 						</button>
 					)}
