@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { resetAccessToken, tryLogin } from '../../apis/login';
@@ -101,6 +101,7 @@ export default function Login() {
 	const [isActive, setIsActive] = useState(false);
 	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
 	const location = useLocation();
+	const navigate = useNavigate();
 	const [result, setResult] = useState<string | null>(null);
 	const [queryParams, _] = useState(new URLSearchParams(location.search));
 
@@ -117,6 +118,8 @@ export default function Login() {
 			localStorage.setItem('refreshToken', refreshToken);
 			autoLogin();
 			setIsLoggedIn(true);
+		} else if (result === 'register') {
+			navigate('/signUp/username');
 		} else if (result === 'fail') {
 			alert('페이스북 로그인에 실패했습니다.');
 		} else {
