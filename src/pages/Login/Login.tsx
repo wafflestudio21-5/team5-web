@@ -126,12 +126,15 @@ export default function Login() {
 	}, []);
 
 	const autoLogin = async () => {
+		console.log(accessToken);
 		const newAccessToken = await resetAccessToken();
 		setAccessToken(newAccessToken);
+		console.log('accessToken : ' + accessToken);
+		console.log('newAccessToken : ' + newAccessToken);
 		const username = localStorage.getItem('username');
 		const currentUserInfo = await getUserInformation(
 			username ? username : '',
-			accessToken
+			newAccessToken
 		);
 		setCurrentUser(currentUserInfo);
 	};
