@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { resetAccessToken } from './login';
+import { useUserContext } from '../contexts/UserContext';
 
 export default function TokenRefresher() {
 	console.log('in');
+	const { setAccessToken } = useUserContext();
 
 	useEffect(() => {
 		const interceptor = axios.interceptors.response.use(
@@ -14,7 +16,8 @@ export default function TokenRefresher() {
 				const originConfig = error.config;
 				if (error.response.status === 401) {
 					const responseData = await resetAccessToken();
-					localStorage.setItem('accessToken', responseData.accessToken);
+					const newAccessToken = responseData.accessToken;
+					setAccessToken(newAccessToken);
 					originConfig.headers['Authorization'] =
 						'Bearer ' + responseData.accessToken;
 					return axios(error.config);
