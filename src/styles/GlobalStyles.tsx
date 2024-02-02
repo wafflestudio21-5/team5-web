@@ -13,6 +13,14 @@ const GlobalStyles = createGlobalStyle`
 			
 		box-sizing: border-box;
 		font-family: 'Noto Sans KR', sans-serif;
+
+		-ms-overflow-style: none;
+ 
+ 
+		::-webkit-scrollbar {
+  			display: none;
+
+		}
 	}
 `;
 
