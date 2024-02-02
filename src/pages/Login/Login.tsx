@@ -91,6 +91,9 @@ const StyledLink = styled(Link)`
 	text-decoration: none;
 	color: blue;
 `;
+const A = styled.a`
+	text-decoration: none;
+`;
 
 export default function Login() {
 	const [usernameInput, setUsernameInput] = useState('');
@@ -191,7 +194,7 @@ export default function Login() {
 			<Div className="line">
 				<Span> 또는 </Span>
 			</Div>
-			<a href={`${baseURL}/api/v1/auth/facebook_login`}>
+			<A href={`${baseURL}/api/v1/auth/facebook_login`}>
 				<Div className="facebookBox">
 					{' '}
 					<Img
@@ -201,7 +204,7 @@ export default function Login() {
 					/>
 					<BlueDiv>Facebook으로 로그인</BlueDiv>
 				</Div>
-			</a>
+			</A>
 			<Div className="footer">
 				계정이 없으신가요?
 				<StyledLink to="signUp/">
