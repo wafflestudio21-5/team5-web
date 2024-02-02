@@ -1,15 +1,6 @@
-// import PostList from '../../components/Post/PostList';
-// import feed from '../../test/data/feed.json';
-import styled from 'styled-components';
-
 import Preview from '../../components/Explore/Preview';
 import SubjectBar from '../../components/Explore/SubjectBar';
-
-const Logo = styled.img`
-	width: 8rem;
-	margin-bottom: -1rem;
-	margin-left: 1rem;
-`;
+import InstagramHeader from '../../shared/Header/InstagramHeader.tsx';
 
 export default function Explore() {
 	const subjects = [
@@ -26,17 +17,11 @@ export default function Explore() {
 	];
 	return (
 		<>
-			<Logo
-				src="https://1000logos.net/wp-content/uploads/2017/02/Logo-Instagram.png"
-				alt="로고"
-			/>
+			<InstagramHeader isMainPage={false} />
 			<SubjectBar />
 			{subjects.map((subject) => (
 				<Preview category={subject} />
 			))}
-			<br />
-			<br />
-			<br />
 		</>
 	);
 }

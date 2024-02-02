@@ -12,6 +12,8 @@ import {
 } from '../../apis/user';
 import DeleteIcon from '../../assets/Images/Post/delete.svg';
 import EditIcon from '../../assets/Images/Post/edit.svg';
+import followIcon from '../../assets/Images/Post/follow.svg';
+import userInfoIcon from '../../assets/Images/Post/user-info.svg';
 import { useUserContext } from '../../contexts/UserContext';
 import Icon from '../../shared/Icon.tsx';
 import Modal from '../../shared/Modal/Modal';
@@ -148,12 +150,12 @@ export default function PostMenuModal({
 					{post?.user.userId !== userId &&
 						(isFollowing ? (
 							<Cell onClick={handleUnfollow}>
-								<Icon src={EditIcon} />
+								<Icon src={followIcon} />
 								<p>팔로우 취소</p>
 							</Cell>
 						) : (
 							<Cell onClick={handleFollow}>
-								<Icon src={EditIcon} />
+								<Icon src={followIcon} />
 								<p>팔로우</p>
 							</Cell>
 						))}
@@ -162,7 +164,7 @@ export default function PostMenuModal({
 							navigate(`/${post?.user.username}`);
 						}}
 					>
-						<Icon src={EditIcon} />
+						<Icon src={userInfoIcon} />
 						<p>이 계정 정보</p>
 					</Cell>
 					{post?.user.userId === userId && (

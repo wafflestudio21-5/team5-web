@@ -6,7 +6,8 @@ import {
 	deleteProfileImage,
 	fetchUserInformation,
 } from '../../apis/account.ts';
-import story from '../../assets/Images/Profile/AddPost/story.png';
+import addImageIcon from '../../assets/Images/Profile/Edit/add-image.svg';
+import deleteImageIcon from '../../assets/Images/Profile/Edit/delete-image.svg';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import Icon from '../../shared/Icon.tsx';
 import Modal from '../../shared/Modal/Modal.tsx';
@@ -85,7 +86,7 @@ export default function ProfileImageModal({
 				<hr />
 				<CellContainer>
 					<Cell onClick={onClickAddProfileImage}>
-						<Icon src={story} alt="프로필 사진 추가" />
+						<Icon src={addImageIcon} alt="프로필 사진 추가" />
 						<p>새로운 프로필 사진</p>
 						<input
 							type="file"
@@ -96,7 +97,7 @@ export default function ProfileImageModal({
 						/>
 					</Cell>
 					<Cell onClick={onClickDeleteProfileImage}>
-						<Icon src={story} alt="현재 사진 삭제" />
+						<Icon src={deleteImageIcon} alt="현재 사진 삭제" />
 						<p className="delete">현재 사진 삭제</p>
 					</Cell>
 				</CellContainer>

@@ -21,18 +21,27 @@ const EditHeaderContainer = styled.div`
 
 export default function CancelHeader({
 	title,
-	onClickSave,
+	customURL,
 }: {
 	title: string;
 	onClickSave: () => void;
+	customURL?: string;
 }) {
 	const navigate = useNavigate();
 
+	const handleCancel = () => {
+		if (customURL) {
+			navigate(customURL);
+		} else {
+			navigate(-1);
+		}
+	};
+
 	return (
 		<EditHeaderContainer>
-			<Icon src={editCancel} alt="취소" onClick={() => navigate(-1)} />
+			<Icon src={editCancel} alt="취소" onClick={handleCancel} />
 			<h2>{title}</h2>
-			<Icon src={editSave} alt="저장" onClick={onClickSave} />
+			<Icon src={editSave} alt="저장" />
 		</EditHeaderContainer>
 	);
 }

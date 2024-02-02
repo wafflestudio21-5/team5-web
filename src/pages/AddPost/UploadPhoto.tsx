@@ -1,74 +1,29 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import PhotoPreview from '../../components/AddPost/PhotoPreview';
 import { usePostContext } from '../../contexts/PostContext';
+import CancelHeader from '../../shared/Header/CancelHeader.tsx';
 
 type ButtonType = {
-	$isadd: boolean;
+	$isAdd: boolean;
 	onClick: () => void;
 };
 
 const Background = styled.div`
-	background-color: white;
-	position: fixed;
-	width: 430px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 	height: 100%;
-	z-index: 100;
-`;
-const Header = styled.div`
-	width: 100%;
-	height: 1.5rem;
-	border-bottom: 1px solid gainsboro;
-	padding-bottom: 0.5rem;
-`;
-const Title = styled.div`
-	display: inline-block;
-	text-align: center;
-	width: 84%;
-	font-weight: 600;
-`;
-const Next = styled.button`
-	display: inline-block;
-	width: 10%;
-	text-align: right;
-	color: blue;
-	border: none;
-	background-color: transparent;
-	margin-left: -0.5rem;
-`;
-const Img = styled.img`
-	width: 3%;
-	margin-top: 0.3rem;
-	float: left;
-	margin-left: 0.8rem;
+	z-index: 500;
 `;
 const Plus = styled.img`
 	width: 80%;
 `;
 const Input = styled.input`
 	display: none;
-`;
-const ButtonBackground = styled.div`
-	position: fixed;
-	bottom: 0;
-	border-top: 1px solid gainsboro;
-	width: 430px;
-	background-color: white;
-	height: 5rem;
-`;
-const ShareButton = styled.button`
-	bottom: 1rem;
-	background-color: blue;
-	width: 86%;
-	height: 3rem;
-	margin-top: 1rem;
-	margin-left: 7%;
-	border-radius: 0.5rem;
-	border: none;
-	color: white;
-	font-weight: 600;
 `;
 const Div = styled.div`
 	width: 90%;
@@ -87,14 +42,13 @@ const Button = styled.button<ButtonType>`
 	width: 18%;
 	background-color: white;
 	border: none;
-	margin-left: ${({ $isadd }) => ($isadd ? '41%;' : '80%')};
-	margin-top: ${({ $isadd }) => ($isadd ? '40%;' : '122%')};
+	margin-left: ${({ $isAdd }) => ($isAdd ? '41%;' : '80%')};
+	margin-top: ${({ $isAdd }) => ($isAdd ? '40%;' : '122%')};
 `;
 
 export default function UploadPhoto() {
 	const navigate = useNavigate();
-	const { files, setFiles, resetPost, previewUrls, setPreviewUrls } =
-		usePostContext();
+	const { files, setFiles, previewUrls, setPreviewUrls } = usePostContext();
 	const [isValid, setIsValid] = useState(true);
 
 	const postPhotoRef = useRef<HTMLInputElement>(null);
@@ -135,17 +89,7 @@ export default function UploadPhoto() {
 	};
 	return (
 		<Background>
-			<Header>
-				<Link to="/">
-					<Img
-						src="https://cdn-icons-png.flaticon.com/256/75/75519.png"
-						alt="취소"
-						onClick={resetPost}
-					/>
-				</Link>
-				<Title>새 게시물</Title>
-				<Next onClick={handleClick}>다음</Next>
-			</Header>
+			<CancelHeader title="새 게시물" onClickSave={handleClick} customURL="/" />
 			<Input
 				type="file"
 				ref={postPhotoRef}
@@ -155,7 +99,7 @@ export default function UploadPhoto() {
 			/>
 			<PhotoPreview previewUrls={previewUrls} />
 			{files === null ? (
-				<Button $isadd={files === null} onClick={onPostPhotoClick}>
+				<Button $isAdd={true} onClick={onPostPhotoClick}>
 					<Plus
 						src={'https://cdn-icons-png.flaticon.com/256/107/107075.png'}
 						alt="사진 추가"
@@ -163,7 +107,7 @@ export default function UploadPhoto() {
 					<Text>사진 추가</Text>
 				</Button>
 			) : (
-				<Button $isadd={files === null} onClick={onPostPhotoClick}>
+				<Button $isAdd={false} onClick={onPostPhotoClick}>
 					<Plus
 						src={'https://cdn-icons-png.flaticon.com/256/107/107075.png'}
 						alt="사진 추가"
@@ -171,9 +115,6 @@ export default function UploadPhoto() {
 				</Button>
 			)}
 			{!isValid && <Div>사진을 한 장 이상 추가해주세요.</Div>}
-			<ButtonBackground>
-				<ShareButton onClick={handleClick}>사진 추가</ShareButton>
-			</ButtonBackground>
 		</Background>
 	);
 }

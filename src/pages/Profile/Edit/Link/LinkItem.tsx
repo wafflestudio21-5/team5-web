@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import tempImg from '../../../../assets/Images/search.png';
+import linkIcon from '../../../../assets/Images/Profile/link.svg';
 import { getColor } from '../../../../styles/Theme.tsx';
 
 const LinkItemLayout = styled.div`
@@ -64,18 +64,17 @@ export default function LinkItem({
 		if (isEdit) {
 			navigate(`/account/edit/link/${linkCount}`);
 		} else {
-			window.open(link, '_blank', 'noopener,noreferrer');
+			window.open(`https://${link}`, '_blank', 'noopener, noreferrer');
 		}
 	};
 
 	return (
 		<LinkItemLayout onClick={onClickNavigate}>
-			<img src={tempImg} alt="link icon" />
+			<img src={linkIcon} alt="link icon" />
 			<LinkItemContainer>
 				<p className="title">{linkTitle}</p>
 				<p className="link">{link}</p>
 			</LinkItemContainer>
-			{/*<p>화살표</p>*/}
 		</LinkItemLayout>
 	);
 }

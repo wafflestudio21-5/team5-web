@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { deleteRecentSearch } from '../apis/search.ts';
-import SearchIcon from '../assets/Images/search.png';
+import deleteIcon from '../assets/Images/Search/delete.png';
+import SearchIcon from '../assets/Images/search.svg';
 import { useUserContext } from '../contexts/UserContext.tsx';
 import { getColor } from '../styles/Theme.tsx';
 import { MiniProfileType } from '../types.ts';
@@ -19,7 +20,7 @@ const RecentSearchLayout = styled.div`
 
 	margin-bottom: 1rem;
 
-	& .hidden {
+	&.hidden {
 		display: none;
 	}
 `;
@@ -41,7 +42,7 @@ const ImageContainer = styled.div`
 `;
 
 const UserInfoContainer = styled.div`
-	width: 45%;
+	width: 60%;
 
 	display: flex;
 	flex-direction: column;
@@ -64,7 +65,7 @@ const UserInfoContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-	width: 35%;
+	width: 10%;
 
 	display: flex;
 	flex-direction: row;
@@ -73,16 +74,9 @@ const ButtonContainer = styled.div`
 
 	padding-right: 1.5rem;
 
-	& button {
-		width: 100%;
-		height: 2.3rem;
-
-		font-size: 1rem;
-		font-weight: 600;
-		padding: 0.5rem 1rem;
-
-		border: none;
-		border-radius: 0.5rem;
+	& img {
+		height: 0.6rem;
+		width: 0.6rem;
 
 		&:hover {
 			cursor: pointer;
@@ -92,10 +86,12 @@ const ButtonContainer = styled.div`
 
 export default function RecentSearch({
 	searchId,
+	isText,
 	text,
 	user,
 }: {
 	searchId: number;
+	isText: boolean;
 	text: string | null;
 	user: MiniProfileType | null;
 }) {
@@ -106,7 +102,6 @@ export default function RecentSearch({
 	const onClickCell = async () => {
 		if (user) {
 			navigate(`/${user.username}`);
-		} else {
 		}
 	};
 
@@ -117,28 +112,33 @@ export default function RecentSearch({
 		await deleteRecentSearch(accessToken, searchId);
 	};
 
-	useEffect(() => {}, []);
-
 	return (
 		<RecentSearchLayout
 			onClick={onClickCell}
 			className={isHidden ? 'hidden' : ''}
 		>
 			<ImageContainer>
-				<img src={user ? user.profileImageUrl : SearchIcon} alt="프로필 사진" />
+				<img
+					src={!isText ? user?.profileImageUrl : SearchIcon}
+					alt="프로필 사진"
+				/>
 			</ImageContainer>
 			<UserInfoContainer>
-				{user ? (
+				{!isText ? (
 					<>
-						<p className="username">{user.username}</p>
-						<p className="name">{user.name}</p>
+						<p className="username">{user?.username}</p>
+						<p className="name">{user?.name}</p>
 					</>
 				) : (
 					<p className="username">{text}</p>
 				)}
 			</UserInfoContainer>
 			<ButtonContainer>
-				<button onClick={onClickDeleteButton}>x</button>
+				<img
+					src={deleteIcon}
+					alt="최근 검색 삭제"
+					onClick={onClickDeleteButton}
+				/>
 			</ButtonContainer>
 		</RecentSearchLayout>
 	);

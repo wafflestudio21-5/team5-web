@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import DefaultProfileIcon from '../../assets/Images/Profile/default-profile.svg';
 import { getColor } from '../../styles/Theme';
 import { MiniProfileType } from '../../types';
 
@@ -52,14 +51,7 @@ export default function UserInfo({ user, blockInteraction }: UserInfoProps) {
 						if (!blockInteraction) navigate(`/${user.username}`);
 					}}
 				>
-					<ProfileImage
-						src={
-							user.profileImageUrl !== ''
-								? user.profileImageUrl
-								: DefaultProfileIcon
-						}
-						alt="profile image"
-					/>
+					<ProfileImage src={user.profileImageUrl} alt="profile image" />
 				</ImageBox>
 				<NameBox
 					onClick={() => {

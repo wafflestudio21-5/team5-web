@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import Search from '../assets/Images/search.png';
+import Search from '../assets/Images/Search/search.png';
 import { getColor } from '../styles/Theme.tsx';
 
 const SearchBarLayout = styled.div`

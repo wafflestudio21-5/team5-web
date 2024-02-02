@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import {
+	addTextToRecentSearch,
 	getRecentSearchList,
 	getSearchAll,
 	getSearchPreview,
@@ -146,6 +147,13 @@ export default function Search() {
 		setSearchInput(text);
 	};
 
+	const onClickShowAll = async () => {
+		setSearchPreview([]);
+		setShowAll(true);
+		setStatus('pending');
+		await addTextToRecentSearch(accessToken, searchInput);
+	};
+
 	return (
 		<SearchLayout>
 			<SearchBar text={searchInput} onChangeSearch={handleSearchChange} />
@@ -157,6 +165,7 @@ export default function Search() {
 				recentSearchList.map((data) => (
 					<RecentSearch
 						searchId={data.searchId}
+						isText={data.isText}
 						text={data.text}
 						user={data.miniProfile}
 					/>
@@ -168,18 +177,11 @@ export default function Search() {
 					<MiniProfile key={user.userId} user={user} action="hideButton" />
 				))
 			)}
-			{showAll ? (
-				isEnd && <></>
-			) : (
-				<span
-					onClick={() => {
-						setShowAll(true);
-						setStatus('pending');
-					}}
-				>
-					결과 모두 보기
-				</span>
-			)}
+			{showAll
+				? isEnd && <></>
+				: searchInput.length > 0 && (
+						<span onClick={onClickShowAll}>결과 모두 보기</span>
+					)}
 		</SearchLayout>
 	);
 }

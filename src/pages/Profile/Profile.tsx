@@ -19,7 +19,15 @@ import {
 } from '../../apis/user.ts';
 import addPost from '../../assets/Images/Profile/add-post.png';
 import back from '../../assets/Images/Profile/back.png';
+import linkIcon from '../../assets/Images/Profile/link.svg';
+import lock from '../../assets/Images/Profile/Menu/lock.svg';
 import menu from '../../assets/Images/Profile/menu.png';
+import noDataIcon from '../../assets/Images/Profile/no-data.svg';
+import PostIconGrey from '../../assets/Images/Profile/post-grey.svg';
+import PostIcon from '../../assets/Images/Profile/post.svg';
+import privateIcon from '../../assets/Images/Profile/private.svg';
+import TaggedIconGrey from '../../assets/Images/Profile/tagged-grey.svg';
+import TaggedIcon from '../../assets/Images/Profile/tagged.svg';
 import PostList from '../../components/Post/PostList.tsx';
 import AddPostModal from '../../components/Profile/AddPostModal.tsx';
 import FollowerModal from '../../components/Profile/FollowerModal.tsx';
@@ -69,6 +77,12 @@ const HeaderContainer = styled.div`
 	& div {
 		position: absolute;
 		right: 0;
+	}
+
+	& img.lock {
+		width: 1.2rem;
+		height: 1.2rem;
+		margin-right: 1rem;
 	}
 `;
 
@@ -308,6 +322,17 @@ const PostContainer = styled.div`
 		align-items: center;
 
 		margin-top: 4rem;
+
+		& img {
+			width: 5rem;
+			height: 5rem;
+			margin-bottom: 1rem;
+		}
+
+		& img.private {
+			width: 3.5rem;
+			height: 3.5rem;
+		}
 
 		& h2 {
 			margin: 0.5rem;
@@ -620,7 +645,9 @@ export default function Profile() {
 					{!isMyAccount ? (
 						<Icon src={back} className="back" onClick={() => navigate(-1)} />
 					) : (
-						isMyAccountPrivate && <p>좌물쇠</p>
+						isMyAccountPrivate && (
+							<img src={lock} alt="비공개 계정" className="lock" />
+						)
 					)}
 					<h2>{id}</h2>
 					{isMyAccount ? (
@@ -637,13 +664,15 @@ export default function Profile() {
 							/>
 						</IconContainer>
 					) : (
-						<IconContainer>
-							<Icon
-								src={menu}
-								alt="팔로워 삭제"
-								onClick={() => setFollowerModal('open')}
-							/>
-						</IconContainer>
+						isMyFollower && (
+							<IconContainer>
+								<Icon
+									src={menu}
+									alt="팔로워 삭제"
+									onClick={() => setFollowerModal('open')}
+								/>
+							</IconContainer>
+						)
 					)}
 				</HeaderContainer>
 
@@ -717,6 +746,11 @@ export default function Profile() {
 								setLinkModal('open');
 							}}
 						>
+							<img
+								src={linkIcon}
+								alt="링크"
+								style={{ width: '1.5rem', height: '1.5rem' }}
+							/>
 							<span>{user.userLinks[0].link}</span>
 							<span>외 {user.userLinks.length - 1}개</span>
 						</p>
@@ -788,13 +822,20 @@ export default function Profile() {
 				<PostContainer>
 					{!isMyAccount && !isFollow && user.isPrivate ? (
 						<div className="noData">
+							<img src={privateIcon} alt="비공개 계정" className="private" />
 							<h2>비공개 계정입니다</h2>
 							<p>사진과 동영상을 보려면 계정을 팔로우하세요.</p>
 						</div>
 					) : (
 						<ToggleBar
-							leftTab={<Icon src={menu} />}
-							rightTab={<Icon src={addPost} />}
+							leftTab={
+								<Icon src={activeTab === 'left' ? PostIcon : PostIconGrey} />
+							}
+							rightTab={
+								<Icon
+									src={activeTab === 'right' ? TaggedIcon : TaggedIconGrey}
+								/>
+							}
 							activeTab={activeTab}
 							setActiveTab={setActiveTab}
 						>
@@ -817,7 +858,10 @@ export default function Profile() {
 											</p>
 										</>
 									) : (
-										<h2>게시물 없음</h2>
+										<>
+											<img src={noDataIcon} alt="게시물 없음" />
+											<h2>게시물 없음</h2>
+										</>
 									)}
 								</div>
 							)}
@@ -833,7 +877,10 @@ export default function Profile() {
 										</p>
 									</>
 								) : (
-									<h2>게시물 없음</h2>
+									<>
+										<img src={noDataIcon} alt="게시물 없음" />
+										<h2>게시물 없음</h2>
+									</>
 								)}
 							</div>
 						</ToggleBar>
@@ -866,6 +913,7 @@ export default function Profile() {
 							setTimeout(() => setFollowerModal('closed'), 300);
 						}}
 						isClosing={followerModal === 'closing'}
+						username={user.username}
 					/>
 				)}
 				{linkModal !== 'closed' && (

@@ -8,9 +8,9 @@ const Subject = styled.div`
 	display: inline-block;
 	width: 4rem;
 	height: 1.7rem;
-	padding-top: 0.3rem;
-	margin: 0 0.5rem;
-	background-color: gainsboro;
+	padding-top: 0.5rem;
+	margin: 0 0.3rem;
+	background-color: ${getColor('extraLightGrey')};
 	color: black;
 	border-radius: 1.2rem;
 	text-align: center;
@@ -34,8 +34,6 @@ const ScrollContainer = styled.div`
 `;
 const SubjectBox = styled.div`
 	width: 100%;
-	border-bottom: 1px solid gainsboro;
-	padding-top: 1rem;
 	overflow-x: auto;
 `;
 
