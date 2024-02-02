@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import back from '../assets/Images//Profile/back.png';
-
-import Icon from './Icon.tsx';
+import back from '../../assets/Images/Profile/back.png';
+import Icon from '../Icon.tsx';
 
 const BackHeaderContainer = styled.div`
 	width: 90%;

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { getFollowRequestList } from '../../apis/user.ts';
 import MiniProfile from '../../components/MiniProfile.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
-import BackHeader from '../../shared/BackHeader.tsx';
+import BackHeader from '../../shared/Header/BackHeader.tsx';
 import { MiniProfileType } from '../../types.ts';
 
 const NotificationLayout = styled.main`
@@ -54,7 +54,7 @@ export default function Notification() {
 				{followRequestList &&
 					followRequestList.length > 0 &&
 					followRequestList.map((user) => (
-						<MiniProfile key={user.userId} user={user} action="알림" />
+						<MiniProfile key={user.userId} user={user} action="notification" />
 					))}
 			</NotificationContainer>
 		</NotificationLayout>

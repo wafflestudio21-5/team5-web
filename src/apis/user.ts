@@ -4,6 +4,7 @@ import { baseURL } from '../constants.ts';
 import {
 	APIErrorResponseType,
 	FollowListResponseType,
+	MiniProfileType,
 	MiniProfileWithIsRequestType,
 	PostType,
 	PreviewType,
@@ -500,9 +501,9 @@ export const getFollowingDiff = async (
 
 export const getFollowRequestList = async (
 	accessToken: string
-): Promise<MiniProfileWithIsRequestType[]> => {
+): Promise<MiniProfileType[]> => {
 	try {
-		const response = await axios.get<FollowListResponseType>(
+		const response = await axios.get(
 			`${baseURL}/api/v1/friendship/requestlist`,
 			{
 				headers: {
@@ -511,7 +512,7 @@ export const getFollowRequestList = async (
 			}
 		);
 
-		return response.data.miniProfiles;
+		return response.data;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 		if (err.response && err.response.data) {
@@ -540,14 +541,7 @@ export const getFeedPreview = async (
 		);
 
 		return response.data;
-	} catch (error) {
-		const err = error as AxiosError<APIErrorResponseType>;
-		if (err.response && err.response.data) {
-			alert(err.response.data.message);
-		} else {
-			alert('Error occurred');
-		}
-
+	} catch {
 		return [];
 	}
 };
@@ -567,14 +561,7 @@ export const getSavedPreview = async (
 		);
 
 		return response.data;
-	} catch (error) {
-		const err = error as AxiosError<APIErrorResponseType>;
-		if (err.response && err.response.data) {
-			alert(err.response.data.message);
-		} else {
-			alert('Error occurred');
-		}
-
+	} catch {
 		return [];
 	}
 };

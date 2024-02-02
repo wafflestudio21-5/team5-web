@@ -6,7 +6,7 @@ import { editGender, fetchUserInformation } from '../../../apis/account.ts';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
 import { getColor } from '../../../styles/Theme.tsx';
 
-import EditHeader from './EditHeader.tsx';
+import CancelHeader from '../../../shared/Header/CancelHeader.tsx';
 
 const EditLayout = styled.div`
 	width: 100%;
@@ -127,7 +127,7 @@ export default function Gender() {
 
 	return (
 		<EditLayout>
-			<EditHeader title="성별" onClickSave={onSubmit} />
+			<CancelHeader title="성별" onClickSave={onSubmit} />
 			<EditContainer>
 				<p>공개 프로필에 포함되지 않습니다.</p>
 				<Cell

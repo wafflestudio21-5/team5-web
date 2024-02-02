@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { getColor } from '../../styles/Theme.tsx';
 import { PostType } from '../../types';
 
 import PostHeader from './PostHeader';
@@ -9,9 +10,11 @@ import ReactSection from './ReactSection';
 const Container = styled.article`
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	height: fit-content;
 	width: 100%;
-	border-bottom: 1px solid gray;
+	border-bottom: 1px solid ${getColor('lightGrey')};
 	margin-bottom: 1rem;
 	padding-bottom: 1rem;
 `;

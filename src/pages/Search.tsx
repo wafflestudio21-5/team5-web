@@ -29,22 +29,23 @@ export default function Search() {
 		[]
 	);
 
-	useEffect(() => {
-		const fetchRecentSearchList = async () => {
-			const result = await getRecentSearchList(accessToken);
-			if (result) {
-				setRecentSearchList(result);
-			}
-
-			setIsLoading(false);
-		};
-
-		setIsLoading(true);
-		fetchRecentSearchList();
-	}, []);
-
 	// 검색 결과 관리
 	const [searchPreview, setSearchPreview] = useState<MiniProfileType[]>([]);
+
+	const fetchRecentSearchList = async () => {
+		const result = await getRecentSearchList(accessToken);
+		if (result) {
+			setRecentSearchList(result);
+		}
+	};
+
+	useEffect(() => {
+		setIsLoading(true);
+		setRecentSearchList([]);
+		setSearchPreview([]);
+		fetchRecentSearchList();
+		setIsLoading(true);
+	}, []);
 
 	useEffect(() => {
 		if (debounceTimer) {
@@ -56,7 +57,7 @@ export default function Search() {
 				const previewResults = await getSearchPreview(accessToken, searchInput);
 				setSearchPreview(previewResults);
 			}
-		}, 300); // 500ms delay
+		}, 300);
 
 		setDebounceTimer(timer as unknown as number);
 
@@ -67,7 +68,7 @@ export default function Search() {
 		<SearchLayout>
 			<SearchBar text={searchInput} onChangeSearch={setSearchInput} />
 			{isLoading ? (
-				<p>Loading...</p>
+				<></>
 			) : searchInput === '' ? (
 				recentSearchList &&
 				recentSearchList.length > 0 &&
@@ -82,7 +83,7 @@ export default function Search() {
 				searchPreview &&
 				searchPreview.length > 0 &&
 				searchPreview.map((user) => (
-					<MiniProfile key={user.userId} user={user} action="hideButton" />
+					<MiniProfile key={user.userId} user={user} action="search" />
 				))
 			)}
 			<p>결과 모두 보기</p>

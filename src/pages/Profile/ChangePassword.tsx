@@ -4,9 +4,8 @@ import styled from 'styled-components';
 
 import { changePassword } from '../../apis/account.ts';
 import { useUserContext } from '../../contexts/UserContext.tsx';
+import CancelHeader from '../../shared/Header/CancelHeader.tsx';
 import { getColor } from '../../styles/Theme.tsx';
-
-import EditHeader from './Edit/EditHeader.tsx';
 
 const ChangePasswordLayout = styled.div`
 	width: 100%;
@@ -79,8 +78,7 @@ export default function ChangePassword() {
 
 	return (
 		<ChangePasswordLayout>
-			<EditHeader title="비밀번호 변경" onClickSave={onClickChangePassword} />
-
+			<CancelHeader title="비밀번호 변경" onClickSave={onClickChangePassword} />
 			<ChangePasswordContainer>
 				<div>
 					<label htmlFor="old">기존 비밀번호</label>

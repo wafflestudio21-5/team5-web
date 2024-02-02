@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { getSavedPreview } from '../../apis/user.ts';
 import PostList from '../../components/Post/PostList.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
-import BackHeader from '../../shared/BackHeader.tsx';
+import BackHeader from '../../shared/Header/BackHeader.tsx';
 import { PreviewType } from '../../types.ts';
 
 const SavedLayout = styled.div`

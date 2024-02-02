@@ -17,7 +17,7 @@ import { PostType } from '../../types';
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 100%;
+	width: 95%;
 	height: fit-content;
 `;
 
@@ -51,7 +51,6 @@ const IconBar = styled.div`
 const TextBox = styled.div`
 	white-space: pre-line;
 	line-height: 18px;
-	font-size: 14px;
 	&.margin {
 		margin-top: 0.5rem;
 	}

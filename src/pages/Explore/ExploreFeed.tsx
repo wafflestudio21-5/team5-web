@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { getExploreFeed } from '../../apis/explore';
 import Feed from '../../components/Feed';
 import { useUserContext } from '../../contexts/UserContext';
-import BackHeader from '../../shared/BackHeader';
+import BackHeader from '../../shared/Header/BackHeader.tsx';
 import { FeedType } from '../../types';
 
 type FeedFetchStatus = 'pending' | 'complete' | 'fail';

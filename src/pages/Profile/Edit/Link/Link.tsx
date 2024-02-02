@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import AddLinkIcon from '../../../../assets/Images/Profile/Edit/AddLink.png';
 import { useUserContext } from '../../../../contexts/UserContext.tsx';
-import BackHeader from '../../../../shared/BackHeader.tsx';
+import BackHeader from '../../../../shared/Header/BackHeader.tsx';
 import { getColor } from '../../../../styles/Theme.tsx';
 
 import LinkItem from './LinkItem.tsx';

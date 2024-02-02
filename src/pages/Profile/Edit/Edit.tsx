@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import ProfileImageModal from '../../../components/Profile/ProfileImageModal.tsx';
 import { useUserContext } from '../../../contexts/UserContext.tsx';
-import BackHeader from '../../../shared/BackHeader.tsx';
+import BackHeader from '../../../shared/Header/BackHeader.tsx';
 import { getColor } from '../../../styles/Theme.tsx';
 import { modalStateType } from '../../../types.ts';
 

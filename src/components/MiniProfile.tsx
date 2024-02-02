@@ -29,7 +29,7 @@ const MiniProfileLayout = styled.div`
 
 	margin-bottom: 1rem;
 
-	& .hidden {
+	&.hidden {
 		display: none;
 	}
 `;
@@ -226,22 +226,24 @@ export default function MiniProfile({
 				<p className="username">{user.username}</p>
 				<p className="name">{user.name}</p>
 			</UserInfoContainer>
-			{action !== 'hideButton' && action === '알림' ? (
-				<ButtonContainer>
-					<button onClick={onClickAcceptRequest} className="blue margin">
-						확인
-					</button>
-					<button onClick={onClickRejectRequest} className="grey">
-						삭제
-					</button>
-				</ButtonContainer>
-			) : (
-				<ButtonContainer>
-					<button onClick={onClickButton} className={buttonClass}>
-						{buttonLabel}
-					</button>
-				</ButtonContainer>
-			)}
+			<ButtonContainer>
+				{action !== 'search' &&
+					action !== 'hideButton' &&
+					(action === 'notification' ? (
+						<>
+							<button onClick={onClickAcceptRequest} className="blue margin">
+								확인
+							</button>
+							<button onClick={onClickRejectRequest} className="grey">
+								삭제
+							</button>
+						</>
+					) : (
+						<button onClick={onClickButton} className={buttonClass}>
+							{buttonLabel}
+						</button>
+					))}
+			</ButtonContainer>
 		</MiniProfileLayout>
 	);
 }

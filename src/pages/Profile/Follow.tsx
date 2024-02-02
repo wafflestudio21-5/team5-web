@@ -13,7 +13,7 @@ import {
 import MiniProfile from '../../components/MiniProfile.tsx';
 import ToggleBar from '../../components/Profile/ToggleBar.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
-import BackHeader from '../../shared/BackHeader.tsx';
+import BackHeader from '../../shared/Header/BackHeader.tsx';
 import SearchBar from '../../shared/SearchBar.tsx';
 import { MiniProfileWithIsRequestType, UserType } from '../../types.ts';
 
@@ -275,7 +275,7 @@ export default function Follow() {
 												name,
 												profileImageUrl,
 											}}
-											action="hidden"
+											action="hideButton"
 										/>
 									)}
 									{/* 다른 유저의 팔로워 중 내가 팔로잉 하는 사람들 */}
@@ -318,7 +318,7 @@ export default function Follow() {
 										name,
 										profileImageUrl,
 									}}
-									action="hidden"
+									action="hideButton"
 								/>
 							)}
 							{/* 팔로잉 중 내가 팔로잉 하는 사람들 */}

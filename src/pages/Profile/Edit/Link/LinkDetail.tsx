@@ -10,7 +10,7 @@ import {
 } from '../../../../apis/account.ts';
 import { useUserContext } from '../../../../contexts/UserContext.tsx';
 import { getColor } from '../../../../styles/Theme.tsx';
-import EditHeader from '../EditHeader.tsx';
+import CancelHeader from '../../../../shared/Header/CancelHeader.tsx';
 
 const EditLayout = styled.div`
 	width: 100%;
@@ -119,7 +119,7 @@ export default function LinkDetail() {
 
 	return (
 		<EditLayout>
-			<EditHeader
+			<CancelHeader
 				title={isAdd ? '외부 링크 추가' : '외부 링크 수정'}
 				onClickSave={onSubmit}
 			/>
