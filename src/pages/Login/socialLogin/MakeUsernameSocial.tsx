@@ -81,7 +81,6 @@ export default function MakeUsernameSocial() {
 	const usernameRegex = /^[a-zA-Z0-9_.]{1,30}$/i;
 	const location = useLocation();
 	const birthday = location.state['birthday'];
-	console.log(birthday);
 
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		setUsername(e.target.value);
@@ -98,13 +97,8 @@ export default function MakeUsernameSocial() {
 
 	const handleClick = async () => {
 		if (usernameRegex.test(username)) {
-			console.log('in');
 			setIsValid(true);
-			const year = birthday.getFullYear();
-			const month = String(birthday.getMonth() + 1).padStart(2, '0');
-			const day = String(birthday.getDate()).padStart(2, '0');
-			const formatted = `${year}-${month}-${day}`;
-			const newAccessToken = await tryFacebookSignup({ username, formatted });
+			const newAccessToken = await tryFacebookSignup({ username, birthday });
 			await setAccessToken(newAccessToken);
 			if (newAccessToken) {
 				setAccessToken(newAccessToken);

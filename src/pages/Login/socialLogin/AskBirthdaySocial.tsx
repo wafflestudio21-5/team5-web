@@ -125,7 +125,12 @@ export default function AskBirthdaySocial() {
 	const navigate = useNavigate();
 	const handleClick = () => {
 		if (birthday.getFullYear() < 2022) {
-			navigate('/signUp/username', { state: { birthday: `${birthday}` } });
+			const year = birthday.getFullYear();
+			const month = String(birthday.getMonth() + 1).padStart(2, '0');
+			const day = String(birthday.getDate()).padStart(2, '0');
+			const formatted = `${year}-${month}-${day}`;
+
+			navigate('/signUp/username', { state: { birthday: `${formatted}` } });
 			setIsValid(true);
 		} else setIsValid(false);
 	};

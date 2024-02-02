@@ -18,7 +18,7 @@ type LoginType = {
 
 type FacebookSignupType = {
 	username: string;
-	formatted: string;
+	birthday: string;
 };
 
 export const tryLogin = async ({ username, password }: LoginType) => {
@@ -128,19 +128,19 @@ export const tryFacebookLogin = async () => {
 
 export const tryFacebookSignup = async ({
 	username,
-	formatted,
+	birthday,
 }: FacebookSignupType) => {
 	try {
 		console.log('facebookSignup');
 		const refreshToken = localStorage.getItem('refreshToken');
 		console.log('username : ', username);
-		console.log('birthday : ', formatted);
+		console.log('birthday : ', birthday);
 		console.log('refreshToken : ', refreshToken);
 		const response = await axios.post(
 			`${baseURL}/api/v1/auth/facebook_signup`,
 			{
 				username: username,
-				birthday: formatted,
+				birthday: birthday,
 				refreshToken: refreshToken,
 			}
 		);
