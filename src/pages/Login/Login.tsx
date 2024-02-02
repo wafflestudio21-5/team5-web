@@ -114,10 +114,9 @@ export default function Login() {
 	}, [accessToken]);
 
 	const getUser = async () => {
-		const currentUserInfo = await getUserInformation(
-			usernameInput,
-			accessToken
-		);
+		const username = localStorage.getItem('username');
+		if (username === null) return;
+		const currentUserInfo = await getUserInformation(username, accessToken);
 		await setCurrentUser(currentUserInfo);
 		setIsLoggedIn(true);
 	};
