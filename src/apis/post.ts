@@ -78,7 +78,6 @@ export const tryPost = async ({
 				'Content-Type': 'multipart/form-data',
 			},
 		});
-		console.log(response);
 		return response;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
@@ -96,7 +95,6 @@ export const tryPost = async ({
 						},
 					}
 				);
-				console.log(retryResponse);
 				return retryResponse;
 			} catch (refreshError) {
 				console.error('토큰 재발급 실패 : ', refreshError);

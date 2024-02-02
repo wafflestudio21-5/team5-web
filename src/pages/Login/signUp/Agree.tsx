@@ -138,7 +138,6 @@ export default function Agree() {
 				username: username,
 				password: password,
 			});
-			console.log('로그인 정보 : ', accessToken);
 			if (accessToken !== null) {
 				setAccessToken(accessToken);
 				const currentUserInfo = await getUserInformation(username, accessToken);
