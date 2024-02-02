@@ -131,7 +131,7 @@ export default function AskBirthdaySocial() {
 	};
 	return (
 		<>
-			<Link to="/signUp/save">
+			<Link to="/">
 				<Img
 					className="back"
 					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsl8RBI7W6MLf98a-xSu5HLLUasmcPAkIU1A&usqp=CAU"
@@ -186,16 +186,6 @@ function NoticeModal({ modal, setModal }: Props) {
 		>
 			<Div>
 				<Div className="grayBar"></Div>
-				{/* <Button className="X" onClick={() => {
-					setModal('closing')
-					setTimeout(() => setModal('closed'), 300);
-				}}>
-					<Img
-						className="X"
-						src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAPFBMVEX///8AAABbW1teXl5YWFhPT09UVFRVVVXq6upOTk7BwcGRkZHu7u4dHR3e3t49PT2Xl5fIyMhkZGQKCgpPrCJfAAADp0lEQVR4nO2dCXqjMAyFQ7plsraZ+991SvncCcECA5Ijvbz/ADxsSZYMXjYbQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEkMdz3FUW3B1rqu23zTenQ61W7g6nVnC7r6R3vjSJzyqCn796l3MNva/mhmsFweut4Je93rnp8WouuO0L2lvx0hds3oz13u70LsZ6m31zj60VXwd61sPNdqDYbA3lXurKtQwVm+bDTG1owW/M1H445iTNYvE9q2ab+ndZTSPPybhoi3GdkRc1aaLQQGMv3ZwEWX1HvU8TiZO6Up+DoKs+3GQHmZaDstA9QiA22o4quah5GN6Wwfdopn7RgjWK/asorheLUgzWKfVzZY2yFe0VJsgn4hadWJRj0LrM/0Xu43eFp8sxWMmCLZa9bO0hhcj9vPY15M6zK/CzyD29zpUcxOD0q/xZ8VQnLtph4U52zr8I/f525KIdco8vs6KchCoPMv/RjUVXMZjQLK8eXqrl0et3dzGYkHt+3ot9+LRgi9z3c2pUuYEPjMGERg7T6SYz1juYlqubsTZpuEwTfeQmllhRtqCbBq6zgts00Wd5Aadd+pmxNBYDxGBiWTSti+DKLLFGkBhMzH9dq08hZsytTJzN6EuYV106L9XyzCngbD8rm1Eei4HSRJ/SmbrTGX0JZbYJlib6lMSXi58vy5m2T9gYTEzlOTc/X5YzXquEjsHEWCPCu2iH3ESZUA0cc1TZusGQh5s8rku1PPMcNZiLdsipf0iIRD+kPBbDxWCi1IpBLdhSFoshYzBRMqIGHEVvmY7FsDGYmHLU0C7aMd5EgAaOO2p4F+34K7fw0a+mA7wNx+MwcLJPwI+l8PkQvqaBr0vh5xbw80P4OT78dxr4b23w30vhv3nD/7cYb4TNbpuqwP8/hP8HDP8ff+1aDPexCL+eBn5NFPy6Nq21iW4LOPj1pfN3vgRbI6y7ztth0tBeq++ugFs6bIRJGvB7Zmz2PTmKRau9a25G1LWp230srs9qzveQwu8Dht/LrTVDcLsfH/5MBc2B3uVmS91+d5g0tL+YuZv1w58xBH9OlE1/O4pFq1dx46jwZ+5Z9rSLAg7+7Ev480vhz6CFP0e4zlnQshXNz4LGP88b/0z2eufqSyO29bn6gizO3Qj491vg31GCf8/ME9wVVPu+p2GPml8vB39n1xPcu4Z/d94T3H+4wb/D8gfwe0gJIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCBP4BAyMhUrpvY7EAAAAASUVORK5CYII="
-						alt="X"
-					/>
-				</Button> */}
 				<H2>생일</H2>
 				<Div className="text">
 					생년월일을 입력하면 회원님에게 제공되는 기능 및 광고가 개선되면

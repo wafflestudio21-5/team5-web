@@ -136,6 +136,9 @@ export const tryFacebookSignup = async ({
 		const day = String(birthday.getDate()).padStart(2, '0');
 		const formatted = `${year}-${month}-${day}`;
 		const refreshToken = localStorage.getItem('refreshToken');
+		console.log('username : ', username);
+		console.log('birthday : ', formatted);
+		console.log('refreshToken : ', refreshToken);
 		const response = await axios.post(
 			`${baseURL}/api/v1/auth/facebook_signup`,
 			{
