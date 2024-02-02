@@ -6,12 +6,15 @@ export type PostContextData = {
 	hideComments: boolean;
 	hideLikes: boolean;
 	files: FileList | null;
+	previewUrls: string[];
 	category: CategoryType | null;
 	setHideComments: (b: boolean) => void;
 	setHideLikes: (b: boolean) => void;
 	setFiles: (f: FileList | null) => void;
+	setPreviewUrls: (s: string[]) => void;
 	setContent: (s: string) => void;
 	setCategory: (s: CategoryType | null) => void;
+	resetPost: () => void;
 };
 
 export const PostContext = createContext<PostContextData | null>(null);
@@ -26,6 +29,15 @@ export function PostProvider({ children }: ProviderProps) {
 	const [hideLikes, setHideLikes] = useState(false);
 	const [category, setCategory] = useState<CategoryType | null>(null);
 	const [files, setFiles] = useState<FileList | null>(null);
+	const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+	const resetPost = () => {
+		setContent('');
+		setHideComments(false);
+		setHideLikes(false);
+		setCategory(null);
+		setFiles(null);
+		setPreviewUrls([]);
+	};
 
 	return (
 		<PostContext.Provider
@@ -34,12 +46,15 @@ export function PostProvider({ children }: ProviderProps) {
 				hideComments,
 				hideLikes,
 				files,
+				previewUrls,
 				category,
 				setHideComments,
 				setHideLikes,
 				setFiles,
+				setPreviewUrls,
 				setContent,
 				setCategory,
+				resetPost,
 			}}
 		>
 			{children}

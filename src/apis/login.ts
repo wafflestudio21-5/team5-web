@@ -16,32 +16,38 @@ type LoginType = {
 	password: string;
 };
 
+type FacebookSignupType = {
+	username: string;
+	birthday: Date;
+};
+
 export const tryLogin = async ({ username, password }: LoginType) => {
 	try {
-		const response = await axios.post(
-			`${baseURL}/api/v1/auth/login`,
+		const response = await fetch(
+			'https://api.waffle5gram.com/api/v1/auth/login',
 			{
-				username: username,
-				password: password,
-			},
-			{
+				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
+				credentials: 'include',
+				body: JSON.stringify({
+					username: username,
+					password: password,
+				}),
 			}
 		);
 
-		return response.data.accessToken;
-	} catch (error) {
-		const err = error as AxiosError<APIErrorResponseType>;
-
-		if (err.response && err.response.data) {
-			alert('아이디 또는 비밀번호가 일치하지 않습니다.');
-		} else {
-			alert('Error occurred');
+		if (!response.ok) {
+			console.error('요청이 실패했습니다.');
+			return;
 		}
 
-		return null;
+		const data = await response.json();
+		console.log('데이터:', data);
+		return data['accessToken'];
+	} catch (error) {
+		console.error('오류 발생:', error);
 	}
 };
 
@@ -87,8 +93,10 @@ export const trySignUp = async ({
 
 export const resetAccessToken = async () => {
 	try {
-		const response = await axios.get(`${baseURL}/api/v1/auth/refresh_token`, {
-			withCredentials: true,
+		const refreshToken = localStorage.getItem('refreshToken');
+		console.log('refreshToken : ' + refreshToken);
+		const response = await axios.post(`${baseURL}/api/v1/auth/refresh_token`, {
+			refreshToken: refreshToken,
 		});
 
 		return response.data.accessToken;
@@ -96,7 +104,7 @@ export const resetAccessToken = async () => {
 		const err = error as AxiosError<APIErrorResponseType>;
 
 		if (err.response && err.response.data) {
-			alert(err.response.data.message);
+			alert(err.response);
 		} else {
 			alert('Error occurred');
 		}
@@ -118,4 +126,22 @@ export const tryFacebookLogin = async () => {
 
 		return null;
 	}
+};
+
+export const tryFacebookSignup = async ({
+	username,
+	birthday,
+}: FacebookSignupType) => {
+	try {
+		const refreshToken = localStorage.getItem('refreshToken');
+		const response = await axios.post(
+			`${baseURL}/api/v1/auth/facebook_signup`,
+			{
+				username: username,
+				birthday: birthday,
+				refreshToken: refreshToken,
+			}
+		);
+		return response.data.accessToken;
+	} catch (error) {}
 };

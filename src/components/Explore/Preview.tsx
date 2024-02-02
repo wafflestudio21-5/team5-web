@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { getCompactExplore } from '../../apis/explore';
 import { useUserContext } from '../../contexts/UserContext';
 import { CategoryType, PreviewType } from '../../types';
-import KorToEng from '../CreatePost/KorToEng';
+import KorToEng from '../AddPost/KorToEng';
 import PostList from '../Post/PostList';
 
 const Header = styled.div`

@@ -18,8 +18,8 @@ import MiniProfile from '../../components/MiniProfile.tsx';
 import ToggleBar from '../../components/Profile/ToggleBar.tsx';
 import { useUserContext } from '../../contexts/UserContext.tsx';
 import BackHeader from '../../shared/BackHeader.tsx';
-import SearchBar from '../../shared/SearchBar.tsx';
-import { MiniProfileType, UserType } from '../../types.ts';
+/* import SearchBar from '../../shared/SearchBar.tsx';
+ */ import { MiniProfileType, UserType } from '../../types.ts';
 
 const FollowLayout = styled.main`
 	width: 100%;
@@ -250,7 +250,8 @@ export default function Follow() {
 						{/* 팔로워 */}
 						<FollowList>
 							{/* 검색 창*/}
-							<SearchBar />
+							{/* 							<SearchBar />
+							 */}{' '}
 							{isMyAccount ? (
 								<>
 									{/* 내가 팔로잉 하는 사람들 */}
@@ -327,7 +328,8 @@ export default function Follow() {
 						{/* 팔로잉 */}
 						<FollowList>
 							{/* 검색 창*/}
-							<SearchBar />
+							{/* 							<SearchBar />
+							 */}{' '}
 							{/* 유저 본인 */}
 							{!isMyAccount && isMyFollower && (
 								<MiniProfile

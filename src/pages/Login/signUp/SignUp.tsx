@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useAuthContext } from '../../../contexts/AuthContext';
+
+type InputType = {
+	$isvalid: boolean;
+	type: string;
+	name: string;
+	value: string;
+	placeholder: string;
+	onChange: React.ChangeEventHandler<HTMLInputElement>;
+};
 
 const Img = styled.img`
 	width: 2rem;
@@ -13,14 +22,14 @@ const H2 = styled.h2`
 	width: 90%;
 	margin-left: 1.5rem;
 `;
-const Input = styled.input`
+const Input = styled.input<InputType>`
 	display: block;
 	width: 90%;
 	height: 3rem;
 	margin: 1rem auto;
 	padding-left: 0.5rem;
 	border-radius: 1rem;
-	border: 1px solid gainsboro;
+	border: 1px solid ${({ $isvalid }) => ($isvalid ? 'gainsboro' : 'red')};
 	background-color: whitesmoke;
 	&:focus {
 		outline: none;
@@ -28,8 +37,10 @@ const Input = styled.input`
 `;
 const Div = styled.div`
 	&.notice {
-		width: 94%;
+		color: red;
+		font-size: 0.7rem;
 		margin-left: 1.5rem;
+		margin-top: -0.5rem;
 	}
 	&.text {
 		width: 90%;
@@ -63,8 +74,13 @@ const Button = styled.button`
 export default function SignUp() {
 	const { name, setName } = useAuthContext();
 	const navigate = useNavigate();
+	const [isValid, setIsvalid] = useState(true);
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		setName(e.target.value);
+	};
+	const handleClick = () => {
+		if (name.length <= 30) navigate('password/');
+		else setIsvalid(false);
 	};
 	return (
 		<>
@@ -79,13 +95,17 @@ export default function SignUp() {
 				친구들이 회원님을 찾을 수 있도록 이름을 추가하세요.
 			</Div>
 			<Input
+				$isvalid={isValid}
 				type="text"
 				name="name"
 				value={name}
 				placeholder="성명"
 				onChange={handleChange}
 			/>
-			<Button className="next" onClick={() => navigate('password/')}>
+			{!isValid && (
+				<Div className="notice">30자 이하의 문자열로 작성해주세요.</Div>
+			)}
+			<Button className="next" onClick={handleClick}>
 				다음
 			</Button>
 			<Button className="already" onClick={() => navigate('/')}>

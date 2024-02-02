@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import KorToEng from '../CreatePost/KorToEng';
+import KorToEng from '../AddPost/KorToEng';
 
 const Subject = styled.div`
 	display: inline-block;
@@ -13,6 +13,9 @@ const Subject = styled.div`
 	color: black;
 	border-radius: 1.2rem;
 	text-align: center;
+	&:hover {
+		cursor: pointer;
+	}
 `;
 const ScrollContainer = styled.div`
 	overflow-x: auto;

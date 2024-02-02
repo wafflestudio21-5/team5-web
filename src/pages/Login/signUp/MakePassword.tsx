@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useAuthContext } from '../../../contexts/AuthContext';
 
 interface InputProps {
-	issixormore: boolean;
+	$issixormore: boolean;
 	type: string;
 	value: string;
 	placeholder: string;
@@ -28,7 +28,8 @@ const Input = styled.input<InputProps>`
 	margin-left: -0.3rem;
 	padding-left: 0.5rem;
 	border-radius: 1rem;
-	border: 1px solid ${({ issixormore }) => (issixormore ? 'gainsboro' : 'red')};
+	border: 1px solid
+		${({ $issixormore }) => ($issixormore ? 'gainsboro' : 'red')};
 	background-color: whitesmoke;
 	&:focus {
 		outline: none;
@@ -119,7 +120,7 @@ export default function MakePassword() {
 			</Div>
 			<Div className="inputBox">
 				<Input
-					issixormore={isSixOrMore}
+					$issixormore={isSixOrMore}
 					type={type}
 					id="password"
 					value={password}
