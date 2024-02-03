@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchUserInformation } from '../../apis/account';
@@ -9,8 +9,6 @@ import PhotoPreviewInorder from '../../components/AddPost/PhotoPreviewInorder';
 import SubjectBar from '../../components/AddPost/SubjectBar';
 import { usePostContext } from '../../contexts/PostContext';
 import { useUserContext } from '../../contexts/UserContext';
-import BackHeader from '../../shared/Header/BackHeader.tsx';
-import { getColor } from '../../styles/Theme.tsx';
 
 const Background = styled.div`
 	background-color: white;
@@ -24,6 +22,20 @@ const Background = styled.div`
 	&::-webkit-scrollbar {
 		display: none;
 	}
+`;
+const Header = styled.div`
+	width: 100%;
+	height: 1.5rem;
+	background-color: white;
+	border-bottom: 1px solid gainsboro;
+	padding-bottom: 0.5rem;
+`;
+const Title = styled.div`
+	display: inline-block;
+	text-align: center;
+	width: 81%;
+	font-weight: 600;
+	margin-left: 1rem;
 `;
 const ButtonBackground = styled.div`
 	position: fixed;
@@ -41,7 +53,7 @@ const ButtonBackground = styled.div`
 `;
 const ShareButton = styled.button`
 	bottom: 1rem;
-	background-color: ${getColor('blue')};
+	background-color: blue;
 	width: 86%;
 	height: 3rem;
 	margin-top: 1rem;
@@ -51,13 +63,19 @@ const ShareButton = styled.button`
 	color: white;
 	font-weight: 600;
 `;
+const Prev = styled.img`
+	width: 3%;
+	margin-top: 0.3rem;
+	margin-left: 0.5rem;
+	float: left;
+`;
 const Textarea = styled.textarea`
 	width: 100%;
 	height: 4rem;
 	border: none;
 	margin-top: 1rem;
 	margin-bottom: 0;
-	border-bottom: 1px solid ${getColor('extraLightGrey')};
+	border-bottom: 1px solid gainsboro;
 	resize: none;
 	outline: none;
 	font-family: 'Noto Sans KR', sans-serif;
@@ -74,7 +92,7 @@ export default function AddText() {
 	const handleClick = async () => {
 		if (category) {
 			const addr = `/${username}`;
-			if (files !== null) {
+			if (files !== null && category !== null) {
 				const response = await tryPost({
 					content,
 					files,
@@ -92,7 +110,7 @@ export default function AddText() {
 			setIsClicked(false);
 		}
 	};
-	const menuName = [
+	const menuname = [
 		'사람 태그',
 		'음악 추가',
 		'알림 추가',
@@ -102,7 +120,15 @@ export default function AddText() {
 	];
 	return (
 		<Background>
-			<BackHeader title="새 게시물" backURL={-1} />
+			<Header>
+				<Link to="/addPost">
+					<Prev
+						src="https://cdn-icons-png.flaticon.com/512/271/271220.png"
+						alt="취소"
+					/>
+				</Link>
+				<Title>새 게시물</Title>
+			</Header>
 			<PhotoPreviewInorder previewUrls={previewUrls} />
 			<Textarea
 				placeholder="문구를 작성하거나 설문을 추가하세요..."
@@ -110,7 +136,7 @@ export default function AddText() {
 				onChange={(e) => setContent(e.target.value)}
 			/>
 			<SubjectBar isClicked={isClicked} />
-			{menuName.map((menu, index) => (
+			{menuname.map((menu, index) => (
 				<MenuElement
 					key={index}
 					title={menu}

@@ -1,13 +1,12 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import PhotoPreview from '../../components/AddPost/PhotoPreview';
 import { usePostContext } from '../../contexts/PostContext';
-import CancelHeader from '../../shared/Header/CancelHeader.tsx';
 
 type ButtonType = {
-	$isAdd: boolean;
+	$isadd: boolean;
 	onClick: () => void;
 };
 
@@ -18,6 +17,33 @@ const Background = styled.div`
 	width: 100%;
 	height: 100%;
 	z-index: 100;
+`;
+const Header = styled.div`
+	width: 100%;
+	height: 1.5rem;
+	border-bottom: 1px solid gainsboro;
+	padding-bottom: 0.5rem;
+`;
+const Title = styled.div`
+	display: inline-block;
+	text-align: center;
+	width: 80%;
+	font-weight: 600;
+`;
+const Next = styled.button`
+	display: inline-block;
+	width: 15%;
+	text-align: right;
+	color: blue;
+	border: none;
+	background-color: transparent;
+	margin-left: -0.5rem;
+`;
+const Img = styled.img`
+	width: 3%;
+	margin-top: 0.3rem;
+	float: left;
+	margin-left: 0.8rem;
 `;
 const Plus = styled.img`
 	width: 80%;
@@ -43,13 +69,14 @@ const Button = styled.button<ButtonType>`
 	width: 18%;
 	background-color: white;
 	border: none;
-	margin-left: ${({ $isAdd }) => ($isAdd ? '41%;' : '80%')};
-	margin-top: ${({ $isAdd }) => ($isAdd ? '40%;' : '122%')};
+	margin-left: ${({ $isadd }) => ($isadd ? '41%;' : '80%')};
+	margin-top: ${({ $isadd }) => ($isadd ? '40%;' : '122%')};
 `;
 
 export default function UploadPhoto() {
 	const navigate = useNavigate();
-	const { files, setFiles, previewUrls, setPreviewUrls } = usePostContext();
+	const { files, setFiles, resetPost, previewUrls, setPreviewUrls } =
+		usePostContext();
 	const [isValid, setIsValid] = useState(true);
 
 	const postPhotoRef = useRef<HTMLInputElement>(null);
@@ -90,7 +117,17 @@ export default function UploadPhoto() {
 	};
 	return (
 		<Background>
-			<CancelHeader title="새 게시물" onClickSave={handleClick} customURL="/" />
+			<Header>
+				<Link to="/">
+					<Img
+						src="https://cdn-icons-png.flaticon.com/256/75/75519.png"
+						alt="취소"
+						onClick={resetPost}
+					/>
+				</Link>
+				<Title>새 게시물</Title>
+				<Next onClick={handleClick}>다음</Next>
+			</Header>
 			<Input
 				type="file"
 				ref={postPhotoRef}
@@ -100,7 +137,7 @@ export default function UploadPhoto() {
 			/>
 			<PhotoPreview previewUrls={previewUrls} />
 			{files === null ? (
-				<Button $isAdd={true} onClick={onPostPhotoClick}>
+				<Button $isadd={files === null} onClick={onPostPhotoClick}>
 					<Plus
 						src={'https://cdn-icons-png.flaticon.com/256/107/107075.png'}
 						alt="사진 추가"
@@ -111,6 +148,10 @@ export default function UploadPhoto() {
 				<></>
 			)}
 			{!isValid && <Div>사진을 한 장 이상 추가해주세요.</Div>}
+			{/* 			<ButtonBackground>
+				<ShareButton onClick={handleClick}>사진 추가</ShareButton>
+			</ButtonBackground>
+ */}{' '}
 		</Background>
 	);
 }
