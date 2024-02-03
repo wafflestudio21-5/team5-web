@@ -44,8 +44,8 @@ import UserFeed from './pages/Profile/UserFeed.tsx';
 import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
-import TokenRefresher from './apis/TokenRefresher.tsx';
-
+/* import TokenRefresher from './apis/TokenRefresher.tsx';
+ */
 const router = createBrowserRouter([
 	{
 		path: '/',
