@@ -95,7 +95,6 @@ export default function Login() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [result, setResult] = useState<string | null>(null);
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [queryParams, _] = useState(new URLSearchParams(location.search));
 
 	useEffect(() => {
@@ -123,7 +122,7 @@ export default function Login() {
 				autoLogin();
 			}
 		}
-	}, []);
+	}, [, queryParams, result]);
 
 	const autoLogin = async () => {
 		const responseData = await resetAccessToken();
