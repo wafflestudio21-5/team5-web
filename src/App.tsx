@@ -44,6 +44,7 @@ import UserFeed from './pages/Profile/UserFeed.tsx';
 import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
+import TokenRefresher from './apis/TokenRefresher.tsx';
 
 const router = createBrowserRouter([
 	{
@@ -211,6 +212,7 @@ export default function App() {
 
 	return (
 		<ThemeProvider theme={Theme}>
+			<TokenRefresher />
 			<GlobalStyles />
 			<RouterProvider router={isLoggedIn ? router : loginRouter} />
 		</ThemeProvider>

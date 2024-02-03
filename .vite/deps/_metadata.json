@@ -1,0 +1,61 @@
+{
+	"hash": "f4e9a358",
+	"configHash": "4dedf37b",
+	"lockfileHash": "25a303b3",
+	"browserHash": "bac6ed85",
+	"optimized": {
+		"react/jsx-dev-runtime": {
+			"src": "../../node_modules/react/jsx-dev-runtime.js",
+			"file": "react_jsx-dev-runtime.js",
+			"fileHash": "9d79baed",
+			"needsInterop": true
+		},
+		"react": {
+			"src": "../../node_modules/react/index.js",
+			"file": "react.js",
+			"fileHash": "0498a1ee",
+			"needsInterop": true
+		},
+		"react-dom/client": {
+			"src": "../../node_modules/react-dom/client.js",
+			"file": "react-dom_client.js",
+			"fileHash": "8ded85ea",
+			"needsInterop": true
+		},
+		"react-router-dom": {
+			"src": "../../node_modules/react-router-dom/dist/index.js",
+			"file": "react-router-dom.js",
+			"fileHash": "0a8b2825",
+			"needsInterop": false
+		},
+		"styled-components": {
+			"src": "../../node_modules/styled-components/dist/styled-components.browser.esm.js",
+			"file": "styled-components.js",
+			"fileHash": "fa1803a2",
+			"needsInterop": false
+		},
+		"hangul-romanization": {
+			"src": "../../node_modules/hangul-romanization/dist/index.js",
+			"file": "hangul-romanization.js",
+			"fileHash": "f4017778",
+			"needsInterop": true
+		},
+		"axios": {
+			"src": "../../node_modules/axios/index.js",
+			"file": "axios.js",
+			"fileHash": "edbd2590",
+			"needsInterop": false
+		}
+	},
+	"chunks": {
+		"chunk-PXJLUKTU": {
+			"file": "chunk-PXJLUKTU.js"
+		},
+		"chunk-FQO5W7GE": {
+			"file": "chunk-FQO5W7GE.js"
+		},
+		"chunk-ZS7NZCD4": {
+			"file": "chunk-ZS7NZCD4.js"
+		}
+	}
+}
