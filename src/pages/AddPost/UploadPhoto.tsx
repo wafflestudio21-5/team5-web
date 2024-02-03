@@ -12,6 +12,8 @@ type ButtonType = {
 
 const Background = styled.div`
 	background-color: white;
+	margin: 0;
+	padding: 0;
 	width: 100%;
 	height: 100%;
 	z-index: 100;
@@ -25,12 +27,12 @@ const Header = styled.div`
 const Title = styled.div`
 	display: inline-block;
 	text-align: center;
-	width: 84%;
+	width: 80%;
 	font-weight: 600;
 `;
 const Next = styled.button`
 	display: inline-block;
-	width: 10%;
+	width: 15%;
 	text-align: right;
 	color: blue;
 	border: none;
@@ -49,13 +51,14 @@ const Plus = styled.img`
 const Input = styled.input`
 	display: none;
 `;
-const ButtonBackground = styled.div`
-	position: fixed;
+/* const ButtonBackground = styled.div`
 	bottom: 0;
 	border-top: 1px solid gainsboro;
-	width: 430px;
+	width: 100%;
+	margin-top: 68%;
 	background-color: white;
 	height: 5rem;
+	z-indev: 300;
 `;
 const ShareButton = styled.button`
 	bottom: 1rem;
@@ -68,7 +71,7 @@ const ShareButton = styled.button`
 	border: none;
 	color: white;
 	font-weight: 600;
-`;
+`; */
 const Div = styled.div`
 	width: 90%;
 	margin-left: 1.5rem;
@@ -166,9 +169,10 @@ export default function UploadPhoto() {
 				<></>
 			)}
 			{!isValid && <Div>사진을 한 장 이상 추가해주세요.</Div>}
-			<ButtonBackground>
+			{/* 			<ButtonBackground>
 				<ShareButton onClick={handleClick}>사진 추가</ShareButton>
 			</ButtonBackground>
+ */}{' '}
 		</Background>
 	);
 }
