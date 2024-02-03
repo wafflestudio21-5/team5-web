@@ -144,8 +144,8 @@ export default function Login() {
 			responseData.accessToken
 		);
 		setCurrentUser(currentUserInfo);
-		navigate('/');
 		setIsLoggedIn(true);
+		navigate('/');
 	};
 
 	const handleClick = async () => {
