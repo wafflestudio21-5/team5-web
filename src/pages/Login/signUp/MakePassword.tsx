@@ -120,25 +120,27 @@ export default function MakePassword() {
 				문자열로 비밀번호를 만드세요.
 			</Div>
 			<Div className="inputBox">
-				{isVisible ? (
-					<Input
-						$issixormore={isSixOrMore}
-						type="text"
-						id="password"
-						value={password}
-						placeholder="비밀번호"
-						onChange={handleChange}
-					/>
-				) : (
-					<Input
-						$issixormore={isSixOrMore}
-						type="password"
-						id="password"
-						value={password}
-						placeholder="비밀번호"
-						onChange={handleChange}
-					/>
-				)}
+				<form>
+					{isVisible ? (
+						<Input
+							$issixormore={isSixOrMore}
+							type="text"
+							id="password"
+							value={password}
+							placeholder="비밀번호"
+							onChange={handleChange}
+						/>
+					) : (
+						<Input
+							$issixormore={isSixOrMore}
+							type="password"
+							id="password"
+							value={password}
+							placeholder="비밀번호"
+							onChange={handleChange}
+						/>
+					)}
+				</form>
 				<Button className="password" onClick={() => setIsVisible(!isVisible)}>
 					<Img src={eyeAddr} alt="visible" />
 				</Button>
