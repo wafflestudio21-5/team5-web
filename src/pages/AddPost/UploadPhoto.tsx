@@ -151,7 +151,7 @@ export default function UploadPhoto() {
 			{/* 			<ButtonBackground>
 				<ShareButton onClick={handleClick}>사진 추가</ShareButton>
 			</ButtonBackground>
- */}{' '}
+ */}
 		</Background>
 	);
 }
