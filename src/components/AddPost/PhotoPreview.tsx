@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { usePostContext } from '../../contexts/PostContext';
+import { getColor } from '../../styles/Theme';
+
+type CheckBoxType = {
+	$isselected: boolean;
+	onClick: () => void;
+};
 
 const Container = styled.div`
 	width: 100%;
@@ -12,24 +18,27 @@ const Container = styled.div`
 	}
 `;
 const Photo = styled.img`
-	width: 100%;
+	height: 90%;
 `;
 const ElementBox = styled.div`
 	display: block;
-	width: 60%;
+	height: 10rem;
 	margin: 2rem auto 1rem auto;
 	padding: 0 0.3rem;
 `;
-const CheckBox = styled.div`
+const CheckBox = styled.div<CheckBoxType>`
 	margin-bottom: 0.5rem;
 	padding-bottom: 0.7rem;
 	text-align: center;
 	width: 1.5rem;
 	height: 0.8rem;
-	border: 1px solid black;
+	border: 1px solid
+		${({ $isselected }) => ($isselected ? getColor('blue') : getColor('grey'))};
 	border-radius: 50%;
-	background-color: white;
-	color: black;
+	background-color: ${({ $isselected }) =>
+		$isselected ? getColor('blue') : getColor('white')};
+	color: white;
+	font-weight: 600;
 `;
 
 type PhotoPreviewType = {
@@ -56,7 +65,10 @@ export default function PhotoPreview({ previewUrls }: PhotoPreviewType) {
 		<Container>
 			{previewUrls.map((url, index) => (
 				<ElementBox>
-					<CheckBox onClick={() => handleClick(index)}>
+					<CheckBox
+						$isselected={fileNum[index] > 0}
+						onClick={() => handleClick(index)}
+					>
 						{fileNum[index]}
 					</CheckBox>
 					<Photo
