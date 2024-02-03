@@ -480,7 +480,6 @@ export default function Profile() {
 				accessToken
 			);
 			if (followStatus) {
-				console.log('팔로잉 중');
 				setIsFollow(true);
 			}
 
