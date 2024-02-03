@@ -13,6 +13,7 @@ import { useUserContext } from '../../contexts/UserContext';
 
 const Background = styled.div`
 	background-color: white;
+	min-height: 100vh;
 	margin: 0;
 	padding: 0;
 	width: 100%;
@@ -41,10 +42,15 @@ const ButtonBackground = styled.div`
 	position: fixed;
 	bottom: 0;
 	border-top: 1px solid gainsboro;
-	width: 430px;
+	max-width: 430px;
+	width: 100%;
 	background-color: white;
 	height: 5rem;
 	z-index: 100;
+	@media (max-width: 430px) {
+		width: 100%;
+		max-width: none;
+	}
 `;
 const ShareButton = styled.button`
 	bottom: 1rem;
