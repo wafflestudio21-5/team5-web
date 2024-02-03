@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
+import TokenRefresher from './apis/TokenRefresher.tsx';
 import NavBar from './components/NavBar.tsx';
 import { useUserContext } from './contexts/UserContext.tsx';
 import AddText from './pages/AddPost/AddText.tsx';
@@ -44,7 +45,6 @@ import UserFeed from './pages/Profile/UserFeed.tsx';
 import Search from './pages/Search.tsx';
 import GlobalStyles from './styles/GlobalStyles.tsx';
 import Theme from './styles/Theme.tsx';
-import TokenRefresher from './apis/TokenRefresher.tsx';
 
 const router = createBrowserRouter([
 	{
