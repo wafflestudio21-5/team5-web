@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { usePostContext } from '../../contexts/PostContext';
-
+import { getColor } from '../../styles/Theme';
 import KorToEng from './KorToEng';
 
 type DivType = {
@@ -16,8 +16,10 @@ const Subject = styled.div<DivType>`
 	height: 1.7rem;
 	padding-top: 0.3rem;
 	margin: 0 0.5rem;
-	background-color: ${({ $isclicked }) => ($isclicked ? 'black' : 'gainsboro')};
-	color: ${({ $isclicked }) => ($isclicked ? 'white' : 'black')};
+	background-color: ${({ $isclicked }) =>
+		$isclicked ? getColor('black') : getColor('extraLightGrey')};
+	color: ${({ $isclicked }) =>
+		$isclicked ? getColor('white') : getColor('black')};
 	border-radius: 1.2rem;
 	text-align: center;
 	&:hover {
@@ -35,7 +37,7 @@ const ScrollContainer = styled.div`
 `;
 const SubjectBox = styled.div`
 	width: 100%;
-	border-bottom: 1px solid gainsboro;
+	border-bottom: 1px solid ${getColor('extraLightGrey')};
 	padding-top: 1rem;
 	overflow-x: auto;
 `;
@@ -43,7 +45,7 @@ const Div = styled.div`
 	width: 90%;
 	margin: 0.5rem 0.5rem 0.5rem;
 	font-size: 0.7rem;
-	color: red;
+	color: ${getColor('red')};
 `;
 
 type SubjectBarType = {

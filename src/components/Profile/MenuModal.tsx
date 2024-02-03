@@ -57,6 +57,7 @@ export default function MenuModal({
 		setCurrentUser,
 		username,
 		isMyAccountPrivate,
+		logout,
 	} = useUserContext();
 
 	const onClickUpdateAccountToOpen = async () => {
@@ -78,6 +79,7 @@ export default function MenuModal({
 	};
 
 	const onClickLogout = () => {
+		logout();
 		navigate('/');
 	};
 

@@ -12,12 +12,12 @@ type ButtonType = {
 };
 
 const Background = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+	background-color: white;
+	margin: 0;
+	padding: 0;
+	width: 100%;
 	height: 100%;
-	z-index: 500;
+	z-index: 100;
 `;
 const Plus = styled.img`
 	width: 80%;
@@ -31,6 +31,7 @@ const Div = styled.div`
 	margin-top: 0.5rem;
 	font-size: 0.7rem;
 	color: red;
+	text-align: center;
 `;
 const Text = styled.div`
 	width: 100%;
@@ -107,12 +108,7 @@ export default function UploadPhoto() {
 					<Text>사진 추가</Text>
 				</Button>
 			) : (
-				<Button $isAdd={false} onClick={onPostPhotoClick}>
-					<Plus
-						src={'https://cdn-icons-png.flaticon.com/256/107/107075.png'}
-						alt="사진 추가"
-					/>
-				</Button>
+				<></>
 			)}
 			{!isValid && <Div>사진을 한 장 이상 추가해주세요.</Div>}
 		</Background>

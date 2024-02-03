@@ -95,7 +95,6 @@ export default function MakePassword() {
 	const eyeAddr = isVisible
 		? 'https://freeiconshop.com/wp-content/uploads/edd/eye-outline.png'
 		: 'https://cdn.iconscout.com/icon/free/png-256/free-eye-slash-3604201-3003511.png';
-	const type = isVisible ? 'text' : 'password';
 	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		setPassword(e.target.value);
 	};
@@ -121,14 +120,27 @@ export default function MakePassword() {
 				문자열로 비밀번호를 만드세요.
 			</Div>
 			<Div className="inputBox">
-				<Input
-					$issixormore={isSixOrMore}
-					type={type}
-					id="password"
-					value={password}
-					placeholder="비밀번호"
-					onChange={handleChange}
-				/>
+				<form>
+					{isVisible ? (
+						<Input
+							$issixormore={isSixOrMore}
+							type="text"
+							id="password"
+							value={password}
+							placeholder="비밀번호"
+							onChange={handleChange}
+						/>
+					) : (
+						<Input
+							$issixormore={isSixOrMore}
+							type="password"
+							id="password"
+							value={password}
+							placeholder="비밀번호"
+							onChange={handleChange}
+						/>
+					)}
+				</form>
 				<Button className="password" onClick={() => setIsVisible(!isVisible)}>
 					<Img src={eyeAddr} alt="visible" />
 				</Button>

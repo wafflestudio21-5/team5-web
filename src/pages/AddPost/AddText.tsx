@@ -14,8 +14,11 @@ import { getColor } from '../../styles/Theme.tsx';
 
 const Background = styled.div`
 	background-color: white;
-	position: fixed;
-	height: 87%;
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
 	overflow-y: scroll;
 	z-index: 100;
 	&::-webkit-scrollbar {
@@ -25,9 +28,16 @@ const Background = styled.div`
 const ButtonBackground = styled.div`
 	position: fixed;
 	bottom: 0;
-	border-top: 1px solid ${getColor('extraLightGrey')};
+	border-top: 1px solid gainsboro;
+	max-width: 430px;
+	width: 100%;
 	background-color: white;
 	height: 5rem;
+	z-index: 100;
+	@media (max-width: 430px) {
+		width: 100%;
+		max-width: none;
+	}
 `;
 const ShareButton = styled.button`
 	bottom: 1rem;
@@ -107,6 +117,10 @@ export default function AddText() {
 					icon="https://mblogthumb-phinf.pstatic.net/MjAxOTAzMTlfMzkg/MDAxNTUzMDAxODEwMzk5.8pXP3XjvzjUzNV86zV796kuswjQOSkKw9L1jLCb9a7og.2HnP8pqAH9bkFMFsWTUV_B69LEoey1624U2_1BGynaYg.PNG.urbanstars/glyph-logo_May2016.png?type=w800"
 				/>
 			))}
+			<br />
+			<br />
+			<br />
+			<br />
 			<ButtonBackground>
 				<ShareButton onClick={handleClick}>공유</ShareButton>
 			</ButtonBackground>

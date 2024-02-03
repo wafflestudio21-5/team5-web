@@ -96,6 +96,7 @@ export default function Login() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [result, setResult] = useState<string | null>(null);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [queryParams, _] = useState(new URLSearchParams(location.search));
 
 	useEffect(() => {
@@ -123,11 +124,10 @@ export default function Login() {
 				autoLogin();
 			}
 		}
-	}, [, queryParams, result]);
+	}, []);
 
 	const autoLogin = async () => {
 		const responseData = await resetAccessToken();
-		console.log(accessToken);
 		await setAccessToken(responseData.accessToken);
 		const username = responseData.username;
 		localStorage.setItem('username', responseData.username);
@@ -136,6 +136,7 @@ export default function Login() {
 			responseData.accessToken
 		);
 		setCurrentUser(currentUserInfo);
+		navigate('/');
 		setIsLoggedIn(true);
 	};
 
@@ -178,14 +179,16 @@ export default function Login() {
 				autoComplete="off"
 				onChange={(e) => setUsernameInput(e.target.value)}
 			/>
-			<Input
-				type="password"
-				name="password"
-				value={passwordInput}
-				placeholder="비밀번호"
-				autoComplete="off"
-				onChange={(e) => setPasswordInput(e.target.value)}
-			/>
+			<form>
+				<Input
+					type="password"
+					name="password"
+					value={passwordInput}
+					placeholder="비밀번호"
+					autoComplete="off"
+					onChange={(e) => setPasswordInput(e.target.value)}
+				/>
+			</form>
 			<br />
 			<Button disabled={!isActive} onClick={handleClick}>
 				로그인

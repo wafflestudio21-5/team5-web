@@ -17,6 +17,8 @@ type UserContextType = {
 	currentUser: UserType;
 	setCurrentUser: (user: UserType) => void;
 
+	logout: () => void;
+
 	userId: number;
 	username: string;
 	name: string;
@@ -39,6 +41,20 @@ export function UserProvider({ children }: ProviderPropsType) {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [accessToken, setAccessToken] = useState('');
 	const [currentUser, setCurrentUser] = useState<UserType>({} as UserType);
+	const logout = () => {
+		localStorage.clear();
+		const cookies = document.cookie.split(';');
+
+		for (let i = 0; i < cookies.length; i++) {
+			const cookie = cookies[i];
+			const eqPos = cookie.indexOf('=');
+			const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+			document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;`;
+		}
+		setCurrentUser({} as UserType);
+		setAccessToken('');
+		setIsLoggedIn(false);
+	};
 
 	return (
 		<UserContext.Provider
@@ -51,6 +67,8 @@ export function UserProvider({ children }: ProviderPropsType) {
 
 				currentUser,
 				setCurrentUser,
+
+				logout,
 
 				userId: currentUser.userId,
 				username: currentUser.username,

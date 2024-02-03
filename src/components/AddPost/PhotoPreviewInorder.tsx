@@ -11,11 +11,11 @@ const Container = styled.div`
 	}
 `;
 const Photo = styled.img`
-	width: 100%;
+	height: 100%;
 `;
 const ElementBox = styled.div`
 	display: block;
-	width: 60%;
+	height: 9rem;
 	margin: 2rem auto 1rem auto;
 	padding: 0 0.3rem;
 `;
