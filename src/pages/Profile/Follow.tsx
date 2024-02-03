@@ -385,7 +385,7 @@ export default function Follow() {
 											name,
 											profileImageUrl,
 										}}
-										action="hidden"
+										action="hideButton"
 									/>
 								)}
 							{/* 팔로잉 중 내가 팔로잉 하는 사람들 */}
