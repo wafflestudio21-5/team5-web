@@ -47,12 +47,19 @@ export const getUserFollowStatus = async (
 	accessToken: string
 ): Promise<boolean> => {
 	try {
-		await axios.get(`${baseURL}/api/v1/friendship/${username}/follow`, {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		});
+		const response = await axios.get(
+			`${baseURL}/api/v1/friendship/${username}/follow`,
+			{
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}
+		);
 
+		console.log(response);
+		console.log(response.data);
+		console.log(response.data.message);
+		console.log(response.data.status);
 		console.log('true');
 		return true;
 	} catch {
