@@ -480,6 +480,7 @@ export default function Profile() {
 				accessToken
 			);
 			if (followStatus) {
+				console.log('팔로잉 중');
 				setIsFollow(true);
 			}
 
@@ -636,7 +637,7 @@ export default function Profile() {
 		}
 	};
 
-	if (isLoading) return <div></div>;
+	if (isLoading) return <></>;
 	return (
 		user && (
 			<ProfileLayout>
