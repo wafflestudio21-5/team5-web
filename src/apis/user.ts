@@ -57,13 +57,8 @@ export const getUserFollowStatus = async (
 		);
 
 		console.log(response);
-		console.log(response.data);
-		console.log(response.data.message);
-		console.log(response.data.status);
-		console.log('true');
 		return true;
 	} catch {
-		console.log('false');
 		return false;
 	}
 };
