@@ -51,27 +51,6 @@ const Plus = styled.img`
 const Input = styled.input`
 	display: none;
 `;
-/* const ButtonBackground = styled.div`
-	bottom: 0;
-	border-top: 1px solid gainsboro;
-	width: 100%;
-	margin-top: 68%;
-	background-color: white;
-	height: 5rem;
-	z-indev: 300;
-`;
-const ShareButton = styled.button`
-	bottom: 1rem;
-	background-color: blue;
-	width: 86%;
-	height: 3rem;
-	margin-top: 1rem;
-	margin-left: 7%;
-	border-radius: 0.5rem;
-	border: none;
-	color: white;
-	font-weight: 600;
-`; */
 const Div = styled.div`
 	width: 90%;
 	margin-left: 1.5rem;
