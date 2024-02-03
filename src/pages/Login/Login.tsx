@@ -187,14 +187,16 @@ export default function Login() {
 				autoComplete="off"
 				onChange={(e) => setUsernameInput(e.target.value)}
 			/>
-			<Input
-				type="password"
-				name="password"
-				value={passwordInput}
-				placeholder="비밀번호"
-				autoComplete="off"
-				onChange={(e) => setPasswordInput(e.target.value)}
-			/>
+			<form>
+				<Input
+					type="password"
+					name="password"
+					value={passwordInput}
+					placeholder="비밀번호"
+					autoComplete="off"
+					onChange={(e) => setPasswordInput(e.target.value)}
+				/>
+			</form>
 			<br />
 			<Button disabled={!isActive} onClick={handleClick}>
 				로그인

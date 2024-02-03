@@ -212,7 +212,8 @@ export default function App() {
 
 	return (
 		<ThemeProvider theme={Theme}>
-			<TokenRefresher />
+			{/* 			<TokenRefresher />
+			 */}{' '}
 			<GlobalStyles />
 			<RouterProvider router={isLoggedIn ? router : loginRouter} />
 		</ThemeProvider>
