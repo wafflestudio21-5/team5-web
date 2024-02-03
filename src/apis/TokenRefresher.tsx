@@ -2,12 +2,12 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { resetAccessToken } from './login';
 import { useUserContext } from '../contexts/UserContext';
-import { useNavigate } from 'react-router';
-
+/* import { useNavigate } from 'react-router';
+ */
 export default function TokenRefresher() {
-	const { setAccessToken, logout } = useUserContext();
-	const navigate = useNavigate();
-
+	const { setAccessToken } = useUserContext();
+	/* 	const navigate = useNavigate();
+	 */
 	useEffect(() => {
 		const interceptor = axios.interceptors.response.use(
 			function (response) {
@@ -16,12 +16,12 @@ export default function TokenRefresher() {
 			async function (error) {
 				const originConfig = error.config;
 				if (error.response.status === 401) {
-					if (
+					/* if (
 						error.response.data.message === '유효하지 않은 refresh token입니다.'
 					) {
 						logout();
 						navigate('/');
-					}
+					} */
 					const responseData = await resetAccessToken();
 					const newAccessToken = responseData.accessToken;
 					setAccessToken(newAccessToken);
