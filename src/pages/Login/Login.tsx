@@ -91,8 +91,7 @@ export default function Login() {
 	const [usernameInput, setUsernameInput] = useState('');
 	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
-	const { setIsLoggedIn, setAccessToken, accessToken, setCurrentUser } =
-		useUserContext();
+	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [result, setResult] = useState<string | null>(null);
