@@ -54,22 +54,7 @@ export const getUserFollowStatus = async (
 		});
 
 		return true;
-	} catch (error) {
-		const err = error as AxiosError<APIErrorResponseType>;
-
-		if (err.response) {
-			if (
-				err.response.data.status === 404 &&
-				err.response.data.message === 'User not follow.'
-			) {
-				return false;
-			} else {
-				alert(err.response.data.message);
-			}
-		} else {
-			alert('Error occurred');
-		}
-
+	} catch {
 		return false;
 	}
 };
