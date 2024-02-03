@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import { resolvePath } from 'react-router-dom';
 
 import { baseURL } from '../constants.ts';
 import {
@@ -56,11 +57,7 @@ export const getUserFollowStatus = async (
 			}
 		);
 
-		console.log(response);
-		console.log(response.data);
-		console.log(response.data.message);
-		console.log('true');
-		return true;
+		return !!response;
 	} catch {
 		console.log('false');
 		return false;
@@ -73,7 +70,7 @@ export const getUserFollowMeStatus = async (
 	accessToken: string
 ): Promise<boolean> => {
 	try {
-		await axios.get(
+		const response = await axios.get(
 			`${baseURL}/api/v1/friendship/${followerUsername}/follower`,
 			{
 				headers: {
@@ -82,7 +79,7 @@ export const getUserFollowMeStatus = async (
 			}
 		);
 
-		return true;
+		return !!response;
 	} catch (error) {
 		const err = error as AxiosError<APIErrorResponseType>;
 
