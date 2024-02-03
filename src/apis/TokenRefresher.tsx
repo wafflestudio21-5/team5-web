@@ -4,7 +4,6 @@ import { resetAccessToken } from './login';
 import { useUserContext } from '../contexts/UserContext';
 
 export default function TokenRefresher() {
-	console.log('in');
 	const { setAccessToken } = useUserContext();
 
 	useEffect(() => {

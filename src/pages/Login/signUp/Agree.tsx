@@ -133,7 +133,7 @@ export default function Agree() {
 			email,
 			birthday,
 		});
-		if (signupResponse) {
+		if (signupResponse !== null) {
 			const accessToken = await tryLogin({
 				username: username,
 				password: password,

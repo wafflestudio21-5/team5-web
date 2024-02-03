@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchUserInformation } from '../../apis/account';
-import { resetAccessToken } from '../../apis/login.ts';
 import { tryPost } from '../../apis/post';
 import MenuElement from '../../components/AddPost/MenuElement.tsx';
 import PhotoPreviewInorder from '../../components/AddPost/PhotoPreviewInorder';
@@ -92,8 +91,6 @@ export default function AddText() {
 	const [isClicked, setIsClicked] = useState(true);
 	const handleClick = async () => {
 		if (category) {
-			const newAccessToken = await resetAccessToken();
-			console.log(newAccessToken);
 			const addr = `/${username}`;
 			if (files !== null && category !== null) {
 				const response = await tryPost({
