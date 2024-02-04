@@ -734,7 +734,15 @@ export default function Profile() {
 					<p>{user.bio}</p>
 					{/* 랑크 1개일 땐 바로 연결*/}
 					{user.userLinks.length === 1 && (
-						<a href={user.userLinks[0].link} target={'_blank'}>
+						<a
+							href={
+								user.userLinks[0].link.startsWith('http://') ||
+								user.userLinks[0].link.startsWith('https://')
+									? user.userLinks[0].link
+									: `https://${user.userLinks[0].link}`
+							}
+							target={'_blank'}
+						>
 							{user.userLinks[0].link}
 						</a>
 					)}
