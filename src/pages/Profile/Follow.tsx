@@ -275,7 +275,7 @@ export default function Follow() {
 	return (
 		user && (
 			<FollowLayout>
-				<BackHeader title={user.username} backURL={`/${username}`} />
+				<BackHeader title={user.username} backURL={`/${user.username}`} />
 				<FollowContainer>
 					<ToggleBar
 						leftTab={`팔로워 ${followerNum}명`}
