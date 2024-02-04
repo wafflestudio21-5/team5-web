@@ -704,7 +704,7 @@ export default function Profile() {
 						<img
 							src={user.profileImageUrl}
 							alt="프로필 사진"
-							onClick={onProfileImageClick}
+							onClick={isMyAccount ? onProfileImageClick : () => {}}
 						/>
 						<input
 							type="file"
