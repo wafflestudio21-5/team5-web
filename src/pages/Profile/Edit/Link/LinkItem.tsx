@@ -64,7 +64,11 @@ export default function LinkItem({
 		if (isEdit) {
 			navigate(`/account/edit/link/${linkCount}`);
 		} else {
-			window.open(`https://${link}`, '_blank', 'noopener, noreferrer');
+			const formattedLink =
+				link.startsWith('http://') || link.startsWith('https://')
+					? link
+					: `https://${link}`;
+			window.open(formattedLink, '_blank', 'noopener,noreferrer');
 		}
 	};
 
