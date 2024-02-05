@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { resetAccessToken, tryLogin } from '../../apis/login';
@@ -91,14 +91,20 @@ const StyledLink = styled(Link)`
 	text-decoration: none;
 	color: blue;
 `;
+const A = styled.a`
+	text-decoration: none;
+`;
 
 export default function Login() {
 	const [usernameInput, setUsernameInput] = useState('');
 	const [passwordInput, setPasswordInput] = useState('');
 	const [isActive, setIsActive] = useState(false);
-	const { setIsLoggedIn, setAccessToken, setCurrentUser } = useUserContext();
+	const { setIsLoggedIn, setAccessToken, accessToken, setCurrentUser } =
+		useUserContext();
 	const location = useLocation();
+	const navigate = useNavigate();
 	const [result, setResult] = useState<string | null>(null);
+	const [queryParams, _] = useState(new URLSearchParams(location.search));
 
 	useEffect(() => {
 		if (usernameInput.length > 0 && passwordInput.length > 0) setIsActive(true);
@@ -106,11 +112,15 @@ export default function Login() {
 	}, [usernameInput, passwordInput]);
 
 	useEffect(() => {
-		const queryParams = new URLSearchParams(location.search);
 		setResult(queryParams.get('result'));
 		if (result === 'success') {
+			const refreshToken = document.cookie.split('; ')[0].split('=')[1];
+			localStorage.setItem('refreshToken', refreshToken);
 			autoLogin();
-			setIsLoggedIn(true);
+		} else if (result === 'register') {
+			const refreshToken = document.cookie.split('; ')[0].split('=')[1];
+			localStorage.setItem('refreshToken', refreshToken);
+			navigate('/signUp/birthdaySocial');
 		} else if (result === 'fail') {
 			alert('페이스북 로그인에 실패했습니다.');
 		} else {
@@ -121,15 +131,17 @@ export default function Login() {
 				autoLogin();
 			}
 		}
-	}, []);
+	}, [, queryParams, result]);
 
 	const autoLogin = async () => {
-		const newAccessToken = await resetAccessToken();
-		setAccessToken(newAccessToken);
-		const username = localStorage.getItem('username');
+		const responseData = await resetAccessToken();
+		console.log(accessToken);
+		await setAccessToken(responseData.accessToken);
+		const username = responseData.username;
+		localStorage.setItem('username', responseData.username);
 		const currentUserInfo = await getUserInformation(
-			username ? username : '',
-			newAccessToken
+			username,
+			responseData.accessToken
 		);
 		setCurrentUser(currentUserInfo);
 		setIsLoggedIn(true);
@@ -154,6 +166,7 @@ export default function Login() {
 				accessToken
 			);
 			setCurrentUser(currentUserInfo);
+			setIsLoggedIn(true);
 		}
 	};
 
@@ -181,16 +194,14 @@ export default function Login() {
 				autoComplete="off"
 				onChange={(e) => setPasswordInput(e.target.value)}
 			/>
-			<StyledLink to="passwordRecovery/">
-				<Div className="passwordRecovery">비밀번호를 잊으셨나요?</Div>
-			</StyledLink>
+			<br />
 			<Button disabled={!isActive} onClick={handleClick}>
 				로그인
 			</Button>
 			<Div className="line">
 				<Span> 또는 </Span>
 			</Div>
-			<a href={`${baseURL}/api/v1/auth/facebook_login`}>
+			<A href={`${baseURL}/api/v1/auth/facebook_login`}>
 				<Div className="facebookBox">
 					{' '}
 					<Img
@@ -200,7 +211,7 @@ export default function Login() {
 					/>
 					<BlueDiv>Facebook으로 로그인</BlueDiv>
 				</Div>
-			</a>
+			</A>
 			<Div className="footer">
 				계정이 없으신가요?
 				<StyledLink to="signUp/">
